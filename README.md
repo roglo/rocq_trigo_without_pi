@@ -21,6 +21,7 @@ opam pin add rocq-trigo-without-pi https://github.com/roglo/rocq_trigo_without_p
 
 ## Paper
 
+Trigonometry without π : A Constructive Approach
 https://zenodo.org/records/15304072
 
 ## Author
