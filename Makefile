@@ -1,7 +1,5 @@
 TARGET=AngleDivNat.vo
 FILESFORDEP=`LC_ALL=C ls *.v`
-QDIRS=
-TEST_DIR=test `basename "$<"` = "$<" || { echo "File \"$<\" needs to be recompiled."; echo "Please run 'make' in directory '$$(dirname "$<")' first."; exit 1; }
 ROCQ=rocq compile
 ROCQ_OPT=
 
@@ -16,17 +14,23 @@ clean:
 
 depend:
 	mv .depend .depend.bak
-	rocq dep $(QDIRS) $(FILESFORDEP) | sed -e " s|$$HOME[^ ]*||" | \
+	rocq dep $(FILESFORDEP) | sed -e " s|$$HOME[^ ]*||" | \
 	LC_ALL=C sort |	sed -e 's/  *$$//' > .depend
+
+install:
+	@echo "Installing TrigoWithoutPi..."
+	@mkdir -p $(OPAM_SWITCH_PREFIX)/lib/coq/user-contrib
+	@cp -r . $(OPAM_SWITCH_PREFIX)/lib/coq/user-contrib/TrigoWithoutPi
+
+uninstall:
+	@echo "Uninstalling TrigoWithoutPi..."
+	@rm -rf $(OPAM_SWITCH_PREFIX)/lib/coq/user-contrib/TrigoWithout_pi
 
 .SUFFIXES: .v .vo
 
 %.vo: %.v
-	@$(TEST_DIR)
-	$(ROCQ) $(ROCQ_OPTS) -R . TrigoWithoutPi $(QDIRS) $<
+	$(ROCQ) $(ROCQ_OPT) -R . TrigoWithoutPi $<
 
-.v.vo:
-
-.PHONY: all clean depend
+.PHONY: all clean depend install uninstall
 
 include .depend

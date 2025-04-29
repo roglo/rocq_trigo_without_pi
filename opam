@@ -6,10 +6,16 @@ authors: "Daniel de Rauglaudre"
 license: "MIT"
 homepage: "https://github.com/roglo/rocq_trigo_without_pi"
 bug-reports: "https://github.com/roglo/rocq_trigo_without_pi/issues"
-synopsis: "Library providing ..."
+synopsis: "A Rocq library for trigonometry based on unit vectors"
 description: """
-rocq-trigo-without-pi provides a Rocq library, based on Rocq 9.0.0,
-for ....
+This library formalizes a geometric approach to trigonometry in Coq,
+where angles are represented by unit vectors (pairs of real numbers
+(x, y) such that x² + y² = 1), instead of real-number angle measures
+involving π.
+
+It provides definitions and lemmas for sine, cosine, and angle
+addition and division by natural without referring to transcendental
+constants, suitable for constructive reasoning and algebraic geometry.
 """
 build: [make]
 install: [make "install"]

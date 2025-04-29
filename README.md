@@ -1,11 +1,16 @@
-# trigo_without_pi
+# rocq_trigo_without_pi
 
-This library ...
+A Rocq/Coq library for **trigonometry without π**.
 
-This project is developed with [Rocq](https://github.com/rocq-prover/rocq)
-version 9.0.0.
+This library defines a form of trigonometry where **angles are not
+real numbers**, but instead are represented as **pairs of real numbers
+(x, y)** constrained by the unit circle equation x²+y²=1.
 
-## Installation
+This approach is purely geometric and avoids relying on π as a
+fundamental constant, aligning with constructive and algebraic
+perspectives.
+
+## 🔧 Installation
 
 To install this project via `opam`, use:
 
