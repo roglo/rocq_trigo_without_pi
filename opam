@@ -17,10 +17,7 @@ It provides definitions and lemmas for sine, cosine, and angle
 addition and division by natural without referring to transcendental
 constants, suitable for constructive reasoning and algebraic geometry.
 """
-build: [
-  ["./configure"]
-  [make "-kj%{jobs}%"]
-]
+build: [make "-kj%{jobs}%"]
 install: [make "install"]
 remove: [make "uninstall"]
 depends: [
