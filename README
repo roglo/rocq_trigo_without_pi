@@ -3,4 +3,4 @@ For developpers of Trigo Without Pi library.
 For a local installation, after having cloned
 roglo/rocq_trigo_without_pi on github, do:
 
-opam pin add rocq-trigo-without_pi . --dev
+opam pin add rocq-trigo-without-pi . --dev
