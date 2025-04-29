@@ -1,0 +1,19 @@
+#!/bin/sh
+
+REQUIRED_ROCQ_VERSION="9.0.0"
+
+# Check that the commande rocq is available
+if ! command -v rocq >/dev/null 2>&1; then
+  echo "Error: 'rocq' command not found. Please install Rocq version $REQUIRED_ROCQ_VERSION."
+  exit 1
+fi
+
+# Check that the version is correct
+INSTALLED_VERSION=$(rocq -v 2>&1 | sed -n 's/.*version \([0-9.]*\).*/\1/p')
+
+if [ "$INSTALLED_VERSION" != "$REQUIRED_ROCQ_VERSION" ]; then
+  echo "Error: rocq version $REQUIRED_ROCQ_VERSION required, but found $INSTALLED_VERSION."
+  exit 1
+fi
+
+echo "rocq version $INSTALLED_VERSION found — OK."
