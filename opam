@@ -1,0 +1,17 @@
+opam-version: "2.0"
+name: "trigo-without-pi"
+version: "1.0.0"
+maintainer: "daniel.roglo@free.fr"
+authors: "Daniel de Rauglaudre"
+license: "MIT"
+homepage: "https://github.com/roglo/rocq_trigo_without_pi"
+bug-reports: "https://github.com/roglo/rocq_trigo_without_pi/issues"
+synopsis: "Library providing ..."
+description: """
+rocq-trigo-without-pi provides a Rocq library, based on Rocq 9.0.0,
+for ....
+"""
+build: [make]
+install: [make "install"]
+remove: [make "uninstall"]
+depends: [ "coq" {= "9.0.0"} ]
