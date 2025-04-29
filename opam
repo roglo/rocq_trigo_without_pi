@@ -20,4 +20,7 @@ constants, suitable for constructive reasoning and algebraic geometry.
 build: [make]
 install: [make "install"]
 remove: [make "uninstall"]
-depends: [ "coq" {= "9.0.0"} ]
+depends: [
+  "coq" {= "9.0.0"}
+  "rocq-ring-like"
+]
