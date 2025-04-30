@@ -18,3 +18,12 @@ To install this project via `opam`, use:
 opam pin add rocq-ring-like https://github.com/roglo/rocq_ring_like.git
 opam pin add rocq-trigo-without-pi https://github.com/roglo/rocq_trigo_without_pi.git
 ```
+
+## Paper
+
+Trigonometry without π : A Constructive Approach
+https://zenodo.org/records/15304072
+
+## Author
+
+Daniel de Rauglaudre <daniel.roglo@free.fr>.
