@@ -1266,6 +1266,17 @@ Qed.
 Definition rngl_distance :=
   {| d_dist := rngl_dist; d_prop := rngl_dist_is_dist ac_op ac_or |}.
 
+(*
+Notation "'lim' ( n → ∞ ) , x = y" :=
+  (is_limit_when_seq_tends_to_inf rngl_distance (λ n, x) y)
+  (at level 70, n at level 1, x at level 50,
+   format "lim  ( n  →  ∞ ) ,  x  =  y").
+
+This notation works, but it depends on rngl_distance but with
+these parameters ac_op ac_or which are not defined in RingLike,
+therefore this notation cannot be put there.
+*)
+
 Theorem rngl_cos_angle_div_2_pow_tending_to_1 :
   rngl_characteristic T ≠ 1 →
   rngl_is_archimedean T = true →
