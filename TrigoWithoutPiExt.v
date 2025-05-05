@@ -1712,7 +1712,7 @@ Definition angle_eucl_distance :=
 Definition angle_taxi_distance :=
   {| d_dist := angle_taxi_dist; d_prop := angle_taxi_dist_is_dist |}.
 
-Definition angle_lim := is_limit_when_seq_tends_to_inf angle_eucl_distance.
+Definition angle_lim := is_limit_when_seq_tends_to_inf angle_eucl_dist.
 
 Theorem angle_eucl_dist_opp_opp :
   ∀ θ1 θ2, angle_eucl_dist (- θ1) (- θ2) = angle_eucl_dist θ1 θ2.
@@ -1892,21 +1892,21 @@ Qed.
 Theorem angle_eucl_dist_diag : ∀ θ, angle_eucl_dist θ θ = 0%L.
 Proof.
 intros.
-apply (dist_diag angle_eucl_distance).
+apply (dist_diag angle_eucl_dist_is_dist).
 Qed.
 
 Theorem angle_eucl_dist_nonneg : ∀ θ1 θ2, (0 ≤ angle_eucl_dist θ1 θ2)%L.
 Proof.
 destruct_ac.
 intros.
-apply (dist_nonneg Hon Hop Hiv Hor angle_eucl_distance).
+apply (dist_nonneg Hon Hop Hiv Hor angle_eucl_dist_is_dist).
 Qed.
 
 Theorem angle_taxi_dist_nonneg : ∀ θ1 θ2, (0 ≤ angle_taxi_dist θ1 θ2)%L.
 Proof.
 destruct_ac.
 intros.
-apply (dist_nonneg Hon Hop Hiv Hor angle_taxi_distance).
+apply (dist_nonneg Hon Hop Hiv Hor angle_taxi_dist_is_dist).
 Qed.
 
 Theorem angle_lim_const :

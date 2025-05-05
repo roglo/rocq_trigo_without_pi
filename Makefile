@@ -26,6 +26,10 @@ uninstall:
 	@echo "Uninstalling TrigoWithoutPi..."
 	@rm -rf $(OPAM_SWITCH_PREFIX)/lib/coq/user-contrib/TrigoWithout_pi
 
+local_opam_pin_add:
+	opam pin add rocq-trigo-without-pi . -n -y
+	opam reinstall rocq-trigo-without-pi -y -w
+
 .SUFFIXES: .v .vo
 
 %.vo: %.v

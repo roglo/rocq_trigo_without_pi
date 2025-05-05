@@ -511,10 +511,10 @@ destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
 }
 intros.
 rewrite <- (rngl_abs_nonneg_eq Hop Hor (angle_eucl_dist _ _)). 2: {
-  apply (dist_nonneg Hon Hop Hiv Hor angle_eucl_distance).
+  apply (dist_nonneg Hon Hop Hiv Hor angle_eucl_dist_is_dist).
 }
 rewrite <- (rngl_abs_nonneg_eq Hop Hor (angle_eucl_dist θ1 _)). 2: {
-  apply (dist_nonneg Hon Hop Hiv Hor angle_eucl_distance).
+  apply (dist_nonneg Hon Hop Hiv Hor angle_eucl_dist_is_dist).
 }
 rewrite angle_eucl_dist_move_0_r.
 rewrite (angle_eucl_dist_move_0_r θ1).
@@ -604,7 +604,7 @@ Qed.
 Theorem angle_div_nat_prop :
   rngl_characteristic T = 0 →
   rngl_is_archimedean T = true →
-  is_complete T rngl_distance →
+  is_complete T rngl_dist →
   ∀ θ n θ',
   angle_div_nat θ n θ'
   → (n = 0 ∧ θ' = 0%A) ∨ (n * θ')%A = θ.
@@ -637,7 +637,7 @@ progress unfold angle_div_nat in Hdn.
 rename Hdn into Hlim.
 specialize (angle_lim_mul n _ _ Hlim) as H1.
 enough (H2 : angle_lim (λ i, (n * seq_angle_to_div_nat θ n i)%A) θ). {
-  specialize (limit_unique Hon Hop Hiv Hor _ angle_eucl_distance) as H3.
+  specialize (limit_unique Hon Hop Hiv Hor angle_eucl_dist_is_dist) as H3.
   now apply (H3 _ (n * θ')%A) in H2.
 }
 clear θ' Hlim H1.
@@ -769,7 +769,7 @@ Qed.
 Theorem exists_angle_div_nat :
   rngl_characteristic T = 0 →
   rngl_is_archimedean T = true →
-  is_complete T rngl_distance →
+  is_complete T rngl_dist →
   ∀ θ n,
   n ≠ 0
   → ∃ θ', (n * θ')%A = θ.

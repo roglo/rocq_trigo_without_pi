@@ -544,7 +544,7 @@ Qed.
 Theorem seq_angle_to_div_nat_is_Cauchy :
   rngl_is_archimedean T = true →
   ∀ n θ,
-  is_Cauchy_sequence angle_eucl_distance (seq_angle_to_div_nat θ n).
+  is_Cauchy_sequence angle_eucl_dist (seq_angle_to_div_nat θ n).
 Proof.
 intros Har *.
 destruct_ac.
@@ -559,7 +559,7 @@ destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
 }
 destruct (angle_eq_dec θ 0) as [Htz| Htz]. {
   subst θ.
-  enough (H : is_Cauchy_sequence angle_eucl_distance (λ _, 0%A)). {
+  enough (H : is_Cauchy_sequence angle_eucl_dist (λ _, 0%A)). {
     intros ε Hε.
     specialize (H ε Hε).
     destruct H as (N, HN).
