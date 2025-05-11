@@ -5,7 +5,7 @@
 Set Nested Proofs Allowed.
 From Stdlib Require Import Utf8 Arith.
 
-Require Import RingLike.RingLike.
+Require Import RingLike.Core.
 Require Import Angle TrigoWithoutPiExt.
 Require Import AngleAddOverflowLe.
 Require Import Angle_order.
