@@ -1,3 +1,13 @@
+(** * SeqAngleIsCauchy
+
+    Let θ be an angle and n a natural number.
+
+    The present module proves that the sequence defined by
+    θᵢ = ⌊2^i / n⌋·(θ / 2^i) is Cauchy.
+    We will see later that its limit θ' satisfies n·θ' = θ,
+    and can therefore be interpreted as θ / n.
+*)
+
 Set Nested Proofs Allowed.
 From Stdlib Require Import Utf8 Arith.
 

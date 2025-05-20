@@ -88,8 +88,7 @@ Context {rp : ring_like_prop T}.
 Context {rl : real_like_prop T}.
 Context {ac : angle_ctx T}.
 
-Theorem angle_div_2_mul_2 :
-  ∀ a, (2 * (a /₂))%A = a.
+Theorem angle_div_2_mul_2 : ∀ a, (2 * (a /₂))%A = a.
 Proof.
 intros *.
 destruct_ac.
