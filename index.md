@@ -7,6 +7,28 @@ Welcome to the **TrigoWithoutPi** library documentation!
 
 ## Available Modules
 
+Definition of angle, cos, sin, addition of angles:
+
+- [Angle](TrigoWithoutPi.Angle.html)
+
+Division of an angle by 2:
+
+- [AngleDiv2](TrigoWithoutPi.AngleDiv2.html)
+
+Proof that the sequence converging to division by a natural is of Cauchy:
+
+- [SeqAngleIsCauchy](TrigoWithoutPi.SeqAngleIsCauchy.html)
+
+Proof that the angle type is complete:
+
+- [AngleTypeIsComplete](TrigoWithoutPi.AngleTypeIsComplete.html)
+
+Division of an angle by a natural number:
+
+- [AngleDivNat](TrigoWithoutPi.AngleDivNat.html)
+
+Other modules:
+
 - [AngleAddLeMonoL_prop](TrigoWithoutPi.AngleAddLeMonoL_prop.html)
 - [AngleAddLeMonoL_sin_lb_neg_sin_2_neg](TrigoWithoutPi.AngleAddLeMonoL_sin_lb_neg_sin_2_neg.html)
 - [AngleAddLeMonoL_sin_lb_neg_sin_2_nonneg](TrigoWithoutPi.AngleAddLeMonoL_sin_lb_neg_sin_2_nonneg.html)
@@ -14,12 +36,7 @@ Welcome to the **TrigoWithoutPi** library documentation!
 - [AngleAddLeMonoL](TrigoWithoutPi.AngleAddLeMonoL.html)
 - [AngleAddOverflowLe](TrigoWithoutPi.AngleAddOverflowLe.html)
 - [AngleDiv2Add](TrigoWithoutPi.AngleDiv2Add.html)
-- [AngleDiv2](TrigoWithoutPi.AngleDiv2.html)
-- [AngleDivNat](TrigoWithoutPi.AngleDivNat.html)
 - [Angle_order](TrigoWithoutPi.Angle_order.html)
-- [AngleTypeIsComplete](TrigoWithoutPi.AngleTypeIsComplete.html)
-- [Angle](TrigoWithoutPi.Angle.html)
-- [SeqAngleIsCauchy](TrigoWithoutPi.SeqAngleIsCauchy.html)
 - [TacChangeAngle](TrigoWithoutPi.TacChangeAngle.html)
 - [TrigoWithoutPiExt](TrigoWithoutPi.TrigoWithoutPiExt.html)
 
@@ -29,6 +46,5 @@ Welcome to the **TrigoWithoutPi** library documentation!
 
 ---
 
-*This documentation is generated automatically. For the latest source
- code and updates, visit the [GitHub
+*For the latest source code and updates, visit the [GitHub
  repository](https://github.com/roglo/rocq_trigo_without_pi).*

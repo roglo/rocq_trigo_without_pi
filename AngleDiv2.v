@@ -1,4 +1,4 @@
-(* dividing an angle by 2 and by 2^n *)
+(** * Dividing an angle by 2 and by 2^n *)
 
 Set Nested Proofs Allowed.
 From Stdlib Require Import Utf8 Arith.
