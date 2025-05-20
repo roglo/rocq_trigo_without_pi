@@ -30,6 +30,12 @@ local_opam_pin_add:
 	opam pin add rocq-trigo-without-pi . -n -y
 	opam reinstall rocq-trigo-without-pi -y -w
 
+doc:
+	rocq doc -html -utf8 --no-index -d ../gh-pages/ -R . TrigoWithoutPi -s -g -toc *.v
+
+doc_links:
+	find ../gh-pages/. -name '*.html' -exec sed -i 's/\[<span class="id" title="var">TrigoWithoutPi\.\([a-zA-Z_]*\)<\/span>\]/<a class="idref" href="TrigoWithoutPi.\1.html">TrigoWithoutPi.\1<\/a>/g' {} +
+
 .SUFFIXES: .v .vo
 
 %.vo: %.v
