@@ -36,6 +36,9 @@ doc:
 doc_links:
 	find ../gh-pages/. -name '*.html' -exec sed -i 's/\[<span class="id" title="var">TrigoWithoutPi\.\([a-zA-Z_]*\)<\/span>\]/<a class="idref" href="TrigoWithoutPi.\1.html">TrigoWithoutPi.\1<\/a>/g' {} +
 
+doc_index:
+	pandoc index.md -s -c style.css -o ../gh-pages/index.html
+
 .SUFFIXES: .v .vo
 
 %.vo: %.v
