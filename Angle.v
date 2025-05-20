@@ -1,13 +1,15 @@
-(* angles without π *)
-(* in this vision, an angle is not a real but a pair of reals (x,y)
-   such that x²+y²=1; the cosinus is then x and the sinus is y.
+(** * Angles Without π
 
-   The property sin²+cos²=1 is therefore by definition. It is possible
-   to add angles (see below) and we inherit the properties of cos(x+y)
-   and sin(x+y) in an obvous way.
+    In this approach, an angle is not a real number but a pair of real
+    numbers (x, y) such that x² + y² = 1. The cosine is then x, and the
+    sine is y.
 
-   There is no need of the number π here; the angle π is just (-1,0)
- *)
+    The identity sin² + cos² = 1 holds by definition. We can define angle
+    addition (see below), and the usual formulas for cos(x + y) and
+    sin(x + y) follow naturally.
+
+    There is no need for the number π here; the angle π is simply (-1, 0).
+*)
 
 Set Nested Proofs Allowed.
 From Stdlib Require Import Utf8 Arith.
