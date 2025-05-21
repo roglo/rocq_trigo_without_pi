@@ -1,5 +1,9 @@
 (** * Dividing an angle by 2 and by 2^n
 
+<<
+   (c, s) / 2 ::= (σ × √((1 + c) / 2), √((1 - rngl_cos c) / 2))
+>>
+   where σ = sign s
 *)
 
 Set Nested Proofs Allowed.
