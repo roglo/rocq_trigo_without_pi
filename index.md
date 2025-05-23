@@ -1,9 +1,36 @@
 ---
-title: "Rocq TrigoWithoutPi: A Library for a new trigonometry"
+title: "Trigonometry Without π – A Constructive Library in Rocq (Coq)"
 css: style.css
 ---
 
-Welcome to the **TrigoWithoutPi** library documentation!
+This site documents a formalization of trigonometry that avoids the use of
+real numbers for angles and, in particular, avoids using π.
+
+Instead of treating angles as real scalars, this approach models them as
+pairs (x, y) such that x² + y² = 1 — i.e., points on the unit circle.
+Trigonometric functions are defined geometrically, and angle operations
+(addition, bisection, division by n) are constructed using only elementary
+tools such as square roots.
+
+All results are proven in Rocq (a proof assistant previously named
+Coq), following a constructive philosophy: no infinite series, no
+transcendental constants, and no non-constructive principles.
+
+## Highlights
+
+- A geometric and algebraic definition of angles and trigonometric functions
+- Constructive proofs of key results, including division of angles
+- Formal verification in Rocq, fully documented module by module
+
+This library may be of interest to:
+
+- Formal methods researchers
+- Constructive mathematicians
+- Educators exploring alternative approaches to trigonometry
+
+👉 [Zenodo article](https://zenodo.org/records/15347540)
+
+👉 [GitHub source code](https://github.com/roglo/rocq_trigo_without_pi)
 
 ## Available Modules
 
@@ -45,6 +72,3 @@ Other modules:
 - [toc](toc.html)
 
 ---
-
-*For the latest source code and updates, visit the [GitHub
- repository](https://github.com/roglo/rocq_trigo_without_pi).*
