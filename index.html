@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="generator" content="pandoc" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
-  <title>Rocq TrigoWithoutPi: A Library for a new trigonometry</title>
+  <title>Trigonometry Without π – A Constructive Library in Rocq (Coq)</title>
   <style>
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
@@ -26,11 +26,37 @@
 </head>
 <body>
 <header id="title-block-header">
-<h1 class="title">Rocq TrigoWithoutPi: A Library for a new
-trigonometry</h1>
+<h1 class="title">Trigonometry Without π – A Constructive Library in
+Rocq (Coq)</h1>
 </header>
-<p>Welcome to the <strong>TrigoWithoutPi</strong> library
-documentation!</p>
+<p>This site documents a formalization of trigonometry that avoids the
+use of real numbers for angles and, in particular, avoids using π.</p>
+<p>Instead of treating angles as real scalars, this approach models them
+as pairs (x, y) such that x² + y² = 1 — i.e., points on the unit circle.
+Trigonometric functions are defined geometrically, and angle operations
+(addition, bisection, division by n) are constructed using only
+elementary tools such as square roots.</p>
+<p>All results are proven in Rocq (a proof assistant previously named
+Coq), following a constructive philosophy: no infinite series, no
+transcendental constants, and no non-constructive principles.</p>
+<h2 id="highlights">Highlights</h2>
+<ul>
+<li>A geometric and algebraic definition of angles and trigonometric
+functions</li>
+<li>Constructive proofs of key results, including division of
+angles</li>
+<li>Formal verification in Rocq, fully documented module by module</li>
+</ul>
+<p>This library may be of interest to:</p>
+<ul>
+<li>Formal methods researchers</li>
+<li>Constructive mathematicians</li>
+<li>Educators exploring alternative approaches to trigonometry</li>
+</ul>
+<p>👉 <a href="https://zenodo.org/records/15347540">Zenodo
+article</a></p>
+<p>👉 <a href="https://github.com/roglo/rocq_trigo_without_pi">GitHub
+source code</a></p>
 <h2 id="available-modules">Available Modules</h2>
 <p>Definition of angle, cos, sin, addition of angles:</p>
 <ul>
@@ -80,8 +106,5 @@ href="TrigoWithoutPi.TrigoWithoutPiExt.html">TrigoWithoutPiExt</a></li>
 <li><a href="toc.html">toc</a></li>
 </ul>
 <hr />
-<p><em>For the latest source code and updates, visit the <a
-href="https://github.com/roglo/rocq_trigo_without_pi">GitHub
-repository</a>.</em></p>
 </body>
 </html>
