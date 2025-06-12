@@ -188,7 +188,7 @@ rewrite rl_nth_root_mul; cycle 1. {
 rewrite rl_nth_root_mul; [ | easy | easy ].
 assert (Hz2 : (0 ≤ 2⁻¹)%L). {
   apply (rngl_lt_le_incl Hor).
-  apply (rngl_0_lt_inv_compat Hon Hop Hiv Hor).
+  apply (rngl_inv_pos Hon Hop Hiv Hor).
   apply (rngl_0_lt_2 Hon Hos Hc1 Hor).
 }
 rewrite rl_nth_root_mul; [ | easy | easy ].
