@@ -720,6 +720,7 @@ rewrite (rngl_mul_comm Hic).
 rewrite (rngl_sub_diag Hos).
 f_equal.
 rewrite <- (rngl_opp_add_distr Hop).
+rewrite rngl_add_comm.
 f_equal.
 apply (rngl_squ_sqrt_3_div_2_add_squ_half Hic Hon Hop Hiv Hor).
 Qed.

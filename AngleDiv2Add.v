@@ -802,6 +802,7 @@ destruct zs12. {
     apply rngl_ltb_lt in Haov.
     rewrite (rngl_mul_1_l Hon).
     rewrite (rngl_opp_add_distr Hop).
+    rewrite (rngl_opp_sub_swap Hop).
     destruct zs2. {
       apply rngl_leb_le in Hzs2.
       rewrite (rngl_mul_1_l Hon).
@@ -910,6 +911,7 @@ destruct zs12. {
   rewrite (rngl_mul_opp_l Hop).
   rewrite (rngl_mul_1_l Hon).
   rewrite (rngl_opp_add_distr Hop).
+  rewrite (rngl_opp_sub_swap Hop).
   rewrite (rngl_mul_opp_l Hop).
   rewrite (rngl_opp_involutive Hop).
   destruct zs2. {
@@ -981,6 +983,7 @@ apply rngl_ltb_lt in Haov.
 rewrite (rngl_mul_opp_l Hop).
 rewrite (rngl_mul_1_l Hon).
 rewrite (rngl_opp_add_distr Hop).
+rewrite (rngl_opp_sub_swap Hop).
 rewrite (rngl_mul_opp_l Hop).
 rewrite (rngl_opp_involutive Hop).
 destruct zs2. {

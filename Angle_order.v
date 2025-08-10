@@ -384,7 +384,6 @@ destruct (rngl_lt_dec Hor x y) as [Hxy| Hxy]. {
       rewrite <- (rngl_opp_add_distr Hop).
       apply (rngl_opp_nonneg_nonpos Hop Hor).
       rewrite Hθ3 in Hzs3.
-      rewrite rngl_add_comm.
       apply (rngl_lt_le_incl Hor).
       now apply rngl_add_cos_neg_when_sin_nonneg_neg.
     }

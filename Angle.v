@@ -596,6 +596,7 @@ do 2 rewrite (rngl_mul_comm Hic (rngl_cos θ1)).
 do 2 rewrite (rngl_mul_comm Hic (rngl_sin θ1)).
 f_equal.
 rewrite (rngl_opp_add_distr Hop).
+rewrite (rngl_opp_sub_swap Hop).
 rewrite <- (rngl_mul_opp_l Hop).
 rewrite (rngl_mul_opp_r Hop).
 symmetry.

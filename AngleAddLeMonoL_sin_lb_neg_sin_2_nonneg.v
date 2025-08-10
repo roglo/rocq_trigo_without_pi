@@ -432,6 +432,7 @@ destruct zs3. {
     progress sin_cos_add_sub_straight_hyp T Hs12z.
     progress sin_cos_add_sub_straight_goal T.
     rewrite <- (rngl_opp_add_distr Hop).
+    rewrite rngl_add_comm.
     apply (rngl_opp_nonpos_nonneg Hop Hor).
     change_angle_sub_l θ3 angle_right.
     progress sin_cos_add_sub_right_hyp T Hzs3.

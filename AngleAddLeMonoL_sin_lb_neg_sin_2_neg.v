@@ -213,6 +213,7 @@ destruct zs13. {
     move Hzs1 before Hc2z.
     rewrite <- (rngl_opp_add_distr Hop).
     apply (rngl_opp_neg_pos Hop Hor).
+    rewrite rngl_add_comm.
     destruct (rngl_eq_dec Heo (rngl_sin θ1) 0) as [Hs1z| Hs1z]. {
       apply (eq_rngl_sin_0) in Hs1z.
       destruct Hs1z; subst θ1. {
