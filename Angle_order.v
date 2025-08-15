@@ -76,7 +76,7 @@ destruct zs1. {
       destruct H12 as (Hc12, H12).
       apply rngl_leb_le in Hc12.
       apply rngl_ltb_lt.
-      apply (rngl_lt_iff Hor).
+      apply (rngl_le_neq Hor).
       split; [ easy | ].
       intros H; symmetry in H.
       apply rngl_cos_eq in H.
@@ -118,7 +118,7 @@ destruct zs1. {
   destruct H12 as (Hc12, H12).
   apply rngl_leb_le in Hc12.
   apply rngl_ltb_lt.
-  apply (rngl_lt_iff Hor).
+  apply (rngl_le_neq Hor).
   split; [ easy | ].
   intros H; apply H12; clear H12.
   apply rngl_cos_eq in H.
@@ -360,7 +360,7 @@ rewrite (rngl_div_mul Hon Hiv); [ | easy ].
 rewrite <- (rngl_abs_nonneg_eq Hop Hor (√_ / _ * _))%L. 2: {
   apply (rngl_mul_nonneg_nonneg Hos Hor); [ | easy ].
   apply (rngl_div_nonneg Hon Hop Hiv Hor). 2: {
-    apply (rngl_lt_iff Hor).
+    apply (rngl_le_neq Hor).
     split; [ now apply rl_sqrt_nonneg | ].
     now apply not_eq_sym.
   }

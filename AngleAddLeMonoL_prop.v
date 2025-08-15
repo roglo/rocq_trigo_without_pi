@@ -74,7 +74,7 @@ destruct (rngl_le_dec Hor 0 (rngl_cos θ1))%L as [Hzc1| Hc1z]. {
     apply rngl_ltb_lt.
     apply (rngl_lt_opp_l Hop Hor).
     apply (rngl_add_pos_nonneg Hor); [ | easy ].
-    apply (rngl_lt_iff Hor).
+    apply (rngl_le_neq Hor).
     split. {
       apply (rngl_lt_le_incl Hor) in Hzs2, Hc2z.
       now apply rngl_sin_add_nonneg.
@@ -540,7 +540,7 @@ rewrite Hc3z in H1.
 apply (rngl_leb_gt Hor) in Hc3z.
 apply rngl_nlt_ge in Hzs13.
 exfalso; apply Hzs13; clear Hzs13.
-apply (rngl_lt_iff Hor).
+apply (rngl_le_neq Hor).
 split. {
   cbn.
   apply (rngl_le_sub_0 Hop Hor).

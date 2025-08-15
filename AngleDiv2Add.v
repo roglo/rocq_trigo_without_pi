@@ -894,7 +894,7 @@ destruct zs12. {
     apply rngl_sin_nonneg_sin_nonneg_sin_neg; try easy; cycle 1. {
       now apply (rngl_lt_le_incl Hor).
     } {
-      now apply (rngl_lt_iff Hor).
+      now apply (rngl_le_neq Hor).
     }
     progress unfold angle_leb.
     generalize Hzs1; intros H.
@@ -951,7 +951,7 @@ destruct zs12. {
     apply rngl_sin_nonneg_sin_nonneg_sin_neg; try easy; cycle 1. {
       now apply (rngl_lt_le_incl Hor).
     } {
-      now apply (rngl_lt_iff Hor).
+      now apply (rngl_le_neq Hor).
     }
     progress unfold angle_leb.
     generalize Hzs1; intros H.
@@ -1211,7 +1211,7 @@ destruct zs. {
     }
     rewrite (rngl_mul_1_l Hon).
     apply (rngl_add_lt_mono_l Hop Hor).
-    apply (rngl_lt_iff Hor).
+    apply (rngl_le_neq Hor).
     split; [ apply rngl_cos_bound | ].
     intros H.
     apply eq_rngl_cos_1 in H.
@@ -1300,7 +1300,7 @@ apply (rngl_nlt_ge_iff Hor).
 intros Hc12.
 apply rngl_nlt_ge in H2.
 apply H2; clear H2.
-apply (rngl_lt_iff Hor).
+apply (rngl_le_neq Hor).
 split; [ apply rngl_cos_bound | ].
 intros H; symmetry in H.
 apply eq_rngl_cos_opp_1 in H; subst θ2.

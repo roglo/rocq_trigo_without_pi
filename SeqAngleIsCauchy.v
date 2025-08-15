@@ -526,7 +526,7 @@ assert (Hε2 : (0 < ε² / 2)%L). {
   apply (rngl_div_pos Hon Hop Hiv Hor). 2: {
     apply (rngl_0_lt_2 Hon Hos Hc1 Hor).
   }
-  apply (rngl_lt_iff Hor).
+  apply (rngl_le_neq Hor).
   split; [ apply (rngl_squ_nonneg Hos Hor) | ].
   apply not_eq_sym.
   intros H.

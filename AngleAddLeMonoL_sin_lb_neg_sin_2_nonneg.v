@@ -147,7 +147,7 @@ destruct zs3. {
       progress sin_cos_add_sub_right_hyp T Hc2z.
       apply rngl_nlt_ge in Hzs12.
       apply Hzs12; clear Hzs12.
-      apply (rngl_lt_iff Hor).
+      apply (rngl_le_neq Hor).
       split. {
         apply (rngl_lt_le_incl Hor) in Hc1z.
         now apply rngl_sin_add_nonneg.
@@ -325,7 +325,7 @@ destruct zs3. {
           apply (rngl_has_eq_dec_or_is_ordered_r Hor).
         }
         apply (rngl_lt_sub_0 Hop Hor).
-        apply (rngl_lt_iff Hor).
+        apply (rngl_le_neq Hor).
         split; [ | easy ].
         apply rngl_cos_cos_sin_sin_nonneg_sin_le_cos_le_iff; try easy.
         now apply (rngl_lt_le_incl Hor).
@@ -478,7 +478,7 @@ destruct zs3. {
   }
   assert (H : (0 < rngl_cos θ2)%L). {
     apply not_eq_sym in Hc2ez.
-    now apply (rngl_lt_iff Hor).
+    now apply (rngl_le_neq Hor).
   }
   move H before Hzs2; clear Hzs2.
   rename H into Hzs2; clear Hc2ez.
@@ -525,7 +525,7 @@ destruct zs3. {
   }
   assert (H : (0 < rngl_cos θ3)%L). {
     apply not_eq_sym in Hc3ez.
-    now apply (rngl_lt_iff Hor).
+    now apply (rngl_le_neq Hor).
   }
   move H before Hzs3; clear Hzs3.
   rename H into Hzs3; clear Hc3ez.
@@ -668,7 +668,7 @@ destruct zs13. {
       now apply (rngl_lt_le_incl Hor).
       apply (rngl_mul_pos_pos Hos Hor Hii); [ easy | ].
       apply (rngl_lt_0_sub Hop Hor).
-      apply (rngl_lt_iff Hor).
+      apply (rngl_le_neq Hor).
       split; [ | easy ].
       apply rngl_sin_bound.
     }
@@ -782,7 +782,7 @@ destruct zs13. {
     apply (eq_rngl_sin_0) in H.
     destruct H; subst θ1. {
       rewrite angle_add_0_l; cbn.
-      apply (rngl_lt_iff Hor).
+      apply (rngl_le_neq Hor).
       split; [ apply rngl_cos_bound | ].
       intros H.
       apply (eq_rngl_cos_1) in H.

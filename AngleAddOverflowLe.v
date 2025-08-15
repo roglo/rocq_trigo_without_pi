@@ -65,7 +65,7 @@ destruct (rngl_le_dec Hor (rngl_cos θ2) 0) as [Hc2z| Hzc2]. {
   intros Hs13.
   apply rngl_nlt_ge in Hzs12.
   apply Hzs12; clear Hzs12.
-  apply (rngl_lt_iff Hor).
+  apply (rngl_le_neq Hor).
   split. {
     cbn.
     apply (rngl_add_nonneg_nonneg Hor).
@@ -256,7 +256,7 @@ destruct (rngl_le_dec Hor (rngl_cos θ3) 0) as [Hc3z| Hzc3]. {
   intros Hc31.
   apply rngl_nlt_ge in Hzs13.
   apply Hzs13; clear Hzs13.
-  apply (rngl_lt_iff Hor).
+  apply (rngl_le_neq Hor).
   split. {
     cbn.
     apply (rngl_add_nonneg_nonneg Hor).
@@ -341,7 +341,7 @@ rewrite rngl_sin_sub_anticomm in Hzs12.
 sin_cos_add_sub_right_hyp T Hzs12.
 apply rngl_nlt_ge in H32.
 apply H32; clear H32.
-apply (rngl_lt_iff Hor).
+apply (rngl_le_neq Hor).
 split. 2: {
   intros H.
   apply rngl_cos_eq in H.

@@ -156,11 +156,11 @@ destruct zs13. {
       apply (rngl_lt_le_incl Hor).
       apply quadrant_1_sin_sub_pos_cos_lt; try easy. {
         apply not_eq_sym in Hs1z.
-        now apply (rngl_lt_iff Hor).
+        now apply (rngl_le_neq Hor).
       } {
         now apply (rngl_lt_le_incl Hor) in Hzc3.
       } {
-        apply (rngl_lt_iff Hor).
+        apply (rngl_le_neq Hor).
         split; [ easy | ].
         intros H; symmetry in H.
         apply (eq_rngl_sin_0) in H.
@@ -259,7 +259,7 @@ destruct zs13. {
     apply (rngl_add_pos_nonneg Hor). {
       apply (rngl_mul_pos_pos Hos Hor Hii); [ easy | ].
       apply (rngl_lt_0_sub Hop Hor).
-      apply (rngl_lt_iff Hor).
+      apply (rngl_le_neq Hor).
       split; [ apply rngl_sin_bound | ].
       intros H.
       apply (eq_rngl_sin_1) in H.
@@ -289,7 +289,7 @@ destruct zs13. {
     rewrite rngl_sin_sub_anticomm.
     apply (rngl_lt_opp_l Hop Hor).
     rewrite rngl_add_0_r.
-    apply (rngl_lt_iff Hor).
+    apply (rngl_le_neq Hor).
     split. {
       apply rngl_sin_sub_nonneg; try easy.
       now apply (rngl_lt_le_incl Hor) in Hs2z.

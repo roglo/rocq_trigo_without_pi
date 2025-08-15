@@ -542,7 +542,7 @@ Proof.
 destruct_ac.
 intros.
 split; intros Htt. {
-  apply (rngl_lt_iff Hor).
+  apply (rngl_le_neq Hor).
   split. {
     apply (rngl_lt_le_incl Hor) in Htt.
     now apply rngl_cos_le_iff_angle_eucl_le.
@@ -561,7 +561,7 @@ split; intros Htt. {
   rewrite H in Htt.
   now apply (rngl_lt_irrefl Hor) in Htt.
 } {
-  apply (rngl_lt_iff Hor).
+  apply (rngl_le_neq Hor).
   split. {
     apply (rngl_lt_le_incl Hor) in Htt.
     now apply rngl_cos_le_iff_angle_eucl_le.
