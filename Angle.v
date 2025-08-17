@@ -920,6 +920,32 @@ split. {
 }
 Qed.
 
+Theorem rngl_cos_cos_sin_sin_nonneg_sin_lt_cos_lt_iff :
+  ∀ θ1 θ2,
+  (0 ≤ rngl_sin θ1)%L
+  → (0 ≤ rngl_sin θ2)%L
+  → (0 ≤ rngl_cos θ1)%L
+  → (0 ≤ rngl_cos θ2)%L
+  → (rngl_sin θ1 < rngl_sin θ2)%L
+  ↔ (rngl_cos θ2 < rngl_cos θ1)%L.
+Proof.
+destruct_ac.
+intros * Hzs1 Hzs2 Hzc1 Hzc2.
+split. 2: {
+  intros Hcc.
+  apply rngl_nle_gt in Hcc.
+  apply (rngl_nle_gt_iff Hor).
+  intros Hss; apply Hcc; clear Hcc.
+  now apply rngl_cos_cos_sin_sin_nonneg_sin_le_cos_le_iff.
+} {
+  intros Hss.
+  apply rngl_nle_gt in Hss.
+  apply (rngl_nle_gt_iff Hor).
+  intros Hcc; apply Hss; clear Hss.
+  now apply rngl_cos_cos_sin_sin_nonneg_sin_le_cos_le_iff.
+}
+Qed.
+
 Theorem eq_rngl_cos_0 :
   ∀ θ, rngl_cos θ = 0%L ↔ (θ = angle_right ∨ θ = - angle_right)%A.
 Proof.
@@ -1192,32 +1218,6 @@ split. {
   generalize Hzc2; intros H.
   apply (rngl_leb_gt Hor) in H.
   now rewrite H in H1; clear H.
-}
-Qed.
-
-Theorem rngl_cos_cos_sin_sin_nonneg_sin_lt_cos_lt_iff :
-  ∀ θ1 θ2,
-  (0 ≤ rngl_sin θ1)%L
-  → (0 ≤ rngl_sin θ2)%L
-  → (0 ≤ rngl_cos θ1)%L
-  → (0 ≤ rngl_cos θ2)%L
-  → (rngl_sin θ1 < rngl_sin θ2)%L
-  ↔ (rngl_cos θ2 < rngl_cos θ1)%L.
-Proof.
-destruct_ac.
-intros * Hzs1 Hzs2 Hzc1 Hzc2.
-split. 2: {
-  intros Hcc.
-  apply rngl_nle_gt in Hcc.
-  apply (rngl_nle_gt_iff Hor).
-  intros Hss; apply Hcc; clear Hcc.
-  now apply rngl_cos_cos_sin_sin_nonneg_sin_le_cos_le_iff.
-} {
-  intros Hss.
-  apply rngl_nle_gt in Hss.
-  apply (rngl_nle_gt_iff Hor).
-  intros Hcc; apply Hss; clear Hss.
-  now apply rngl_cos_cos_sin_sin_nonneg_sin_le_cos_le_iff.
 }
 Qed.
 
