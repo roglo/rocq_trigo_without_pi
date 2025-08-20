@@ -571,7 +571,7 @@ apply -> (rngl_lt_div_r Hon Hop Hiv Hor); [ | easy ].
 apply (rngl_le_lt_trans Hor _ (rngl_cos θ * 2))%L. 2: {
   rewrite rngl_mul_add_distr_l.
   rewrite (rngl_mul_1_r Hon).
-  apply (rngl_add_lt_le_mono Hop Hor); [ | now apply (rngl_le_refl Hor) ].
+  apply (rngl_add_lt_le_mono Hos Hor); [ | now apply (rngl_le_refl Hor) ].
   apply (rngl_le_neq Hor).
   split; [ apply rngl_cos_bound | ].
   intros H.
