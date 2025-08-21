@@ -312,7 +312,7 @@ rewrite (rl_sqrt_squ Hon Hop Hor).
 rewrite (rngl_mul_comm Hic).
 rewrite (rngl_mul_comm Hic (_ - _)).
 apply (rngl_abs_nonneg_eq Hop Hor).
-apply (rngl_add_nonneg_nonneg Hor).
+apply (rngl_le_0_add Hor).
 apply rl_sqrt_nonneg.
 apply (rngl_mul_nonneg_nonneg Hos Hor).
 apply (rngl_le_opp_l Hop Hor), rngl_cos_bound.
