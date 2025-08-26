@@ -228,7 +228,7 @@ destruct zs13. {
     apply (rngl_lt_eq_cases Hor) in Hc1z.
     apply not_eq_sym in Hs1z.
     destruct Hc1z as [Hc1z| H]; [ | easy ].
-    apply (rngl_add_nonneg_pos Hor); [ | easy ].
+    apply (rngl_add_nonneg_pos Hos Hor); [ | easy ].
     apply (rngl_lt_le_incl Hor) in Hc1z, Hzs3, Hc3z.
     now apply rngl_sin_add_nonneg.
   }
@@ -256,7 +256,7 @@ destruct zs13. {
     rewrite (rngl_add_sub_assoc Hop).
     rewrite (rngl_add_sub_swap Hop).
     rewrite (rngl_sub_mul_r_diag_l Hon Hop).
-    apply (rngl_lt_0_add Hor). {
+    apply (rngl_lt_0_add Hos Hor). {
       apply (rngl_mul_pos_pos Hos Hor Hii); [ easy | ].
       apply (rngl_lt_0_sub Hop Hor).
       apply (rngl_le_neq Hor).
@@ -395,7 +395,7 @@ destruct (rngl_le_dec Hor 0 (rngl_cos θ1)) as [Hzs1| Hc1z]. {
   destruct (rngl_le_dec Hor 0 (rngl_cos θ3)) as [Hzc3| Hc3z]. {
     apply rngl_nlt_ge in Haov13.
     apply Haov13; clear Haov13.
-    apply (rngl_add_nonneg_pos Hor); [ easy | ].
+    apply (rngl_add_nonneg_pos Hos Hor); [ easy | ].
     now apply (rngl_sin_add_pos_1).
   }
   apply (rngl_nle_gt_iff Hor) in Hc3z.
@@ -409,7 +409,7 @@ destruct (rngl_le_dec Hor 0 (rngl_cos θ1)) as [Hzs1| Hc1z]. {
     apply Bool.not_true_iff_false in Haov12.
     apply Haov12; clear Haov12.
     (* perhaps a lemma *)
-    clear - ac Hop Hzs12 Hs1z Hor Hzs1 Hzs2 Hzc2.
+    clear - ac Hop Hos Hzs12 Hs1z Hor Hzs1 Hzs2 Hzc2.
     rewrite <- angle_add_overflow_equiv2.
     progress unfold angle_add_overflow2.
     rewrite angle_add_sub_assoc.
@@ -432,7 +432,7 @@ destruct (rngl_le_dec Hor 0 (rngl_cos θ1)) as [Hzs1| Hc1z]. {
     do 2 rewrite rngl_cos_sub_right_r.
     apply rngl_ltb_lt.
     apply (rngl_lt_opp_l Hop Hor).
-    apply (rngl_lt_0_add Hor); [ | easy ].
+    apply (rngl_lt_0_add Hos Hor); [ | easy ].
     now apply (rngl_sin_add_pos_1).
   }
   apply (rngl_nle_gt_iff Hor) in Hc2z.
@@ -476,7 +476,7 @@ destruct (rngl_le_dec Hor 0 (rngl_cos θ1)) as [Hzs1| Hc1z]. {
   rewrite <- (rngl_add_sub_swap Hop).
   rewrite <- (rngl_add_sub_assoc Hop).
   rewrite (rngl_sub_mul_r_diag_l Hon Hop).
-  apply (rngl_lt_0_add Hor). {
+  apply (rngl_lt_0_add Hos Hor). {
     now apply (rngl_mul_pos_pos Hos Hor Hii).
   }
   apply (rngl_mul_nonneg_nonneg Hos Hor); [ easy | ].

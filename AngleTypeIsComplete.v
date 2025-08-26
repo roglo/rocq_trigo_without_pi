@@ -170,6 +170,7 @@ Theorem rngl_converging_seq_bounded :
   → ∃ N, ∀ n, N ≤ n → (rngl_abs (u n) < rngl_abs l + 1)%L.
 Proof.
 intros Hon Hop Hor Hc1.
+specialize (rngl_has_opp_has_opp_or_subt Hop) as Hos.
 intros * Hlim.
 apply (rngl_dist_to_limit_bounded Hon Hop Hor Hc1) in Hlim.
 destruct Hlim as (N, HN).
@@ -178,7 +179,7 @@ intros n Hn.
 specialize (HN n Hn).
 progress unfold rngl_dist in HN.
 eapply (rngl_le_lt_trans Hor). 2: {
-  apply (rngl_add_lt_mono_l Hop Hor), HN.
+  apply (rngl_add_lt_mono_l Hos Hor), HN.
 }
 eapply (rngl_le_trans Hor); [ | apply (rngl_abs_triangle Hop Hor) ].
 rewrite rngl_add_comm, (rngl_sub_add Hop).
@@ -195,6 +196,7 @@ Theorem rngl_converging_seq_add_limit_bounded :
   → ∃ N, ∀ n, N ≤ n → (rngl_abs (u n + k) < 2 * rngl_abs k + 1)%L.
 Proof.
 intros Hon Hop Hor Hc1.
+specialize (rngl_has_opp_has_opp_or_subt Hop) as Hos.
 intros * Hlim.
 apply (rngl_converging_seq_bounded Hon Hop Hor Hc1) in Hlim.
 destruct Hlim as (N, HN).
@@ -204,7 +206,7 @@ specialize (HN n Hn).
 rewrite (rngl_mul_2_l Hon).
 rewrite <- rngl_add_assoc.
 eapply (rngl_le_lt_trans Hor). 2: {
-  apply (rngl_add_lt_mono_l Hop Hor), HN.
+  apply (rngl_add_lt_mono_l Hos Hor), HN.
 }
 rewrite rngl_add_comm.
 apply (rngl_abs_triangle Hop Hor).
@@ -241,7 +243,7 @@ assert (H : (0 < ε / (2 * rngl_abs l + 1))%L). {
   apply (rngl_lt_le_trans Hor _ 1). {
     apply (rngl_0_lt_1 Hon Hos Hc1 Hor).
   }
-  apply (rngl_le_add_l Hor).
+  apply (rngl_le_add_l Hos Hor).
   apply (rngl_mul_nonneg_nonneg Hos Hor).
   apply (rngl_0_le_2 Hon Hos Hor).
   apply (rngl_abs_nonneg Hop Hor).
@@ -281,7 +283,7 @@ apply (rngl_lt_div_l Hon Hop Hiv Hor). {
   apply (rngl_lt_le_trans Hor _ 1). {
     apply (rngl_0_lt_1 Hon Hos Hc1 Hor).
   }
-  apply (rngl_le_add_l Hor).
+  apply (rngl_le_add_l Hos Hor).
   apply (rngl_mul_nonneg_nonneg Hos Hor).
   apply (rngl_0_le_2 Hon Hos Hor).
   apply (rngl_abs_nonneg Hop Hor).
@@ -389,7 +391,7 @@ rewrite (rngl_mul_2_r Hon ε²)%L. 2: {
 rewrite (rngl_div_add_distr_r Hiv).
 rewrite (rngl_squ_sub_comm Hop (rngl_cos _))%L.
 rewrite (rngl_squ_sub_comm Hop (rngl_sin _))%L.
-now apply (rngl_add_lt_compat Hop Hor).
+now apply (rngl_add_lt_compat Hos Hor).
 Qed.
 
 Theorem limit_const :

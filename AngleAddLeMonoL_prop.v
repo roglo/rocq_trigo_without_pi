@@ -49,7 +49,7 @@ destruct (rngl_le_dec Hor 0 (rngl_cos θ1))%L as [Hzc1| Hc1z]. {
   progress sin_cos_add_sub_right_hyp T Hzc1.
   progress sin_cos_add_sub_right_hyp T Hzs12.
   progress sin_cos_add_sub_right_hyp T Hs1z.
-  clear - Haov12 ac Hop Hs1z Hor Hzc1 Hzs2 Hc2z Hzs12 Hon Hc1.
+  clear - Haov12 ac Hos Hop Hs1z Hor Hzc1 Hzs2 Hc2z Hzs12 Hon Hc1.
   rewrite <- angle_add_overflow_equiv2 in Haov12.
   progress unfold angle_add_overflow2 in Haov12.
   apply Bool.not_true_iff_false in Haov12.
@@ -73,7 +73,7 @@ destruct (rngl_le_dec Hor 0 (rngl_cos θ1))%L as [Hzc1| Hc1z]. {
     destruct (0 ≤? rngl_cos _)%L; [ easy | ].
     apply rngl_ltb_lt.
     apply (rngl_lt_opp_l Hop Hor).
-    apply (rngl_lt_0_add Hor); [ | easy ].
+    apply (rngl_lt_0_add Hos Hor); [ | easy ].
     apply (rngl_le_neq Hor).
     split. {
       apply (rngl_lt_le_incl Hor) in Hzs2, Hc2z.
