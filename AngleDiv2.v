@@ -961,7 +961,7 @@ split; intros Hs3. {
     now rewrite (rngl_mul_1_l Hon).
   }
   apply (rngl_le_0_sub Hop Hor).
-  apply (rngl_mul_le_mono_pos_l Hop Hor Hii _ _ 2); [ easy | ].
+  apply (rngl_mul_le_mono_pos_l Hop Hor Hii 2); [ easy | ].
   rewrite (rngl_mul_0_r Hos).
   rewrite (rngl_mul_sub_distr_l Hop).
   rewrite (rngl_div_1_l Hon Hiv).
