@@ -245,6 +245,7 @@ apply cos2_sin2_prop_add_squ in Hcs.
 assert (H : (s² ≤ 1)%L). {
   rewrite <- Hcs.
   apply (rngl_le_add_l Hos Hor).
+...
   apply (rngl_squ_nonneg Hos Hor).
 }
 replace 1%L with 1²%L in H. 2: {
