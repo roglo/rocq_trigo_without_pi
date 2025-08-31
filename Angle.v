@@ -214,24 +214,24 @@ Theorem rngl_cos_proj_bound :
   ∀ c s, cos2_sin2_prop c s → (-1 ≤ c ≤ 1)%L.
 Proof.
 destruct_ac.
-specialize (rngl_int_dom_or_inv_1_quo Hiv Hon) as Hii.
+specialize (rngl_has_inv_has_inv_or_quot Hiv) as Hiq.
 intros * Hcs.
 apply cos2_sin2_prop_add_squ in Hcs.
 assert (H : (c² ≤ 1)%L). {
   rewrite <- Hcs.
   apply (rngl_le_add_r Hos Hor).
-  apply (rngl_squ_nonneg Hos Hor).
+  apply (rngl_squ_nonneg Hon Hos Hiq Hor).
 }
 replace 1%L with 1²%L in H. 2: {
   apply (rngl_mul_1_l Hon).
 }
 rewrite <- (rngl_squ_abs Hop c) in H.
 rewrite <- (rngl_squ_abs Hop 1%L) in H.
-apply (rngl_square_le_simpl_nonneg Hop Hor Hii) in H. 2: {
-  rewrite (rngl_abs_1 Hon Hos Hor).
-  apply (rngl_0_le_1 Hon Hos Hor).
+apply (rngl_square_le_simpl_nonneg Hon Hop Hiq Hor) in H. 2: {
+  rewrite (rngl_abs_1 Hon Hos Hiq Hor).
+  apply (rngl_0_le_1 Hon Hos Hiq Hor).
 }
-rewrite (rngl_abs_1 Hon Hos Hor) in H.
+rewrite (rngl_abs_1 Hon Hos Hiq Hor) in H.
 now apply (rngl_abs_le Hop Hor) in H.
 Qed.
 
