@@ -186,7 +186,7 @@ destruct zs3. {
       rewrite rngl_sin_add_right_r in Hc2z.
       apply rngl_nlt_ge in Hc2z.
       apply Hc2z; clear Hc2z; cbn.
-      apply (rngl_opp_1_lt_0 Hon Hop Hor Hc1).
+      apply (rngl_opp_1_lt_0 Hon Hop Hiq Hor Hc1).
     }
     move Hzc2 after Hzs3.
     apply rngl_nle_gt in Hzs12.
@@ -294,7 +294,7 @@ destruct zs3. {
         rewrite rngl_add_add_swap.
         rewrite (rngl_add_sub Hos).
         rewrite <- rngl_mul_add_distr_r.
-        apply (rngl_mul_nonpos_nonneg Hop Hor); [ | ].
+        apply (rngl_mul_nonpos_nonneg Hon Hop Hiq Hor); [ | ].
         apply (rngl_lt_le_incl Hor) in Hzc2.
         now apply (rngl_add_nonpos_nonpos Hos Hor).
         now apply (rngl_lt_le_incl Hor).
@@ -319,7 +319,7 @@ destruct zs3. {
         rewrite <- rngl_mul_add_distr_r.
         rewrite (rngl_add_opp_l Hop).
         rewrite (rngl_mul_comm Hic).
-        apply (rngl_mul_pos_neg Hop Hor); [ | easy | ]. {
+        apply (rngl_mul_pos_neg Hon Hop Hiq Hor); [ | easy | ]. {
           rewrite Bool.orb_true_iff; right.
           rewrite Hi1; cbn.
           apply (rngl_has_eq_dec_or_is_ordered_r Hor).
@@ -488,7 +488,7 @@ destruct zs3. {
       exfalso.
       apply rngl_nlt_ge in Hc3z.
       apply Hc3z; cbn.
-      apply (rngl_opp_1_lt_0 Hon Hop Hor Hc1).
+      apply (rngl_opp_1_lt_0 Hon Hop Hiq Hor Hc1).
     }
     clear Hc3z Hc32 Hzs3.
     rewrite rngl_sin_add_right_r.

@@ -36,7 +36,7 @@ destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
   rewrite H1; apply H1.
 }
 specialize (rngl_0_lt_2 Hon Hos Hiq Hc1 Hor) as Hz2.
-specialize (rngl_2_neq_0 Hon Hos Hc1 Hor) as H20.
+specialize (rngl_2_neq_0 Hon Hos Hiq Hc1 Hor) as H20.
 assert (Hze2 : (0 ≤ 2)%L) by now apply (rngl_lt_le_incl Hor).
 assert (Hz1ac :  ∀ θ, (0 ≤ 1 + rngl_cos θ)%L). {
   intros.
@@ -297,7 +297,7 @@ destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
   rewrite H1; apply H1.
 }
 specialize (rngl_0_lt_2 Hon Hos Hiq Hc1 Hor) as Hz2.
-specialize (rngl_2_neq_0 Hon Hos Hc1 Hor) as H20.
+specialize (rngl_2_neq_0 Hon Hos Hiq Hc1 Hor) as H20.
 intros * Haov.
 assert (Hze2 : (0 ≤ 2)%L) by now apply (rngl_lt_le_incl Hor).
 assert (Hz1ac :  ∀ θ, (0 ≤ 1 + rngl_cos θ)%L). {
@@ -404,7 +404,7 @@ destruct zs1. {
     now apply (rngl_mul_nonneg_nonpos Hop Hor).
   } {
     apply (rngl_lt_le_incl Hor) in Hzs2, Hc1z.
-    now apply (rngl_mul_nonpos_nonneg Hop Hor).
+    now apply (rngl_mul_nonpos_nonneg Hon Hop Hiq Hor).
   }
 } {
   apply (rngl_leb_gt Hor) in Hzs1.
@@ -460,7 +460,7 @@ destruct zs1. {
       apply (rngl_mul_nonneg_nonpos Hop Hor); try easy.
     } {
       apply (rngl_lt_le_incl Hor) in Hc1z.
-      now apply (rngl_mul_nonpos_nonneg Hop Hor).
+      now apply (rngl_mul_nonpos_nonneg Hon Hop Hiq Hor).
     }
   }
   exfalso. (* because goal is nonneg=nonpos *)
@@ -636,10 +636,10 @@ destruct zs12. {
       rewrite (rngl_add_opp_r Hop).
       rewrite (rngl_sub_diag Hos).
       rewrite (rngl_div_diag Hon Hiq). 2: {
-        apply (rngl_2_neq_0 Hon Hos Hc1 Hor).
+        apply (rngl_2_neq_0 Hon Hos Hiq Hc1 Hor).
       }
       rewrite (rngl_div_0_l Hos Hi1). 2: {
-        apply (rngl_2_neq_0 Hon Hos Hc1 Hor).
+        apply (rngl_2_neq_0 Hon Hos Hiq Hc1 Hor).
       }
       rewrite (rl_sqrt_1 Hon Hop Hor). 2: {
         now rewrite Bool.orb_true_iff; right.
@@ -836,10 +836,10 @@ destruct zs12. {
       rewrite (rngl_add_opp_r Hop).
       rewrite (rngl_sub_diag Hos).
       rewrite (rngl_div_diag Hon Hiq). 2: {
-        apply (rngl_2_neq_0 Hon Hos Hc1 Hor).
+        apply (rngl_2_neq_0 Hon Hos Hiq Hc1 Hor).
       }
       rewrite (rngl_div_0_l Hos Hi1). 2: {
-        apply (rngl_2_neq_0 Hon Hos Hc1 Hor).
+        apply (rngl_2_neq_0 Hon Hos Hiq Hc1 Hor).
       }
       rewrite (rl_sqrt_1 Hon Hop Hor). 2: {
         now rewrite Bool.orb_true_iff; right.
@@ -886,7 +886,7 @@ destruct zs12. {
       rewrite (rngl_mul_comm Hic).
       do 2 rewrite (rngl_sub_diag Hos).
       rewrite (rngl_div_0_l Hos Hi1). 2: {
-        apply (rngl_2_neq_0 Hon Hos Hc1 Hor).
+        apply (rngl_2_neq_0 Hon Hos Hiq Hc1 Hor).
       }
       apply (rl_sqrt_0 Hon Hop Hor).
       now rewrite Bool.orb_true_iff; right.
@@ -943,7 +943,7 @@ destruct zs12. {
       rewrite (rngl_mul_comm Hic).
       do 2 rewrite (rngl_sub_diag Hos).
       rewrite (rngl_div_0_l Hos Hi1). 2: {
-        apply (rngl_2_neq_0 Hon Hos Hc1 Hor).
+        apply (rngl_2_neq_0 Hon Hos Hiq Hc1 Hor).
       }
       apply (rl_sqrt_0 Hon Hop Hor).
       now rewrite Bool.orb_true_iff; right.
@@ -1183,7 +1183,7 @@ symmetry in Hzs.
 destruct zs. {
   rewrite (rngl_mul_1_l Hon).
   apply (rngl_lt_le_trans Hor _ 0). {
-    apply (rngl_opp_1_lt_0 Hon Hop Hor Hc1).
+    apply (rngl_opp_1_lt_0 Hon Hop Hiq Hor Hc1).
   }
   apply rl_sqrt_nonneg.
   apply (rngl_div_nonneg Hon Hop Hiv Hor). 2: {
@@ -1454,7 +1454,7 @@ destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
   rewrite (rngl_characteristic_1_angle_0 Hc1 (angle_div_2_pow _ _)).
   apply angle_mul_nat_overflow_0_r.
 }
-assert (H2z : (2 ≠ 0)%L) by apply (rngl_2_neq_0 Hon Hos Hc1 Hor).
+assert (H2z : (2 ≠ 0)%L) by apply (rngl_2_neq_0 Hon Hos Hiq Hc1 Hor).
 intros.
 revert θ.
 induction n; intros; [ easy | cbn ].

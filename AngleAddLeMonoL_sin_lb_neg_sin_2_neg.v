@@ -223,7 +223,7 @@ destruct zs13. {
       exfalso.
       apply rngl_nlt_ge in Hzs1.
       apply Hzs1; clear Hzs1.
-      apply (rngl_opp_1_lt_0 Hon Hop Hor Hc1).
+      apply (rngl_opp_1_lt_0 Hon Hop Hiq Hor Hc1).
     }
     apply (rngl_lt_eq_cases Hor) in Hc1z.
     apply not_eq_sym in Hs1z.

@@ -188,7 +188,7 @@ destruct zs2. 2: {
     }
     apply rngl_nlt_ge in Hc1z.
     apply Hc1z; cbn.
-    apply (rngl_opp_1_lt_0 Hon Hop Hor Hc1).
+    apply (rngl_opp_1_lt_0 Hon Hop Hiq Hor Hc1).
   }
   apply (rngl_nle_gt_iff Hor) in Hzc2.
   change_angle_add_r θ2 angle_right.
@@ -395,13 +395,13 @@ destruct (rngl_le_dec Hor 0 (rngl_cos θ1))%L as [Hzc1| Hc1z]. 2: {
   destruct (rngl_le_dec Hor (rngl_sin θ1) 0)%L as [Hs1z| Hs1z]. {
     apply (rngl_add_nonpos_nonpos Hos Hor); cbn.
     apply (rngl_add_nonpos_nonpos Hos Hor); cbn.
-    apply (rngl_mul_nonpos_nonneg Hop Hor); [ easy | ].
+    apply (rngl_mul_nonpos_nonneg Hon Hop Hiq Hor); [ easy | ].
     now apply (rngl_lt_le_incl Hor).
-    apply (rngl_mul_nonpos_nonneg Hop Hor); [ | easy ].
+    apply (rngl_mul_nonpos_nonneg Hon Hop Hiq Hor); [ | easy ].
     now apply (rngl_lt_le_incl Hor).
     apply (rngl_add_nonpos_nonpos Hos Hor); cbn.
-    now apply (rngl_mul_nonpos_nonneg Hop Hor).
-    apply (rngl_mul_nonpos_nonneg Hop Hor); [ | easy ].
+    now apply (rngl_mul_nonpos_nonneg Hon Hop Hiq Hor).
+    apply (rngl_mul_nonpos_nonneg Hon Hop Hiq Hor); [ | easy ].
     now apply (rngl_lt_le_incl Hor).
   }
   exfalso.

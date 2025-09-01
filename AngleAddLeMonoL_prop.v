@@ -105,7 +105,7 @@ destruct (rngl_le_dec Hor 0 (rngl_cos θ1))%L as [Hzc1| Hc1z]. {
   }
   apply rngl_nlt_ge in Hzc1.
   apply Hzc1.
-  apply (rngl_opp_1_lt_0 Hon Hop Hor Hc1).
+  apply (rngl_opp_1_lt_0 Hon Hop Hiq Hor Hc1).
 }
 apply (rngl_nle_gt_iff Hor) in Hc1z.
 destruct (rngl_lt_dec Hor (rngl_sin θ1) 0)%L as [Hs1z| Hzs1]. 2: {
@@ -230,7 +230,7 @@ destruct H21 as [H21| H21]. {
       apply Hzs12; clear Hzs12.
       apply (rngl_le_lt_trans Hor _ 0). {
         apply (rngl_lt_le_incl Hor) in Hzs1.
-        now apply (rngl_mul_nonpos_nonneg Hop Hor).
+        now apply (rngl_mul_nonpos_nonneg Hon Hop Hiq Hor).
       }
       now apply (rngl_mul_pos_pos Hos Hor Hii).
     }

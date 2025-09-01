@@ -317,7 +317,7 @@ destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
   rewrite H1; apply H1.
 }
 specialize (rngl_0_lt_2 Hon Hos Hiq Hc1 Hor) as Hz2.
-specialize (rngl_2_neq_0 Hon Hos Hc1 Hor) as H20.
+specialize (rngl_2_neq_0 Hon Hos Hiq Hc1 Hor) as H20.
 assert (Hze2 : (0 ≤ 2)%L) by now apply (rngl_lt_le_incl Hor).
 assert (Hz1ac :  ∀ θ, (0 ≤ 1 + rngl_cos θ)%L). {
   intros.
@@ -348,8 +348,8 @@ do 2 rewrite (rngl_div_mul_mul_div Hic Hiv).
 do 2 rewrite (rngl_mul_div_assoc Hiv).
 rewrite <- rl_sqrt_mul; [ | easy | easy ].
 rewrite <- rl_sqrt_mul; [ | easy | easy ].
-rewrite (rngl_div_div Hos Hon Hiv); [ | easy | easy ].
-rewrite (rngl_div_div Hos Hon Hiv); [ | easy | easy ].
+rewrite (rngl_div_div Hon Hos Hiv); [ | easy | easy ].
+rewrite (rngl_div_div Hon Hos Hiv); [ | easy | easy ].
 rewrite <- rl_sqrt_mul; [ | easy | easy ].
 rewrite fold_rngl_squ.
 rewrite (rl_sqrt_squ Hon Hop Hor).

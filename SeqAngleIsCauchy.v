@@ -262,7 +262,7 @@ split; intros H12. {
   rewrite (rngl_mul_div_assoc Hiv).
   rewrite (rngl_mul_comm Hic).
   rewrite (rngl_mul_div Hi1). 2: {
-    apply (rngl_2_neq_0 Hon Hos Hc1 Hor).
+    apply (rngl_2_neq_0 Hon Hos Hiq Hc1 Hor).
   }
   rewrite (rl_sqrt_squ Hon Hop Hor).
   now apply (rngl_abs_nonneg_eq Hop Hor).
@@ -284,7 +284,7 @@ split; intros H12. {
   }
   rewrite (rngl_mul_comm Hic).
   rewrite (rngl_mul_div Hi1). 2: {
-    apply (rngl_2_neq_0 Hon Hos Hc1 Hor).
+    apply (rngl_2_neq_0 Hon Hos Hiq Hc1 Hor).
   }
   rewrite (rngl_sub_sub_distr Hop).
   rewrite (rngl_sub_diag Hos).
@@ -527,7 +527,7 @@ assert (Hε2 : (0 < ε² / 2)%L). {
     apply (rngl_0_lt_2 Hon Hos Hiq Hc1 Hor).
   }
   apply (rngl_le_neq Hor).
-  split; [ apply (rngl_squ_nonneg Hos Hor) | ].
+  split; [ apply (rngl_squ_nonneg Hon Hos Hiq Hor) | ].
   apply not_eq_sym.
   intros H.
   apply (eq_rngl_squ_0 Hos) in H. 2: {
