@@ -162,7 +162,7 @@ destruct (rngl_le_dec Hor (rngl_cos θ3) 0) as [Hc3z| Hzc3]. {
   progress unfold rngl_sub.
   rewrite Hop.
   apply (rngl_add_nonpos_nonpos Hos Hor).
-  apply (rngl_mul_nonneg_nonpos Hop Hor); [ | easy ].
+  apply (rngl_mul_nonneg_nonpos Hon Hop Hiq Hor); [ | easy ].
   now apply (rngl_lt_le_incl Hor).
   apply (rngl_opp_nonpos_nonneg Hop Hor).
   now apply (rngl_mul_nonneg_nonneg Hon Hos Hiq Hor).
@@ -529,9 +529,9 @@ destruct (rngl_le_dec Hor 0 (rngl_cos θ1)) as [Hzc1| Hc1z]. {
   rewrite H in H1; clear H.
   cbn.
   apply (rngl_sub_le_compat Hop Hor).
-  apply (rngl_mul_le_mono_nonneg_l Hop Hor); [ | easy ].
+  apply (rngl_mul_le_mono_nonneg_l Hon Hop Hiq Hor); [ | easy ].
   now apply (rngl_lt_le_incl Hor).
-  now apply (rngl_mul_le_mono_nonneg_l Hop Hor).
+  now apply (rngl_mul_le_mono_nonneg_l Hon Hop Hiq Hor).
 }
 apply (rngl_nle_gt_iff Hor) in Hc1z.
 change_angle_add_r θ1 angle_straight.
@@ -572,9 +572,9 @@ specialize (H1 θ3 θ2 Hc3z Hc2z Hzs3 Hzs2).
 specialize (proj1 H1 H32) as H23; clear H1.
 cbn.
 apply (rngl_sub_le_compat Hop Hor).
-apply (rngl_mul_le_mono_nonneg_l Hop Hor); [ | easy ].
+apply (rngl_mul_le_mono_nonneg_l Hon Hop Hiq Hor); [ | easy ].
 now apply (rngl_lt_le_incl Hor).
-apply (rngl_mul_le_mono_nonneg_l Hop Hor); [ | easy ].
+apply (rngl_mul_le_mono_nonneg_l Hon Hop Hiq Hor); [ | easy ].
 now apply (rngl_lt_le_incl Hor).
 Qed.
 

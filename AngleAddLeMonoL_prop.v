@@ -199,7 +199,7 @@ destruct H21 as [H21| H21]. {
   rewrite rngl_cos_add in Hzs12.
   apply -> (rngl_le_sub_0 Hop Hor) in Hzs12.
   destruct (rngl_le_dec Hor 0 (rngl_sin θ1)) as [Hzs1| Hzs1]. {
-    apply (rngl_mul_le_mono_nonneg_l Hop Hor (rngl_cos θ1)) in Hzs12. 2: {
+    apply (rngl_mul_le_mono_nonneg_l Hon Hop Hiq Hor (rngl_cos θ1)) in Hzs12. 2: {
       now apply (rngl_lt_le_incl Hor) in Hs1z.
     }
     rewrite rngl_mul_assoc in Hzs12.
@@ -219,7 +219,7 @@ destruct H21 as [H21| H21]. {
     rewrite <- rngl_sin_add in Hzs12.
     eapply (rngl_le_trans Hor); [ apply Hzs12 | ].
     rewrite <- (rngl_mul_1_r Hon (rngl_sin θ1)) at 2.
-    apply (rngl_mul_le_mono_nonneg_l Hop Hor); [ easy | ].
+    apply (rngl_mul_le_mono_nonneg_l Hon Hop Hiq Hor); [ easy | ].
     apply rngl_sin_bound.
   } {
     apply (rngl_nle_gt_iff Hor) in Hzs1.
@@ -545,7 +545,7 @@ split. {
   cbn.
   apply (rngl_le_sub_0 Hop Hor).
   apply (rngl_le_trans Hor _ 0).
-  apply (rngl_mul_nonneg_nonpos Hop Hor); [ easy | ].
+  apply (rngl_mul_nonneg_nonpos Hon Hop Hiq Hor); [ easy | ].
   now apply (rngl_lt_le_incl Hor).
   apply (rngl_mul_nonneg_nonneg Hon Hos Hiq Hor); [ | easy ].
   now apply (rngl_lt_le_incl Hor).

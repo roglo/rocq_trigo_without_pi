@@ -272,7 +272,7 @@ rewrite (rngl_mul_comm Hic (u n)).
 rewrite (rngl_add_sub Hos).
 rewrite (rngl_abs_mul Hop Hi1 Hor).
 eapply (rngl_le_lt_trans Hor). {
-  apply (rngl_mul_le_mono_nonneg_l Hop Hor). {
+  apply (rngl_mul_le_mono_nonneg_l Hon Hop Hiq Hor). {
     apply (rngl_abs_nonneg Hop Hor).
   }
   apply (rngl_lt_le_incl Hor) in HN1.

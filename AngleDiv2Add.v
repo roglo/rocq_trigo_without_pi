@@ -401,7 +401,7 @@ destruct zs1. {
   exfalso; apply Hzs12; clear Hzs12; cbn.
   apply (rngl_add_nonpos_nonpos Hos Hor). {
     apply (rngl_lt_le_incl Hor) in Hc2z.
-    now apply (rngl_mul_nonneg_nonpos Hop Hor).
+    now apply (rngl_mul_nonneg_nonpos Hon Hop Hiq Hor).
   } {
     apply (rngl_lt_le_incl Hor) in Hzs2, Hc1z.
     now apply (rngl_mul_nonpos_nonneg Hon Hop Hiq Hor).
@@ -457,7 +457,7 @@ destruct zs1. {
     exfalso; apply Hzs12; clear Hzs12; cbn.
     apply (rngl_add_nonpos_nonpos Hos Hor). {
       apply (rngl_lt_le_incl Hor) in Hzs1, Hc2z.
-      apply (rngl_mul_nonneg_nonpos Hop Hor); try easy.
+      apply (rngl_mul_nonneg_nonpos Hon Hop Hiq Hor); try easy.
     } {
       apply (rngl_lt_le_incl Hor) in Hc1z.
       now apply (rngl_mul_nonpos_nonneg Hon Hop Hiq Hor).

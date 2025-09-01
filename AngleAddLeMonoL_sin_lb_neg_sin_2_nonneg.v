@@ -30,11 +30,11 @@ destruct_ac.
 intros * Hzs1 Hzs2 Hzs3 Hzc1 Hzc2 Hzc3 H23 Hzc13.
 eapply (rngl_le_trans Hor); [ apply Hzc13 | cbn ].
 apply (rngl_sub_le_compat Hop Hor). {
-  apply (rngl_mul_le_mono_nonneg_l Hop Hor); [ easy | ].
+  apply (rngl_mul_le_mono_nonneg_l Hon Hop Hiq Hor); [ easy | ].
   generalize H23; intros H32.
   now apply rngl_cos_cos_sin_sin_nonneg_sin_le_cos_le_iff in H32.
 }
-now apply (rngl_mul_le_mono_nonneg_l Hop Hor).
+now apply (rngl_mul_le_mono_nonneg_l Hon Hop Hiq Hor).
 Qed.
 
 Theorem angle_add_overflow_straight_straight :
@@ -312,7 +312,7 @@ destruct zs3. {
         rewrite rngl_add_comm.
         eapply (rngl_le_lt_trans Hor). {
           apply (rngl_add_le_mono_l Hos Hor).
-          apply (rngl_mul_le_mono_nonneg_l Hop Hor); [ easy | ].
+          apply (rngl_mul_le_mono_nonneg_l Hon Hop Hiq Hor); [ easy | ].
           apply H23.
         }
         rewrite (rngl_mul_comm Hic).

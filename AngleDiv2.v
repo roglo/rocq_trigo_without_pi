@@ -580,7 +580,7 @@ apply (rngl_le_lt_trans Hor _ (rngl_cos θ * 2))%L. 2: {
 apply (rngl_mul_le_mono_pos_r Hon Hop Hiq Hor); [ easy | ].
 progress unfold rngl_squ.
 rewrite <- (rngl_mul_1_r Hon).
-apply (rngl_mul_le_mono_nonneg_l Hop Hor); [ easy | ].
+apply (rngl_mul_le_mono_nonneg_l Hon Hop Hiq Hor); [ easy | ].
 apply rngl_cos_bound.
 Qed.
 
