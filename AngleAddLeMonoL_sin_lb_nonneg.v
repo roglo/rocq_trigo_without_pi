@@ -144,10 +144,10 @@ destruct zs2. 2: {
       rewrite rngl_add_assoc.
       rewrite (rngl_add_mul_r_diag_l Hon).
       apply (rngl_le_0_add Hos Hor).
-      apply (rngl_mul_nonneg_nonneg Hos Hor); [ easy | ].
+      apply (rngl_mul_nonneg_nonneg Hon Hos Hiq Hor); [ easy | ].
       apply (rngl_le_opp_l Hop Hor).
       apply rngl_cos_bound.
-      apply (rngl_mul_nonneg_nonneg Hos Hor); [ easy | ].
+      apply (rngl_mul_nonneg_nonneg Hon Hos Hiq Hor); [ easy | ].
       now apply (rngl_lt_le_incl Hor).
     }
     intros H; symmetry in H.
@@ -231,7 +231,7 @@ destruct zs2. 2: {
     rewrite <- (rngl_add_sub_assoc Hop).
     rewrite (rngl_sub_mul_r_diag_l Hon Hop).
     apply (rngl_add_nonneg_pos Hos Hor).
-    apply (rngl_mul_nonneg_nonneg Hos Hor); [ easy | ].
+    apply (rngl_mul_nonneg_nonneg Hon Hos Hiq Hor); [ easy | ].
     now apply (rngl_lt_le_incl Hor).
     apply (rngl_mul_pos_pos Hos Hor Hii); [ easy | ].
     apply (rngl_lt_0_sub Hop Hor).
@@ -382,7 +382,7 @@ destruct (rngl_le_dec Hor (rngl_cos θ2) 0)%L as [Hc2z| Hzc2]. 2: {
   apply (rngl_le_neq Hor).
   split; [ | easy ].
   apply rngl_cos_bound.
-  apply (rngl_mul_nonneg_nonneg Hos Hor); [ | easy ].
+  apply (rngl_mul_nonneg_nonneg Hon Hos Hiq Hor); [ | easy ].
   now apply (rngl_lt_le_incl Hor).
 }
 change_angle_sub_r θ2 angle_right.
@@ -470,8 +470,8 @@ split. {
     rewrite (rngl_mul_opp_r Hop).
     rewrite (rngl_sub_opp_r Hop).
     apply (rngl_le_0_add Hos Hor).
-    now apply (rngl_mul_nonneg_nonneg Hos Hor).
-    apply (rngl_mul_nonneg_nonneg Hos Hor); [ easy | ].
+    now apply (rngl_mul_nonneg_nonneg Hon Hos Hiq Hor).
+    apply (rngl_mul_nonneg_nonneg Hon Hos Hiq Hor); [ easy | ].
     now apply (rngl_lt_le_incl Hor).
   } {
     rewrite angle_sub_sub_distr.

@@ -244,7 +244,7 @@ assert (H : (0 < ε / (2 * rngl_abs l + 1))%L). {
     apply (rngl_0_lt_1 Hon Hos Hc1 Hor).
   }
   apply (rngl_le_add_l Hos Hor).
-  apply (rngl_mul_nonneg_nonneg Hos Hor).
+  apply (rngl_mul_nonneg_nonneg Hon Hos Hiq Hor).
   apply (rngl_0_le_2 Hon Hos Hor).
   apply (rngl_abs_nonneg Hop Hor).
 }
@@ -284,7 +284,7 @@ apply (rngl_lt_div_l Hon Hop Hiv Hor). {
     apply (rngl_0_lt_1 Hon Hos Hc1 Hor).
   }
   apply (rngl_le_add_l Hos Hor).
-  apply (rngl_mul_nonneg_nonneg Hos Hor).
+  apply (rngl_mul_nonneg_nonneg Hon Hos Hiq Hor).
   apply (rngl_0_le_2 Hon Hos Hor).
   apply (rngl_abs_nonneg Hop Hor).
 }
@@ -333,7 +333,7 @@ intros ε Hε.
 assert (H : (0 < √(ε² / 2))%L). {
   apply (rl_sqrt_pos Hon Hos Hor).
   apply (rngl_lt_div_r Hon Hop Hiv Hor).
-  apply (rngl_0_lt_2 Hon Hos Hc1 Hor).
+  apply (rngl_0_lt_2 Hon Hos Hiq Hc1 Hor).
   rewrite (rngl_mul_0_l Hos).
   progress unfold rngl_squ.
   now apply (rngl_mul_pos_pos Hos Hor Hii).
@@ -366,7 +366,7 @@ progress unfold rngl_dist in Hns.
 assert (H : (0 ≤ ε² / 2)%L). {
   apply (rngl_div_nonneg Hon Hop Hiv Hor).
   apply (rngl_squ_nonneg Hos Hor).
-  apply (rngl_0_lt_2 Hon Hos Hc1 Hor).
+  apply (rngl_0_lt_2 Hon Hos Hiq Hc1 Hor).
 }
 rewrite <- (rngl_abs_sqrt Hop Hor) in Hnc; [ | easy ].
 rewrite <- (rngl_abs_sqrt Hop Hor) in Hns; [ | easy ].

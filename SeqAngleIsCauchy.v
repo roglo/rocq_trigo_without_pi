@@ -185,7 +185,7 @@ intros * Hza.
 rewrite angle_eucl_dist_is_sqrt.
 rewrite <- (rngl_abs_nonneg_eq Hop Hor √_). 2: {
   apply rl_sqrt_nonneg.
-  apply (rngl_mul_nonneg_nonneg Hos Hor). {
+  apply (rngl_mul_nonneg_nonneg Hon Hos Hiq Hor). {
     apply (rngl_0_le_2 Hon Hos Hor).
   }
   apply (rngl_le_0_sub Hop Hor).
@@ -196,7 +196,7 @@ split. {
   intros Hc.
   apply (rngl_squ_lt_abs_lt Hop Hor Hii).
   rewrite (rngl_squ_sqrt Hon). 2: {
-    apply (rngl_mul_nonneg_nonneg Hos Hor). {
+    apply (rngl_mul_nonneg_nonneg Hon Hos Hiq Hor). {
       apply (rngl_0_le_2 Hon Hos Hor).
     }
     apply (rngl_le_0_sub Hop Hor).
@@ -204,7 +204,7 @@ split. {
   }
   rewrite (rngl_mul_comm Hic).
   apply (rngl_lt_div_r Hon Hop Hiv Hor). {
-    apply (rngl_0_lt_2 Hon Hos Hc1 Hor).
+    apply (rngl_0_lt_2 Hon Hos Hiq Hc1 Hor).
   }
   apply (rngl_lt_sub_lt_add_l Hop Hor).
   now apply (rngl_lt_sub_lt_add_r Hop Hor).
@@ -214,7 +214,7 @@ split. {
     apply (rngl_mul_comm Hic).
   }
   rewrite (rngl_squ_sqrt Hon) in Ha. 2: {
-    apply (rngl_mul_nonneg_nonneg Hos Hor). {
+    apply (rngl_mul_nonneg_nonneg Hon Hos Hiq Hor). {
       apply (rngl_0_le_2 Hon Hos Hor).
     }
     apply (rngl_le_0_sub Hop Hor).
@@ -222,7 +222,7 @@ split. {
   }
   rewrite (rngl_mul_comm Hic) in Ha.
   apply (rngl_lt_div_r Hon Hop Hiv Hor) in Ha. 2: {
-    apply (rngl_0_lt_2 Hon Hos Hc1 Hor).
+    apply (rngl_0_lt_2 Hon Hos Hiq Hc1 Hor).
   }
   apply (rngl_lt_sub_lt_add_l Hop Hor) in Ha.
   now apply (rngl_lt_sub_lt_add_r Hop Hor) in Ha.
@@ -276,7 +276,7 @@ split; intros H12. {
   rewrite angle_eucl_dist_is_sqrt in H12.
   rewrite <- H12.
   rewrite (rngl_squ_sqrt Hon). 2: {
-    apply (rngl_mul_nonneg_nonneg Hos Hor). {
+    apply (rngl_mul_nonneg_nonneg Hon Hos Hiq Hor). {
       apply (rngl_0_le_2 Hon Hos Hor).
     }
     apply (rngl_le_0_sub Hop Hor).
@@ -352,7 +352,7 @@ destruct_ac.
 intros * Htr.
 progress unfold angle_leb in Htr.
 cbn in Htr.
-specialize (rngl_0_le_1 Hon Hos Hor) as H1.
+specialize (rngl_0_le_1 Hon Hos Hiq Hor) as H1.
 apply rngl_leb_le in H1.
 rewrite H1 in Htr.
 remember (0 ≤? rngl_sin θ)%L as zst eqn:Hzst.
@@ -368,7 +368,7 @@ destruct_ac.
 intros * Htr.
 progress unfold angle_ltb in Htr.
 cbn in Htr.
-specialize (rngl_0_le_1 Hon Hos Hor) as H1.
+specialize (rngl_0_le_1 Hon Hos Hiq Hor) as H1.
 apply rngl_leb_le in H1.
 rewrite H1 in Htr.
 remember (0 ≤? rngl_sin θ)%L as zst eqn:Hzst.
@@ -524,7 +524,7 @@ progress unfold rngl_dist in H1.
 specialize (H1 (ε² / 2))%L.
 assert (Hε2 : (0 < ε² / 2)%L). {
   apply (rngl_div_pos Hon Hop Hiv Hor). 2: {
-    apply (rngl_0_lt_2 Hon Hos Hc1 Hor).
+    apply (rngl_0_lt_2 Hon Hos Hiq Hc1 Hor).
   }
   apply (rngl_le_neq Hor).
   split; [ apply (rngl_squ_nonneg Hos Hor) | ].
@@ -631,7 +631,7 @@ assert (He1 : (1 - ε² / 2 < 1)%L). {
   apply (rngl_lt_sub_lt_add_l Hop Hor).
   rewrite (rngl_sub_diag Hos).
   apply (rngl_div_pos Hon Hop Hiv Hor). 2: {
-    apply (rngl_0_lt_2 Hon Hos Hc1 Hor).
+    apply (rngl_0_lt_2 Hon Hos Hiq Hc1 Hor).
   }
   now apply (rngl_mul_pos_pos Hos Hor Hii).
 }
