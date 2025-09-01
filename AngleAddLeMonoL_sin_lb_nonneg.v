@@ -68,7 +68,7 @@ destruct zs2. 2: {
     now apply angle_add_le_mono_l_lemma_11.
   }
   apply (rngl_nlt_ge_iff Hor) in Hzc3.
-  clear - ac Hor Hon Hop Hiv Hos Hzs13 Hzs12 Haov13 Haov12 H23 Hzc3 Hzs3 Hzs2.
+  clear - Hor Hon Hop Hiq Hiv Hos Hzs13 Hzs12 Haov13 Haov12 H23 Hzc3 Hzs3 Hzs2.
   specialize (rngl_int_dom_or_inv_1_quo Hiv Hon) as Hii.
   generalize Hzs13; intros Hzs1.
   apply rngl_sin_add_nonneg_sin_nonneg in Hzs1; try easy.
@@ -106,7 +106,7 @@ destruct zs2. 2: {
     apply (rngl_nlt_ge_iff Hor) in Hc1z.
     apply Bool.not_true_iff_false in Haov12.
     apply Haov12.
-    clear - Hon Hos Hor Hop Hzs2 Hzs1 Hc1z Hzs12 Hc2z.
+    clear - Hon Hos Hor Hiq Hop Hzs2 Hzs1 Hc1z Hzs12 Hc2z.
     destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
       specialize (rngl_characteristic_1 Hon Hos Hc1) as H1.
       rewrite (H1 (rngl_sin _)) in Hzs2.

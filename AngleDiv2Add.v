@@ -571,7 +571,6 @@ Theorem rngl_cos_angle_div_2_add_overflow :
   → rngl_cos ((θ1 + θ2) /₂) = rngl_cos (θ1 /₂ + θ2 /₂ + angle_straight).
 Proof.
 destruct_ac.
-specialize (rngl_has_inv_has_inv_or_quot Hiv) as Hiq.
 specialize (rngl_has_inv_and_1_has_inv_and_1_or_quot Hon Hiv) as Hi1.
 specialize (rngl_int_dom_or_inv_1_quo_and_eq_dec Hi1 Hed) as Hid.
 destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
@@ -641,9 +640,7 @@ destruct zs12. {
       rewrite (rngl_div_0_l Hos Hi1). 2: {
         apply (rngl_2_neq_0 Hon Hos Hiq Hc1 Hor).
       }
-      rewrite (rl_sqrt_1 Hon Hop Hiq Hor). 2: {
-        now rewrite Bool.orb_true_iff; right.
-      }
+      rewrite (rl_sqrt_1 Hon Hop Hiq Hor).
       rewrite (rl_sqrt_0 Hon Hop Hor). 2: {
         now rewrite Bool.orb_true_iff; right.
       }
@@ -775,7 +772,6 @@ Theorem rngl_sin_angle_div_2_add_overflow :
 Proof.
 destruct_ac.
 specialize (rngl_has_eq_dec_or_is_ordered_r Hor) as Heo.
-specialize (rngl_has_inv_has_inv_or_quot Hiv) as Hiq.
 specialize (rngl_has_inv_and_1_has_inv_and_1_or_quot Hon Hiv) as Hi1.
 specialize (rngl_int_dom_or_inv_1_quo_and_eq_dec Hi1 Hed) as Hid.
 destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
@@ -841,9 +837,7 @@ destruct zs12. {
       rewrite (rngl_div_0_l Hos Hi1). 2: {
         apply (rngl_2_neq_0 Hon Hos Hiq Hc1 Hor).
       }
-      rewrite (rl_sqrt_1 Hon Hop Hiq Hor). 2: {
-        now rewrite Bool.orb_true_iff; right.
-      }
+      rewrite (rl_sqrt_1 Hon Hop Hiq Hor).
       rewrite (rl_sqrt_0 Hon Hop Hor). 2: {
         now rewrite Bool.orb_true_iff; right.
       }
@@ -1196,10 +1190,8 @@ destruct zs. {
   rewrite (rngl_mul_opp_l Hop).
   apply -> (rngl_opp_lt_compat Hop Hor).
   rewrite (rngl_mul_1_l Hon).
-  rewrite <- (rl_sqrt_1 Hon Hop Hiq Hor) at 4. 2: {
-    now rewrite Bool.orb_true_iff; right.
-  }
-  apply (rl_sqrt_lt_rl_sqrt Hon Hor). {
+  rewrite <- (rl_sqrt_1 Hon Hop Hiq Hor) at 4.
+  apply (rl_sqrt_lt_rl_sqrt Hon Hiq Hor). {
     apply (rngl_div_nonneg Hon Hop Hiv Hor). 2: {
       apply (rngl_0_lt_2 Hon Hos Hiq Hc1 Hor).
     }

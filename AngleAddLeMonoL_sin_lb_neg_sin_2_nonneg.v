@@ -132,7 +132,7 @@ destruct zs3. {
       apply Hc1z; clear Hc1z.
       apply (rngl_lt_le_incl Hor).
       rewrite angle_add_overflow_comm in Haov13.
-      clear - ac Hc1 Haov13 Hc3z Hzs1 Hzs3 Hzs13 Hor Hop Hon Hos.
+      clear - ac Hc1 Haov13 Hc3z Hzs1 Hzs3 Hzs13 Hor Hop Hiq Hon Hos.
       rename θ1 into θ2; rename θ3 into θ1.
       rename Hzs1 into Hzs2.
       rename Hzs13 into Hzs12.
@@ -319,11 +319,7 @@ destruct zs3. {
         rewrite <- rngl_mul_add_distr_r.
         rewrite (rngl_add_opp_l Hop).
         rewrite (rngl_mul_comm Hic).
-        apply (rngl_mul_pos_neg Hon Hop Hiq Hor); [ | easy | ]. {
-          rewrite Bool.orb_true_iff; right.
-          rewrite Hi1; cbn.
-          apply (rngl_has_eq_dec_or_is_ordered_r Hor).
-        }
+        apply (rngl_mul_pos_neg Hon Hop Hiq Hor); [ easy | ].
         apply (rngl_lt_sub_0 Hop Hor).
         apply (rngl_le_neq Hor).
         split; [ | easy ].
@@ -338,8 +334,8 @@ destruct zs3. {
     destruct (rngl_le_dec Hor (rngl_cos θ1) 0) as [Hzc1| Hc1z]. {
       cbn.
       apply (rngl_sub_le_compat Hop Hor).
-      now apply (rngl_mul_le_mono_nonpos_l Hop Hor).
-      apply (rngl_mul_le_mono_nonpos_l Hop Hor); [ easy | ].
+      now apply (rngl_mul_le_mono_nonpos_l Hon Hop Hiq Hor).
+      apply (rngl_mul_le_mono_nonpos_l Hon Hop Hiq Hor); [ easy | ].
       apply rngl_cos_cos_sin_sin_nonneg_sin_le_cos_le_iff; try easy.
       now apply (rngl_lt_le_incl Hor).
       now apply (rngl_lt_le_incl Hor).

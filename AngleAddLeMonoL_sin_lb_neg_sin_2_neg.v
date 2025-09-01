@@ -83,7 +83,7 @@ destruct zs13. {
     now apply (rngl_lt_le_incl Hor) in Hzs1.
   }
   (* perhaps a lemma; faut réfléchir *)
-  clear - ac Hzs13 Hor θ2 H23 Hzs12 Hzs2 Heo Hop Hzs3 Hon Hs13 Hc1 Hii Hos.
+  clear - Hzs13 Hor θ2 H23 Hzs12 Hzs2 Heo Hop Hzs3 Hon Hs13 Hc1 Hii Hos Hiq.
   rewrite <- angle_add_overflow_equiv2.
   progress unfold angle_add_overflow2.
   progress unfold angle_ltb.

@@ -191,7 +191,7 @@ apply (rl_sqrt_le_rl_sqrt Hon Hop Hiq Hor). {
   apply (rngl_le_0_sub Hop Hor), rngl_cos_bound.
   apply (rngl_le_0_sub Hop Hor), rngl_cos_bound.
 }
-apply (rngl_mul_le_compat_nonneg Hor). {
+apply (rngl_mul_le_compat_nonneg Hon Hiq Hor). {
   split. {
     apply (rngl_le_0_sub Hop Hor), rngl_cos_bound.
   }
@@ -521,13 +521,13 @@ rewrite (angle_eucl_dist_move_0_r θ1).
 do 2 rewrite rngl_cos_angle_eucl_dist_0_r.
 split; intros H1. {
   apply (rngl_sub_le_mono_l Hop Hor) in H1.
-  apply (rngl_div_le_mono_pos_r Hon Hop Hiv Hor Hii) in H1. 2: {
+  apply (rngl_div_le_mono_pos_r Hon Hop Hiv Hor) in H1. 2: {
     apply (rngl_0_lt_2 Hon Hos Hiq Hc1 Hor).
   }
   now apply (rngl_squ_le_abs_le Hon Hop Hiq Hor) in H1.
 } {
   apply (rngl_sub_le_mono_l Hop Hor).
-  apply (rngl_div_le_mono_pos_r Hon Hop Hiv Hor Hii). {
+  apply (rngl_div_le_mono_pos_r Hon Hop Hiv Hor). {
     apply (rngl_0_lt_2 Hon Hos Hiq Hc1 Hor).
   }
   now apply (rngl_abs_le_squ_le Hon Hop Hiq Hor).

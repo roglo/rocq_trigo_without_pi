@@ -194,7 +194,7 @@ rewrite <- (rngl_abs_nonneg_eq Hop Hor √_). 2: {
 rewrite <- (rngl_abs_nonneg_eq Hop Hor a) at 2; [ | easy ].
 split. {
   intros Hc.
-  apply (rngl_squ_lt_abs_lt Hop Hor Hii).
+  apply (rngl_squ_lt_abs_lt Hon Hop Hiq Hor).
   rewrite (rngl_squ_sqrt Hon). 2: {
     apply (rngl_mul_nonneg_nonneg Hon Hos Hiq Hor). {
       apply (rngl_0_le_2 Hon Hos Hiq Hor).
@@ -210,7 +210,7 @@ split. {
   now apply (rngl_lt_sub_lt_add_r Hop Hor).
 } {
   intros Ha.
-  apply (rngl_abs_lt_squ_lt Hop Hor Hii) in Ha. 2: {
+  apply (rngl_abs_lt_squ_lt Hon Hop Hiq Hor) in Ha. 2: {
     apply (rngl_mul_comm Hic).
   }
   rewrite (rngl_squ_sqrt Hon) in Ha. 2: {
