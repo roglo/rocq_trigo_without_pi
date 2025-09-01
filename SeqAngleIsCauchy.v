@@ -186,7 +186,7 @@ rewrite angle_eucl_dist_is_sqrt.
 rewrite <- (rngl_abs_nonneg_eq Hop Hor √_). 2: {
   apply rl_sqrt_nonneg.
   apply (rngl_mul_nonneg_nonneg Hon Hos Hiq Hor). {
-    apply (rngl_0_le_2 Hon Hos Hor).
+    apply (rngl_0_le_2 Hon Hos Hiq Hor).
   }
   apply (rngl_le_0_sub Hop Hor).
   apply rngl_cos_bound.
@@ -197,7 +197,7 @@ split. {
   apply (rngl_squ_lt_abs_lt Hop Hor Hii).
   rewrite (rngl_squ_sqrt Hon). 2: {
     apply (rngl_mul_nonneg_nonneg Hon Hos Hiq Hor). {
-      apply (rngl_0_le_2 Hon Hos Hor).
+      apply (rngl_0_le_2 Hon Hos Hiq Hor).
     }
     apply (rngl_le_0_sub Hop Hor).
     apply rngl_cos_bound.
@@ -215,7 +215,7 @@ split. {
   }
   rewrite (rngl_squ_sqrt Hon) in Ha. 2: {
     apply (rngl_mul_nonneg_nonneg Hon Hos Hiq Hor). {
-      apply (rngl_0_le_2 Hon Hos Hor).
+      apply (rngl_0_le_2 Hon Hos Hiq Hor).
     }
     apply (rngl_le_0_sub Hop Hor).
     apply rngl_cos_bound.
@@ -277,7 +277,7 @@ split; intros H12. {
   rewrite <- H12.
   rewrite (rngl_squ_sqrt Hon). 2: {
     apply (rngl_mul_nonneg_nonneg Hon Hos Hiq Hor). {
-      apply (rngl_0_le_2 Hon Hos Hor).
+      apply (rngl_0_le_2 Hon Hos Hiq Hor).
     }
     apply (rngl_le_0_sub Hop Hor).
     apply rngl_cos_bound.
@@ -633,7 +633,7 @@ assert (He1 : (1 - ε² / 2 < 1)%L). {
   apply (rngl_div_pos Hon Hop Hiv Hor). 2: {
     apply (rngl_0_lt_2 Hon Hos Hiq Hc1 Hor).
   }
-  now apply (rngl_mul_pos_pos Hos Hor Hii).
+  now apply (rngl_mul_pos_pos Hon Hop Hiq Hor).
 }
 enough (H :
   ∃ N, ∀ p q,

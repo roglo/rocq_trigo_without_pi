@@ -96,7 +96,7 @@ destruct (rngl_le_dec Hor (rngl_cos θ2) 0) as [Hc2z| Hzc2]. {
     rewrite angle_right_add_right in H12.
     apply rngl_nlt_ge in H12.
     apply H12; cbn.
-    apply (rngl_opp_1_lt_1 Hon Hop Hor Hc1).
+    apply (rngl_opp_1_lt_1 Hon Hop Hiq Hor Hc1).
   }
   apply rngl_nle_gt in Hc1z.
   apply Hc1z; cbn.
@@ -404,7 +404,7 @@ destruct (rngl_le_dec Hor (rngl_cos θ2) 0) as [Hc2z| Hzc2]. {
     apply Hzs13; clear Hzs13; cbn.
     apply (rngl_add_nonneg_pos Hos Hor).
     now apply (rngl_mul_nonneg_nonneg Hon Hos Hiq Hor).
-    now apply (rngl_mul_pos_pos Hos Hor Hii).
+    now apply (rngl_mul_pos_pos Hon Hop Hiq Hor).
   }
   apply (rngl_nlt_ge_iff Hor) in Hc1z.
   change_angle_sub_r θ1 angle_right.
@@ -543,7 +543,7 @@ destruct (rngl_lt_dec Hor 0 (rngl_cos θ3)) as [Hzc3| Hc3z]. {
   apply rngl_nlt_ge in Hzs13.
   apply Hzs13; clear Hzs13; cbn.
   apply (rngl_lt_0_add Hos Hor).
-  now apply (rngl_mul_pos_pos Hos Hor Hii).
+  now apply (rngl_mul_pos_pos Hon Hop Hiq Hor).
   apply (rngl_mul_nonneg_nonneg Hon Hos Hiq Hor); [ | easy ].
   now apply (rngl_lt_le_incl Hor).
 }
@@ -606,7 +606,7 @@ destruct (rngl_le_dec Hor 0 (rngl_cos θ1)) as [Hzc1| Hc1z]. {
     apply (rngl_add_nonneg_pos Hos Hor); [ easy | cbn ].
     apply (rngl_add_nonneg_pos Hos Hor).
     now apply (rngl_mul_nonneg_nonneg Hon Hos Hiq Hor).
-    now apply (rngl_mul_pos_pos Hos Hor Hii).
+    now apply (rngl_mul_pos_pos Hon Hop Hiq Hor).
   }
   apply (rngl_nle_gt_iff Hor) in Hzc2.
   change_angle_opp θ2.

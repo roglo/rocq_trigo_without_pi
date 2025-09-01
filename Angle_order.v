@@ -194,7 +194,7 @@ progress unfold angle_ltb.
 cbn.
 rewrite (rngl_leb_refl Hor).
 apply rngl_ltb_lt.
-apply (rngl_opp_1_lt_1 Hon Hop Hor Hc1).
+apply (rngl_opp_1_lt_1 Hon Hop Hiq Hor Hc1).
 Qed.
 
 Theorem angle_straight_nonneg : (0 ≤ angle_straight)%A.
@@ -204,7 +204,7 @@ progress unfold angle_leb.
 cbn.
 rewrite (rngl_leb_refl Hor).
 apply rngl_leb_le.
-apply (rngl_opp_1_le_1 Hon Hop Hor).
+apply (rngl_opp_1_le_1 Hon Hop Hiq Hor).
 Qed.
 
 Theorem angle_leb_gt : ∀ θ1 θ2, (θ1 ≤? θ2)%A = false ↔ (θ2 < θ1)%A.

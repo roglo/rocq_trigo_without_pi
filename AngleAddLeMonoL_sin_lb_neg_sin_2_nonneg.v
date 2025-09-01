@@ -49,7 +49,7 @@ rewrite angle_straight_add_straight.
 progress unfold angle_ltb; cbn.
 rewrite (rngl_leb_refl Hor).
 apply rngl_ltb_lt.
-apply (rngl_opp_1_lt_1 Hon Hop Hor Hc1).
+apply (rngl_opp_1_lt_1 Hon Hop Hiq Hor Hc1).
 Qed.
 
 Theorem angle_add_le_mono_l_sin_lb_neg_sin_2_nonneg :
@@ -180,7 +180,7 @@ destruct zs3. {
         progress unfold angle_ltb; cbn.
         rewrite (rngl_leb_refl Hor).
         apply rngl_ltb_lt.
-        apply (rngl_opp_1_lt_1 Hon Hop Hor Hc1).
+        apply (rngl_opp_1_lt_1 Hon Hop Hiq Hor Hc1).
       }
       rewrite angle_sub_opp_r in Hc2z.
       rewrite rngl_sin_add_right_r in Hc2z.
@@ -666,7 +666,7 @@ destruct zs13. {
       apply (rngl_add_nonneg_pos Hos Hor).
       apply (rngl_mul_nonneg_nonneg Hon Hos Hiq Hor); [ easy | ].
       now apply (rngl_lt_le_incl Hor).
-      apply (rngl_mul_pos_pos Hos Hor Hii); [ easy | ].
+      apply (rngl_mul_pos_pos Hon Hop Hiq Hor); [ easy | ].
       apply (rngl_lt_0_sub Hop Hor).
       apply (rngl_le_neq Hor).
       split; [ | easy ].
@@ -831,7 +831,7 @@ destruct zs13. {
     rewrite <- (rngl_add_sub_assoc Hop).
     rewrite (rngl_sub_mul_r_diag_l Hon Hop).
     apply (rngl_lt_0_add Hos Hor).
-    now apply (rngl_mul_pos_pos Hos Hor Hii).
+    now apply (rngl_mul_pos_pos Hon Hop Hiq Hor).
     apply (rngl_mul_nonneg_nonneg Hon Hos Hiq Hor); [ easy | ].
     apply (rngl_le_0_sub Hop Hor).
     apply rngl_sin_bound.
@@ -985,7 +985,7 @@ destruct (rngl_le_dec Hor 0 (rngl_cos θ3)) as [Hzc3| Hc3z]. {
         rewrite (rngl_sub_mul_r_diag_l Hon Hop).
         apply (rngl_lt_le_incl Hor) in Hzc1.
         apply (rngl_lt_0_add Hos Hor).
-        now apply (rngl_mul_pos_pos Hos Hor Hii).
+        now apply (rngl_mul_pos_pos Hon Hop Hiq Hor).
         apply (rngl_mul_nonneg_nonneg Hon Hos Hiq Hor); [ easy | ].
         apply (rngl_le_0_sub Hop Hor).
         apply rngl_sin_bound.
@@ -1054,7 +1054,7 @@ destruct (rngl_le_dec Hor 0 (rngl_cos θ3)) as [Hzc3| Hc3z]. {
     rewrite <- (rngl_add_sub_assoc Hop).
     rewrite (rngl_sub_mul_r_diag_l Hon Hop).
     apply (rngl_lt_0_add Hos Hor).
-    now apply (rngl_mul_pos_pos Hos Hor Hii).
+    now apply (rngl_mul_pos_pos Hon Hop Hiq Hor).
     apply (rngl_mul_nonneg_nonneg Hon Hos Hiq Hor); [ easy | ].
     apply (rngl_le_0_sub Hop Hor).
     apply rngl_sin_bound.

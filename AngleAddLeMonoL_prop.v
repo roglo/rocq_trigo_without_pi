@@ -232,7 +232,7 @@ destruct H21 as [H21| H21]. {
         apply (rngl_lt_le_incl Hor) in Hzs1.
         now apply (rngl_mul_nonpos_nonneg Hon Hop Hiq Hor).
       }
-      now apply (rngl_mul_pos_pos Hos Hor Hii).
+      now apply (rngl_mul_pos_pos Hon Hop Hiq Hor).
     }
     apply (rngl_mul_le_mono_nonneg_r Hop Hor _ _ (rngl_sin θ2)) in Hzs12. 2: {
       easy.

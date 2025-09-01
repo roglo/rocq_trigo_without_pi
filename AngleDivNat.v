@@ -98,7 +98,7 @@ assert (H2r : √2 ≠ 0%L). {
   intros H.
   apply (f_equal rngl_squ) in H.
   rewrite (rngl_squ_sqrt Hon) in H. 2: {
-    apply (rngl_0_le_2 Hon Hos Hor).
+    apply (rngl_0_le_2 Hon Hos Hiq Hor).
   }
   rewrite (rngl_squ_0 Hos) in H.
   now apply (rngl_2_neq_0 Hon Hos Hiq Hc1 Hor) in H.
@@ -133,7 +133,7 @@ rewrite (rngl_div_div Hon Hos Hiv); [ | easy | easy ].
 rewrite (rngl_div_div Hon Hos Hiv); [ | easy | easy ].
 rewrite fold_rngl_squ.
 rewrite (rngl_squ_sqrt Hon). 2: {
-  apply (rngl_0_le_2 Hon Hos Hor).
+  apply (rngl_0_le_2 Hon Hos Hiq Hor).
 }
 rewrite (rngl_mul_sub_distr_l Hop).
 do 2 rewrite (rngl_mul_comm Hic 2).
@@ -186,7 +186,7 @@ rewrite Hzs1, Hzs2 in Ht21.
 rewrite rngl_cos_sub_straight_r in Ht21.
 apply rngl_leb_le in Ht21.
 rewrite (rngl_mul_comm Hic).
-apply (rl_sqrt_le_rl_sqrt Hon Hop Hor Hii). {
+apply (rl_sqrt_le_rl_sqrt Hon Hop Hiq Hor). {
   apply (rngl_mul_nonneg_nonneg Hon Hos Hiq Hor).
   apply (rngl_le_0_sub Hop Hor), rngl_cos_bound.
   apply (rngl_le_0_sub Hop Hor), rngl_cos_bound.
@@ -232,7 +232,7 @@ assert (H2r : √2 ≠ 0%L). {
   intros H.
   apply (f_equal rngl_squ) in H.
   rewrite (rngl_squ_sqrt Hon) in H. 2: {
-    apply (rngl_0_le_2 Hon Hos Hor).
+    apply (rngl_0_le_2 Hon Hos Hiq Hor).
   }
   rewrite (rngl_squ_0 Hos) in H.
   now apply (rngl_2_neq_0 Hon Hos Hiq Hc1 Hor) in H.
@@ -267,7 +267,7 @@ rewrite (rngl_div_div Hon Hos Hiv); [ | easy | easy ].
 rewrite (rngl_div_div Hon Hos Hiv); [ | easy | easy ].
 rewrite fold_rngl_squ.
 rewrite (rngl_squ_sqrt Hon). 2: {
-  apply (rngl_0_le_2 Hon Hos Hor).
+  apply (rngl_0_le_2 Hon Hos Hiq Hor).
 }
 rewrite rngl_mul_add_distr_l.
 do 2 rewrite (rngl_mul_comm Hic 2).

@@ -240,7 +240,7 @@ destruct (rngl_le_dec Hor (rngl_cos θ1) 0) as [Hc1z| Hzc1]. {
     rewrite (rngl_sub_0_l Hop).
     apply rngl_cos_bound.
   }
-  now apply (rngl_mul_pos_pos Hos Hor Hii).
+  now apply (rngl_mul_pos_pos Hon Hop Hiq Hor).
 } {
   apply (rngl_nle_gt_iff Hor) in Hzc1.
   move Hzc1 before Hzs2.
@@ -554,7 +554,7 @@ destruct zs1. {
   rewrite rngl_add_comm.
   rewrite <- rngl_add_assoc.
   apply (rngl_lt_0_add Hos Hor). {
-    now apply (rngl_mul_pos_pos Hos Hor Hii).
+    now apply (rngl_mul_pos_pos Hon Hop Hiq Hor).
   }
   rewrite (rngl_add_mul_r_diag_l Hon).
   apply (rngl_mul_nonneg_nonneg Hon Hos Hiq Hor).
@@ -641,7 +641,7 @@ destruct zs12. {
       rewrite (rngl_div_0_l Hos Hi1). 2: {
         apply (rngl_2_neq_0 Hon Hos Hiq Hc1 Hor).
       }
-      rewrite (rl_sqrt_1 Hon Hop Hor). 2: {
+      rewrite (rl_sqrt_1 Hon Hop Hiq Hor). 2: {
         now rewrite Bool.orb_true_iff; right.
       }
       rewrite (rl_sqrt_0 Hon Hop Hor). 2: {
@@ -841,7 +841,7 @@ destruct zs12. {
       rewrite (rngl_div_0_l Hos Hi1). 2: {
         apply (rngl_2_neq_0 Hon Hos Hiq Hc1 Hor).
       }
-      rewrite (rl_sqrt_1 Hon Hop Hor). 2: {
+      rewrite (rl_sqrt_1 Hon Hop Hiq Hor). 2: {
         now rewrite Bool.orb_true_iff; right.
       }
       rewrite (rl_sqrt_0 Hon Hop Hor). 2: {
@@ -1196,7 +1196,7 @@ destruct zs. {
   rewrite (rngl_mul_opp_l Hop).
   apply -> (rngl_opp_lt_compat Hop Hor).
   rewrite (rngl_mul_1_l Hon).
-  rewrite <- (rl_sqrt_1 Hon Hop Hor) at 4. 2: {
+  rewrite <- (rl_sqrt_1 Hon Hop Hiq Hor) at 4. 2: {
     now rewrite Bool.orb_true_iff; right.
   }
   apply (rl_sqrt_lt_rl_sqrt Hon Hor). {

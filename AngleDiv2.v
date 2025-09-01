@@ -31,7 +31,6 @@ Theorem angle_div_2_prop :
     (√((1 - rngl_cos a) / 2)%L).
 Proof.
 destruct_ac.
-specialize (rngl_has_inv_has_inv_or_quot Hiv) as Hiq.
 intros.
 progress unfold cos2_sin2_prop.
 assert (Hε : (ε² = 1)%L). {
@@ -183,6 +182,7 @@ do 2 rewrite <- rngl_mul_assoc.
 rewrite rl_nth_root_mul; cycle 1. {
   now apply (rngl_mul_nonneg_nonneg Hon Hos Hiq Hor).
 } {
+...
   apply (rngl_mul_diag_nonneg Hos Hor).
 }
 rewrite rl_nth_root_mul; [ | easy | easy ].
@@ -294,8 +294,8 @@ destruct zs. {
   rewrite (rngl_mul_opp_l Hop).
   apply -> (rngl_opp_le_compat Hop Hor).
   rewrite (rngl_mul_1_l Hon).
-  rewrite <- (rl_sqrt_1 Hon Hop Hor Hii) at 4.
-  apply (rl_sqrt_le_rl_sqrt Hon Hop Hor Hii). {
+  rewrite <- (rl_sqrt_1 Hon Hop Hiq Hor Hii) at 4.
+  apply (rl_sqrt_le_rl_sqrt Hon Hop Hiq Hor). {
     apply (rngl_div_nonneg Hon Hop Hiv Hor). 2: {
       apply (rngl_0_lt_2 Hon Hos Hiq Hc1 Hor).
     }
@@ -328,7 +328,7 @@ rewrite (rngl_mul_1_l Hon).
 rewrite (rngl_div_diag Hon Hiq). 2: {
   apply (rngl_2_neq_0 Hon Hos Hiq Hc1 Hor).
 }
-rewrite (rl_sqrt_1 Hon Hop Hor). 2: {
+rewrite (rl_sqrt_1 Hon Hop Hiq Hor). 2: {
   rewrite Bool.orb_true_iff; right.
   apply (rngl_has_inv_and_1_has_inv_and_1_or_quot Hon Hiv).
 }
@@ -371,7 +371,7 @@ f_equal.
 rewrite (rngl_div_diag Hon Hiq). 2: {
   apply (rngl_2_neq_0 Hon Hos Hiq Hc1 Hor).
 }
-apply (rl_sqrt_1 Hon Hop Hor).
+apply (rl_sqrt_1 Hon Hop Hiq Hor).
 rewrite Bool.orb_true_iff; right.
 apply (rngl_has_inv_and_1_has_inv_and_1_or_quot Hon Hiv).
 Qed.
@@ -606,7 +606,7 @@ rewrite (rngl_squ_div Hic Hon Hos Hiv); [ | easy ].
 rewrite (rngl_squ_div Hic Hon Hos Hiv); [ | easy ].
 rewrite (rngl_squ_1 Hon).
 rewrite (rngl_squ_sqrt Hon). 2: {
-  apply (rngl_le_trans Hor _ 2); [ apply (rngl_0_le_2 Hon Hos Hor) | ].
+  apply (rngl_le_trans Hor _ 2); [ apply (rngl_0_le_2 Hon Hos Hiq Hor) | ].
   apply (rngl_add_le_mono_r Hos Hor).
   apply (rngl_1_le_2 Hon Hos Hor).
 }
@@ -651,7 +651,7 @@ rewrite (rngl_squ_div Hic Hon Hos Hiv); [ | easy ].
 rewrite <- (rngl_div_sub_distr_r Hop Hiv).
 rewrite (rngl_squ_1 Hon).
 rewrite (rngl_squ_sqrt Hon). 2: {
-  apply (rngl_le_trans Hor _ 2); [ apply (rngl_0_le_2 Hon Hos Hor) | ].
+  apply (rngl_le_trans Hor _ 2); [ apply (rngl_0_le_2 Hon Hos Hiq Hor) | ].
   apply (rngl_add_le_mono_r Hos Hor).
   apply (rngl_1_le_2 Hon Hos Hor).
 }
@@ -1248,7 +1248,7 @@ apply (rngl_add_le_mono_l Hos Hor).
 rewrite (rngl_mul_comm Hic), rngl_add_comm.
 apply (rngl_add_le_mono Hos Hor). 2: {
   apply (rngl_mul_le_mono_nonneg_r Hop Hor). {
-    apply (rngl_0_le_2 Hon Hos Hor).
+    apply (rngl_0_le_2 Hon Hos Hiq Hor).
   }
   now apply IHn.
 }
