@@ -49,7 +49,7 @@ destruct (rngl_le_dec Hor 0 (rngl_cos θ1))%L as [Hzc1| Hc1z]. {
   progress sin_cos_add_sub_right_hyp T Hzc1.
   progress sin_cos_add_sub_right_hyp T Hzs12.
   progress sin_cos_add_sub_right_hyp T Hs1z.
-  clear - Haov12 ac Hos Hop Hs1z Hor Hzc1 Hzs2 Hc2z Hzs12 Hon Hc1.
+  clear - Haov12 ac Hos Hop Hiq Hs1z Hor Hzc1 Hzs2 Hc2z Hzs12 Hon Hc1.
   rewrite <- angle_add_overflow_equiv2 in Haov12.
   progress unfold angle_add_overflow2 in Haov12.
   apply Bool.not_true_iff_false in Haov12.
@@ -234,9 +234,8 @@ destruct H21 as [H21| H21]. {
       }
       now apply (rngl_mul_pos_pos Hon Hop Hiq Hor).
     }
-    apply (rngl_mul_le_mono_nonneg_r Hop Hor _ _ (rngl_sin θ2)) in Hzs12. 2: {
-      easy.
-    }
+    apply (rngl_mul_le_mono_nonneg_r Hon Hop Hiq Hor _ _ (rngl_sin θ2))
+      in Hzs12; [ | easy ].
     do 2 rewrite <- rngl_mul_assoc in Hzs12.
     rewrite fold_rngl_squ in Hzs12.
     specialize (cos2_sin2_1 θ2) as H.
@@ -252,6 +251,7 @@ destruct H21 as [H21| H21]. {
     rewrite <- rngl_sin_add in Hzs12.
     eapply (rngl_le_trans Hor); [ | apply Hzs12 ].
     rewrite <- (rngl_mul_1_r Hon (rngl_cos θ2)) at 1.
+...
     apply (rngl_mul_le_mono_nonpos_l Hop Hor); [ easy | ].
     apply rngl_sin_bound.
   }
@@ -570,7 +570,7 @@ intros H.
 apply angle_add_move_0_r in H; subst θ1.
 apply rngl_nle_gt in Hc1z.
 apply Hc1z; cbn.
-apply (rngl_opp_1_le_0 Hon Hop Hor).
+apply (rngl_opp_1_le_0 Hon Hop Hiq Hor).
 Qed.
 
 End a.
