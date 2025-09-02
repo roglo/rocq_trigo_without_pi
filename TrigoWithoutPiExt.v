@@ -113,7 +113,7 @@ Theorem rngl_cos_add_le_cos :
 Proof.
 destruct_ac.
 specialize (rngl_has_eq_dec_or_is_ordered_r Hor) as Heo.
-specialize (rngl_has_inv_and_1_has_inv_and_1_or_quot Hon Hiv) as Hi1.
+specialize (rngl_has_inv_and_1_has_inv_and_1_or_pdiv Hon Hiv) as Hi1.
 specialize (rngl_int_dom_or_inv_1_quo_and_eq_dec Hi1 Hed) as Hid.
 intros * H12 Hzs1 Hzs2 Hzs12.
 rewrite <- or_assoc in H12.
@@ -1837,7 +1837,7 @@ Theorem rngl_cos_angle_eucl_dist_0_r :
   ∀ θ, (rngl_cos θ = 1 - (angle_eucl_dist θ 0)² / 2)%L.
 Proof.
 destruct_ac.
-specialize (rngl_has_inv_and_1_has_inv_and_1_or_quot Hon Hiv) as Hi1.
+specialize (rngl_has_inv_and_1_has_inv_and_1_or_pdiv Hon Hiv) as Hi1.
 destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
   specialize (rngl_characteristic_1 Hon Hos Hc1) as H1.
   intros.
@@ -1863,7 +1863,7 @@ Theorem rngl_cos_angle_eucl_dist_straight_r :
   ∀ θ, (rngl_cos θ = (angle_eucl_dist θ angle_straight)² / 2 - 1)%L.
 Proof.
 destruct_ac.
-specialize (rngl_has_inv_and_1_has_inv_and_1_or_quot Hon Hiv) as Hi1.
+specialize (rngl_has_inv_and_1_has_inv_and_1_or_pdiv Hon Hiv) as Hi1.
 destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
   specialize (rngl_characteristic_1 Hon Hos Hc1) as H1.
   intros.
@@ -1966,7 +1966,7 @@ Theorem angle_lim_add_add :
   → angle_lim (λ i, (u i + v i))%A (θ1 + θ2).
 Proof.
 destruct_ac.
-specialize (rngl_has_inv_and_1_has_inv_and_1_or_quot Hon Hiv) as Hi1.
+specialize (rngl_has_inv_and_1_has_inv_and_1_or_pdiv Hon Hiv) as Hi1.
 destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
   intros * Hu Hv ε Hε.
   rewrite (rngl_characteristic_1 Hon Hos Hc1 ε) in Hε.
@@ -2015,7 +2015,7 @@ Theorem angle_lim_mul :
   → angle_lim (λ i, (k * u i)%A) (k * θ).
 Proof.
 destruct_ac.
-specialize (rngl_has_inv_and_1_has_inv_and_1_or_quot Hon Hiv) as Hi1.
+specialize (rngl_has_inv_and_1_has_inv_and_1_or_pdiv Hon Hiv) as Hi1.
 intros * Hu.
 induction k. {
   intros ε Hε.
@@ -2169,7 +2169,7 @@ Fixpoint squ_rngl_cos_div_pow_2 θ n :=
 Theorem rngl_cos_div_pow_2_0 : ∀ n, rngl_cos_div_pow_2 0 n = 1%L.
 Proof.
 destruct_ac.
-specialize (rngl_has_inv_and_1_has_inv_and_1_or_quot Hon Hiv) as Hi1.
+specialize (rngl_has_inv_and_1_has_inv_and_1_or_pdiv Hon Hiv) as Hi1.
 specialize (rngl_int_dom_or_inv_1_quo_and_eq_dec Hi1 Hed) as Hid.
 destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
   intros.

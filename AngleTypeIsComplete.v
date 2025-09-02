@@ -146,7 +146,7 @@ Qed.
 Theorem rngl_dist_to_limit_bounded :
   rngl_has_1 T = true →
   rngl_has_opp T = true →
-  rngl_has_inv_or_quot T = true →
+  rngl_has_inv_or_pdiv T = true →
   rngl_is_ordered T = true →
   rngl_characteristic T ≠ 1 →
   ∀ u l,
@@ -154,7 +154,7 @@ Theorem rngl_dist_to_limit_bounded :
   → ∃ N, ∀ n, N ≤ n → (rngl_dist (u n) l < 1)%L.
 Proof.
 intros Hon Hop Hiq Hor Hc1.
-specialize (rngl_has_opp_has_opp_or_subt Hop) as Hos.
+specialize (rngl_has_opp_has_opp_or_psub Hop) as Hos.
 intros * Hlim.
 specialize (Hlim 1)%L.
 specialize (rngl_0_lt_1 Hon Hos Hiq Hc1 Hor) as H.
@@ -164,7 +164,7 @@ Qed.
 Theorem rngl_converging_seq_bounded :
   rngl_has_1 T = true →
   rngl_has_opp T = true →
-  rngl_has_inv_or_quot T = true →
+  rngl_has_inv_or_pdiv T = true →
   rngl_is_ordered T = true →
   rngl_characteristic T ≠ 1 →
   ∀ u l,
@@ -172,7 +172,7 @@ Theorem rngl_converging_seq_bounded :
   → ∃ N, ∀ n, N ≤ n → (rngl_abs (u n) < rngl_abs l + 1)%L.
 Proof.
 intros Hon Hop Hiq Hor Hc1.
-specialize (rngl_has_opp_has_opp_or_subt Hop) as Hos.
+specialize (rngl_has_opp_has_opp_or_psub Hop) as Hos.
 intros * Hlim.
 apply (rngl_dist_to_limit_bounded Hon Hop Hiq Hor Hc1) in Hlim.
 destruct Hlim as (N, HN).
@@ -191,7 +191,7 @@ Qed.
 Theorem rngl_converging_seq_add_limit_bounded :
   rngl_has_1 T = true →
   rngl_has_opp T = true →
-  rngl_has_inv_or_quot T = true →
+  rngl_has_inv_or_pdiv T = true →
   rngl_is_ordered T = true →
   rngl_characteristic T ≠ 1 →
   ∀ u k,
@@ -199,7 +199,7 @@ Theorem rngl_converging_seq_add_limit_bounded :
   → ∃ N, ∀ n, N ≤ n → (rngl_abs (u n + k) < 2 * rngl_abs k + 1)%L.
 Proof.
 intros Hon Hop Hiq Hor Hc1.
-specialize (rngl_has_opp_has_opp_or_subt Hop) as Hos.
+specialize (rngl_has_opp_has_opp_or_psub Hop) as Hos.
 intros * Hlim.
 apply (rngl_converging_seq_bounded Hon Hop Hiq Hor Hc1) in Hlim.
 destruct Hlim as (N, HN).
@@ -226,10 +226,10 @@ Theorem rngl_limit_limit_squ :
   → is_limit_when_seq_tends_to_inf rngl_dist (λ i, (u i)²)%L l²%L.
 Proof.
 intros Hon Hop Hic Hiv Hor.
-specialize (rngl_has_opp_has_opp_or_subt Hop) as Hos.
-specialize (rngl_has_inv_has_inv_or_quot Hiv) as Hiq.
+specialize (rngl_has_opp_has_opp_or_psub Hop) as Hos.
+specialize (rngl_has_inv_has_inv_or_pdiv Hiv) as Hiq.
 specialize (rngl_int_dom_or_inv_1_quo Hiv Hon) as Hii.
-specialize (rngl_has_inv_and_1_has_inv_and_1_or_quot Hon Hiv) as Hi1.
+specialize (rngl_has_inv_and_1_has_inv_and_1_or_pdiv Hon Hiv) as Hi1.
 destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
   specialize (rngl_characteristic_1 Hon Hos Hc1) as H1.
   intros * Hu.
@@ -325,7 +325,7 @@ Theorem limit_cos_cos_sin_sin :
 Proof.
 destruct_ac.
 specialize (rngl_int_dom_or_inv_1_quo Hiv Hon) as Hii.
-specialize (rngl_has_inv_and_1_has_inv_and_1_or_quot Hon Hiv) as Hi1.
+specialize (rngl_has_inv_and_1_has_inv_and_1_or_pdiv Hon Hiv) as Hi1.
 destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
   specialize (rngl_characteristic_1 Hon Hos Hc1) as H1.
   intros * Hc Hs ε Hε.
@@ -445,7 +445,7 @@ Theorem rngl_is_complete_angle_is_complete :
 Proof.
 destruct_ac.
 specialize (rngl_int_dom_or_inv_1_quo Hiv Hon) as Hii.
-specialize (rngl_has_inv_and_1_has_inv_and_1_or_quot Hon Hiv) as Hi1.
+specialize (rngl_has_inv_and_1_has_inv_and_1_or_pdiv Hon Hiv) as Hi1.
 specialize (rngl_int_dom_or_inv_1_quo_and_eq_dec Hi1 Hed) as Hid.
 destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
   specialize (rngl_characteristic_1 Hon Hos Hc1) as H1.

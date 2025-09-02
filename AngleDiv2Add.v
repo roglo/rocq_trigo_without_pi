@@ -27,7 +27,7 @@ Theorem rngl_cos_angle_div_2_add_not_overflow :
   → rngl_cos ((θ1 + θ2) /₂) = rngl_cos (θ1 /₂ + θ2 /₂).
 Proof.
 destruct_ac.
-specialize (rngl_has_inv_and_1_has_inv_and_1_or_quot Hon Hiv) as Hi1.
+specialize (rngl_has_inv_and_1_has_inv_and_1_or_pdiv Hon Hiv) as Hi1.
 specialize (rngl_int_dom_or_inv_1_quo_and_eq_dec Hi1 Hed) as Hid.
 specialize (rngl_int_dom_or_inv_1_quo Hiv Hon) as Hii.
 destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
@@ -288,7 +288,7 @@ Theorem rngl_sin_angle_div_2_add_not_overflow :
 Proof.
 destruct_ac.
 specialize (rngl_has_eq_dec_or_is_ordered_r Hor) as Heo.
-specialize (rngl_has_inv_and_1_has_inv_and_1_or_quot Hon Hiv) as Hi1.
+specialize (rngl_has_inv_and_1_has_inv_and_1_or_pdiv Hon Hiv) as Hi1.
 specialize (rngl_int_dom_or_inv_1_quo_and_eq_dec Hi1 Hed) as Hid.
 specialize (rngl_int_dom_or_inv_1_quo Hiv Hon) as Hii.
 destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
@@ -571,7 +571,7 @@ Theorem rngl_cos_angle_div_2_add_overflow :
   → rngl_cos ((θ1 + θ2) /₂) = rngl_cos (θ1 /₂ + θ2 /₂ + angle_straight).
 Proof.
 destruct_ac.
-specialize (rngl_has_inv_and_1_has_inv_and_1_or_quot Hon Hiv) as Hi1.
+specialize (rngl_has_inv_and_1_has_inv_and_1_or_pdiv Hon Hiv) as Hi1.
 specialize (rngl_int_dom_or_inv_1_quo_and_eq_dec Hi1 Hed) as Hid.
 destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
   intros.
@@ -772,7 +772,7 @@ Theorem rngl_sin_angle_div_2_add_overflow :
 Proof.
 destruct_ac.
 specialize (rngl_has_eq_dec_or_is_ordered_r Hor) as Heo.
-specialize (rngl_has_inv_and_1_has_inv_and_1_or_quot Hon Hiv) as Hi1.
+specialize (rngl_has_inv_and_1_has_inv_and_1_or_pdiv Hon Hiv) as Hi1.
 specialize (rngl_int_dom_or_inv_1_quo_and_eq_dec Hi1 Hed) as Hid.
 destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
   intros.
@@ -1162,7 +1162,7 @@ Theorem angle_div_2_lt_straight :
 Proof.
 destruct_ac.
 intros Hc1.
-specialize (rngl_has_inv_and_1_has_inv_and_1_or_quot Hon Hiv) as Hi1.
+specialize (rngl_has_inv_and_1_has_inv_and_1_or_pdiv Hon Hiv) as Hi1.
 specialize (rngl_int_dom_or_inv_1_quo_and_eq_dec Hi1 Hed) as Hid.
 intros.
 progress unfold angle_ltb.
@@ -1440,7 +1440,7 @@ Theorem angle_mul_nat_overflow_pow_div :
 Proof.
 destruct_ac.
 specialize (rngl_int_dom_or_inv_1_quo Hiv Hon) as Hii.
-specialize (rngl_has_inv_and_1_has_inv_and_1_or_quot Hon Hiv) as Hi1.
+specialize (rngl_has_inv_and_1_has_inv_and_1_or_pdiv Hon Hiv) as Hi1.
 destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
   intros.
   rewrite (rngl_characteristic_1_angle_0 Hc1 (angle_div_2_pow _ _)).

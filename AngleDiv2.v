@@ -259,7 +259,7 @@ Theorem angle_div_2_le_straight : ∀ θ, (θ /₂ ≤ angle_straight)%A.
 Proof.
 destruct_ac.
 specialize (rngl_int_dom_or_inv_1_quo Hiv Hon) as Hii.
-specialize (rngl_has_inv_and_1_has_inv_and_1_or_quot Hon Hiv) as Hi1.
+specialize (rngl_has_inv_and_1_has_inv_and_1_or_pdiv Hon Hiv) as Hi1.
 specialize (rngl_int_dom_or_inv_1_quo_and_eq_dec Hi1 Hed) as Hid.
 destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
   intros.
@@ -314,7 +314,7 @@ Qed.
 Theorem angle_0_div_2 : (0 /₂ = 0)%A.
 Proof.
 destruct_ac.
-specialize (rngl_has_inv_and_1_has_inv_and_1_or_quot Hon Hiv) as Hi1.
+specialize (rngl_has_inv_and_1_has_inv_and_1_or_pdiv Hon Hiv) as Hi1.
 destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
   intros.
   specialize (rngl_characteristic_1_angle_0 Hc1) as H1.
@@ -334,13 +334,13 @@ rewrite (rngl_div_0_l Hos Hi1). 2: {
 }
 apply (rl_sqrt_0 Hon Hop Hor).
 rewrite Bool.orb_true_iff; right.
-apply (rngl_has_inv_and_1_has_inv_and_1_or_quot Hon Hiv).
+apply (rngl_has_inv_and_1_has_inv_and_1_or_pdiv Hon Hiv).
 Qed.
 
 Theorem angle_straight_div_2 : (angle_straight /₂ = angle_right)%A.
 Proof.
 destruct_ac.
-specialize (rngl_has_inv_and_1_has_inv_and_1_or_quot Hon Hiv) as Hi1.
+specialize (rngl_has_inv_and_1_has_inv_and_1_or_pdiv Hon Hiv) as Hi1.
 specialize (rngl_int_dom_or_inv_1_quo_and_eq_dec Hi1 Hed) as Hid.
 destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
   intros.
@@ -359,7 +359,7 @@ rewrite (rngl_div_0_l Hos Hi1). 2: {
 }
 rewrite (rl_sqrt_0 Hon Hop Hor). 2: {
   rewrite Bool.orb_true_iff; right.
-  apply (rngl_has_inv_and_1_has_inv_and_1_or_quot Hon Hiv).
+  apply (rngl_has_inv_and_1_has_inv_and_1_or_pdiv Hon Hiv).
 }
 f_equal.
 rewrite (rngl_div_diag Hon Hiq). 2: {
@@ -372,7 +372,7 @@ Theorem angle_opp_div_2 :
   ∀ θ, (- (θ /₂) = (- θ) /₂ + if (θ =? 0)%A then 0 else angle_straight)%A.
 Proof.
 destruct_ac.
-specialize (rngl_has_inv_and_1_has_inv_and_1_or_quot Hon Hiv) as Hi1.
+specialize (rngl_has_inv_and_1_has_inv_and_1_or_pdiv Hon Hiv) as Hi1.
 destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
   specialize (rngl_characteristic_1_angle_0 Hc1) as H1.
   intros.
@@ -585,8 +585,8 @@ Theorem rngl_squ_sqrt_3_div_2_add_squ_half :
   ((√3 / 2)² + (1 / 2)²)%L = 1%L.
 Proof.
 intros Hic Hon Hop Hiv Hor.
-specialize (rngl_has_opp_has_opp_or_subt Hop) as Hos.
-specialize (rngl_has_inv_has_inv_or_quot Hiv) as Hiq.
+specialize (rngl_has_opp_has_opp_or_psub Hop) as Hos.
+specialize (rngl_has_inv_has_inv_or_pdiv Hiv) as Hiq.
 specialize (rngl_int_dom_or_inv_1_quo Hiv Hon) as Hii.
 destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
   specialize (rngl_characteristic_1 Hon Hos Hc1) as H1.
@@ -630,8 +630,8 @@ Theorem rngl_squ_sqrt_3_div_2_sub_squ_half :
   ((√3 / 2)² - (1 / 2)²)%L = (1 / 2)%L.
 Proof.
 intros Hic Hon Hop Hiv Hor.
-specialize (rngl_has_opp_has_opp_or_subt Hop) as Hos.
-specialize (rngl_has_inv_has_inv_or_quot Hiv) as Hiq.
+specialize (rngl_has_opp_has_opp_or_psub Hop) as Hos.
+specialize (rngl_has_inv_has_inv_or_pdiv Hiv) as Hiq.
 destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
   specialize (rngl_characteristic_1 Hon Hos Hc1) as H1.
   rewrite (H1 (1 / 2)%L).
@@ -796,8 +796,8 @@ Theorem rngl_0_leb_opp_sqrt_3_div_2 :
   (0 ≤? - (√3 / 2))%L = false.
 Proof.
 intros Hon Hop Hiv Hor Hc1.
-specialize (rngl_has_opp_has_opp_or_subt Hop) as Hos.
-specialize (rngl_has_inv_has_inv_or_quot Hiv) as Hiq.
+specialize (rngl_has_opp_has_opp_or_psub Hop) as Hos.
+specialize (rngl_has_inv_has_inv_or_pdiv Hiv) as Hiq.
 rewrite (rngl_leb_0_opp Hop Hor).
 apply (rngl_leb_gt Hor).
 apply (rngl_div_pos Hon Hop Hiv Hor). 2: {

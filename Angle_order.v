@@ -309,7 +309,7 @@ Theorem rngl_sin_nonneg_sin_nonneg_sin_neg :
 Proof.
 destruct_ac.
 intros * Haov Hzs1 Hzs2 Hzs3.
-specialize (rngl_has_inv_and_1_has_inv_and_1_or_quot Hon Hiv) as Hi1.
+specialize (rngl_has_inv_and_1_has_inv_and_1_or_pdiv Hon Hiv) as Hi1.
 specialize (rngl_int_dom_or_inv_1_quo_and_eq_dec Hi1 Hed) as Hid.
 specialize (rngl_int_dom_or_inv_1_quo Hiv Hon) as Hii.
 destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
@@ -416,7 +416,7 @@ rewrite <- (rngl_abs_nonneg_eq Hop Hor). 2: {
 }
 apply (eq_rngl_squ_rngl_abs Hop Hor). {
   rewrite Bool.orb_true_iff; right.
-  apply (rngl_has_inv_and_1_has_inv_and_1_or_quot Hon Hiv).
+  apply (rngl_has_inv_and_1_has_inv_and_1_or_pdiv Hon Hiv).
 } {
   apply (rngl_mul_comm Hic).
 }
