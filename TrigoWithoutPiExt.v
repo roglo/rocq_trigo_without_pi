@@ -4,6 +4,8 @@ From Stdlib Require Import Utf8 Arith.
 Require Import RingLike.Core.
 Require Import RingLike.RealLike.
 Require Import RingLike.Misc.
+
+Require Import Core.
 Require Import Angle.
 Require Import Angle_order.
 Require Import TacChangeAngle.
@@ -1604,32 +1606,6 @@ Qed.
 
 Context {rl : real_like_prop T}.
 
-Theorem rngl_acos_prop :
-  ∀ x, (x² ≤ 1)%L → cos2_sin2_prop x √(1 - x²)%L.
-Proof.
-destruct_ac.
-intros * Hx1.
-progress unfold cos2_sin2_prop.
-apply (rngl_eqb_eq Hed).
-rewrite (rngl_squ_sqrt Hon). 2: {
-  apply (rngl_le_add_le_sub_r Hop Hor).
-  now rewrite rngl_add_0_l.
-}
-rewrite rngl_add_comm.
-apply (rngl_sub_add Hop).
-Qed.
-
-Definition rngl_acos (x : T) :=
-  match (rngl_le_dec ac_or x² 1)%L with
-  | left Hx1 =>
-      {| rngl_cos := x; rngl_sin := √(1 - x²)%L;
-         rngl_cos2_sin2 := rngl_acos_prop x Hx1 |}
-  | _ =>
-      angle_zero
-  end.
-
-Arguments rngl_acos x%_L.
-
 End a.
 
 Section a.
@@ -2719,5 +2695,3 @@ now apply (rngl_lt_irrefl Hor) in H1.
 Qed.
 
 End a.
-
-Arguments rngl_acos {T ro rp ac rl} x%_L.
