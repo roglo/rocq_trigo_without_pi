@@ -43,16 +43,6 @@ Fixpoint angle_mul_nat a n :=
   | S n' => angle_add a (angle_mul_nat a n')
   end.
 
-Theorem cos2_sin2_1 :
-  ∀ θ, ((rngl_cos θ)² + (rngl_sin θ)² = 1)%L.
-Proof.
-destruct_ac.
-intros.
-destruct θ as (c, s, Hcs); cbn.
-progress unfold cos2_sin2_prop in Hcs.
-now apply (rngl_eqb_eq Hed) in Hcs.
-Qed.
-
 Theorem rngl_sin_proj_bound :
   ∀ c s, cos2_sin2_prop c s → (-1 ≤ s ≤ 1)%L.
 Proof.
@@ -218,82 +208,6 @@ apply (rngl_squ_eq_cases Hon Hop Hiv Heo) in H1. 2: {
 now destruct H1; subst c; [ left | right ]; apply eq_angle_eq.
 Qed.
 
-Theorem angle_add_comm :
-  ∀ θ1 θ2, (θ1 + θ2 = θ2 + θ1)%A.
-Proof.
-destruct_ac.
-intros.
-apply eq_angle_eq; cbn.
-rewrite (rngl_mul_comm Hic).
-rewrite (rngl_mul_comm Hic (rngl_sin θ1)).
-f_equal.
-rewrite rngl_add_comm.
-rewrite (rngl_mul_comm Hic).
-rewrite (rngl_mul_comm Hic (rngl_cos θ2)).
-easy.
-Qed.
-
-Theorem angle_add_assoc :
-  ∀ θ1 θ2 θ3, (θ1 + (θ2 + θ3) = (θ1 + θ2) + θ3)%A.
-Proof.
-destruct_ac.
-intros.
-apply eq_angle_eq; cbn.
-destruct θ1 as (c1, s1, Hcs1).
-destruct θ2 as (c2, s2, Hcs2).
-destruct θ3 as (c3, s3, Hcs3).
-cbn.
-f_equal. {
-  rewrite (rngl_mul_sub_distr_l Hop).
-  rewrite (rngl_mul_sub_distr_r Hop).
-  rewrite rngl_mul_add_distr_l.
-  rewrite rngl_mul_add_distr_r.
-  do 4 rewrite rngl_mul_assoc.
-  do 2 rewrite <- (rngl_sub_add_distr Hos).
-  f_equal.
-  rewrite rngl_add_comm; symmetry.
-  apply rngl_add_assoc.
-} {
-  rewrite (rngl_mul_sub_distr_l Hop).
-  rewrite (rngl_mul_sub_distr_r Hop).
-  rewrite rngl_mul_add_distr_l.
-  rewrite rngl_mul_add_distr_r.
-  do 4 rewrite rngl_mul_assoc.
-  rewrite (rngl_add_sub_assoc Hop).
-  rewrite rngl_add_assoc.
-  rewrite (rngl_add_sub_swap Hop).
-  f_equal.
-  symmetry.
-  apply (rngl_add_sub_swap Hop).
-}
-Qed.
-
-Theorem angle_add_opp_l :
-  ∀ θ1 θ2, (- θ1 + θ2 = θ2 - θ1)%A.
-Proof.
-intros.
-apply angle_add_comm.
-Qed.
-
-Theorem angle_add_opp_r : ∀ θ1 θ2, (θ1 + - θ2 = θ1 - θ2)%A.
-Proof. easy. Qed.
-
-Theorem angle_sub_diag : ∀ θ, (θ - θ = 0)%A.
-Proof.
-destruct_ac.
-intros.
-apply eq_angle_eq; cbn.
-rewrite (rngl_mul_opp_r Hop).
-rewrite (rngl_sub_opp_r Hop).
-do 2 rewrite fold_rngl_squ.
-rewrite cos2_sin2_1.
-f_equal.
-rewrite (rngl_mul_opp_r Hop).
-rewrite (rngl_mul_comm Hic).
-rewrite (rngl_add_opp_r Hop).
-apply (rngl_sub_diag Hos).
-Qed.
-
 Theorem angle_add_0_l : ∀ θ, (0 + θ = θ)%A.
 Proof.
 destruct_ac.
@@ -303,17 +217,6 @@ do 2 rewrite (rngl_mul_1_l Hon).
 do 2 rewrite (rngl_mul_0_l Hos).
 rewrite (rngl_sub_0_r Hos).
 now rewrite rngl_add_0_l.
-Qed.
-
-Theorem angle_add_0_r : ∀ θ, (θ + 0 = θ)%A.
-Proof.
-destruct_ac.
-intros.
-apply eq_angle_eq; cbn.
-do 2 rewrite (rngl_mul_1_r Hon).
-do 2 rewrite (rngl_mul_0_r Hos).
-rewrite (rngl_sub_0_r Hos).
-now rewrite rngl_add_0_r.
 Qed.
 
 Theorem angle_sub_0_l :
@@ -339,41 +242,6 @@ rewrite (rngl_opp_0 Hop).
 do 2 rewrite (rngl_mul_0_r Hos).
 rewrite (rngl_sub_0_r Hos).
 now rewrite rngl_add_0_r.
-Qed.
-
-Theorem angle_add_opp_diag_l : ∀ θ, (- θ + θ = 0)%A.
-Proof.
-destruct_ac; intros.
-apply eq_angle_eq; cbn.
-do 2 rewrite (rngl_mul_opp_l Hop).
-progress unfold rngl_sub.
-rewrite Hop.
-rewrite (rngl_opp_involutive Hop).
-do 2 rewrite fold_rngl_squ.
-rewrite cos2_sin2_1.
-f_equal.
-rewrite (rngl_add_opp_l Hop).
-rewrite (rngl_mul_comm Hic).
-apply (rngl_sub_diag Hos).
-Qed.
-
-Theorem angle_add_sub : ∀ θ1 θ2, (θ1 + θ2 - θ2)%A = θ1.
-Proof.
-destruct_ac; intros.
-progress unfold angle_sub.
-rewrite <- angle_add_assoc.
-rewrite angle_add_opp_r.
-rewrite angle_sub_diag.
-apply (angle_add_0_r).
-Qed.
-
-Theorem angle_sub_add : ∀ θ1 θ2, (θ1 - θ2 + θ2)%A = θ1.
-Proof.
-destruct_ac; intros.
-progress unfold angle_sub.
-rewrite <- angle_add_assoc.
-rewrite angle_add_opp_diag_l.
-apply (angle_add_0_r).
 Qed.
 
 Theorem angle_opp_add_distr :
