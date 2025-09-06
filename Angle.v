@@ -87,15 +87,9 @@ destruct a as (ca, sa, Ha); cbn.
 now apply (rngl_sin_proj_bound ca sa).
 Qed.
 
-(* *)
-
-Definition angle_eqb a b :=
-  ((rngl_cos a =? rngl_cos b)%L && (rngl_sin a =? rngl_sin b)%L)%bool.
-
 End a.
 
 Notation "θ1 =? θ2" := (angle_eqb θ1 θ2) : angle_scope.
-Notation "θ1 ≠? θ2" := (negb (angle_eqb θ1 θ2)) : angle_scope.
 Notation "n * θ" := (angle_mul_nat θ n) : angle_scope.
 
 Section a.

@@ -19,9 +19,7 @@ Context {ac : angle_ctx T}.
 
 (* *)
 
-Definition angle_add_overflow θ1 θ2 := ((θ1 ≠? 0)%A && (- θ1 ≤? θ2)%A)%bool.
-
-(* equivalent definition *)
+(* equivalent definition of angle_add_overflow *)
 Definition angle_add_overflow2 θ1 θ2 := (θ1 + θ2 <? θ1)%A.
 
 Theorem angle_add_overflow_0_l : ∀ θ, angle_add_overflow 0 θ = false.

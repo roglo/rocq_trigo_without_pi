@@ -787,4 +787,3 @@ now destruct H2.
 Qed.
 
 End a.
-
