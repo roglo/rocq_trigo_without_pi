@@ -94,8 +94,6 @@ Definition angle_eqb a b :=
 
 End a.
 
-Notation "θ1 + θ2" := (angle_add θ1 θ2) : angle_scope.
-Notation "θ1 - θ2" := (angle_sub θ1 θ2) : angle_scope.
 Notation "θ1 =? θ2" := (angle_eqb θ1 θ2) : angle_scope.
 Notation "θ1 ≠? θ2" := (negb (angle_eqb θ1 θ2)) : angle_scope.
 Notation "n * θ" := (angle_mul_nat θ n) : angle_scope.

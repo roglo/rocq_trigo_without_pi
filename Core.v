@@ -319,6 +319,7 @@ End a.
 Arguments rngl_acos {T ro rp rl ac} x%_L.
 
 Notation "0" := angle_zero : angle_scope.
+Notation "θ1 + θ2" := (angle_add θ1 θ2) : angle_scope.
 Notation "θ1 - θ2" := (angle_sub θ1 θ2) : angle_scope.
 Notation "- θ" := (angle_opp θ) : angle_scope.
 Notation "θ /₂" := (angle_div_2 θ) (at level 40) : angle_scope.
