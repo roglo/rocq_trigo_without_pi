@@ -322,3 +322,89 @@ Notation "0" := angle_zero : angle_scope.
 Notation "θ1 - θ2" := (angle_sub θ1 θ2) : angle_scope.
 Notation "- θ" := (angle_opp θ) : angle_scope.
 Notation "θ /₂" := (angle_div_2 θ) (at level 40) : angle_scope.
+
+
+Section a.
+
+Context {T : Type}.
+Context {ro : ring_like_op T}.
+Context {rp : ring_like_prop T}.
+Context {rl : real_like_prop T}.
+Context {ac : angle_ctx T}.
+
+Theorem eq_angle_eq : ∀ θ1 θ2,
+  (rngl_cos θ1, rngl_sin θ1) = (rngl_cos θ2, rngl_sin θ2) ↔ θ1 = θ2.
+Proof.
+intros.
+split; intros Hab; [ | now subst θ2 ].
+injection Hab; clear Hab; intros Hs Hc.
+destruct θ1 as (aco, asi, Hacs).
+destruct θ2 as (bco, bsi, Hbcs).
+cbn in Hs, Hc.
+subst bsi bco.
+f_equal.
+apply (Eqdep_dec.UIP_dec Bool.bool_dec).
+Qed.
+
+Theorem angle_opp_sub_distr :
+  ∀ θ1 θ2, (- (θ1 - θ2))%A = (θ2 - θ1)%A.
+Proof.
+destruct_ac.
+intros.
+apply eq_angle_eq; cbn.
+do 3 rewrite (rngl_mul_opp_r Hop).
+do 2 rewrite (rngl_sub_opp_r Hop).
+rewrite (rngl_add_opp_r Hop).
+rewrite (rngl_opp_sub_distr Hop).
+do 2 rewrite (rngl_mul_comm Hic (rngl_cos θ1)).
+do 2 rewrite (rngl_mul_comm Hic (rngl_sin θ1)).
+f_equal.
+rewrite (rngl_mul_opp_r Hop).
+symmetry.
+apply (rngl_add_opp_r Hop).
+Qed.
+
+Theorem rngl_characteristic_1_angle_0 :
+  rngl_characteristic T = 1 →
+  ∀ θ, (θ = 0)%A.
+Proof.
+destruct_ac.
+intros Hc1 *.
+specialize (rngl_characteristic_1 Hon Hos Hc1) as H1.
+apply eq_angle_eq.
+do 2 rewrite (H1 (rngl_cos _)).
+now do 2 rewrite (H1 (rngl_sin _)).
+Qed.
+
+Theorem angle_straight_div_2 : (angle_straight /₂ = angle_right)%A.
+Proof.
+destruct_ac.
+specialize (rngl_has_inv_and_1_has_inv_and_1_or_pdiv Hon Hiv) as Hi1.
+specialize (rngl_int_dom_or_inv_1_quo_and_eq_dec Hi1 Hed) as Hid.
+destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
+  intros.
+  specialize (rngl_characteristic_1_angle_0 Hc1) as H1.
+  rewrite (H1 angle_right).
+  apply H1.
+}
+apply eq_angle_eq; cbn.
+rewrite (rngl_leb_refl Hor).
+rewrite (rngl_mul_1_l Hon).
+rewrite (rngl_add_opp_r Hop).
+rewrite (rngl_sub_opp_r Hop).
+rewrite (rngl_sub_diag Hos).
+rewrite (rngl_div_0_l Hos Hi1). 2: {
+  apply (rngl_2_neq_0 Hon Hos Hiq Hc1 Hor).
+}
+rewrite (rl_sqrt_0 Hon Hop Hor). 2: {
+  rewrite Bool.orb_true_iff; right.
+  apply (rngl_has_inv_and_1_has_inv_and_1_or_pdiv Hon Hiv).
+}
+f_equal.
+rewrite (rngl_div_diag Hon Hiq). 2: {
+  apply (rngl_2_neq_0 Hon Hos Hiq Hc1 Hor).
+}
+apply (rl_sqrt_1 Hon Hop Hiq Hor).
+Qed.
+
+End a.

@@ -29,20 +29,6 @@ Context {rp : ring_like_prop T}.
 Context {rl : real_like_prop T}.
 Context {ac : angle_ctx T}.
 
-Theorem eq_angle_eq : ∀ θ1 θ2,
-  (rngl_cos θ1, rngl_sin θ1) = (rngl_cos θ2, rngl_sin θ2) ↔ θ1 = θ2.
-Proof.
-intros.
-split; intros Hab; [ | now subst θ2 ].
-injection Hab; clear Hab; intros Hs Hc.
-destruct θ1 as (aco, asi, Hacs).
-destruct θ2 as (bco, bsi, Hbcs).
-cbn in Hs, Hc.
-subst bsi bco.
-f_equal.
-apply (Eqdep_dec.UIP_dec Bool.bool_dec).
-Qed.
-
 Theorem neq_angle_neq : ∀ θ1 θ2,
   (rngl_cos θ1, rngl_sin θ1) ≠ (rngl_cos θ2, rngl_sin θ2) ↔ θ1 ≠ θ2.
 Proof.
@@ -414,24 +400,6 @@ f_equal.
 rewrite (rngl_opp_add_distr Hop).
 rewrite (rngl_opp_sub_swap Hop).
 rewrite <- (rngl_mul_opp_l Hop).
-rewrite (rngl_mul_opp_r Hop).
-symmetry.
-apply (rngl_add_opp_r Hop).
-Qed.
-
-Theorem angle_opp_sub_distr :
-  ∀ θ1 θ2, (- (θ1 - θ2))%A = (θ2 - θ1)%A.
-Proof.
-destruct_ac.
-intros.
-apply eq_angle_eq; cbn.
-do 3 rewrite (rngl_mul_opp_r Hop).
-do 2 rewrite (rngl_sub_opp_r Hop).
-rewrite (rngl_add_opp_r Hop).
-rewrite (rngl_opp_sub_distr Hop).
-do 2 rewrite (rngl_mul_comm Hic (rngl_cos θ1)).
-do 2 rewrite (rngl_mul_comm Hic (rngl_sin θ1)).
-f_equal.
 rewrite (rngl_mul_opp_r Hop).
 symmetry.
 apply (rngl_add_opp_r Hop).
@@ -1651,18 +1619,6 @@ injection H12; clear H12; intros H1 H2.
 apply (rngl_opp_inj Hop) in H1.
 apply eq_angle_eq.
 now rewrite H1, H2.
-Qed.
-
-Theorem rngl_characteristic_1_angle_0 :
-  rngl_characteristic T = 1 →
-  ∀ θ, (θ = 0)%A.
-Proof.
-destruct_ac.
-intros Hc1 *.
-specialize (rngl_characteristic_1 Hon Hos Hc1) as H1.
-apply eq_angle_eq.
-do 2 rewrite (H1 (rngl_cos _)).
-now do 2 rewrite (H1 (rngl_sin _)).
 Qed.
 
 Theorem rngl_add_cos_neg_when_sin_nonneg_neg :

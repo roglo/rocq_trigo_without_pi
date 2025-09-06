@@ -270,37 +270,6 @@ rewrite Bool.orb_true_iff; right.
 apply (rngl_has_inv_and_1_has_inv_and_1_or_pdiv Hon Hiv).
 Qed.
 
-Theorem angle_straight_div_2 : (angle_straight /₂ = angle_right)%A.
-Proof.
-destruct_ac.
-specialize (rngl_has_inv_and_1_has_inv_and_1_or_pdiv Hon Hiv) as Hi1.
-specialize (rngl_int_dom_or_inv_1_quo_and_eq_dec Hi1 Hed) as Hid.
-destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
-  intros.
-  specialize (rngl_characteristic_1_angle_0 Hc1) as H1.
-  rewrite (H1 angle_right).
-  apply H1.
-}
-apply eq_angle_eq; cbn.
-rewrite (rngl_leb_refl Hor).
-rewrite (rngl_mul_1_l Hon).
-rewrite (rngl_add_opp_r Hop).
-rewrite (rngl_sub_opp_r Hop).
-rewrite (rngl_sub_diag Hos).
-rewrite (rngl_div_0_l Hos Hi1). 2: {
-  apply (rngl_2_neq_0 Hon Hos Hiq Hc1 Hor).
-}
-rewrite (rl_sqrt_0 Hon Hop Hor). 2: {
-  rewrite Bool.orb_true_iff; right.
-  apply (rngl_has_inv_and_1_has_inv_and_1_or_pdiv Hon Hiv).
-}
-f_equal.
-rewrite (rngl_div_diag Hon Hiq). 2: {
-  apply (rngl_2_neq_0 Hon Hos Hiq Hc1 Hor).
-}
-apply (rl_sqrt_1 Hon Hop Hiq Hor).
-Qed.
-
 Theorem angle_opp_div_2 :
   ∀ θ, (- (θ /₂) = (- θ) /₂ + if (θ =? 0)%A then 0 else angle_straight)%A.
 Proof.
