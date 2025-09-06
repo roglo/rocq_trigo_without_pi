@@ -51,20 +51,6 @@ split; intros Hab H; [ now subst θ2 | ].
 now apply eq_angle_eq in H.
 Qed.
 
-Theorem angle_right_prop : cos2_sin2_prop 0 1.
-Proof.
-destruct_ac.
-progress unfold cos2_sin2_prop.
-rewrite (rngl_squ_0 Hos).
-rewrite (rngl_squ_1 Hon).
-rewrite rngl_add_0_l.
-apply (rngl_eqb_refl Hed).
-Qed.
-
-Definition angle_right :=
-  {| rngl_cos := 0; rngl_sin := 1;
-     rngl_cos2_sin2 := angle_right_prop |}%L.
-
 Fixpoint angle_mul_nat a n :=
   match n with
   | 0 => angle_zero

@@ -23,20 +23,11 @@ Definition angle_leb θ1 θ2 :=
     if (0 ≤? rngl_sin θ2)%L then false
     else (rngl_cos θ1 ≤? rngl_cos θ2)%L.
 
-Definition angle_ltb θ1 θ2 :=
-  if (0 ≤? rngl_sin θ1)%L then
-    if (0 ≤? rngl_sin θ2)%L then (rngl_cos θ2 <? rngl_cos θ1)%L
-    else true
-  else
-    if (0 ≤? rngl_sin θ2)%L then false
-    else (rngl_cos θ1 <? rngl_cos θ2)%L.
-
 End a.
 
 Notation "θ1 ≤? θ2" := (angle_leb θ1 θ2) : angle_scope.
 Notation "θ1 <? θ2" := (angle_ltb θ1 θ2) : angle_scope.
 Notation "θ1 ≤ θ2" := (angle_leb θ1 θ2 = true) : angle_scope.
-Notation "θ1 < θ2" := (angle_ltb θ1 θ2 = true) : angle_scope.
 Notation "θ1 ≤ θ2 < θ3" :=
   (angle_leb θ1 θ2 = true ∧ angle_ltb θ2 θ3 = true) : angle_scope.
 Notation "θ1 ≤ θ2 ≤ θ3" :=

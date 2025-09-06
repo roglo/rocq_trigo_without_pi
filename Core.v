@@ -66,6 +66,16 @@ rewrite rngl_add_0_r.
 apply (rngl_eqb_refl Hed).
 Qed.
 
+Theorem angle_right_prop : cos2_sin2_prop 0 1.
+Proof.
+destruct_ac.
+progress unfold cos2_sin2_prop.
+rewrite (rngl_squ_0 Hos).
+rewrite (rngl_squ_1 Hon).
+rewrite rngl_add_0_l.
+apply (rngl_eqb_refl Hed).
+Qed.
+
 Theorem angle_straight_prop : cos2_sin2_prop (-1) 0.
 Proof.
 destruct_ac.
@@ -95,6 +105,10 @@ Qed.
 
 Definition angle_zero :=
   {| rngl_cos := 1; rngl_sin := 0; rngl_cos2_sin2 := angle_zero_prop |}%L.
+
+Definition angle_right :=
+  {| rngl_cos := 0; rngl_sin := 1;
+     rngl_cos2_sin2 := angle_right_prop |}%L.
 
 Definition angle_straight :=
   {| rngl_cos := -1; rngl_sin := 0;
@@ -162,6 +176,42 @@ Definition angle_opp a :=
      rngl_cos2_sin2 := angle_opp_prop a |}.
 
 Definition angle_sub θ1 θ2 := angle_add θ1 (angle_opp θ2).
+
+Definition angle_ltb θ1 θ2 :=
+  if (0 ≤? rngl_sin θ1)%L then
+    if (0 ≤? rngl_sin θ2)%L then (rngl_cos θ2 <? rngl_cos θ1)%L
+    else true
+  else
+    if (0 ≤? rngl_sin θ2)%L then false
+    else (rngl_cos θ1 <? rngl_cos θ2)%L.
+
+End a.
+
+Notation "θ1 < θ2" := (angle_ltb θ1 θ2 = true) : angle_scope.
+
+Section a.
+
+Context {T : Type}.
+Context {ro : ring_like_op T}.
+Context {rp : ring_like_prop T}.
+Context {rl : real_like_prop T}.
+Context {ac : angle_ctx T}.
+
+Theorem rngl_lt_0_cos :
+  ∀ θ, (θ < angle_right)%A → (0 < rngl_cos θ)%L.
+Proof.
+destruct_ac.
+intros * Htr.
+progress unfold angle_ltb in Htr.
+cbn in Htr.
+specialize (rngl_0_le_1 Hon Hos Hiq Hor) as H1.
+apply rngl_leb_le in H1.
+rewrite H1 in Htr.
+remember (0 ≤? rngl_sin θ)%L as zst eqn:Hzst.
+symmetry in Hzst.
+destruct zst; [ | easy ].
+now apply rngl_ltb_lt in Htr.
+Qed.
 
 (* *)
 
