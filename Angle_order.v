@@ -279,6 +279,34 @@ apply rngl_leb_le.
 apply rngl_cos_bound.
 Qed.
 
+Theorem angle_add_overflow_0_l : ∀ θ, angle_add_overflow 0 θ = false.
+Proof.
+intros.
+progress unfold angle_add_overflow.
+apply Bool.andb_false_iff; left.
+apply Bool.negb_false_iff.
+now apply angle_eqb_eq.
+Qed.
+
+Theorem angle_add_overflow_0_r : ∀ θ, angle_add_overflow θ 0 = false.
+Proof.
+intros.
+progress unfold angle_add_overflow.
+apply Bool.andb_false_iff.
+destruct (angle_eq_dec θ 0) as [Htz| Htz]. {
+  subst θ; left.
+  apply Bool.negb_false_iff.
+  now apply angle_eqb_eq.
+}
+right.
+apply angle_leb_gt.
+apply angle_lt_iff.
+split; [ apply angle_nonneg | ].
+intros H; apply Htz; clear Htz.
+apply (f_equal angle_opp) in H.
+now rewrite angle_opp_0, angle_opp_involutive in H.
+Qed.
+
 Theorem angle_le_rngl_sin_nonneg_sin_nonneg :
   ∀ θ1 θ2,
   (θ2 ≤ θ1)%A

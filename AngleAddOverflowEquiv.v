@@ -1,3 +1,5 @@
+(* equivalent definition of angle_add_overflow *)
+
 From Stdlib Require Import Utf8 Arith.
 
 Require Import RingLike.Core.
@@ -12,52 +14,7 @@ Context {ro : ring_like_op T}.
 Context {rp : ring_like_prop T}.
 Context {ac : angle_ctx T}.
 
-(* equivalent definition of angle_add_overflow *)
 Definition angle_add_overflow2 θ1 θ2 := (θ1 + θ2 <? θ1)%A.
-
-Theorem angle_add_overflow_0_l : ∀ θ, angle_add_overflow 0 θ = false.
-Proof.
-intros.
-progress unfold angle_add_overflow.
-apply Bool.andb_false_iff; left.
-apply Bool.negb_false_iff.
-now apply angle_eqb_eq.
-Qed.
-
-Theorem angle_add_overflow_0_r : ∀ θ, angle_add_overflow θ 0 = false.
-Proof.
-intros.
-progress unfold angle_add_overflow.
-apply Bool.andb_false_iff.
-destruct (angle_eq_dec θ 0) as [Htz| Htz]. {
-  subst θ; left.
-  apply Bool.negb_false_iff.
-  now apply angle_eqb_eq.
-}
-right.
-apply angle_leb_gt.
-apply angle_lt_iff.
-split; [ apply angle_nonneg | ].
-intros H; apply Htz; clear Htz.
-apply (f_equal angle_opp) in H.
-now rewrite angle_opp_0, angle_opp_involutive in H.
-Qed.
-
-Theorem rngl_sin_add_nonneg :
-  ∀ θ1 θ2,
-  (0 ≤ rngl_sin θ1)%L
-  → (0 ≤ rngl_sin θ2)%L
-  → (0 ≤ rngl_cos θ1)%L
-  → (0 ≤ rngl_cos θ2)%L
-  → (0 ≤ rngl_sin (θ1 + θ2))%L.
-Proof.
-destruct_ac.
-intros * Hzs1 Hzs2 Hcs1 Hcs2.
-cbn.
-apply (rngl_le_0_add Hos Hor).
-now apply (rngl_mul_nonneg_nonneg Hon Hos Hiq Hor).
-now apply (rngl_mul_nonneg_nonneg Hon Hos Hiq Hor).
-Qed.
 
 Theorem rngl_cos_add_le_cos :
   ∀ θ1 θ2,
@@ -157,60 +114,6 @@ apply (rngl_add_neg_nonpos Hop Hor). {
 }
 Qed.
 
-Theorem quadrant_1_sin_sub_nonneg_cos_le :
-  ∀ θ1 θ2,
-  (0 ≤ rngl_sin θ1)%L
-  → (0 ≤ rngl_sin θ2)%L
-  → (0 ≤ rngl_cos θ2)%L
-  → (0 ≤ rngl_sin (θ1 - θ2))%L
-  → (rngl_cos θ1 ≤ rngl_cos θ2)%L.
-Proof.
-destruct_ac.
-specialize (rngl_int_dom_or_inv_1_quo Hiv Hon) as Hii.
-specialize (rngl_has_eq_dec_or_is_ordered_r Hor) as Heo.
-destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
-  specialize (rngl_characteristic_1 Hon Hos Hc1) as H1.
-  intros.
-  do 2 rewrite (H1 (rngl_cos _)).
-  apply (rngl_le_refl Hor).
-}
-intros * Hsz1 Hzs2 Hzc2 Hzs12.
-destruct (rngl_eq_dec Heo (rngl_sin θ2) 0) as [Hs2z| Hs2z]. {
-  apply eq_rngl_sin_0 in Hs2z.
-  destruct Hs2z; subst θ2; [ apply rngl_cos_bound | ].
-  exfalso.
-  apply rngl_nlt_ge in Hzc2.
-  apply Hzc2; clear Hzc2; cbn.
-  apply (rngl_opp_1_lt_0 Hon Hop Hiq Hor Hc1).
-}
-cbn in Hzs12.
-rewrite (rngl_mul_opp_r Hop) in Hzs12.
-rewrite (rngl_add_opp_r Hop) in Hzs12.
-apply -> (rngl_le_0_sub Hop Hor) in Hzs12.
-apply (rngl_lt_eq_cases Hor) in Hzs2.
-apply not_eq_sym in Hs2z.
-destruct Hzs2 as [Hzs2| Hzs2]; [ | easy ].
-clear Hs2z.
-apply (rngl_mul_le_mono_pos_r Hon Hop Hiq Hor _ _ (rngl_sin θ2) Hzs2) in Hzs12.
-rewrite <- rngl_mul_assoc in Hzs12.
-rewrite fold_rngl_squ in Hzs12.
-specialize (cos2_sin2_1 θ2) as H1.
-apply (rngl_add_move_l Hop) in H1.
-rewrite H1 in Hzs12; clear H1.
-rewrite (rngl_mul_sub_distr_l Hop) in Hzs12.
-rewrite (rngl_mul_1_r Hon) in Hzs12.
-apply (rngl_le_sub_le_add_l Hop Hor) in Hzs12.
-eapply (rngl_le_trans Hor); [ apply Hzs12 | ].
-rewrite (rngl_mul_mul_swap Hic).
-progress unfold rngl_squ.
-rewrite rngl_mul_assoc.
-rewrite <- rngl_mul_add_distr_r.
-rewrite <- rngl_cos_sub.
-rewrite <- (rngl_mul_1_l Hon).
-apply (rngl_mul_le_mono_nonneg_r Hon Hop Hiq Hor); [ easy | ].
-apply rngl_cos_bound.
-Qed.
-
 Theorem quadrant_1_quadrant_4_cos_lt_cos_add :
   ∀ θ1 θ2,
   (0 ≤ rngl_sin θ1)%L
@@ -306,31 +209,6 @@ rewrite angle_straight_add_straight in Hzs12.
 cbn in Hzs12.
 rewrite (rngl_opp_0 Hop) in Hzs12.
 now apply (rngl_lt_irrefl Hor) in Hzs12.
-Qed.
-
-Theorem rngl_sin_sub_lt_sin_l :
-  ∀ θ1 θ2,
-  (0 ≤ rngl_sin θ1)%L
-  → (0 < rngl_sin θ2)%L
-  → (0 < rngl_cos θ1)%L
-  → (rngl_sin (θ1 - θ2) < rngl_sin θ1)%L.
-Proof.
-destruct_ac.
-specialize (rngl_int_dom_or_inv_1_quo Hiv Hon) as Hii.
-intros * Hc1z Hzs2 Hzc1.
-cbn.
-rewrite (rngl_mul_opp_r Hop).
-rewrite (rngl_add_opp_r Hop).
-apply (rngl_lt_sub_lt_add_r Hop Hor).
-eapply (rngl_le_lt_trans Hor _ (rngl_sin θ1)). {
-  apply (rngl_le_0_sub Hop Hor).
-  rewrite (rngl_sub_mul_r_diag_l Hon Hop).
-  apply (rngl_mul_nonneg_nonneg Hon Hos Hiq Hor); [ easy | ].
-  apply (rngl_le_0_sub Hop Hor).
-  apply rngl_cos_bound.
-}
-apply (rngl_lt_add_r Hos Hor).
-now apply (rngl_mul_pos_pos Hon Hop Hiq Hor).
 Qed.
 
 Theorem angle_add_overflow_equiv2 :
