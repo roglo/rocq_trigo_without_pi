@@ -192,8 +192,7 @@ Fixpoint angle_mul_nat a n :=
   | S n' => angle_add a (angle_mul_nat a n')
   end.
 
-Theorem cos2_sin2_prop_add_squ :
-  ∀ c s, cos2_sin2_prop c s → (c² + s² = 1)%L.
+Theorem cos2_sin2_prop_add_squ : ∀ c s, cos2_sin2_prop c s → (c² + s² = 1)%L.
 Proof.
 destruct_ac.
 intros * Hcs.
@@ -201,8 +200,7 @@ progress unfold cos2_sin2_prop in Hcs.
 now apply (rngl_eqb_eq Hed) in Hcs.
 Qed.
 
-Theorem cos2_sin2_1 :
-  ∀ θ, ((rngl_cos θ)² + (rngl_sin θ)² = 1)%L.
+Theorem cos2_sin2_1 : ∀ θ, ((rngl_cos θ)² + (rngl_sin θ)² = 1)%L.
 Proof.
 destruct_ac.
 intros.
@@ -211,8 +209,7 @@ progress unfold cos2_sin2_prop in Hcs.
 now apply (rngl_eqb_eq Hed) in Hcs.
 Qed.
 
-Theorem rngl_cos_proj_bound :
-  ∀ c s, cos2_sin2_prop c s → (-1 ≤ c ≤ 1)%L.
+Theorem rngl_cos_proj_bound : ∀ c s, cos2_sin2_prop c s → (-1 ≤ c ≤ 1)%L.
 Proof.
 destruct_ac.
 intros * Hcs.
@@ -235,8 +232,7 @@ rewrite (rngl_abs_1 Hon Hos Hiq Hor) in H.
 now apply (rngl_abs_le Hop Hor) in H.
 Qed.
 
-Theorem rngl_sin_proj_bound :
-  ∀ c s, cos2_sin2_prop c s → (-1 ≤ s ≤ 1)%L.
+Theorem rngl_sin_proj_bound : ∀ c s, cos2_sin2_prop c s → (-1 ≤ s ≤ 1)%L.
 Proof.
 destruct_ac.
 intros * Hcs.
@@ -260,8 +256,7 @@ rewrite (rngl_abs_1 Hon Hos Hiq Hor) in H.
 now apply (rngl_abs_le Hop Hor) in H.
 Qed.
 
-Theorem rngl_cos_bound :
-  ∀ a, (-1 ≤ rngl_cos a ≤ 1)%L.
+Theorem rngl_cos_bound : ∀ a, (-1 ≤ rngl_cos a ≤ 1)%L.
 Proof.
 destruct_ac.
 intros.
@@ -269,8 +264,7 @@ destruct a as (ca, sa, Ha); cbn.
 now apply (rngl_cos_proj_bound ca sa).
 Qed.
 
-Theorem rngl_sin_bound :
-  ∀ a, (-1 ≤ rngl_sin a ≤ 1)%L.
+Theorem rngl_sin_bound : ∀ a, (-1 ≤ rngl_sin a ≤ 1)%L.
 Proof.
 destruct_ac.
 intros.
@@ -403,8 +397,7 @@ apply (rngl_lt_le_incl Hor).
 apply (rngl_0_lt_2 Hon Hos Hiq Hc1 Hor).
 Qed.
 
-Theorem eq_rngl_sin_0 :
-  ∀ θ, rngl_sin θ = 0%L → θ = 0%A ∨ θ = angle_straight.
+Theorem eq_rngl_sin_0 : ∀ θ, rngl_sin θ = 0%L → θ = 0%A ∨ θ = angle_straight.
 Proof.
 destruct_ac.
 specialize (rngl_has_eq_dec_or_is_ordered_r Hor) as Heo.
@@ -423,8 +416,7 @@ apply (rngl_squ_eq_cases Hon Hop Hiv Heo) in H1. 2: {
 now destruct H1; subst c; [ left | right ]; apply eq_angle_eq.
 Qed.
 
-Theorem angle_add_comm :
-  ∀ θ1 θ2, (θ1 + θ2 = θ2 + θ1)%A.
+Theorem angle_add_comm : ∀ θ1 θ2, (θ1 + θ2 = θ2 + θ1)%A.
 Proof.
 destruct_ac.
 intros.
@@ -438,8 +430,7 @@ rewrite (rngl_mul_comm Hic (rngl_cos θ2)).
 easy.
 Qed.
 
-Theorem angle_add_assoc :
-  ∀ θ1 θ2 θ3, (θ1 + (θ2 + θ3) = (θ1 + θ2) + θ3)%A.
+Theorem angle_add_assoc : ∀ θ1 θ2 θ3, (θ1 + (θ2 + θ3) = (θ1 + θ2) + θ3)%A.
 Proof.
 destruct_ac.
 intros.
@@ -473,8 +464,7 @@ f_equal. {
 }
 Qed.
 
-Theorem angle_add_opp_l :
-  ∀ θ1 θ2, (- θ1 + θ2 = θ2 - θ1)%A.
+Theorem angle_add_opp_l : ∀ θ1 θ2, (- θ1 + θ2 = θ2 - θ1)%A.
 Proof.
 intros.
 apply angle_add_comm.
@@ -579,8 +569,7 @@ rewrite angle_add_opp_diag_l.
 apply (angle_add_0_r).
 Qed.
 
-Theorem angle_opp_add_distr :
-  ∀ θ1 θ2, (- (θ1 + θ2))%A = (- θ2 - θ1)%A.
+Theorem angle_opp_add_distr : ∀ θ1 θ2, (- (θ1 + θ2))%A = (- θ2 - θ1)%A.
 Proof.
 destruct_ac.
 intros.
@@ -600,8 +589,7 @@ symmetry.
 apply (rngl_add_opp_r Hop).
 Qed.
 
-Theorem angle_opp_sub_distr :
-  ∀ θ1 θ2, (- (θ1 - θ2))%A = (θ2 - θ1)%A.
+Theorem angle_opp_sub_distr : ∀ θ1 θ2, (- (θ1 - θ2))%A = (θ2 - θ1)%A.
 Proof.
 destruct_ac.
 intros.
@@ -639,8 +627,7 @@ rewrite angle_opp_involutive.
 apply angle_add_comm.
 Qed.
 
-Theorem angle_add_move_l :
-  ∀ θ1 θ2 θ3, (θ1 + θ2)%A = θ3 ↔ θ2 = (θ3 - θ1)%A.
+Theorem angle_add_move_l : ∀ θ1 θ2 θ3, (θ1 + θ2)%A = θ3 ↔ θ2 = (θ3 - θ1)%A.
 Proof.
 destruct_ac.
 intros.
@@ -655,16 +642,14 @@ split; intros H2. {
 }
 Qed.
 
-Theorem angle_add_move_r :
-  ∀ θ1 θ2 θ3, (θ1 + θ2)%A = θ3 ↔ θ1 = (θ3 - θ2)%A.
+Theorem angle_add_move_r : ∀ θ1 θ2 θ3, (θ1 + θ2)%A = θ3 ↔ θ1 = (θ3 - θ2)%A.
 Proof.
 destruct_ac; intros.
 rewrite angle_add_comm.
 apply angle_add_move_l.
 Qed.
 
-Theorem angle_sub_move_l :
-  ∀ θ1 θ2 θ3, (θ1 - θ2)%A = θ3 ↔ θ2 = (θ1 - θ3)%A.
+Theorem angle_sub_move_l : ∀ θ1 θ2 θ3, (θ1 - θ2)%A = θ3 ↔ θ2 = (θ1 - θ3)%A.
 Proof.
 destruct_ac.
 intros.
@@ -681,8 +666,7 @@ split; intros Ha. {
 }
 Qed.
 
-Theorem angle_sub_move_r :
-  ∀ θ1 θ2 θ3, (θ1 - θ2)%A = θ3 ↔ θ1 = (θ3 + θ2)%A.
+Theorem angle_sub_move_r : ∀ θ1 θ2 θ3, (θ1 - θ2)%A = θ3 ↔ θ1 = (θ3 + θ2)%A.
 Proof.
 destruct_ac.
 intros.
@@ -989,8 +973,7 @@ apply eq_angle_eq.
 now rewrite Hθ, H1.
 Qed.
 
-Theorem eq_rngl_cos_opp_1 :
-  ∀ θ, (rngl_cos θ = -1 → θ = angle_straight)%L.
+Theorem eq_rngl_cos_opp_1 : ∀ θ, (rngl_cos θ = -1 → θ = angle_straight)%L.
 Proof.
 destruct_ac.
 specialize (rngl_has_eq_dec_or_is_ordered_r Hor) as Heo.
@@ -1012,8 +995,7 @@ rewrite Heo, Bool.andb_true_r.
 apply (rngl_has_inv_and_1_has_inv_and_1_or_pdiv Hon Hiv).
 Qed.
 
-Theorem eq_rngl_sin_1 :
-  ∀ θ, rngl_sin θ = 1%L ↔ θ = angle_right.
+Theorem eq_rngl_sin_1 : ∀ θ, rngl_sin θ = 1%L ↔ θ = angle_right.
 Proof.
 destruct_ac.
 specialize (rngl_has_eq_dec_or_is_ordered_r Hor) as Heo.
@@ -1822,8 +1804,7 @@ apply (rngl_opp_nonneg_nonpos Hop Hor) in Hs2.
 now apply rngl_nle_gt in Hs1.
 Qed.
 
-Theorem angle_opp_inj :
-  ∀ θ1 θ2, (- θ1)%A = (- θ2)%A → θ1 = θ2.
+Theorem angle_opp_inj : ∀ θ1 θ2, (- θ1)%A = (- θ2)%A → θ1 = θ2.
 Proof.
 destruct_ac.
 intros * H12.
@@ -2247,8 +2228,7 @@ apply rngl_leb_le in Hzs1, Hzs2.
 congruence.
 Qed.
 
-Theorem angle_add_add_swap :
-  ∀ θ1 θ2 θ3, (θ1 + θ2 + θ3)%A = (θ1 + θ3 + θ2)%A.
+Theorem angle_add_add_swap : ∀ θ1 θ2 θ3, (θ1 + θ2 + θ3)%A = (θ1 + θ3 + θ2)%A.
 Proof.
 intros.
 do 2 rewrite <- angle_add_assoc.
@@ -2256,8 +2236,7 @@ f_equal.
 apply angle_add_comm.
 Qed.
 
-Theorem angle_sub_sub_swap :
-  ∀ θ1 θ2 θ3, (θ1 - θ2 - θ3 = θ1 - θ3 - θ2)%A.
+Theorem angle_sub_sub_swap : ∀ θ1 θ2 θ3, (θ1 - θ2 - θ3 = θ1 - θ3 - θ2)%A.
 Proof.
 intros.
 progress unfold angle_sub.
@@ -2487,8 +2466,7 @@ rewrite (rngl_sub_opp_r Hop).
 apply rngl_add_0_l.
 Qed.
 
-Theorem rngl_cos_sub_comm :
-  ∀ θ1 θ2, rngl_cos (θ1 - θ2) = rngl_cos (θ2 - θ1).
+Theorem rngl_cos_sub_comm : ∀ θ1 θ2, rngl_cos (θ1 - θ2) = rngl_cos (θ2 - θ1).
 Proof.
 destruct_ac.
 intros; cbn.
@@ -2499,8 +2477,7 @@ f_equal.
 apply (rngl_mul_comm Hic).
 Qed.
 
-Theorem angle_sub_opp_r :
-  ∀ θ1 θ2, (θ1 - - θ2)%A = (θ1 + θ2)%A.
+Theorem angle_sub_opp_r : ∀ θ1 θ2, (θ1 - - θ2)%A = (θ1 + θ2)%A.
 Proof.
 destruct_ac.
 intros.
@@ -2508,15 +2485,13 @@ apply eq_angle_eq; cbn.
 now rewrite (rngl_opp_involutive Hop).
 Qed.
 
-Theorem angle_add_sub_swap :
-  ∀ θ1 θ2 θ3, (θ1 + θ2 - θ3 = θ1 - θ3 + θ2)%A.
+Theorem angle_add_sub_swap : ∀ θ1 θ2 θ3, (θ1 + θ2 - θ3 = θ1 - θ3 + θ2)%A.
 Proof.
 intros.
 apply angle_add_add_swap.
 Qed.
 
-Theorem angle_add_sub_assoc :
-  ∀ θ1 θ2 θ3, (θ1 + (θ2 - θ3))%A = (θ1 + θ2 - θ3)%A.
+Theorem angle_add_sub_assoc : ∀ θ1 θ2 θ3, (θ1 + (θ2 - θ3) = θ1 + θ2 - θ3)%A.
 Proof.
 intros.
 progress unfold angle_sub.
@@ -2677,8 +2652,7 @@ rewrite (rngl_opp_involutive Hop).
 apply (rngl_opp_1_le_1 Hon Hop Hiq Hor).
 Qed.
 
-Theorem angle_eqb_eq :
-  ∀ θ1 θ2 : angle T, (θ1 =? θ2)%A = true ↔ θ1 = θ2.
+Theorem angle_eqb_eq : ∀ θ1 θ2 : angle T, (θ1 =? θ2)%A = true ↔ θ1 = θ2.
 Proof.
 destruct_ac.
 intros.
@@ -2696,8 +2670,7 @@ split; intros H12. {
 }
 Qed.
 
-Theorem angle_eqb_neq :
-  ∀ θ1 θ2, (θ1 =? θ2)%A = false ↔ θ1 ≠ θ2.
+Theorem angle_eqb_neq : ∀ θ1 θ2, (θ1 =? θ2)%A = false ↔ θ1 ≠ θ2.
 Proof.
 destruct_ac.
 intros.
@@ -2716,8 +2689,7 @@ split; intros H12. {
 }
 Qed.
 
-Theorem angle_neqb_neq :
-  ∀ θ1 θ2, (θ1 ≠? θ2)%A = true ↔ θ1 ≠ θ2.
+Theorem angle_neqb_neq : ∀ θ1 θ2, (θ1 ≠? θ2)%A = true ↔ θ1 ≠ θ2.
 Proof.
 intros.
 split; intros H12. {
@@ -2808,8 +2780,7 @@ Qed.
 Theorem fold_rl_sqrt : rl_nth_root 2 = rl_sqrt.
 Proof. easy. Qed.
 
-Theorem rngl_1_add_cos_div_2_nonneg :
-  ∀ θ, (0 ≤ (1 + rngl_cos θ) / 2)%L.
+Theorem rngl_1_add_cos_div_2_nonneg : ∀ θ, (0 ≤ (1 + rngl_cos θ) / 2)%L.
 Proof.
 destruct_ac.
 specialize (rngl_int_dom_or_inv_1_quo Hiv Hon) as Hii.
@@ -2832,8 +2803,7 @@ rewrite (rngl_sub_0_l Hop).
 now apply rngl_cos_bound.
 Qed.
 
-Theorem rngl_1_sub_cos_div_2_nonneg :
-  ∀ θ, (0 ≤ (1 - rngl_cos θ) / 2)%L.
+Theorem rngl_1_sub_cos_div_2_nonneg : ∀ θ, (0 ≤ (1 - rngl_cos θ) / 2)%L.
 Proof.
 destruct_ac.
 specialize (rngl_int_dom_or_inv_1_quo Hiv Hon) as Hii.
