@@ -8,6 +8,7 @@ Require Import RingLike.Misc.
 Require Import Angle TrigoWithoutPiExt.
 Require Import Angle_order.
 Require Import AngleAddOverflowLe.
+Require Import AngleAddOverflowEquiv.
 Require Import AngleAddLeMonoL.
 Require Import AngleDiv2.
 

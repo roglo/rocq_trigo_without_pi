@@ -52,6 +52,8 @@ Context {rp : ring_like_prop T}.
 Context {rl : real_like_prop T}.
 Context {ac : angle_ctx T}.
 
+Definition angle_add_overflow θ1 θ2 := ((θ1 ≠? 0)%A && (- θ1 ≤? θ2)%A)%bool.
+
 Theorem angle_lt_iff : ∀ θ1 θ2, (θ1 < θ2 ↔ θ1 ≤ θ2 ∧ θ1 ≠ θ2)%A.
 Proof.
 destruct_ac; intros.

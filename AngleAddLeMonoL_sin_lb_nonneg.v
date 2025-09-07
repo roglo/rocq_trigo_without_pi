@@ -4,6 +4,7 @@ Require Import RingLike.Core.
 Require Import Angle TrigoWithoutPiExt.
 Require Import Angle_order.
 Require Import AngleAddOverflowLe.
+Require Import AngleAddOverflowEquiv.
 Require Import TacChangeAngle.
 Require Import AngleAddLeMonoL_prop.
 

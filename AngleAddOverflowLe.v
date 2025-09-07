@@ -5,6 +5,7 @@ Require Import Init.Nat.
 Require Import RingLike.Core.
 Require Import Angle TrigoWithoutPiExt.
 Require Import Angle_order.
+Require Import AngleAddOverflowEquiv.
 Require Import TacChangeAngle.
 
 Section a.
