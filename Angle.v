@@ -521,8 +521,7 @@ rewrite (rngl_sub_0_r Hos).
 now rewrite rngl_add_0_r.
 Qed.
 
-Theorem angle_sub_0_l :
-  ∀ θ, (0 - θ = - θ)%A.
+Theorem angle_sub_0_l : ∀ θ, (0 - θ = - θ)%A.
 Proof.
 destruct_ac.
 intros.
@@ -533,8 +532,7 @@ rewrite (rngl_sub_0_r Hos).
 now rewrite rngl_add_0_l.
 Qed.
 
-Theorem angle_sub_0_r :
-  ∀ θ, (θ - 0 = θ)%A.
+Theorem angle_sub_0_r : ∀ θ, (θ - 0 = θ)%A.
 Proof.
 destruct_ac.
 intros.
