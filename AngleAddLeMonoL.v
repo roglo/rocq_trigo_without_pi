@@ -6,8 +6,6 @@ Set Nested Proofs Allowed.
 From Stdlib Require Import Utf8 Arith.
 
 Require Import RingLike.Core.
-
-Require Import Core.
 Require Import Angle TrigoWithoutPiExt.
 Require Import AngleAddOverflowLe.
 Require Import Angle_order.
@@ -217,18 +215,6 @@ apply (f_equal (λ θ, (θ - θ1)%A)) in H.
 do 2 rewrite angle_add_comm, angle_add_sub in H.
 subst θ3.
 now apply angle_lt_irrefl in H23.
-Qed.
-
-Theorem angle_sub_lt_mono_l :
-  ∀ θ2 θ3 θ1,
-  angle_add_overflow θ3 (- θ1) = false
-  → θ1 ≠ 0%A
-  → (θ1 < θ2)%A
-  → (θ3 - θ2 < θ3 - θ1)%A.
-Proof.
-intros * Hov H1z H12.
-apply angle_add_lt_mono_l; [ easy | ].
-now apply angle_opp_lt_compat_if.
 Qed.
 
 End a.

@@ -3,8 +3,6 @@
    to do. *)
 
 Require Import RingLike.Core.
-
-Require Import Core.
 Require Import Angle.
 
 Ltac change_angle_add_r θ a :=

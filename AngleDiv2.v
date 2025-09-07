@@ -12,11 +12,78 @@ From Stdlib Require Import Utf8 Arith.
 Require Import RingLike.Core.
 Require Import RingLike.RealLike.
 Require Import RingLike.Misc.
-
-Require Import Core.
 Require Import Angle.
 Require Import TrigoWithoutPiExt.
 Require Import Angle_order.
+
+Section a.
+
+Context {T : Type}.
+Context {ro : ring_like_op T}.
+Context {rp : ring_like_prop T}.
+Context {rl : real_like_prop T}.
+Context {ac : angle_ctx T}.
+
+Theorem angle_div_2_prop :
+  ∀ a (ε := (if (0 ≤? rngl_sin a)%L then 1%L else (-1)%L)),
+  cos2_sin2_prop
+    (ε * √((1 + rngl_cos a) / 2))%L
+    (√((1 - rngl_cos a) / 2)%L).
+Proof.
+destruct_ac.
+intros.
+progress unfold cos2_sin2_prop.
+assert (Hε : (ε² = 1)%L). {
+  progress unfold ε.
+  destruct (0 ≤? _)%L. {
+    apply (rngl_mul_1_l Hon).
+  } {
+    apply (rngl_squ_opp_1 Hon Hop).
+  }
+}
+rewrite (rngl_squ_mul Hic).
+rewrite Hε, (rngl_mul_1_l Hon).
+apply (rngl_eqb_eq Hed).
+destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
+  specialize (rngl_characteristic_1 Hon Hos Hc1) as H1.
+  now rewrite (H1 (_ + _)%L), (H1 1%L).
+}
+rewrite (rngl_squ_sqrt Hon). 2: {
+  apply (rngl_le_div_r Hon Hop Hiv Hor). {
+    apply (rngl_0_lt_2 Hon Hos Hiq Hc1 Hor).
+  }
+  rewrite (rngl_mul_0_l Hos).
+  apply (rngl_le_sub_le_add_l Hop Hor).
+  rewrite (rngl_sub_0_l Hop).
+  apply rngl_cos_bound.
+}
+rewrite (rngl_squ_sqrt Hon). 2: {
+  apply (rngl_le_div_r Hon Hop Hiv Hor). {
+    apply (rngl_0_lt_2 Hon Hos Hiq Hc1 Hor).
+  }
+  rewrite (rngl_mul_0_l Hos).
+  apply (rngl_le_add_le_sub_r Hop Hor).
+  rewrite rngl_add_0_l.
+  apply rngl_cos_bound.
+}
+rewrite <- (rngl_div_add_distr_r Hiv).
+rewrite (rngl_add_sub_assoc Hop).
+rewrite rngl_add_comm.
+rewrite rngl_add_assoc.
+rewrite (rngl_add_sub Hos).
+apply (rngl_div_diag Hon Hiq).
+apply (rngl_2_neq_0 Hon Hos Hiq Hc1 Hor).
+Qed.
+
+Definition angle_div_2 a :=
+  let ε := if (0 ≤? rngl_sin a)%L then 1%L else (-1)%L in
+  {| rngl_cos := ε * √((1 + rngl_cos a) / 2)%L;
+     rngl_sin := √((1 - rngl_cos a)%L / 2%L);
+     rngl_cos2_sin2 := angle_div_2_prop a |}.
+
+End a.
+
+Notation "θ /₂" := (angle_div_2 θ) (at level 40) : angle_scope.
 
 Section a.
 
@@ -268,6 +335,37 @@ rewrite (rngl_div_0_l Hos Hi1). 2: {
 apply (rl_sqrt_0 Hon Hop Hor).
 rewrite Bool.orb_true_iff; right.
 apply (rngl_has_inv_and_1_has_inv_and_1_or_pdiv Hon Hiv).
+Qed.
+
+Theorem angle_straight_div_2 : (angle_straight /₂ = angle_right)%A.
+Proof.
+destruct_ac.
+specialize (rngl_has_inv_and_1_has_inv_and_1_or_pdiv Hon Hiv) as Hi1.
+specialize (rngl_int_dom_or_inv_1_quo_and_eq_dec Hi1 Hed) as Hid.
+destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
+  intros.
+  specialize (rngl_characteristic_1_angle_0 Hc1) as H1.
+  rewrite (H1 angle_right).
+  apply H1.
+}
+apply eq_angle_eq; cbn.
+rewrite (rngl_leb_refl Hor).
+rewrite (rngl_mul_1_l Hon).
+rewrite (rngl_add_opp_r Hop).
+rewrite (rngl_sub_opp_r Hop).
+rewrite (rngl_sub_diag Hos).
+rewrite (rngl_div_0_l Hos Hi1). 2: {
+  apply (rngl_2_neq_0 Hon Hos Hiq Hc1 Hor).
+}
+rewrite (rl_sqrt_0 Hon Hop Hor). 2: {
+  rewrite Bool.orb_true_iff; right.
+  apply (rngl_has_inv_and_1_has_inv_and_1_or_pdiv Hon Hiv).
+}
+f_equal.
+rewrite (rngl_div_diag Hon Hiq). 2: {
+  apply (rngl_2_neq_0 Hon Hos Hiq Hc1 Hor).
+}
+apply (rl_sqrt_1 Hon Hop Hiq Hor).
 Qed.
 
 Theorem angle_opp_div_2 :

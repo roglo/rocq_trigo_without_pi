@@ -3,12 +3,38 @@ From Stdlib Require Import Utf8 Arith.
 
 Require Import RingLike.Core.
 Require Import RingLike.RealLike.
-
-Require Import Core.
 Require Import Angle.
 
+Section a.
+
+Context {T : Type}.
+Context {ro : ring_like_op T}.
+Context {rp : ring_like_prop T}.
+Context {rl : real_like_prop T}.
+Context {ac : angle_ctx T}.
+
+Definition angle_leb θ1 θ2 :=
+  if (0 ≤? rngl_sin θ1)%L then
+    if (0 ≤? rngl_sin θ2)%L then (rngl_cos θ2 ≤? rngl_cos θ1)%L
+    else true
+  else
+    if (0 ≤? rngl_sin θ2)%L then false
+    else (rngl_cos θ1 ≤? rngl_cos θ2)%L.
+
+Definition angle_ltb θ1 θ2 :=
+  if (0 ≤? rngl_sin θ1)%L then
+    if (0 ≤? rngl_sin θ2)%L then (rngl_cos θ2 <? rngl_cos θ1)%L
+    else true
+  else
+    if (0 ≤? rngl_sin θ2)%L then false
+    else (rngl_cos θ1 <? rngl_cos θ2)%L.
+
+End a.
+
+Notation "θ1 ≤? θ2" := (angle_leb θ1 θ2) : angle_scope.
 Notation "θ1 <? θ2" := (angle_ltb θ1 θ2) : angle_scope.
 Notation "θ1 ≤ θ2" := (angle_leb θ1 θ2 = true) : angle_scope.
+Notation "θ1 < θ2" := (angle_ltb θ1 θ2 = true) : angle_scope.
 Notation "θ1 ≤ θ2 < θ3" :=
   (angle_leb θ1 θ2 = true ∧ angle_ltb θ2 θ3 = true) : angle_scope.
 Notation "θ1 ≤ θ2 ≤ θ3" :=
