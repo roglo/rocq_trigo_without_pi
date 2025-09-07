@@ -7,6 +7,7 @@ Require Import RingLike.Misc.
 Require Import Angle.
 Require Import Angle_order.
 Require Import AngleAddOverflowEquiv.
+Require Import Distance.
 Require Import TacChangeAngle.
 
 Section a.

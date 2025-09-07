@@ -11,6 +11,7 @@ Require Import AngleDiv2.
 Require Import AngleDiv2Add.
 Require Import AngleAddLeMonoL.
 Require Import AngleTypeIsComplete.
+Require Import Distance.
 Require Import SeqAngleIsCauchy.
 Require Import TacChangeAngle.
 
