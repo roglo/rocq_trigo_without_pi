@@ -5,7 +5,7 @@ Require Import RingLike.Core.
 Require Import RingLike.RealLike.
 Require Import RingLike.Misc.
 
-Require Import Angle TrigoWithoutPiExt.
+Require Import AngleDef Angle TrigoWithoutPiExt.
 Require Import Angle_order.
 Require Import AngleAddOverflowLe.
 Require Import AngleAddOverflowEquiv.

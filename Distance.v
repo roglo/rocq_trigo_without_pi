@@ -3,7 +3,7 @@ From Stdlib Require Import Utf8 Arith.
 Require Import RingLike.Core.
 Require Import RingLike.RealLike.
 
-Require Import Angle.
+Require Import Angle AngleDef.
 
 Section a.
 
