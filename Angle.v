@@ -2951,4 +2951,54 @@ apply (rngl_mul_le_mono_nonneg_r Hon Hop Hiq Hor); [ easy | ].
 apply rngl_cos_bound.
 Qed.
 
+Theorem rngl_acos_prop :
+  ∀ x, (x² ≤ 1)%L → cos2_sin2_prop x √(1 - x²)%L.
+Proof.
+destruct_ac.
+intros * Hx1.
+progress unfold cos2_sin2_prop.
+apply (rngl_eqb_eq Hed).
+rewrite (rngl_squ_sqrt Hon). 2: {
+  apply (rngl_le_add_le_sub_r Hop Hor).
+  now rewrite rngl_add_0_l.
+}
+rewrite rngl_add_comm.
+apply (rngl_sub_add Hop).
+Qed.
+
+Definition rngl_acos (x : T) :=
+  match (rngl_le_dec ac_or x² 1)%L with
+  | left Hx1 =>
+      {| rngl_cos := x; rngl_sin := √(1 - x²)%L;
+         rngl_cos2_sin2 := rngl_acos_prop x Hx1 |}
+  | _ =>
+      angle_zero
+  end.
+
+Arguments rngl_acos x%_L.
+
+Theorem rngl_cos_acos :
+  ∀ x, (-1 ≤ x ≤ 1)%L → rngl_cos (rngl_acos x) = x.
+Proof.
+destruct_ac.
+intros * Hx1.
+progress unfold rngl_acos.
+destruct (rngl_le_dec ac_or x² 1) as [| H]; [ easy | ].
+exfalso; apply H; clear H.
+now apply (rngl_squ_le_1 Hon Hop Hiq Hor).
+Qed.
+
+Theorem rngl_sin_acos :
+  ∀ x, (-1 ≤ x ≤ 1)%L → rngl_sin (rngl_acos x) = √(1 - x²)%L.
+Proof.
+destruct_ac.
+intros * Hx1.
+progress unfold rngl_acos.
+destruct (rngl_le_dec ac_or x² 1) as [| H]; [ easy | ].
+exfalso; apply H; clear H.
+now apply (rngl_squ_le_1 Hon Hop Hiq Hor).
+Qed.
+
 End a.
+
+Arguments rngl_acos {T ro rp rl ac} x%_L.

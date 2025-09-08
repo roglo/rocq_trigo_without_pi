@@ -4,8 +4,8 @@ From Stdlib Require Import Utf8 Arith.
 Require Import RingLike.Core.
 Require Import RingLike.RealLike.
 Require Import RingLike.Misc.
-Require Import Angle TrigoWithoutPiExt.
-Require Import Distance.
+
+Require Import Angle Distance.
 
 Section a.
 
