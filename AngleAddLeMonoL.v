@@ -217,4 +217,57 @@ subst θ3.
 now apply angle_lt_irrefl in H23.
 Qed.
 
+(*
+Require Import AngleAddOverflowEquiv.
+
+Theorem angle_add_overflow_assoc' :
+  ∀ θ1 θ2 θ3,
+  angle_add_overflow θ1 θ2 = angle_add_overflow θ2 θ3
+  → angle_add_overflow (θ1 + θ2) θ3 = angle_add_overflow θ1 (θ2 + θ3).
+Proof.
+intros * H12.
+remember (angle_add_overflow θ2 θ3) as ov eqn:H23.
+symmetry in H23.
+destruct ov. 2: {
+  remember (angle_add_overflow (θ1 + θ2) θ3) as ov eqn:Hov.
+  symmetry in Hov |-*.
+  destruct ov; [ now apply angle_add_overflow_move_add | ].
+  rewrite angle_add_comm.
+  now apply angle_add_not_overflow_move_add.
+} {
+(**)
+  rewrite <- angle_add_overflow_equiv2 in H23, H12.
+  progress unfold angle_add_overflow2 in H23, H12.
+  remember (angle_add_overflow (θ1 + θ2) θ3) as ov eqn:Hov.
+  symmetry in Hov |-*.
+  destruct ov. {
+    rewrite <- angle_add_overflow_equiv2 in Hov |-*.
+    progress unfold angle_add_overflow2 in Hov |-*.
+    progress unfold angle_ltb.
+    remember (0 ≤? rngl_sin (θ1 + (θ2 + θ3)))%L as zs1 eqn:Hzs1.
+    symmetry in Hzs1.
+    destruct zs1. {
+      remember (0 ≤? rngl_sin θ1)%L as zs2 eqn:Hzs2.
+      symmetry in Hzs2.
+      destruct zs2; [ | easy ].
+      apply rngl_leb_le in Hzs1.
+      apply rngl_leb_le in Hzs2.
+      apply rngl_ltb_lt.
+Search (rngl_cos _ < rngl_cos (_ + _))%L.
+...
+Search (_ + _ < _ + _)%A.
+Search (_ + _ < _)%A.
+...
+do 2 rewrite <- angle_add_overflow_equiv2.
+rewrite <- angle_add_assoc.
+rewrite angle_add_lt_mono_l.
+...
+  remember (angle_add_overflow (θ1 + θ2) θ3) as ov eqn:Hov.
+  symmetry in Hov |-*.
+  destruct ov. {
+...
+Qed.
+...
+*)
+
 End a.

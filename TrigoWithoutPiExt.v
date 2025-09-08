@@ -851,6 +851,14 @@ destruct ov. 2: {
   rewrite angle_add_comm.
   now apply angle_add_not_overflow_move_add.
 } {
+(**)
+rewrite <- angle_add_overflow_equiv2 in H23, H12.
+progress unfold angle_add_overflow2 in H23, H12.
+do 2 rewrite <- angle_add_overflow_equiv2.
+progress unfold angle_add_overflow2.
+rewrite <- angle_add_assoc.
+Search (_ + _ ≤ _ + _)%A.
+...
   remember (angle_add_overflow (θ1 + θ2) θ3) as ov eqn:Hov.
   symmetry in Hov |-*.
   destruct ov. {
