@@ -974,6 +974,30 @@ rewrite angle_add_comm.
 now apply angle_add_not_overflow_move_add.
 Qed.
 
+(*
+Theorem angle_add_overflow_assoc' :
+  ∀ θ1 θ2 θ3,
+  angle_add_overflow θ1 θ2 = angle_add_overflow θ2 θ3
+  → angle_add_overflow (θ1 + θ2) θ3 = angle_add_overflow θ1 (θ2 + θ3).
+Proof.
+intros * H12.
+remember (angle_add_overflow θ2 θ3) as ov eqn:H23.
+symmetry in H23.
+destruct ov. 2: {
+  remember (angle_add_overflow (θ1 + θ2) θ3) as ov eqn:Hov.
+  symmetry in Hov |-*.
+  destruct ov; [ now apply angle_add_overflow_move_add | ].
+  rewrite angle_add_comm.
+  now apply angle_add_not_overflow_move_add.
+} {
+  remember (angle_add_overflow (θ1 + θ2) θ3) as ov eqn:Hov.
+  symmetry in Hov |-*.
+  destruct ov. {
+...
+Qed.
+...
+*)
+
 Theorem angle_mul_2_l : ∀ θ, (2 * θ = θ + θ)%A.
 Proof.
 intros; cbn.
