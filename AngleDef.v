@@ -802,4 +802,7 @@ f_equal.
 apply (rngl_opp_0 Hop).
 Qed.
 
+Theorem angle_eqb_refl : ∀ θ : angle T, ((θ =? θ)%A = true).
+Proof. now intros; apply angle_eqb_eq. Qed.
+
 End a.

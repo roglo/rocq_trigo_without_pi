@@ -236,6 +236,13 @@ destruct ov. 2: {
   now apply angle_add_not_overflow_move_add.
 } {
 (**)
+  destruct (angle_lt_dec θ2 angle_straight) as [H2s| H2s]. {
+    generalize H12; intros H1s.
+    rewrite angle_add_overflow_comm in H1s.
+    apply angle_add_overflow_lt_straight_ge_straight in H1s; [ | easy ].
+    generalize H23; intros H3s.
+    apply angle_add_overflow_lt_straight_ge_straight in H3s; [ | easy ].
+...
   rewrite <- angle_add_overflow_equiv2 in H23, H12.
   progress unfold angle_add_overflow2 in H23, H12.
   remember (angle_add_overflow (θ1 + θ2) θ3) as ov eqn:Hov.
