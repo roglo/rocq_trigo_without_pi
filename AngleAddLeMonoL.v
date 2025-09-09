@@ -317,6 +317,7 @@ Theorem angle_add_overflow_assoc' :
   angle_add_overflow θ1 θ2 = angle_add_overflow θ2 θ3
   → angle_add_overflow (θ1 + θ2) θ3 = angle_add_overflow θ1 (θ2 + θ3).
 Proof.
+destruct_ac.
 intros * H12.
 do 2 rewrite <- angle_add_overflow_equiv1 in H12.
 do 2 rewrite <- angle_add_overflow_equiv1.
@@ -337,6 +338,60 @@ destruct t2z. {
   rewrite angle_add_0_r, angle_add_0_l.
   now rewrite Ht1z.
 }
+remember (0 <? rngl_sin θ1)%L as zs1 eqn:Hzs1.
+remember (0 <? rngl_sin θ2)%L as zs2 eqn:Hzs2.
+remember (0 <? rngl_sin θ3)%L as zs3 eqn:Hzs3.
+remember (θ3 =? 0)%A as t3z eqn:Ht3z.
+symmetry in Hzs1, Hzs2, Hzs3, Ht3z.
+destruct zs1. {
+  destruct zs2. {
+    destruct t3z. {
+      apply angle_eqb_eq in Ht3z; subst θ3.
+      rewrite angle_add_0_r.
+      rewrite Hzs2.
+      now do 2 rewrite Tauto.if_same.
+    }
+    destruct zs3. {
+      remember (θ1 + θ2 =? 0)%A as t12z eqn:Ht12z.
+      remember (θ2 + θ3 =? 0)%A as t23z eqn:Ht23z.
+      remember (0 <? rngl_sin (θ1 + θ2))%L as zs12 eqn:Hzs12.
+      remember (0 <? rngl_sin (θ2 + θ3))%L as zs23 eqn:Hzs23.
+      symmetry in Ht12z, Ht23z, Hzs12, Hzs23.
+      destruct t12z. {
+        destruct t23z; [ easy | ].
+        destruct zs23; [ easy | symmetry ].
+        apply angle_eqb_eq in Ht12z.
+        apply angle_eqb_neq in Ht23z.
+        apply angle_add_move_0_r in Ht12z; subst θ1.
+        cbn in Hzs1.
+        rewrite (rngl_ltb_opp_r Hop Hor) in Hzs1.
+        rewrite (rngl_opp_0 Hop) in Hzs1.
+        apply rngl_ltb_lt in Hzs1, Hzs2.
+        now apply (rngl_lt_asymm Hor) in Hzs1.
+      }
+      destruct zs12. {
+        destruct t23z; [ easy | ].
+        destruct zs23; [ easy | symmetry ].
+        apply (rngl_leb_gt Hor).
+        apply rngl_ltb_lt in Hzs1, Hzs2, Hzs3.
+...
+        eapply (rngl_lt_trans Hor). {
+          apply (rngl_lt_sub_l Hop Hor).
+          now apply (rngl_mul_pos_pos Hon Hop Hiq Hor).
+        }
+...
+        apply (rngl_le_lt_trans Hor _ (rngl_cos θ3)). {
+...
+          rewrite <- (rngl_mul_1_l Hon (rngl_cos θ3)) at 2.
+Search (_ * _ ≤ _ * _)%L.
+...
+          apply (rngl_mul_le_mono_nonneg_r Hon Hop Hiq Hor).
+
+Search (_ * _ ≤ _)%L.
+...
+          apply <- (rngl_mul_lt_mono_pos_r Hon Hop Hiq Hor 1%L).
+          apply rngl
+Search (rngl_cos (_ + _) < rngl_cos _)%L.
 ...
 intros * H12.
 remember (angle_add_overflow θ2 θ3) as ov eqn:H23.
