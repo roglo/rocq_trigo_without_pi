@@ -251,6 +251,7 @@ destruct ov. 2: {
     remember (0 ≤? rngl_sin (θ1 + θ2 + θ3))%L as z123 eqn:Hz123.
     symmetry in Hz123.
     destruct z123. {
+      progress sin_cos_add_sub_straight_goal T.
 ...
     generalize H12; intros H1s.
     rewrite angle_add_overflow_comm in H1s.
