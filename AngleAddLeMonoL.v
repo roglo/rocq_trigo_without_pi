@@ -240,6 +240,17 @@ destruct ov. 2: {
     change_angle_sub_r θ1 angle_straight.
     change_angle_sub_r θ3 angle_straight.
     move θ1 after θ2.
+    do 2 rewrite <- angle_add_overflow_equiv2.
+    progress unfold angle_add_overflow2.
+    progress sin_cos_add_sub_right_goal T.
+    do 2 rewrite (angle_add_add_swap _ angle_straight).
+    rewrite <- angle_add_assoc.
+    rewrite angle_straight_add_straight.
+    rewrite angle_add_0_r.
+    progress unfold angle_ltb.
+    remember (0 ≤? rngl_sin (θ1 + θ2 + θ3))%L as z123 eqn:Hz123.
+    symmetry in Hz123.
+    destruct z123. {
 ...
     generalize H12; intros H1s.
     rewrite angle_add_overflow_comm in H1s.
