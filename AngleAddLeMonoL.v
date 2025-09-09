@@ -242,6 +242,18 @@ destruct ov. 2: {
     apply angle_add_overflow_lt_straight_ge_straight in H1s; [ | easy ].
     generalize H23; intros H3s.
     apply angle_add_overflow_lt_straight_ge_straight in H3s; [ | easy ].
+    remember (θ1 - angle_straight)%A as θ.
+    apply angle_add_move_r in Heqθ.
+    subst θ1; rename θ into θ1; move θ1 after θ2.
+    remember (θ3 - angle_straight)%A as θ.
+    apply angle_add_move_r in Heqθ.
+    subst θ3; rename θ into θ3; move θ3 before θ2.
+...
+Search (angle_add_overflow _ (_ + _)).
+rewrite angle_add_comm in H12.
+apply angle_add_overflow_move_add in H12.
+rewrite (angle_add_comm θ3).
+rewrite <- angle_add_overflow_assoc.
 ...
   rewrite <- angle_add_overflow_equiv2 in H23, H12.
   progress unfold angle_add_overflow2 in H23, H12.
