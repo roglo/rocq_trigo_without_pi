@@ -235,8 +235,12 @@ destruct ov. 2: {
   rewrite angle_add_comm.
   now apply angle_add_not_overflow_move_add.
 } {
-(**)
   destruct (angle_lt_dec θ2 angle_straight) as [H2s| H2s]. {
+(**)
+    change_angle_sub_r θ1 angle_straight.
+    change_angle_sub_r θ3 angle_straight.
+    move θ1 after θ2.
+...
     generalize H12; intros H1s.
     rewrite angle_add_overflow_comm in H1s.
     apply angle_add_overflow_lt_straight_ge_straight in H1s; [ | easy ].
@@ -248,6 +252,22 @@ destruct ov. 2: {
     remember (θ3 - angle_straight)%A as θ.
     apply angle_add_move_r in Heqθ.
     subst θ3; rename θ into θ3; move θ3 before θ2.
+...
+  H23 : angle_add_overflow θ2 (θ3 + angle_straight) = true
+  H12 : angle_add_overflow (θ1 + angle_straight) θ2 = true
+  H2s : (θ2 < angle_straight)%A
+  H1s : (angle_straight ≤ θ1 + angle_straight)%A
+  H3s : (angle_straight ≤ θ3 + angle_straight)%A
+  ============================
+  angle_add_overflow (θ1 + angle_straight + θ2) (θ3 + angle_straight) =
+  angle_add_overflow (θ1 + angle_straight) (θ2 + (θ3 + angle_straight))
+...
+Search (angle_straight ≤ _)%A.
+Search (_ < angle_straight)%A.
+Search (_ ≤ _ + _)%A.
+Theorem glop : ∀ θ, (angle_straight ≤ θ + angle_straight)%A → (θ < angle_straight)%A.
+...
+    apply glop in H1s, H3s.
 ...
 Search (angle_add_overflow _ (_ + _)).
 rewrite angle_add_comm in H12.
