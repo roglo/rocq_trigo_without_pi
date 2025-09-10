@@ -383,8 +383,65 @@ destruct l123. {
         apply rngl_ltb_lt in H12.
         apply rngl_ltb_lt in H123.
         apply rngl_ltb_lt.
-        eapply (rngl_lt_trans Hor); [ | apply H123 ].
-(* bref, c'est à l'envers *)
+        apply (rngl_nle_gt_iff Hor).
+        intros Hc123.
+        apply rngl_nle_gt in H12.
+        apply H12; clear H12.
+        remember (0 ≤? rngl_sin (θ2 + θ3))%L as zs23 eqn:Hzs23.
+        remember (0 ≤? rngl_sin θ2)%L as zs2 eqn:Hzs2.
+        symmetry in Hzs23, Hzs2.
+        destruct zs23. {
+          apply rngl_leb_le in Hzs23.
+          destruct zs2. {
+            apply rngl_leb_le in Hzs2.
+            apply rngl_ltb_lt in H23.
+            destruct (rngl_le_dec Hor 0 (rngl_cos θ1)) as [Hzc1| Hzc1]. {
+              destruct (rngl_le_dec Hor 0 (rngl_cos θ2)) as [Hzc2| Hzc2]. {
+                now apply quadrant_1_rngl_cos_add_le_cos_l.
+              }
+              apply (rngl_nle_gt_iff Hor) in Hzc2.
+              apply rngl_cos_add_le_cos; [ | easy | easy | easy ].
+              now right; right; left.
+            }
+            apply (rngl_nle_gt_iff Hor) in Hzc1.
+            generalize Hzc1; intros H.
+            apply (rngl_lt_le_incl Hor) in H.
+            apply angle_add_overflow_le_lemma_2;
+              [ | easy | easy | easy | easy ].
+            clear H; intros H.
+            apply eq_rngl_cos_opp_1 in H; subst θ1.
+            rewrite rngl_sin_add_straight_l in Hz12.
+            apply (rngl_opp_nonneg_nonpos Hop Hor) in Hz12.
+            apply (rngl_le_antisymm Hor) in Hzs2; [ | easy ].
+            clear Hzc1 Hzs1 Hz12.
+            apply eq_rngl_sin_0 in Hzs2.
+            destruct Hzs2; subst θ2. {
+              apply rngl_nle_gt in H23.
+              apply H23, rngl_cos_bound.
+            }
+            rewrite rngl_sin_add_straight_l in Hzs23.
+            apply (rngl_opp_nonneg_nonpos Hop Hor) in Hzs23.
+            rewrite rngl_cos_add_straight_l in H23.
+            cbn in H23.
+            rewrite angle_straight_add_straight in Hz123.
+            rewrite angle_add_0_l in Hz123.
+            apply (rngl_le_antisymm Hor) in Hz123; [ | easy ].
+            clear Hzs23.
+            apply eq_rngl_sin_0 in Hz123.
+            destruct Hz123; subst θ3. {
+              now apply (rngl_lt_irrefl Hor) in H23.
+            }
+            rewrite angle_straight_add_straight in H123.
+            rewrite angle_add_0_l in H123.
+            now apply (rngl_lt_irrefl Hor) in H123.
+          }
+          clear H23.
+          apply (rngl_leb_gt Hor) in Hzs2.
+...
+            rewrite <- angle_add_assoc in Hc123, H123, Hz123.
+            do 2 rewrite rngl_cos_add_straight_l in Hc123.
+            rewrite rngl_cos_add_straight_l in H123.
+            rewrite rngl_sin_add_straight_l in Hz123, Hz12.
 ...
 rewrite <- angle_add_overflow_equiv1 in H12, H23.
 do 2 rewrite <- angle_add_overflow_equiv1.
