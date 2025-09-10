@@ -319,39 +319,37 @@ Theorem angle_add_overflow_assoc' :
 Proof.
 destruct_ac.
 intros * H12.
-do 2 rewrite <- angle_add_overflow_equiv1 in H12.
+remember (angle_add_overflow θ2 θ3) as ov eqn:H23.
+symmetry in H23.
+destruct ov. 2: {
+  remember (angle_add_overflow (θ1 + θ2) θ3) as ov eqn:Hov.
+  symmetry in Hov |-*.
+  destruct ov; [ now apply angle_add_overflow_move_add | ].
+  rewrite angle_add_comm.
+  now apply angle_add_not_overflow_move_add.
+}
+rewrite <- angle_add_overflow_equiv1 in H12, H23.
 do 2 rewrite <- angle_add_overflow_equiv1.
 progress unfold angle_add_overflow1 in H12.
+progress unfold angle_add_overflow1 in H23.
 progress unfold angle_add_overflow1.
 remember (θ1 =? 0)%A as t1z eqn:Ht1z.
 remember (θ2 =? 0)%A as t2z eqn:Ht2z.
-symmetry in Ht1z, Ht2z.
-destruct t1z. {
-  apply angle_eqb_eq in Ht1z; subst θ1.
-  rewrite angle_add_0_l.
-  destruct t2z; [ | now rewrite Ht2z ].
-  apply angle_eqb_eq in Ht2z; subst θ2.
-  now rewrite angle_eqb_refl.
-}
-destruct t2z. {
-  apply angle_eqb_eq in Ht2z; subst θ2.
-  rewrite angle_add_0_r, angle_add_0_l.
-  now rewrite Ht1z.
-}
+remember (θ3 =? 0)%A as t3z eqn:Ht3z.
+symmetry in Ht1z, Ht2z, Ht3z.
+destruct t1z; [ easy | ].
+destruct t2z; [ easy | ].
+destruct t3z; [ easy | ].
+move Ht1z after Ht2z.
 remember (0 <? rngl_sin θ1)%L as zs1 eqn:Hzs1.
 remember (0 <? rngl_sin θ2)%L as zs2 eqn:Hzs2.
 remember (0 <? rngl_sin θ3)%L as zs3 eqn:Hzs3.
-remember (θ3 =? 0)%A as t3z eqn:Ht3z.
-symmetry in Hzs1, Hzs2, Hzs3, Ht3z.
+symmetry in Hzs1, Hzs2, Hzs3.
 destruct zs1. {
-  destruct zs2. {
-    destruct t3z. {
-      apply angle_eqb_eq in Ht3z; subst θ3.
-      rewrite angle_add_0_r.
-      rewrite Hzs2.
-      now do 2 rewrite Tauto.if_same.
-    }
-    destruct zs3. {
+  destruct zs2; [ easy | ].
+  move Hzs1 after Hzs2.
+  destruct zs3. {
+...
       remember (θ1 + θ2 =? 0)%A as t12z eqn:Ht12z.
       remember (θ2 + θ3 =? 0)%A as t23z eqn:Ht23z.
       remember (0 <? rngl_sin (θ1 + θ2))%L as zs12 eqn:Hzs12.
