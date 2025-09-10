@@ -349,22 +349,30 @@ destruct zs1. {
   destruct zs2; [ easy | ].
   move Hzs1 after Hzs2.
   destruct zs3. {
+    remember (θ1 + θ2 =? 0)%A as t12z eqn:Ht12z.
+    remember (θ2 + θ3 =? 0)%A as t23z eqn:Ht23z.
+    remember (0 <? rngl_sin (θ1 + θ2))%L as zs12 eqn:Hzs12.
+    remember (0 <? rngl_sin (θ2 + θ3))%L as zs23 eqn:Hzs23.
+    symmetry in Ht12z, Ht23z, Hzs12, Hzs23.
+    destruct t12z. {
+      destruct t23z; [ easy | ].
+      destruct zs23; [ easy | symmetry ].
+      apply angle_eqb_eq in Ht12z.
+      apply angle_eqb_neq in Ht23z.
+      apply angle_add_move_0_r in Ht12z; subst θ1.
+      cbn in Hzs1.
+      rewrite (rngl_ltb_opp_r Hop Hor) in Hzs1.
+      rewrite (rngl_opp_0 Hop) in Hzs1.
+clear Ht1z Hzs2 H12.
+clear zs12 Hzs12.
+rewrite rngl_cos_opp.
+apply rngl_ltb_lt in Hzs1, Hzs3.
+apply rngl_leb_le in H23.
+apply (rngl_ltb_ge_iff Hor) in Hzs23.
+apply (rngl_leb_gt Hor).
+Search (0 < rngl_sin (_ + _))%L.
 ...
-      remember (θ1 + θ2 =? 0)%A as t12z eqn:Ht12z.
-      remember (θ2 + θ3 =? 0)%A as t23z eqn:Ht23z.
-      remember (0 <? rngl_sin (θ1 + θ2))%L as zs12 eqn:Hzs12.
-      remember (0 <? rngl_sin (θ2 + θ3))%L as zs23 eqn:Hzs23.
-      symmetry in Ht12z, Ht23z, Hzs12, Hzs23.
-      destruct t12z. {
-        destruct t23z; [ easy | ].
-        destruct zs23; [ easy | symmetry ].
-        apply angle_eqb_eq in Ht12z.
-        apply angle_eqb_neq in Ht23z.
-        apply angle_add_move_0_r in Ht12z; subst θ1.
-        cbn in Hzs1.
-        rewrite (rngl_ltb_opp_r Hop Hor) in Hzs1.
-        rewrite (rngl_opp_0 Hop) in Hzs1.
-        apply rngl_ltb_lt in Hzs1, Hzs2.
+      apply rngl_ltb_lt in Hzs1, Hzs2.
         now apply (rngl_lt_asymm Hor) in Hzs1.
       }
       destruct zs12. {
