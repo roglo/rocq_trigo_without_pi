@@ -437,11 +437,16 @@ destruct l123. {
           }
           clear H23.
           apply (rngl_leb_gt Hor) in Hzs2.
-...
-            rewrite <- angle_add_assoc in Hc123, H123, Hz123.
-            do 2 rewrite rngl_cos_add_straight_l in Hc123.
-            rewrite rngl_cos_add_straight_l in H123.
-            rewrite rngl_sin_add_straight_l in Hz123, Hz12.
+          change_angle_sub_r θ2 angle_straight.
+          rewrite angle_add_assoc in Hz12, Hc123, H123, Hz123 |-*.
+          rewrite angle_add_add_swap in Hc123, H123, Hz123.
+          progress sin_cos_add_sub_straight_hyp T Hz12.
+          progress sin_cos_add_sub_straight_hyp T Hzs2.
+          progress sin_cos_add_sub_straight_hyp T Hzs23.
+          progress sin_cos_add_sub_straight_hyp T Hc123.
+          progress sin_cos_add_sub_straight_hyp T H123.
+          progress sin_cos_add_sub_straight_hyp T Hz123.
+          progress sin_cos_add_sub_straight_goal T.
 ...
 rewrite <- angle_add_overflow_equiv1 in H12, H23.
 do 2 rewrite <- angle_add_overflow_equiv1.
