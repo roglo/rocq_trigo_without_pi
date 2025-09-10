@@ -354,6 +354,38 @@ destruct ov. 2: {
   rewrite angle_add_comm.
   now apply angle_add_not_overflow_move_add.
 }
+(**)
+rewrite <- angle_add_overflow_equiv2 in H12, H23.
+do 2 rewrite <- angle_add_overflow_equiv2.
+progress unfold angle_add_overflow2 in H12.
+progress unfold angle_add_overflow2 in H23.
+progress unfold angle_add_overflow2.
+rewrite angle_add_assoc.
+remember (θ1 + θ2 + θ3 <? θ1)%A as l123 eqn:H123.
+symmetry in H123.
+destruct l123. {
+  progress unfold angle_ltb in H12.
+  progress unfold angle_ltb in H23.
+  progress unfold angle_ltb in H123.
+  progress unfold angle_ltb.
+  remember (0 ≤? rngl_sin (θ1 + θ2 + θ3))%L as z123 eqn:Hz123.
+  symmetry in Hz123.
+  destruct z123. {
+    apply rngl_leb_le in Hz123.
+    remember (0 ≤? rngl_sin (θ1 + θ2))%L as z12 eqn:Hz12.
+    symmetry in Hz12.
+    destruct z12. {
+      apply rngl_leb_le in Hz12.
+      remember (0 ≤? rngl_sin θ1)%L as zs1 eqn:Hzs1.
+      symmetry in Hzs1.
+      destruct zs1. {
+        apply rngl_leb_le in Hzs1.
+        apply rngl_ltb_lt in H12.
+        apply rngl_ltb_lt in H123.
+        apply rngl_ltb_lt.
+        eapply (rngl_lt_trans Hor); [ | apply H123 ].
+(* bref, c'est à l'envers *)
+...
 rewrite <- angle_add_overflow_equiv1 in H12, H23.
 do 2 rewrite <- angle_add_overflow_equiv1.
 progress unfold angle_add_overflow1 in H12.
