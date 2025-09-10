@@ -256,6 +256,7 @@ Definition angle_add_overflow1 θ1 θ2 :=
     else true.
 
 Require Import Angle.
+Require Import RingLike.RealLike.
 
 Theorem angle_add_overflow_equiv1 :
   ∀ θ1 θ2, angle_add_overflow1 θ1 θ2 = angle_add_overflow θ1 θ2.
@@ -447,6 +448,9 @@ destruct l123. {
           progress sin_cos_add_sub_straight_hyp T H123.
           progress sin_cos_add_sub_straight_hyp T Hz123.
           progress sin_cos_add_sub_straight_goal T.
+          rewrite (rngl_add_opp_l Hop) in Hc123.
+          apply -> (rngl_le_sub_0 Hop Hor) in Hc123.
+          apply (rngl_lt_opp_r Hop Hor) in H123.
 ...
 rewrite <- angle_add_overflow_equiv1 in H12, H23.
 do 2 rewrite <- angle_add_overflow_equiv1.
