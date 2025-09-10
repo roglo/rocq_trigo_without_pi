@@ -239,8 +239,9 @@ Definition angle_cnt_add (θ1 θ2 : angle_cnt T) :=
   mk_angle_cnt (rngl_angle θ1 + rngl_angle θ2)
     (rngl_count θ1 + rngl_count θ2 +
      Nat.b2n (angle_add_overflow (rngl_angle θ1) (rngl_angle θ2))).
+*)
 
-(**)
+(*
 
 Require Import AngleAddOverflowEquiv.
 
@@ -341,7 +342,7 @@ Theorem angle_add_overflow_assoc' :
   angle_add_overflow θ1 θ2 = angle_add_overflow θ2 θ3
   → angle_add_overflow (θ1 + θ2) θ3 = angle_add_overflow θ1 (θ2 + θ3).
 Proof.
-(*
+(**)
 destruct_ac.
 intros * H12.
 remember (angle_add_overflow θ2 θ3) as ov eqn:H23.
@@ -353,7 +354,6 @@ destruct ov. 2: {
   rewrite angle_add_comm.
   now apply angle_add_not_overflow_move_add.
 }
-...
 rewrite <- angle_add_overflow_equiv1 in H12, H23.
 do 2 rewrite <- angle_add_overflow_equiv1.
 progress unfold angle_add_overflow1 in H12.
@@ -439,7 +439,6 @@ Search (_ * _ ≤ _)%L.
           apply rngl
 Search (rngl_cos (_ + _) < rngl_cos _)%L.
 ...
-*)
 intros * H12.
 remember (angle_add_overflow θ2 θ3) as ov eqn:H23.
 symmetry in H23.
