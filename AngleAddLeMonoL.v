@@ -370,7 +370,17 @@ apply rngl_ltb_lt in Hzs1, Hzs3.
 apply rngl_leb_le in H23.
 apply (rngl_ltb_ge_iff Hor) in Hzs23.
 apply (rngl_leb_gt Hor).
-Search (0 < rngl_sin (_ + _))%L.
+apply rngl_nlt_ge in Hzs23.
+apply (rngl_nle_gt_iff Hor).
+intros H223; apply Hzs23; clear Hzs23.
+apply angle_eqb_neq in Ht2z, Ht3z.
+change_angle_sub_r θ2 angle_straight.
+progress sin_cos_add_sub_straight_hyp T Hzs1.
+progress sin_cos_add_sub_straight_hyp T H223.
+progress sin_cos_add_sub_straight_hyp T Ht23z.
+progress sin_cos_add_sub_straight_hyp T H23.
+progress sin_cos_add_sub_straight_goal T.
+rewrite rngl_add_0_l.
 ...
       apply rngl_ltb_lt in Hzs1, Hzs2.
         now apply (rngl_lt_asymm Hor) in Hzs1.
