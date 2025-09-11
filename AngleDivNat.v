@@ -997,6 +997,17 @@ destruct l123. {
           apply -> (rngl_le_sub_0 Hop Hor) in Hc123.
           apply (rngl_lt_opp_r Hop Hor) in H123.
           move Hzs1 after Hzs2.
+(**)
+rewrite <- angle_add_assoc in Hc123, H123, Hz123.
+remember (θ2 + θ3)%A as θ4.
+clear θ3 Heqθ4.
+(*
+exfalso; clear θ2 Hz12 Hzs2 Heqθ4 Hc123.
+...
+exfalso; clear θ1 Hz12 Hzs1 Hc123 H123 Hz123.
+exfalso; clear θ2 Hz12 Hzs2 Hzs23 Hc123 H123 Hz123.
+...
+*)
           destruct (rngl_lt_dec Hor 0 (rngl_cos θ1)) as [Hzc1| Hzc1]. {
             destruct (rngl_le_dec Hor 0 (rngl_cos θ2)) as [Hzc2| Hzc2]. {
               apply (rngl_nlt_ge_iff Hor).
@@ -1009,17 +1020,23 @@ destruct l123. {
 (**)
             change_angle_sub_l θ2 angle_straight.
             progress sin_cos_add_sub_straight_hyp T Hz12.
-            rewrite angle_add_sub_assoc in Hz123, H123, Hc123.
-            rewrite angle_add_sub_swap in Hz123, H123, Hc123.
+            rewrite angle_add_sub_assoc in (*Hz123, H123,*) Hc123.
+            rewrite angle_add_sub_swap in (*Hz123, H123,*) Hc123.
+(*
             progress sin_cos_add_sub_straight_hyp T Hz123.
             progress sin_cos_add_sub_straight_hyp T H123.
+*)
             progress sin_cos_add_sub_straight_hyp T Hc123.
+(*
             progress sin_cos_add_sub_straight_hyp T Hzs23.
+*)
             progress sin_cos_add_sub_straight_hyp T Hzs2.
             progress sin_cos_add_sub_straight_hyp T Hzc2.
             progress sin_cos_add_sub_straight_goal T.
             rewrite (rngl_add_opp_l Hop).
             apply (rngl_le_0_sub Hop Hor).
+...
+clear θ3 Hz123 H123 Hc123 Hzs23.
 ...
             change_angle_sub_r θ2 angle_right.
             progress sin_cos_add_sub_right_hyp T Hz12.
