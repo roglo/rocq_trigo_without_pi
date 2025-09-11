@@ -981,6 +981,7 @@ destruct l123. {
             rewrite angle_add_0_l in H123.
             now apply (rngl_lt_irrefl Hor) in H123.
           }
+...
           clear H23.
           apply (rngl_leb_gt Hor) in Hzs2.
           change_angle_sub_r θ2 angle_straight.
