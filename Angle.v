@@ -2201,6 +2201,14 @@ exfalso; apply H; clear H.
 now apply (rngl_squ_le_1 Hon Hop Hiq Hor).
 Qed.
 
+Theorem rngl_sin_asin : ∀ a, (-1 ≤ a ≤ 1)%L → rngl_sin (rngl_asin a) = a.
+Proof.
+intros * Ha.
+progress unfold rngl_asin.
+rewrite rngl_sin_sub_right_l.
+now apply rngl_cos_acos.
+Qed.
+
 Theorem rngl_sin_acos :
   ∀ x, (-1 ≤ x ≤ 1)%L → rngl_sin (rngl_acos x) = √(1 - x²)%L.
 Proof.
@@ -2212,12 +2220,13 @@ exfalso; apply H; clear H.
 now apply (rngl_squ_le_1 Hon Hop Hiq Hor).
 Qed.
 
-Theorem rngl_sin_asin : ∀ a, (-1 ≤ a ≤ 1)%L → rngl_sin (rngl_asin a) = a.
+Theorem rngl_cos_asin :
+  ∀ a, (-1 ≤ a ≤ 1)%L → rngl_cos (rngl_asin a) = √(1 - a²).
 Proof.
 intros * Ha.
 progress unfold rngl_asin.
-rewrite rngl_sin_sub_right_l.
-now apply rngl_cos_acos.
+rewrite rngl_cos_sub_right_l.
+now apply rngl_sin_acos.
 Qed.
 
 End a.
