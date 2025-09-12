@@ -2185,7 +2185,10 @@ Definition rngl_acos (x : T) :=
       angle_zero
   end.
 
+Definition rngl_asin x := (angle_right - rngl_acos x)%A.
+
 Arguments rngl_acos x%_L.
+Arguments rngl_asin x%_L.
 
 Theorem rngl_cos_acos :
   ∀ x, (-1 ≤ x ≤ 1)%L → rngl_cos (rngl_acos x) = x.
@@ -2209,6 +2212,15 @@ exfalso; apply H; clear H.
 now apply (rngl_squ_le_1 Hon Hop Hiq Hor).
 Qed.
 
+Theorem rngl_sin_asin : ∀ a, (-1 ≤ a ≤ 1)%L → rngl_sin (rngl_asin a) = a.
+Proof.
+intros * Ha.
+progress unfold rngl_asin.
+rewrite rngl_sin_sub_right_l.
+now apply rngl_cos_acos.
+Qed.
+
 End a.
 
 Arguments rngl_acos {T ro rp rl ac} x%_L.
+Arguments rngl_asin {T ro rp rl ac} x%_L.
