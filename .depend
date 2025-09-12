@@ -7,9 +7,11 @@ AngleAddLeMonoL_sin_lb_nonneg.vo AngleAddLeMonoL_sin_lb_nonneg.glob AngleAddLeMo
 AngleAddOverflowEquiv.vo AngleAddOverflowEquiv.glob AngleAddOverflowEquiv.v.beautified AngleAddOverflowEquiv.required_vo: AngleAddOverflowEquiv.v Angle.vo AngleDef.vo Angle_order.vo TacChangeAngle.vo
 AngleAddOverflowLe.vo AngleAddOverflowLe.glob AngleAddOverflowLe.v.beautified AngleAddOverflowLe.required_vo: AngleAddOverflowLe.v Angle.vo AngleAddOverflowEquiv.vo AngleDef.vo Angle_order.vo TacChangeAngle.vo TrigoWithoutPiExt.vo
 AngleDef.vo AngleDef.glob AngleDef.v.beautified AngleDef.required_vo: AngleDef.v
+AngleDeriv.vo AngleDeriv.glob AngleDeriv.v.beautified AngleDeriv.required_vo: AngleDeriv.v Angle.vo AngleDef.vo AngleDiv2.vo AngleDiv2Add.vo AngleDivNat.vo AngleTypeIsComplete.vo Angle_order.vo Distance.vo SeqAngleIsCauchy.vo TacChangeAngle.vo TrigoWithoutPiExt.vo
 AngleDiv2.vo AngleDiv2.glob AngleDiv2.v.beautified AngleDiv2.required_vo: AngleDiv2.v Angle.vo AngleDef.vo Angle_order.vo TrigoWithoutPiExt.vo
 AngleDiv2Add.vo AngleDiv2Add.glob AngleDiv2Add.v.beautified AngleDiv2Add.required_vo: AngleDiv2Add.v Angle.vo AngleAddLeMonoL.vo AngleAddOverflowEquiv.vo AngleAddOverflowLe.vo AngleDef.vo AngleDiv2.vo Angle_order.vo TacChangeAngle.vo TrigoWithoutPiExt.vo
 AngleDivNat.vo AngleDivNat.glob AngleDivNat.v.beautified AngleDivNat.required_vo: AngleDivNat.v Angle.vo AngleAddLeMonoL.vo AngleDef.vo AngleDiv2.vo AngleDiv2Add.vo AngleTypeIsComplete.vo Angle_order.vo Distance.vo SeqAngleIsCauchy.vo TacChangeAngle.vo TrigoWithoutPiExt.vo
+AngleTan.vo AngleTan.glob AngleTan.v.beautified AngleTan.required_vo: AngleTan.v Angle.vo AngleDef.vo AngleDeriv.vo AngleDiv2.vo Angle_order.vo Distance.vo TrigoWithoutPiExt.vo
 AngleTypeIsComplete.vo AngleTypeIsComplete.glob AngleTypeIsComplete.v.beautified AngleTypeIsComplete.required_vo: AngleTypeIsComplete.v Angle.vo AngleDef.vo Distance.vo
 Angle_order.vo Angle_order.glob Angle_order.v.beautified Angle_order.required_vo: Angle_order.v Angle.vo AngleDef.vo
 Distance.vo Distance.glob Distance.v.beautified Distance.required_vo: Distance.v Angle.vo AngleDef.vo
