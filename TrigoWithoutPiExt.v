@@ -802,38 +802,6 @@ rewrite angle_add_comm.
 now apply angle_add_not_overflow_move_add.
 Qed.
 
-(*
-Theorem angle_add_overflow_assoc' :
-  ∀ θ1 θ2 θ3,
-  angle_add_overflow θ1 θ2 = angle_add_overflow θ2 θ3
-  → angle_add_overflow (θ1 + θ2) θ3 = angle_add_overflow θ1 (θ2 + θ3).
-Proof.
-intros * H12.
-remember (angle_add_overflow θ2 θ3) as ov eqn:H23.
-symmetry in H23.
-destruct ov. 2: {
-  remember (angle_add_overflow (θ1 + θ2) θ3) as ov eqn:Hov.
-  symmetry in Hov |-*.
-  destruct ov; [ now apply angle_add_overflow_move_add | ].
-  rewrite angle_add_comm.
-  now apply angle_add_not_overflow_move_add.
-} {
-(**)
-rewrite <- angle_add_overflow_equiv2 in H23, H12.
-progress unfold angle_add_overflow2 in H23, H12.
-do 2 rewrite <- angle_add_overflow_equiv2.
-progress unfold angle_add_overflow2.
-rewrite <- angle_add_assoc.
-Search (_ + _ ≤ _ + _)%A.
-...
-  remember (angle_add_overflow (θ1 + θ2) θ3) as ov eqn:Hov.
-  symmetry in Hov |-*.
-  destruct ov. {
-...
-Qed.
-...
-*)
-
 Theorem angle_mul_2_l : ∀ θ, (2 * θ = θ + θ)%A.
 Proof.
 intros; cbn.
@@ -1206,20 +1174,55 @@ rewrite H in H1.
 now apply (rngl_lt_irrefl Hor) in H1.
 Qed.
 
+Theorem rngl_negb_ltb :
+  rngl_is_ordered T = true →
+  ∀ a b, (negb (a <? b) = (b ≤? a))%L.
+Proof.
+intros Hor *.
+progress unfold rngl_is_ordered in Hor.
+progress unfold rngl_ltb.
+progress unfold rngl_leb.
+destruct rngl_opt_leb; [ apply Bool.negb_involutive | easy ].
+Qed.
+
 Theorem rngl_lt_0_cos :
-  ∀ θ, (θ < angle_right)%A → (0 < rngl_cos θ)%L.
+  ∀ θ, (θ < angle_right ∨ - angle_right < θ)%A ↔ (0 < rngl_cos θ)%L.
 Proof.
 destruct_ac.
-intros * Htr.
-progress unfold angle_ltb in Htr.
-cbn in Htr.
+destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
+  intros.
+  specialize (rngl_characteristic_1 Hon Hos Hc1) as H1.
+  specialize (rngl_characteristic_1_angle_0 Hc1) as H2.
+  rewrite (H1 (rngl_cos _)).
+  rewrite (H2 θ), (H2 angle_right).
+  rewrite angle_opp_0.
+  split; intros H; [ now destruct H; apply angle_lt_irrefl in H | ].
+  now apply (rngl_lt_irrefl Hor) in H.
+}
+intros.
+progress unfold angle_ltb.
+cbn.
+rewrite (rngl_leb_0_opp Hop Hor).
+rewrite <- (rngl_negb_ltb Hor 0 1)%L.
 specialize (rngl_0_le_1 Hon Hos Hiq Hor) as H1.
+specialize (rngl_0_lt_1 Hon Hos Hiq Hc1 Hor) as H2.
 apply rngl_leb_le in H1.
-rewrite H1 in Htr.
+apply rngl_ltb_lt in H2.
+rewrite H1, H2.
+cbn.
 remember (0 ≤? rngl_sin θ)%L as zst eqn:Hzst.
 symmetry in Hzst.
-destruct zst; [ | easy ].
-now apply rngl_ltb_lt in Htr.
+split; intros Htr. {
+  destruct zst. {
+    destruct Htr as [Htr| ]; [ | easy ].
+    now apply rngl_ltb_lt in Htr.
+  } {
+    destruct Htr as [| Htr]; [ easy | ].
+    now apply rngl_ltb_lt in Htr.
+  }
+} {
+  now destruct zst; [ left | right ]; apply rngl_ltb_lt.
+}
 Qed.
 
 End a.
