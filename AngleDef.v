@@ -806,3 +806,6 @@ Theorem angle_eqb_refl : ∀ θ : angle T, ((θ =? θ)%A = true).
 Proof. now intros; apply angle_eqb_eq. Qed.
 
 End a.
+
+Notation "rngl_cos² a" := ((rngl_cos a)²) (at level 1).
+Notation "rngl_sin² a" := ((rngl_sin a)²) (at level 1).

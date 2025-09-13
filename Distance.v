@@ -252,7 +252,7 @@ rewrite rngl_add_0_l.
 rewrite rngl_add_assoc.
 rewrite (rngl_add_sub_assoc Hop).
 rewrite rngl_add_add_swap.
-rewrite <- (rngl_add_sub_swap Hop (rngl_cos θ)²)%L.
+rewrite <- (rngl_add_sub_swap Hop (rngl_cos² θ)).
 rewrite cos2_sin2_1.
 rewrite <- (rngl_add_sub_swap Hop).
 rewrite <- rngl_add_assoc.
@@ -308,7 +308,7 @@ apply angle_opp_sub_distr.
 Qed.
 
 Theorem angle_eucl_dist_0_r_cos_sin :
-  ∀ θ, ((angle_eucl_dist θ 0)² = (1 - rngl_cos θ)² + (rngl_sin θ)²)%L.
+  ∀ θ, ((angle_eucl_dist θ 0)² = (1 - rngl_cos θ)² + rngl_sin² θ)%L.
 Proof.
 destruct_ac.
 intros.
@@ -323,7 +323,7 @@ Qed.
 
 Theorem angle_eucl_dist_straight_r_cos_sin :
   ∀ θ,
-  ((angle_eucl_dist θ angle_straight)² = (1 + rngl_cos θ)² + (rngl_sin θ)²)%L.
+  ((angle_eucl_dist θ angle_straight)² = (1 + rngl_cos θ)² + rngl_sin² θ)%L.
 Proof.
 destruct_ac.
 intros.

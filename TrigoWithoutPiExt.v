@@ -1149,7 +1149,7 @@ apply (rngl_mul_2_l Hon).
 Qed.
 
 Theorem rngl_cos_mul_2_l :
-  ∀ θ, rngl_cos (2 * θ) = ((rngl_cos θ)² - (rngl_sin θ)²)%L.
+  ∀ θ, rngl_cos (2 * θ) = (rngl_cos² θ - rngl_sin² θ)%L.
 Proof.
 destruct_ac.
 intros; cbn.

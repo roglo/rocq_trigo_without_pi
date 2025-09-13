@@ -816,13 +816,13 @@ rewrite (rngl_squ_sub_squ' Hop).
 rewrite (rngl_mul_1_r Hon), (rngl_mul_1_l Hon).
 rewrite (rngl_add_sub Hos).
 rewrite (rngl_squ_1 Hon).
-replace (1 - (rngl_cos θ1)²)%L with (rngl_sin θ1)²%L. 2: {
+replace (1 - rngl_cos² θ1)%L with (rngl_sin² θ1). 2: {
   symmetry.
   apply (rngl_add_sub_eq_l Hos).
   apply (cos2_sin2_prop_add_squ).
   apply rngl_cos2_sin2.
 }
-replace (1 - (rngl_cos θ2)²)%L with (rngl_sin θ2)²%L. 2: {
+replace (1 - rngl_cos² θ2)%L with (rngl_sin² θ2). 2: {
   symmetry.
   apply (rngl_add_sub_eq_l Hos).
   apply (cos2_sin2_prop_add_squ).
@@ -1436,13 +1436,13 @@ do 2 rewrite (rngl_squ_sub_squ' Hop).
 do 2 rewrite (rngl_mul_1_r Hon), (rngl_mul_1_l Hon).
 do 2 rewrite (rngl_add_sub Hos).
 rewrite (rngl_squ_1 Hon).
-replace (1 - (rngl_cos θ1)²)%L with (rngl_sin θ1)²%L. 2: {
+replace (1 - rngl_cos² θ1)%L with (rngl_sin² θ1). 2: {
   symmetry.
   apply (rngl_add_sub_eq_l Hos).
   apply (cos2_sin2_prop_add_squ).
   apply rngl_cos2_sin2.
 }
-replace (1 - (rngl_cos θ2)²)%L with (rngl_sin θ2)²%L. 2: {
+replace (1 - rngl_cos² θ2)%L with (rngl_sin² θ2). 2: {
   symmetry.
   apply (rngl_add_sub_eq_l Hos).
   apply (cos2_sin2_prop_add_squ).
@@ -1753,13 +1753,13 @@ do 2 rewrite (rngl_squ_sub_squ' Hop).
 do 2 rewrite (rngl_mul_1_r Hon), (rngl_mul_1_l Hon).
 do 2 rewrite (rngl_add_sub Hos).
 rewrite (rngl_squ_1 Hon).
-replace (1 - (rngl_cos θ1)²)%L with (rngl_sin θ1)²%L. 2: {
+replace (1 - rngl_cos² θ1)%L with rngl_sin² θ1. 2: {
   symmetry.
   apply (rngl_add_sub_eq_l Hos).
   apply (cos2_sin2_prop_add_squ).
   apply rngl_cos2_sin2.
 }
-replace (1 - (rngl_cos θ2)²)%L with (rngl_sin θ2)²%L. 2: {
+replace (1 - rngl_cos² θ2)%L with rngl_sin² θ2. 2: {
   symmetry.
   apply (rngl_add_sub_eq_l Hos).
   apply (cos2_sin2_prop_add_squ).
@@ -1953,7 +1953,7 @@ apply (rngl_mul_lt_mono_pos_r Hon Hop Hiq Hor). {
   subst θ2.
   now apply (rngl_lt_irrefl Hor) in Hzs2.
 }
-apply (rngl_le_lt_trans Hor _ (2 * (rngl_cos θ2)²))%L. {
+apply (rngl_le_lt_trans Hor _ (2 * rngl_cos² θ2))%L. {
   apply (rngl_mul_le_mono_pos_l Hon Hop Hiq Hor); [ easy | ].
   apply (rngl_abs_le_squ_le Hon Hop Hiq Hor).
   rewrite (rngl_abs_nonneg_eq Hop Hor); [ | easy ].
