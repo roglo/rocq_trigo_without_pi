@@ -34,6 +34,9 @@ Arguments angle_ctx T {ro rp}.
 Arguments cos2_sin2_prop {T ro} (x y)%_L.
 Arguments mk_angle {T ro} (rngl_cos rngl_sin)%_L.
 
+Notation "rngl_cos² a" := ((rngl_cos a)²) (at level 1).
+Notation "rngl_sin² a" := ((rngl_sin a)²) (at level 1).
+
 Ltac destruct_ac :=
   set (Hic := ac_ic);
   set (Hop := ac_op);
@@ -185,7 +188,7 @@ progress unfold cos2_sin2_prop in Hcs.
 now apply (rngl_eqb_eq Hed) in Hcs.
 Qed.
 
-Theorem cos2_sin2_1 : ∀ θ, ((rngl_cos θ)² + (rngl_sin θ)² = 1)%L.
+Theorem cos2_sin2_1 : ∀ θ, (rngl_cos² θ + rngl_sin² θ = 1)%L.
 Proof.
 destruct_ac.
 intros.
@@ -806,6 +809,3 @@ Theorem angle_eqb_refl : ∀ θ : angle T, ((θ =? θ)%A = true).
 Proof. now intros; apply angle_eqb_eq. Qed.
 
 End a.
-
-Notation "rngl_cos² a" := ((rngl_cos a)²) (at level 1).
-Notation "rngl_sin² a" := ((rngl_sin a)²) (at level 1).
