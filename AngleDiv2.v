@@ -1273,13 +1273,20 @@ therefore this notation cannot be put there.
 *)
 
 Theorem rngl_cos_angle_div_2_pow_tending_to_1 :
-  rngl_characteristic T ≠ 1 →
   rngl_is_archimedean T = true →
   ∀ θ,
   is_limit_when_seq_tends_to_inf rngl_dist (λ i, rngl_cos (θ /₂^i)) 1%L.
 Proof.
-intros Hc1 Har.
 destruct_ac.
+intros Har.
+destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
+  specialize (rngl_characteristic_1 Hon Hos Hc1) as H1.
+  intros.
+  progress unfold is_limit_when_seq_tends_to_inf.
+  intros ε Hε.
+  rewrite (H1 ε) in Hε.
+  now apply (rngl_lt_irrefl Hor) in Hε.
+}
 specialize (rngl_int_dom_or_inv_1_quo Hiv Hon) as Hii.
 intros.
 enough (H :
@@ -1342,7 +1349,7 @@ enough (H :
   revert ε Hε HN.
   induction n; intros. {
     cbn in HN |-*.
-    rewrite (rngl_div_1_r Hon Hiq Hc1) in HN.
+    rewrite (rngl_div_1_r Hon Hiq) in HN; [ | now left ].
     apply (rngl_lt_sub_lt_add_l Hop Hor).
     apply (rngl_lt_sub_lt_add_r Hop Hor).
     easy.
@@ -1365,7 +1372,7 @@ enough (H :
     apply (rngl_0_lt_2 Hon Hos Hiq Hc1 Hor).
   }
   rewrite (rngl_div_div Hon Hos Hiv); cycle 1. {
-    apply (rngl_pow_nonzero Hon Hc1 Hos Hiq).
+    apply (rngl_pow_nonzero Hon Hos Hiq).
     apply (rngl_2_neq_0 Hon Hos Hiq Hc1 Hor).
   } {
     apply (rngl_2_neq_0 Hon Hos Hiq Hc1 Hor).
@@ -1381,7 +1388,7 @@ destruct H1 as (N, HN).
 exists (Nat.log2 N + 1).
 intros n Hn.
 apply (rngl_lt_div_l Hon Hop Hiv Hor). {
-  apply (rngl_pow_pos_pos Hon Hop Hiv Hc1 Hor).
+  apply (rngl_pow_pos_pos Hon Hop Hiv Hor).
   apply (rngl_0_lt_2 Hon Hos Hiq Hc1 Hor).
 }
 rewrite (rngl_mul_comm Hic).
