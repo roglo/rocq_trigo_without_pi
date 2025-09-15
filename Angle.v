@@ -1753,13 +1753,13 @@ do 2 rewrite (rngl_squ_sub_squ' Hop).
 do 2 rewrite (rngl_mul_1_r Hon), (rngl_mul_1_l Hon).
 do 2 rewrite (rngl_add_sub Hos).
 rewrite (rngl_squ_1 Hon).
-replace (1 - rngl_cos² θ1)%L with rngl_sin² θ1. 2: {
+replace (1 - rngl_cos² θ1)%L with (rngl_sin² θ1). 2: {
   symmetry.
   apply (rngl_add_sub_eq_l Hos).
   apply (cos2_sin2_prop_add_squ).
   apply rngl_cos2_sin2.
 }
-replace (1 - rngl_cos² θ2)%L with rngl_sin² θ2. 2: {
+replace (1 - rngl_cos² θ2)%L with (rngl_sin² θ2). 2: {
   symmetry.
   apply (rngl_add_sub_eq_l Hos).
   apply (cos2_sin2_prop_add_squ).

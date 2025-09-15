@@ -34,8 +34,8 @@ Arguments angle_ctx T {ro rp}.
 Arguments cos2_sin2_prop {T ro} (x y)%_L.
 Arguments mk_angle {T ro} (rngl_cos rngl_sin)%_L.
 
-Notation "rngl_cos² a" := ((rngl_cos a)²) (at level 1).
-Notation "rngl_sin² a" := ((rngl_sin a)²) (at level 1).
+Notation "rngl_cos² a" := ((rngl_cos a)²) (at level 10).
+Notation "rngl_sin² a" := ((rngl_sin a)²) (at level 10).
 
 Ltac destruct_ac :=
   set (Hic := ac_ic);
