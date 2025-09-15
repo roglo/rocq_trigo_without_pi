@@ -925,19 +925,35 @@ apply angle_lt_opp_r; [ easy | ].
 now rewrite angle_opp_straight.
 Qed.
 
-Theorem rngl_le_0_cos : ∀ θ, (θ ≤ angle_right)%A → (0 ≤ rngl_cos θ)%L.
+Theorem rngl_le_0_cos :
+  ∀ θ,
+  (θ ≤ angle_right ∨ angle_straight + angle_right ≤ θ)%A
+  → (0 ≤ rngl_cos θ)%L.
 Proof.
 destruct_ac.
+destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
+  specialize (rngl_characteristic_1 Hon Hos Hc1) as H1.
+  intros.
+  rewrite (H1 (rngl_cos θ)).
+  apply (rngl_le_refl Hor).
+}
 intros * Htr.
 progress unfold angle_leb in Htr.
+rewrite rngl_sin_add_right_r in Htr.
+rewrite rngl_cos_add_right_r in Htr.
 cbn in Htr.
+rewrite (rngl_opp_0 Hop) in Htr.
+rewrite (rngl_leb_0_opp Hop Hor) in Htr.
 specialize (rngl_0_le_1 Hon Hos Hiq Hor) as H1.
 apply rngl_leb_le in H1.
-rewrite H1 in Htr.
+rewrite H1 in Htr; clear H1.
+specialize (rngl_0_lt_1 Hon Hos Hiq Hc1 Hor) as H1.
+apply (rngl_leb_gt Hor) in H1.
+rewrite H1 in Htr; clear H1.
 remember (0 ≤? rngl_sin θ)%L as zst eqn:Hzst.
 symmetry in Hzst.
-destruct zst; [ | easy ].
-now apply rngl_leb_le in Htr.
+apply rngl_leb_le.
+now destruct zst; destruct Htr.
 Qed.
 
 Theorem rngl_le_cos_0 :

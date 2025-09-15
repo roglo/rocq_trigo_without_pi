@@ -655,7 +655,7 @@ destruct (rngl_lt_dec Hor (1 - ε² / 2)%L 0) as [Hez| Hze]. {
   intros * Hpq.
   apply (rngl_lt_le_trans Hor _ 0); [ easy | ].
   rewrite pow2_mod_mul_div; [ | flia Hpq ].
-  apply rngl_le_0_cos.
+  apply rngl_le_0_cos; left.
   apply angle_mul_div_pow2_le_right.
   apply (Nat.le_trans _ (4 * (2 ^ q * n / (2 ^ p * n)))). {
     apply Nat.mul_le_mono_l.
