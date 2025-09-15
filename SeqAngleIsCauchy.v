@@ -346,22 +346,6 @@ rewrite Nat.mul_comm.
 apply Nat.Div0.div_div.
 Qed.
 
-Theorem rngl_le_0_cos :
-  ∀ θ, (θ ≤ angle_right)%A → (0 ≤ rngl_cos θ)%L.
-Proof.
-destruct_ac.
-intros * Htr.
-progress unfold angle_leb in Htr.
-cbn in Htr.
-specialize (rngl_0_le_1 Hon Hos Hiq Hor) as H1.
-apply rngl_leb_le in H1.
-rewrite H1 in Htr.
-remember (0 ≤? rngl_sin θ)%L as zst eqn:Hzst.
-symmetry in Hzst.
-destruct zst; [ | easy ].
-now apply rngl_leb_le in Htr.
-Qed.
-
 Theorem angle_add_overflow_mul_div_pow2 :
   ∀ n i θ,
   n < 2 ^ i
