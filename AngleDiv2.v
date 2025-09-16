@@ -1372,7 +1372,7 @@ enough (H :
     apply (rngl_0_lt_2 Hon Hos Hiq Hc1 Hor).
   }
   rewrite (rngl_div_div Hon Hos Hiv); cycle 1. {
-    apply (rngl_pow_nonzero Hon Hos Hiq).
+    apply (rngl_pow_neq_0 Hon Hos Hiq).
     apply (rngl_2_neq_0 Hon Hos Hiq Hc1 Hor).
   } {
     apply (rngl_2_neq_0 Hon Hos Hiq Hc1 Hor).
