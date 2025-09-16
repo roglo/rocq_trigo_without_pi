@@ -267,6 +267,9 @@ Definition angle_eqb a b :=
 
 End a.
 
+Notation "'π'" := (angle_straight) (at level 0).
+Notation "'π/₂'" := angle_right.
+
 Declare Scope angle_scope.
 Delimit Scope angle_scope with A.
 Bind Scope angle_scope with angle.
