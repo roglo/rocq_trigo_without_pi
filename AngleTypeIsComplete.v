@@ -510,13 +510,13 @@ assert (Hts : s = rngl_sin θ ∨ s = (- rngl_sin θ)%L). {
   destruct (rngl_le_dec Hor 0 s) as [Hzs| Hzs]; [ left | right ]. {
     rewrite <- (rngl_abs_sqrt Hop Hor). 2: {
       apply (rngl_le_0_sub Hop Hor).
-      now apply (rngl_squ_le_1 Hon Hop Hiq Hor).
+      now apply (rngl_squ_le_1_iff Hon Hop Hiq Hor).
     }
     rewrite <- (rngl_abs_nonneg_eq Hop Hor s Hzs).
     apply (eq_rngl_squ_rngl_abs Hop Hor Hii); [ apply (rngl_mul_comm Hic) | ].
     rewrite (rngl_squ_sqrt Hon). 2: {
       apply (rngl_le_0_sub Hop Hor).
-      now apply (rngl_squ_le_1 Hon Hop Hiq Hor).
+      now apply (rngl_squ_le_1_iff Hon Hop Hiq Hor).
     }
     now apply (rngl_add_move_l Hop).
   } {
@@ -530,14 +530,14 @@ assert (Hts : s = rngl_sin θ ∨ s = (- rngl_sin θ)%L). {
     f_equal.
     rewrite <- (rngl_abs_sqrt Hop Hor). 2: {
       apply (rngl_le_0_sub Hop Hor).
-      now apply (rngl_squ_le_1 Hon Hop Hiq Hor).
+      now apply (rngl_squ_le_1_iff Hon Hop Hiq Hor).
     }
     apply (rngl_lt_le_incl Hor) in Hzs.
     rewrite <- (rngl_abs_nonneg_eq Hop Hor s Hzs).
     apply (eq_rngl_squ_rngl_abs Hop Hor Hii); [ apply (rngl_mul_comm Hic) | ].
     rewrite (rngl_squ_sqrt Hon). 2: {
       apply (rngl_le_0_sub Hop Hor).
-      now apply (rngl_squ_le_1 Hon Hop Hiq Hor).
+      now apply (rngl_squ_le_1_iff Hon Hop Hiq Hor).
     }
     now apply (rngl_add_move_l Hop).
   }

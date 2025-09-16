@@ -2198,7 +2198,7 @@ intros * Hx1.
 progress unfold rngl_acos.
 destruct (rngl_le_dec ac_or x² 1) as [| H]; [ easy | ].
 exfalso; apply H; clear H.
-now apply (rngl_squ_le_1 Hon Hop Hiq Hor).
+now apply (rngl_squ_le_1_iff Hon Hop Hiq Hor).
 Qed.
 
 Theorem rngl_sin_asin : ∀ a, (-1 ≤ a ≤ 1)%L → rngl_sin (rngl_asin a) = a.
@@ -2217,7 +2217,7 @@ intros * Hx1.
 progress unfold rngl_acos.
 destruct (rngl_le_dec ac_or x² 1) as [| H]; [ easy | ].
 exfalso; apply H; clear H.
-now apply (rngl_squ_le_1 Hon Hop Hiq Hor).
+now apply (rngl_squ_le_1_iff Hon Hop Hiq Hor).
 Qed.
 
 Theorem rngl_cos_asin :
