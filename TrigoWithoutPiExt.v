@@ -328,7 +328,7 @@ destruct (rngl_le_dec Hor 0 (rngl_cos θ1)) as [Hzc1| Hc1z]. {
   now apply (rngl_lt_le_incl Hor).
 }
 apply (rngl_nle_gt_iff Hor) in Hc1z.
-change_angle_sub_r θ1 angle_straight.
+change_angle_sub_r θ1 π.
 progress sin_cos_add_sub_straight_hyp T Hzs1.
 progress sin_cos_add_sub_straight_hyp T Hc1z.
 progress sin_cos_add_sub_straight_hyp T Hzs12.
@@ -475,7 +475,7 @@ destruct (rngl_lt_dec Hor 0 (rngl_cos θ2)) as [Hzc2| Hzc2]. {
   now apply (rngl_lt_le_incl Hor).
 }
 apply (rngl_nlt_ge_iff Hor) in Hzc2.
-change_angle_add_r θ2 angle_straight.
+change_angle_add_r θ2 π.
 progress sin_cos_add_sub_straight_hyp T Hzs2.
 progress sin_cos_add_sub_straight_hyp T H12.
 progress sin_cos_add_sub_straight_hyp T Hzs12.
@@ -557,7 +557,7 @@ destruct (rngl_lt_dec Hor 0 (rngl_cos θ2)) as [Hzc2| Hzc2]. {
   now apply not_eq_sym in Hc1z.
 }
 apply (rngl_nlt_ge_iff Hor) in Hzc2.
-change_angle_add_r θ2 angle_straight.
+change_angle_add_r θ2 π.
 progress sin_cos_add_sub_straight_hyp T Hzs2.
 progress sin_cos_add_sub_straight_hyp T Hzc2.
 progress sin_cos_add_sub_straight_hyp T Hzs12.

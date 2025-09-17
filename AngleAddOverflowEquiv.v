@@ -18,8 +18,7 @@ Definition angle_add_overflow2 θ1 θ2 := (θ1 + θ2 <? θ1)%A.
 
 Theorem rngl_cos_add_le_cos :
   ∀ θ1 θ2,
-  (θ1 ≠ π ∨ θ2 ≠ π ∨
-   0 ≤ rngl_cos θ1 ∨ 0 ≤ rngl_cos θ2)%L
+  (θ1 ≠ π ∨ θ2 ≠ π ∨ 0 ≤ rngl_cos θ1 ∨ 0 ≤ rngl_cos θ2)%L
   → (0 ≤ rngl_sin θ1)%L
   → (0 ≤ rngl_sin θ2)%L
   → (0 ≤ rngl_sin (θ1 + θ2))%L
@@ -359,7 +358,7 @@ destruct zs1. {
       }
       exfalso.
       apply (rngl_nle_gt_iff Hor) in Hzc2.
-      change_angle_add_r θ2 angle_straight.
+      change_angle_add_r θ2 π.
       progress sin_cos_add_sub_straight_hyp T Hzs2.
       progress sin_cos_add_sub_straight_hyp T Hzs12.
       progress sin_cos_add_sub_straight_hyp T Hc12.
@@ -378,7 +377,7 @@ destruct zs1. {
       apply rngl_leb_le in Hc12.
       apply rngl_ltb_lt.
       apply (rngl_nle_gt_iff Hor) in Hzc1.
-      change_angle_sub_l θ1 angle_straight.
+      change_angle_sub_l θ1 π.
       progress sin_cos_add_sub_straight_hyp T Hzs12.
       progress sin_cos_add_sub_straight_hyp T Hs1z.
       progress sin_cos_add_sub_straight_hyp T Hzs1.
@@ -411,7 +410,7 @@ destruct zs1. {
         now apply rngl_nlt_ge in Hzs12.
       }
       apply (rngl_nle_gt_iff Hor) in Hzc2.
-      change_angle_add_r θ2 angle_straight.
+      change_angle_add_r θ2 π.
       rewrite angle_sub_sub_distr in Hzs12 |-*.
       progress sin_cos_add_sub_straight_hyp T Hzs12.
       progress sin_cos_add_sub_straight_hyp T Hc12.
@@ -431,7 +430,7 @@ destruct zs1. {
     progress sin_cos_add_sub_right_hyp T Hzs1.
     progress sin_cos_add_sub_right_hyp T Hc12.
     progress sin_cos_add_sub_right_hyp T Hzc1.
-    change_angle_add_r θ2 angle_straight.
+    change_angle_add_r θ2 π.
     progress sin_cos_add_sub_straight_hyp T Hzs12.
     progress sin_cos_add_sub_straight_hyp T Hc12.
     progress sin_cos_add_sub_straight_hyp T Hzs2.
@@ -482,7 +481,7 @@ destruct zs1. {
     now apply rngl_cos_sub_nonneg.
   }
   apply (rngl_nle_gt_iff Hor) in Hzc2.
-  change_angle_add_r θ2 angle_straight.
+  change_angle_add_r θ2 π.
   progress sin_cos_add_sub_straight_hyp T Hzs12.
   progress sin_cos_add_sub_straight_hyp T Hzs2.
   progress sin_cos_add_sub_straight_hyp T Hzc2.
@@ -549,7 +548,7 @@ destruct s1z. {
       now apply rngl_nle_gt in Hzs1.
     }
     apply (rngl_nle_gt_iff Hor) in Hzc1.
-    change_angle_add_r θ1 angle_straight.
+    change_angle_add_r θ1 π.
     progress sin_cos_add_sub_straight_hyp T Hzs12.
     progress sin_cos_add_sub_straight_hyp T Hs1z.
     progress sin_cos_add_sub_straight_hyp T Hzs1.
@@ -578,7 +577,7 @@ destruct s1z. {
       now apply rngl_nle_gt in Hzc1.
     }
     apply (rngl_nle_gt_iff Hor) in Hzc2.
-    change_angle_sub_l θ2 angle_straight.
+    change_angle_sub_l θ2 π.
     progress sin_cos_add_sub_straight_hyp T Hzs12.
     progress sin_cos_add_sub_straight_hyp T Hs2z.
     progress sin_cos_add_sub_straight_hyp T Hzc2.
@@ -629,7 +628,7 @@ destruct s1z. {
         }
         exfalso.
         apply (rngl_nle_gt_iff Hor) in Hzc2.
-        change_angle_sub_l θ2 angle_straight.
+        change_angle_sub_l θ2 π.
         rewrite <- angle_sub_add_distr in Hzs12.
         progress sin_cos_add_sub_straight_hyp T Hzs12.
         progress sin_cos_add_sub_straight_hyp T Hs2z.
@@ -642,13 +641,13 @@ destruct s1z. {
       }
       exfalso.
       apply (rngl_nle_gt_iff Hor) in Hzc1.
-      change_angle_add_r θ1 angle_straight.
+      change_angle_add_r θ1 π.
       progress sin_cos_add_sub_straight_hyp T Hzs12.
       progress sin_cos_add_sub_straight_hyp T Hs1z.
       progress sin_cos_add_sub_straight_hyp T Hzs1.
       progress sin_cos_add_sub_straight_hyp T Hzc1.
       progress sin_cos_add_sub_straight_hyp T Hc21.
-      change_angle_sub_l θ2 angle_straight.
+      change_angle_sub_l θ2 π.
       progress sin_cos_add_sub_straight_hyp T Hzs12.
       progress sin_cos_add_sub_straight_hyp T Hs2z.
       progress sin_cos_add_sub_straight_hyp T Hc21.
@@ -679,7 +678,7 @@ destruct s1z. {
       }
     }
     apply (rngl_nle_gt_iff Hor) in Hzc1.
-    change_angle_add_r θ1 angle_straight.
+    change_angle_add_r θ1 π.
     progress sin_cos_add_sub_straight_hyp T Hzs12.
     progress sin_cos_add_sub_straight_hyp T Hs1z.
     progress sin_cos_add_sub_straight_hyp T Hzs1.
@@ -692,7 +691,7 @@ destruct s1z. {
       now apply quadrant_1_rngl_cos_add_le_cos_l.
     }
     apply (rngl_nle_gt_iff Hor) in Hzc2.
-    change_angle_sub_l θ2 angle_straight.
+    change_angle_sub_l θ2 π.
     progress sin_cos_add_sub_straight_hyp T Hzs12.
     progress sin_cos_add_sub_straight_hyp T Hs2z.
     progress sin_cos_add_sub_straight_hyp T Hzc2.
@@ -721,7 +720,7 @@ destruct s1z. {
       now apply rngl_sin_sub_lt_sin_l.
     }
     apply (rngl_nle_gt_iff Hor) in Hzc2.
-    change_angle_add_r θ2 angle_straight.
+    change_angle_add_r θ2 π.
     progress sin_cos_add_sub_straight_hyp T Hzs12.
     progress sin_cos_add_sub_straight_hyp T Hs2z.
     progress sin_cos_add_sub_straight_hyp T Hzc2.
@@ -733,7 +732,7 @@ destruct s1z. {
     now apply (rngl_mul_pos_pos Hon Hop Hiq Hor).
   }
   apply (rngl_nle_gt_iff Hor) in Hzc1.
-  change_angle_add_r θ1 angle_straight.
+  change_angle_add_r θ1 π.
   progress sin_cos_add_sub_straight_hyp T Hzs12.
   progress sin_cos_add_sub_straight_hyp T Hs1z.
   progress sin_cos_add_sub_straight_hyp T Hzs1.
@@ -754,7 +753,7 @@ destruct s1z. {
   }
   exfalso.
   apply (rngl_nle_gt_iff Hor) in Hzc2.
-  change_angle_add_r θ2 angle_straight.
+  change_angle_add_r θ2 π.
   progress sin_cos_add_sub_straight_hyp T Hzs12.
   progress sin_cos_add_sub_straight_hyp T Hs2z.
   progress sin_cos_add_sub_straight_hyp T Hzc2.

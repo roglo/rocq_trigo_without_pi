@@ -211,7 +211,7 @@ apply rngl_nlt_ge in Haov.
 apply Haov; clear Haov.
 destruct (rngl_le_dec Hor (rngl_cos θ1) 0) as [Hc1z| Hzc1]. {
   (* changing θ1 into π - θ1 *)
-  remember (angle_straight - θ1)%A as θ.
+  remember (π - θ1)%A as θ.
   apply angle_sub_move_r in Heqθ.
   rewrite angle_sub_opp_r in Heqθ.
   apply angle_add_move_l in Heqθ.
@@ -261,7 +261,7 @@ destruct (rngl_le_dec Hor (rngl_cos θ1) 0) as [Hc1z| Hzc1]. {
   } {
     apply (rngl_nle_gt_iff Hor) in Hc2z.
     (* changing θ2 into π - θ2 *)
-    remember (angle_straight - θ2)%A as θ.
+    remember (π - θ2)%A as θ.
     apply angle_sub_move_r in Heqθ.
     rewrite angle_sub_opp_r in Heqθ.
     apply angle_add_move_l in Heqθ.
@@ -503,7 +503,7 @@ destruct zs1. {
       now apply (rngl_mul_nonneg_nonneg Hon Hos Hiq Hor).
     }
     apply (rngl_nle_gt_iff Hor) in Hc2z.
-    remember (angle_straight - θ2)%A as θ.
+    remember (π - θ2)%A as θ.
     apply angle_sub_move_r in Heqθ.
     rewrite angle_sub_opp_r in Heqθ.
     apply angle_add_move_l in Heqθ.
@@ -685,11 +685,11 @@ destruct zs12. {
   rewrite (rngl_mul_1_l Hon).
   rewrite (rngl_mul_opp_r Hop).
   rewrite (rngl_add_opp_r Hop).
-  change_angle_sub_r θ1 angle_straight.
+  change_angle_sub_r θ1 π.
   progress sin_cos_add_sub_straight_hyp T Hzs12.
   progress sin_cos_add_sub_straight_hyp T Hzs1.
   progress sin_cos_add_sub_straight_goal T.
-  change_angle_sub_r θ2 angle_straight.
+  change_angle_sub_r θ2 π.
   rewrite angle_add_assoc in Hzs12 |-*.
   progress sin_cos_add_sub_straight_hyp T Hzs12.
   progress sin_cos_add_sub_straight_hyp T Hzs2.
@@ -720,7 +720,7 @@ rewrite (rngl_mul_1_l Hon).
 destruct zs2. {
   rewrite (rngl_mul_1_l Hon).
   apply rngl_leb_le in Hzs2.
-  change_angle_sub_r θ1 angle_straight.
+  change_angle_sub_r θ1 π.
   progress sin_cos_add_sub_straight_hyp T Haov.
   progress sin_cos_add_sub_straight_hyp T Hzs12.
   progress sin_cos_add_sub_straight_hyp T Hzs1.
@@ -741,12 +741,12 @@ rewrite (rngl_add_opp_r Hop).
 apply (rngl_opp_inj Hop).
 rewrite (rngl_opp_involutive Hop).
 rewrite (rngl_opp_sub_distr Hop).
-change_angle_sub_r θ1 angle_straight.
+change_angle_sub_r θ1 π.
 progress sin_cos_add_sub_straight_hyp T Haov.
 progress sin_cos_add_sub_straight_hyp T Hzs12.
 progress sin_cos_add_sub_straight_hyp T Hzs1.
 progress sin_cos_add_sub_straight_goal T.
-change_angle_sub_r θ2 angle_straight.
+change_angle_sub_r θ2 π.
 rewrite angle_add_assoc in Hzs12, Haov |-*.
 progress sin_cos_add_sub_straight_hyp T Hzs12.
 progress sin_cos_add_sub_straight_hyp T Haov.
@@ -854,7 +854,7 @@ destruct zs12. {
     rewrite (rngl_mul_opp_r Hop).
     rewrite (rngl_sub_opp_r Hop).
     rewrite (rngl_add_opp_l Hop).
-    change_angle_sub_r θ2 angle_straight.
+    change_angle_sub_r θ2 π.
     progress sin_cos_add_sub_straight_hyp T Hzs2.
     rewrite angle_add_assoc in Haov, Hzs12 |-*.
     progress sin_cos_add_sub_straight_hyp T Haov.
@@ -912,7 +912,7 @@ destruct zs12. {
   destruct zs2. {
     apply rngl_leb_le in Hzs2.
     rewrite (rngl_mul_1_l Hon).
-    change_angle_sub_r θ1 angle_straight.
+    change_angle_sub_r θ1 π.
     progress sin_cos_add_sub_straight_hyp T Hzs12.
     progress sin_cos_add_sub_straight_hyp T Hzs1.
     progress sin_cos_add_sub_straight_goal T.
@@ -964,7 +964,7 @@ destruct zs12. {
   rewrite (rngl_mul_1_l Hon).
   rewrite (rngl_mul_opp_r Hop).
   rewrite (rngl_sub_opp_r Hop).
-  change_angle_sub_r θ1 angle_straight.
+  change_angle_sub_r θ1 π.
   progress sin_cos_add_sub_straight_hyp T Hzs12.
   progress sin_cos_add_sub_straight_hyp T Hzs1.
   progress sin_cos_add_sub_straight_goal T.
@@ -984,7 +984,7 @@ rewrite (rngl_opp_involutive Hop).
 destruct zs2. {
   apply rngl_leb_le in Hzs2.
   rewrite (rngl_mul_1_l Hon).
-  change_angle_sub_r θ1 angle_straight.
+  change_angle_sub_r θ1 π.
   progress sin_cos_add_sub_straight_hyp T Haov.
   progress sin_cos_add_sub_straight_hyp T Hzs12.
   progress sin_cos_add_sub_straight_hyp T Hzs1.
@@ -1009,7 +1009,7 @@ destruct zs2. {
   now apply (rngl_lt_irrefl Hor) in Hzs1.
 }
 apply (rngl_leb_gt Hor) in Hzs2.
-change_angle_sub_r θ1 angle_straight.
+change_angle_sub_r θ1 π.
 progress sin_cos_add_sub_straight_hyp T Haov.
 progress sin_cos_add_sub_straight_hyp T Hzs12.
 progress sin_cos_add_sub_straight_hyp T Hzs1.
@@ -1246,8 +1246,8 @@ Qed.
 
 Theorem angle_add_overflow_gt_straight_ge_straight :
   ∀ θ1 θ2,
-  (angle_straight < θ1)%A
-  → (angle_straight ≤ θ2)%A
+  (π < θ1)%A
+  → (π ≤ θ2)%A
   → angle_add_overflow θ1 θ2 = true.
 Proof.
 destruct_ac.

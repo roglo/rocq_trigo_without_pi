@@ -125,7 +125,7 @@ apply (rngl_lt_le_incl Hor).
 apply (rngl_0_lt_2 Hon Hos Hiq Hc1 Hor).
 Qed.
 
-Theorem eq_rngl_sin_0 : ∀ θ, rngl_sin θ = 0%L → θ = 0%A ∨ θ = angle_straight.
+Theorem eq_rngl_sin_0 : ∀ θ, rngl_sin θ = 0%L → θ = 0%A ∨ θ = π.
 Proof.
 destruct_ac.
 specialize (rngl_has_eq_dec_or_is_ordered_r Hor) as Heo.
@@ -145,7 +145,7 @@ now destruct H1; subst c; [ left | right ]; apply eq_angle_eq.
 Qed.
 
 Theorem rngl_cos_add_straight_l :
-  ∀ θ, rngl_cos (angle_straight + θ) = (- rngl_cos θ)%L.
+  ∀ θ, rngl_cos (π + θ) = (- rngl_cos θ)%L.
 Proof.
 destruct_ac.
 intros; cbn.
@@ -167,7 +167,7 @@ apply (rngl_sub_0_r Hos).
 Qed.
 
 Theorem rngl_cos_add_right_l :
-  ∀ θ, rngl_cos (angle_right + θ) = (- rngl_sin θ)%L.
+  ∀ θ, rngl_cos (π/₂ + θ) = (- rngl_sin θ)%L.
 Proof.
 destruct_ac.
 intros; cbn.
@@ -187,7 +187,7 @@ apply (rngl_sub_0_l Hop).
 Qed.
 
 Theorem rngl_sin_add_right_l :
-  ∀ θ, rngl_sin (angle_right + θ) = rngl_cos θ.
+  ∀ θ, rngl_sin (π/₂ + θ) = rngl_cos θ.
 Proof.
 destruct_ac.
 intros; cbn.
@@ -207,7 +207,7 @@ apply rngl_add_0_l.
 Qed.
 
 Theorem rngl_cos_sub_straight_l :
-  ∀ θ, rngl_cos (angle_straight - θ) = (- rngl_cos θ)%L.
+  ∀ θ, rngl_cos (π - θ) = (- rngl_cos θ)%L.
 Proof.
 destruct_ac.
 intros; cbn.
@@ -218,7 +218,7 @@ now rewrite (rngl_sub_0_r Hos).
 Qed.
 
 Theorem rngl_sin_sub_straight_l :
-  ∀ θ, rngl_sin (angle_straight - θ) = rngl_sin θ.
+  ∀ θ, rngl_sin (π - θ) = rngl_sin θ.
 Proof.
 destruct_ac.
 intros; cbn.
@@ -517,7 +517,7 @@ apply (rngl_opp_involutive Hop).
 Qed.
 
 Theorem rngl_sin_eq :
-  ∀ θ1 θ2, rngl_sin θ1 = rngl_sin θ2 → θ1 = θ2 ∨ θ1 = (angle_straight - θ2)%A.
+  ∀ θ1 θ2, rngl_sin θ1 = rngl_sin θ2 → θ1 = θ2 ∨ θ1 = (π - θ2)%A.
 Proof.
 destruct_ac.
 specialize (rngl_has_eq_dec_or_is_ordered_r Hor) as Heo.
@@ -733,7 +733,7 @@ assert (Hzls2 : (0 < rngl_sin θ2)%L). {
 clear H2z.
 assert (Hs21 : (rngl_sin θ2 < rngl_sin θ1)%L). {
   apply (rngl_lt_opp_r Hop Hor) in Hcc.
-  remember (angle_straight - θ2)%A as θ eqn:Hθ.
+  remember (π - θ2)%A as θ eqn:Hθ.
   symmetry in Hθ.
   apply angle_sub_move_l in Hθ.
   subst θ2; rename θ into θ2.
@@ -1079,7 +1079,7 @@ apply (rngl_mul_comm Hic).
 Qed.
 
 Theorem rngl_sin_add_straight_l :
-  ∀ θ, (rngl_sin (angle_straight + θ) = - rngl_sin θ)%L.
+  ∀ θ, (rngl_sin (π + θ) = - rngl_sin θ)%L.
 Proof.
 destruct_ac.
 intros; cbn.
@@ -1262,7 +1262,7 @@ apply (rngl_nle_gt_iff Hor) in Hzc2.
 apply (rngl_nle_gt_iff Hor).
 intros Hcc.
 assert (Hs21 : (rngl_sin θ1 ≤ rngl_sin θ2)%L). {
-  remember (angle_straight - θ2)%A as θ eqn:Hθ.
+  remember (π - θ2)%A as θ eqn:Hθ.
   symmetry in Hθ.
   apply angle_sub_move_l in Hθ.
   subst θ2; rename θ into θ2.
@@ -1809,7 +1809,7 @@ easy.
 Qed.
 
 Theorem rngl_sin_sub_right_l :
-  ∀ θ, rngl_sin (angle_right - θ) = rngl_cos θ.
+  ∀ θ, rngl_sin (π/₂ - θ) = rngl_cos θ.
 Proof.
 destruct_ac.
 intros; cbn.
@@ -1843,7 +1843,7 @@ apply (rngl_mul_1_r Hon).
 Qed.
 
 Theorem rngl_cos_sub_right_l :
-  ∀ θ, rngl_cos (angle_right - θ) = rngl_sin θ.
+  ∀ θ, rngl_cos (π/₂ - θ) = rngl_sin θ.
 Proof.
 destruct_ac.
 intros; cbn.
@@ -2185,7 +2185,7 @@ Definition rngl_acos (x : T) :=
       angle_zero
   end.
 
-Definition rngl_asin x := (angle_right - rngl_acos x)%A.
+Definition rngl_asin x := (π/₂ - rngl_acos x)%A.
 
 Arguments rngl_acos x%_L.
 Arguments rngl_asin x%_L.

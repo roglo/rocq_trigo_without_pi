@@ -30,7 +30,7 @@ destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
   now apply (rngl_lt_irrefl Hor) in Hzs2.
 }
 intros * Hzs2 Hc2z Hzs12.
-change_angle_add_r θ2 angle_straight.
+change_angle_add_r θ2 π.
 progress sin_cos_add_sub_straight_hyp T Hzs12.
 progress sin_cos_add_sub_straight_hyp T Hc2z.
 progress sin_cos_add_sub_straight_hyp T Hzs2.
@@ -146,7 +146,7 @@ intros Haov12.
 apply Hzs12; clear Hzs12.
 apply (rngl_nle_gt_iff Hor).
 intros Hzs12.
-change_angle_add_r θ1 angle_straight.
+change_angle_add_r θ1 π.
 progress sin_cos_add_sub_straight_hyp T Hzs12.
 progress sin_cos_add_sub_straight_hyp T Hs1z.
 progress sin_cos_add_sub_straight_hyp T Hc1z.
@@ -305,7 +305,7 @@ destruct H21 as [H21| H21]. {
     now apply rngl_sin_sub_nonneg_sin_le_sin.
   }
   apply (rngl_nle_gt_iff Hor) in Hc2z.
-  change_angle_add_r θ2 angle_straight.
+  change_angle_add_r θ2 π.
   progress sin_cos_add_sub_straight_hyp T Hc2z.
   progress sin_cos_add_sub_straight_hyp T Hzs2.
   progress sin_cos_add_sub_straight_hyp T Hzs12.
@@ -329,7 +329,7 @@ Qed.
 
 Theorem angle_lt_rngl_sin_add_nonneg_sin_nonneg :
   ∀ θ1 θ2,
-  (θ2 < - θ1)%A ∨ (angle_straight - θ1 < θ2)%A
+  (θ2 < - θ1)%A ∨ (π - θ1 < θ2)%A
   → (0 ≤ rngl_sin (θ1 + θ2))%L
   → (0 ≤ rngl_sin θ1)%L.
 Proof.
@@ -442,7 +442,7 @@ move Hc1z before Hzs3.
 destruct (rngl_le_dec Hor 0 (rngl_sin θ1))%L as [Hzs1| Hs1z]. 2: {
   apply (rngl_nle_gt_iff Hor) in Hs1z.
   move Hs1z after Hzs2.
-  change_angle_sub_r θ1 angle_straight.
+  change_angle_sub_r θ1 π.
   progress sin_cos_add_sub_straight_hyp T Hs1z.
   progress sin_cos_add_sub_straight_hyp T Hzs13.
   progress sin_cos_add_sub_straight_hyp T Hzs12.

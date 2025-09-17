@@ -487,7 +487,7 @@ Qed.
 
 Theorem angle_straight_le_lt_sub_le_straight :
   ∀ θ₀ θ,
-  (angle_straight ≤ θ₀ < θ)%A
+  (π ≤ θ₀ < θ)%A
   → (θ - θ₀ ≤ angle_straight)%A.
 Proof.
 destruct_ac.
@@ -531,8 +531,8 @@ apply (rngl_leb_gt Hor) in Hzstz, Hzst.
 apply rngl_ltb_lt in Hθ.
 apply rngl_nle_gt in Hθ.
 apply Hθ; clear Hθ.
-change_angle_add_r θ₀ angle_straight.
-change_angle_add_r θ angle_straight.
+change_angle_add_r θ₀ π.
+change_angle_add_r θ π.
 progress sin_cos_add_sub_straight_hyp T Hzstz.
 progress sin_cos_add_sub_straight_hyp T Hzst.
 progress sin_cos_add_sub_straight_hyp T Hzstt.
@@ -665,7 +665,7 @@ Qed.
 
 Theorem rngl_sin_angle_eucl_dist_straight_r' :
   ∀ θ,
-  (angle_straight ≤ θ)%A
+  (π ≤ θ)%A
   → rngl_sin θ = (- rngl_sin (θ /₂) * angle_eucl_dist θ angle_straight)%L.
 Proof.
 destruct_ac.

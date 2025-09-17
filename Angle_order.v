@@ -629,7 +629,7 @@ now apply rngl_nle_gt in Hzs.
 Qed.
 
 Theorem rngl_sin_neg_angle_gt_straight :
-  ∀ θ, (rngl_sin θ < 0)%L ↔ (angle_straight < θ)%A.
+  ∀ θ, (rngl_sin θ < 0)%L ↔ (π < θ)%A.
 Proof.
 destruct_ac.
 intros.
@@ -903,7 +903,7 @@ Theorem angle_add_overflow_lt_straight_ge_straight :
   ∀ θ1 θ2,
   angle_add_overflow θ1 θ2 = true
   → (θ1 < angle_straight)%A
-  → (angle_straight ≤ θ2)%A.
+  → (π ≤ θ2)%A.
 Proof.
 intros * H12 H1s.
 apply angle_nlt_ge.
@@ -958,7 +958,7 @@ Qed.
 
 Theorem rngl_le_cos_0 :
   ∀ θ,
-  (angle_right ≤ θ ≤ π + π/₂)%A
+  (π/₂ ≤ θ ≤ π + π/₂)%A
   → (rngl_cos θ ≤ 0)%L.
 Proof.
 destruct_ac.

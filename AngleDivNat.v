@@ -158,7 +158,7 @@ rewrite <- rl_sqrt_mul; cycle 1. {
   apply (rngl_le_0_sub Hop Hor).
   apply rngl_cos_bound.
 }
-change_angle_add_r θ1 angle_straight.
+change_angle_add_r θ1 π.
 rewrite rngl_cos_sub_straight_r.
 rewrite (rngl_sub_opp_r Hop).
 rewrite (rngl_add_opp_r Hop).
@@ -292,7 +292,7 @@ rewrite <- rl_sqrt_mul; cycle 1. {
   apply (rngl_le_0_sub Hop Hor).
   apply rngl_cos_bound.
 }
-change_angle_add_r θ1 angle_straight.
+change_angle_add_r θ1 π.
 rewrite rngl_cos_sub_straight_r.
 rewrite (rngl_sub_opp_r Hop).
 rewrite (rngl_add_opp_r Hop).
@@ -362,8 +362,8 @@ destruct zs1. {
     now apply angle_eucl_dist_2_mul_sqrt_add_sqrt.
   }
   apply (rngl_leb_gt Hor) in Hzs1, Hzs2.
-  change_angle_add_r θ1 angle_straight.
-  change_angle_add_r θ2 angle_straight.
+  change_angle_add_r θ1 π.
+  change_angle_add_r θ2 π.
   progress sin_cos_add_sub_straight_hyp T Hzs1.
   progress sin_cos_add_sub_straight_hyp T Hzs2.
   progress sin_cos_add_sub_straight_goal T.
@@ -984,7 +984,7 @@ destruct l123. {
 ...
           clear H23.
           apply (rngl_leb_gt Hor) in Hzs2.
-          change_angle_sub_r θ2 angle_straight.
+          change_angle_sub_r θ2 π.
           rewrite angle_add_assoc in Hz12, Hc123, H123, Hz123 |-*.
           rewrite angle_add_add_swap in Hc123, H123, Hz123.
           progress sin_cos_add_sub_straight_hyp T Hz12.
@@ -1019,7 +1019,7 @@ exfalso; clear θ2 Hz12 Hzs2 Hzs23 Hc123 H123 Hz123.
             }
             apply (rngl_nle_gt_iff Hor) in Hzc2.
 (**)
-            change_angle_sub_l θ2 angle_straight.
+            change_angle_sub_l θ2 π.
             progress sin_cos_add_sub_straight_hyp T Hz12.
             rewrite angle_add_sub_assoc in (*Hz123, H123,*) Hc123.
             rewrite angle_add_sub_swap in (*Hz123, H123,*) Hc123.
@@ -1097,7 +1097,7 @@ apply (rngl_nle_gt_iff Hor).
 intros H223; apply Hzs23; clear Hzs23.
 *)
 apply angle_eqb_neq in Ht2z, Ht3z.
-change_angle_sub_r θ2 angle_straight.
+change_angle_sub_r θ2 π.
 progress sin_cos_add_sub_straight_hyp T Hzs1.
 progress sin_cos_add_sub_straight_hyp T H23.
 progress sin_cos_add_sub_straight_hyp T Ht23z.
@@ -1146,8 +1146,8 @@ destruct ov. 2: {
 } {
   destruct (angle_lt_dec θ2 angle_straight) as [H2s| H2s]. {
 (**)
-    change_angle_sub_r θ1 angle_straight.
-    change_angle_sub_r θ3 angle_straight.
+    change_angle_sub_r θ1 π.
+    change_angle_sub_r θ3 π.
     move θ1 after θ2.
     do 2 rewrite <- angle_add_overflow_equiv2.
     progress unfold angle_add_overflow2.
@@ -1177,16 +1177,16 @@ destruct ov. 2: {
   H23 : angle_add_overflow θ2 (θ3 + angle_straight) = true
   H12 : angle_add_overflow (θ1 + angle_straight) θ2 = true
   H2s : (θ2 < angle_straight)%A
-  H1s : (angle_straight ≤ θ1 + angle_straight)%A
-  H3s : (angle_straight ≤ θ3 + angle_straight)%A
+  H1s : (π ≤ θ1 + angle_straight)%A
+  H3s : (π ≤ θ3 + angle_straight)%A
   ============================
   angle_add_overflow (θ1 + π + θ2) (θ3 + angle_straight) =
   angle_add_overflow (θ1 + angle_straight) (θ2 + (θ3 + angle_straight))
 ...
-Search (angle_straight ≤ _)%A.
+Search (π ≤ _)%A.
 Search (_ < angle_straight)%A.
 Search (_ ≤ _ + _)%A.
-Theorem glop : ∀ θ, (angle_straight ≤ θ + angle_straight)%A → (θ < angle_straight)%A.
+Theorem glop : ∀ θ, (π ≤ θ + angle_straight)%A → (θ < angle_straight)%A.
 ...
     apply glop in H1s, H3s.
 ...

@@ -81,7 +81,7 @@ destruct zs2. 2: {
   progress sin_cos_add_sub_right_goal T.
   destruct (rngl_le_dec Hor (rngl_cos θ2) 0)%L as [Hc2z| Hzc2]. {
     exfalso.
-    change_angle_add_r θ2 angle_straight.
+    change_angle_add_r θ2 π.
     progress sin_cos_add_sub_straight_hyp T H23.
     progress sin_cos_add_sub_straight_hyp T Hzs2.
     progress sin_cos_add_sub_straight_hyp T Hzs12.

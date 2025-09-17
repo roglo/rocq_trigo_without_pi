@@ -337,7 +337,7 @@ rewrite Bool.orb_true_iff; right.
 apply (rngl_has_inv_and_1_has_inv_and_1_or_pdiv Hon Hiv).
 Qed.
 
-Theorem angle_straight_div_2 : (angle_straight /₂ = π/₂)%A.
+Theorem angle_straight_div_2 : (π /₂ = π/₂)%A.
 Proof.
 destruct_ac.
 specialize (rngl_has_inv_and_1_has_inv_and_1_or_pdiv Hon Hiv) as Hi1.
@@ -672,7 +672,7 @@ Definition angle_straight_div_3 :=
      rngl_cos2_sin2 := angle_straight_div_3_prop |}.
 
 Theorem angle_straight_div_3_mul_3 :
-  (3 * angle_straight_div_3)%A = angle_straight.
+  (3 * angle_straight_div_3)%A = π.
 Proof.
 destruct_ac.
 destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
@@ -812,7 +812,7 @@ apply (rngl_1_le_2 Hon Hos Hiq Hor).
 Qed.
 
 Theorem angle_straight_le_4_angle_straight_div_3 :
-  (angle_straight ≤ 4 * angle_straight_div_3)%A.
+  (π ≤ 4 * angle_straight_div_3)%A.
 Proof.
 destruct_ac.
 destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {

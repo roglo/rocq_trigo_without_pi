@@ -269,7 +269,7 @@ destruct zs3. {
         now apply rngl_sin_add_nonneg.
       }
       apply (rngl_nle_gt_iff Hor) in Hc1z.
-      change_angle_sub_l θ1 angle_straight.
+      change_angle_sub_l θ1 π.
       progress sin_cos_add_sub_straight_hyp T Hzs13.
       progress sin_cos_add_sub_straight_hyp T Hzs12.
       progress sin_cos_add_sub_straight_hyp T Hc1z.
@@ -422,7 +422,7 @@ destruct zs3. {
       now apply rngl_cos_add_nonneg.
     }
     apply (rngl_nle_gt_iff Hor) in Hc1z.
-    change_angle_add_r θ1 angle_straight.
+    change_angle_add_r θ1 π.
     progress sin_cos_add_sub_straight_hyp T Hs1z.
     progress sin_cos_add_sub_straight_hyp T Hc1z.
     progress sin_cos_add_sub_straight_hyp T Hs13z.
@@ -586,7 +586,7 @@ destruct zs3. {
   }
   apply (rngl_nle_gt_iff Hor) in Hc1z.
   apply (rngl_lt_le_incl Hor) in Hzs3, Hs13z.
-  change_angle_add_r θ1 angle_straight.
+  change_angle_add_r θ1 π.
   progress sin_cos_add_sub_straight_hyp T Hs1z.
   progress sin_cos_add_sub_straight_hyp T Hc1z.
   progress sin_cos_add_sub_straight_hyp T Hs13z.
@@ -739,7 +739,7 @@ destruct zs13. {
       now apply rngl_cos_sub_nonneg.
     }
     apply (rngl_nle_gt_iff Hor) in Hc1z.
-    change_angle_add_r θ1 angle_straight.
+    change_angle_add_r θ1 π.
     progress sin_cos_add_sub_straight_hyp T Hs1z.
     progress sin_cos_add_sub_straight_hyp T Hc1z.
     progress sin_cos_add_sub_straight_hyp T Hzs13.
@@ -834,7 +834,7 @@ destruct zs13. {
     apply rngl_sin_bound.
   }
   apply (rngl_nle_gt_iff Hor) in Hc3z.
-  change_angle_add_r θ3 angle_straight.
+  change_angle_add_r θ3 π.
   progress sin_cos_add_sub_straight_hyp T Hzs13.
   progress sin_cos_add_sub_straight_hyp T Hc3z.
   progress sin_cos_add_sub_straight_hyp T Hzs3.
@@ -900,7 +900,7 @@ destruct (rngl_le_dec Hor 0 (rngl_cos θ3)) as [Hzc3| Hc3z]. {
     } {
       apply (rngl_nle_gt_iff Hor) in Hs1z.
       destruct (rngl_le_dec Hor (rngl_cos θ1) 0) as [Hc1z| Hzc1]. {
-        change_angle_add_r θ1 angle_straight.
+        change_angle_add_r θ1 π.
         progress sin_cos_add_sub_straight_hyp T Hzs12.
         progress sin_cos_add_sub_straight_hyp T Hzs13.
         progress sin_cos_add_sub_straight_hyp T Hc1z.
@@ -1058,7 +1058,7 @@ destruct (rngl_le_dec Hor 0 (rngl_cos θ3)) as [Hzc3| Hc3z]. {
   }
   apply (rngl_nle_gt_iff Hor) in Hc1z.
   exfalso.
-  change_angle_add_r θ1 angle_straight.
+  change_angle_add_r θ1 π.
   progress sin_cos_add_sub_straight_hyp T Hzs13.
   progress sin_cos_add_sub_straight_hyp T Hc1z.
   progress sin_cos_add_sub_straight_hyp T Hs1z.
@@ -1100,7 +1100,7 @@ destruct (rngl_le_dec Hor 0 (rngl_cos θ3)) as [Hzc3| Hc3z]. {
   apply quadrant_1_sin_sub_pos_cos_lt; try easy.
 }
 apply (rngl_nle_gt_iff Hor) in Hc3z.
-change_angle_add_r θ3 angle_straight.
+change_angle_add_r θ3 π.
 progress sin_cos_add_sub_straight_hyp T Hzs3.
 progress sin_cos_add_sub_straight_hyp T Hc3z.
 progress sin_cos_add_sub_straight_hyp T Hzs13.
@@ -1165,7 +1165,7 @@ destruct (rngl_le_dec Hor 0 (rngl_cos θ2)) as [Hzc2| Hc2z]. {
       now apply (rngl_sin_add_pos_1).
     } {
       apply (rngl_nle_gt_iff Hor) in Hc1z.
-      change_angle_add_r θ1 angle_straight.
+      change_angle_add_r θ1 π.
       progress sin_cos_add_sub_straight_hyp T Hzs12.
       progress sin_cos_add_sub_straight_hyp T Hzs13.
       progress sin_cos_add_sub_straight_hyp T Hc1z.
@@ -1202,7 +1202,7 @@ destruct (rngl_le_dec Hor 0 (rngl_sin θ1)) as [Hzs1| Hs1z]. 2: {
   } {
     apply (rngl_nle_gt_iff Hor) in Hc1z.
     apply (rngl_lt_le_incl Hor) in Hc1z.
-    change_angle_add_r θ1 angle_straight.
+    change_angle_add_r θ1 π.
     progress sin_cos_add_sub_straight_hyp T Hzs12.
     progress sin_cos_add_sub_straight_hyp T Hzs13.
     progress sin_cos_add_sub_straight_hyp T Hc1z.
