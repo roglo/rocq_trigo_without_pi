@@ -417,7 +417,7 @@ Qed.
 Theorem angle_mul_div_pow2_le_straight :
   ∀ n i θ,
   2 * n ≤ 2 ^ i
-  → (n * (θ /₂^i) ≤ angle_straight)%A.
+  → (n * (θ /₂^i) ≤ π)%A.
 Proof.
 destruct_ac.
 intros * Hni.
@@ -575,7 +575,7 @@ destruct (Nat.eq_dec n 1) as [Hn1| Hn1]. {
   cbn.
   now rewrite angle_eucl_dist_diag.
 }
-assert (Hss : ∀ i, (seq_angle_to_div_nat θ n i ≤ angle_straight)%A). {
+assert (Hss : ∀ i, (seq_angle_to_div_nat θ n i ≤ π)%A). {
   intros i.
   specialize seq_angle_to_div_nat_le_straight_div_pow2_log2_pred as H1.
   specialize (H1 n i θ Hn1).

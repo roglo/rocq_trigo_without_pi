@@ -901,7 +901,7 @@ apply (rngl_2_neq_0 Hon Hos Hiq Hc1 Hor).
 Qed.
 
 Theorem rngl_cos_decr :
-  ∀ θ1 θ2, (θ1 ≤ θ2 ≤ angle_straight)%A → (rngl_cos θ2 ≤ rngl_cos θ1)%L.
+  ∀ θ1 θ2, (θ1 ≤ θ2 ≤ π)%A → (rngl_cos θ2 ≤ rngl_cos θ1)%L.
 Proof.
 destruct_ac.
 intros * (H12, H2s).
@@ -916,7 +916,7 @@ now apply rngl_leb_le in H12.
 Qed.
 
 Theorem rngl_cos_decr_lt :
-  ∀ θ1 θ2, (θ1 < θ2 ≤ angle_straight)%A → (rngl_cos θ2 < rngl_cos θ1)%L.
+  ∀ θ1 θ2, (θ1 < θ2 ≤ π)%A → (rngl_cos θ2 < rngl_cos θ1)%L.
 Proof.
 destruct_ac.
 intros * (H12, H2s).

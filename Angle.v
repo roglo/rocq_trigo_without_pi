@@ -156,7 +156,7 @@ apply (rngl_sub_0_r Hos).
 Qed.
 
 Theorem rngl_cos_add_straight_r :
-  ∀ θ, rngl_cos (θ + angle_straight) = (- rngl_cos θ)%L.
+  ∀ θ, rngl_cos (θ + π) = (- rngl_cos θ)%L.
 Proof.
 destruct_ac.
 intros; cbn.
@@ -230,7 +230,7 @@ apply (rngl_opp_involutive Hop).
 Qed.
 
 Theorem rngl_cos_sub_straight_r :
-  ∀ θ, rngl_cos (θ - angle_straight) = (- rngl_cos θ)%L.
+  ∀ θ, rngl_cos (θ - π) = (- rngl_cos θ)%L.
 Proof.
 destruct_ac.
 intros; cbn.
@@ -242,7 +242,7 @@ now rewrite (rngl_sub_0_r Hos).
 Qed.
 
 Theorem rngl_sin_sub_straight_r :
-  ∀ θ, rngl_sin (θ - angle_straight) = (- rngl_sin θ)%L.
+  ∀ θ, rngl_sin (θ - π) = (- rngl_sin θ)%L.
 Proof.
 destruct_ac.
 intros; cbn.
@@ -438,7 +438,7 @@ apply eq_angle_eq.
 now rewrite Hθ, H1.
 Qed.
 
-Theorem eq_rngl_cos_opp_1 : ∀ θ, (rngl_cos θ = -1 → θ = angle_straight)%L.
+Theorem eq_rngl_cos_opp_1 : ∀ θ, (rngl_cos θ = -1 → θ = π)%L.
 Proof.
 destruct_ac.
 specialize (rngl_has_eq_dec_or_is_ordered_r Hor) as Heo.
@@ -1338,7 +1338,7 @@ apply rngl_add_cos_nonneg_when_sin_nonneg. {
 Qed.
 
 Theorem rngl_sin_add_straight_r :
-  ∀ θ, (rngl_sin (θ + angle_straight) = - rngl_sin θ)%L.
+  ∀ θ, (rngl_sin (θ + π) = - rngl_sin θ)%L.
 Proof.
 destruct_ac.
 intros; cbn.

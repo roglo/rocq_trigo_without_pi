@@ -372,7 +372,7 @@ Qed.
 
 Theorem rngl_sin_angle_eucl_dist_twice_0 :
   ∀ θ,
-  (θ ≤ angle_straight)%A
+  (θ ≤ π)%A
   → rngl_sin θ = (angle_eucl_dist (2 * θ) 0 / 2)%L.
 Proof.
 destruct_ac.
@@ -384,7 +384,7 @@ destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
   apply H1.
 }
 intros * Hts.
-destruct (angle_eq_dec θ angle_straight) as [Hts'| Hts']. {
+destruct (angle_eq_dec θ π) as [Hts'| Hts']. {
   subst θ.
   rewrite angle_mul_2_l.
   rewrite angle_straight_add_straight.
@@ -453,7 +453,7 @@ Qed.
 
 Theorem angle_lt_angle_le_straight_angle_sub_le :
   ∀ θ1 θ2,
-  (θ1 < θ2 ≤ angle_straight)%A
+  (θ1 < θ2 ≤ π)%A
   → (θ2 - θ1 ≤ θ2)%A.
 Proof.
 destruct_ac.
@@ -488,7 +488,7 @@ Qed.
 Theorem angle_straight_le_lt_sub_le_straight :
   ∀ θ₀ θ,
   (π ≤ θ₀ < θ)%A
-  → (θ - θ₀ ≤ angle_straight)%A.
+  → (θ - θ₀ ≤ π)%A.
 Proof.
 destruct_ac.
 intros * (Hts, Hθ).
@@ -546,7 +546,7 @@ Qed.
 (* *)
 
 Definition angle_lt_for_deriv θ1 θ2 :=
-  (θ1 < θ2)%A ∧ (θ2 - θ1 ≤ angle_straight)%A.
+  (θ1 < θ2)%A ∧ (θ2 - θ1 ≤ π)%A.
 
 Definition angle_lt θ1 θ2 :=
   (θ1 < θ2)%A.
@@ -622,8 +622,8 @@ Qed.
 
 Theorem rngl_sin_angle_eucl_dist_straight_r :
   ∀ θ,
-  (θ ≤ angle_straight)%A
-  → rngl_sin θ = (rngl_sin (θ /₂) * angle_eucl_dist θ angle_straight)%L.
+  (θ ≤ π)%A
+  → rngl_sin θ = (rngl_sin (θ /₂) * angle_eucl_dist θ π)%L.
 Proof.
 destruct_ac.
 specialize (rngl_has_inv_and_1_has_inv_and_1_or_pdiv Hon Hiv) as Hi1.
@@ -666,7 +666,7 @@ Qed.
 Theorem rngl_sin_angle_eucl_dist_straight_r' :
   ∀ θ,
   (π ≤ θ)%A
-  → rngl_sin θ = (- rngl_sin (θ /₂) * angle_eucl_dist θ angle_straight)%L.
+  → rngl_sin θ = (- rngl_sin (θ /₂) * angle_eucl_dist θ π)%L.
 Proof.
 destruct_ac.
 destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
@@ -773,7 +773,7 @@ Qed.
 
 Theorem rngl_1_sub_cos_div_2_le_angle_eucl_dist_0_r :
   ∀ θ,
-  (θ ≤ angle_straight)%A
+  (θ ≤ π)%A
   → (1 - rngl_cos (θ /₂) ≤ angle_eucl_dist θ 0)%L.
 Proof.
 destruct_ac.
@@ -822,7 +822,7 @@ apply angle_eucl_dist_nonneg.
 Qed.
 
 Theorem rngl_1_sub_sin_div_2_le_angle_eucl_dist_straight_r :
-  ∀ θ, (1 - rngl_sin (θ /₂) ≤ angle_eucl_dist θ angle_straight)%L.
+  ∀ θ, (1 - rngl_sin (θ /₂) ≤ angle_eucl_dist θ π)%L.
 Proof.
 intros.
 destruct_ac.
@@ -836,7 +836,7 @@ destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
 specialize (rngl_0_lt_2 Hon Hos Hiq Hc1 Hor) as Hz2.
 intros.
 cbn.
-destruct (rngl_le_dec Hor 1 (angle_eucl_dist θ angle_straight))
+destruct (rngl_le_dec Hor 1 (angle_eucl_dist θ π))
   as [H1s| H1s]. {
   eapply (rngl_le_trans Hor); [ | apply H1s ].
   apply (rngl_le_sub_l Hop Hor).
@@ -859,7 +859,7 @@ apply (rngl_le_div_r Hon Hop Hiv Hor _²); [ easy | ].
 rewrite rngl_cos_angle_eucl_dist_straight_r.
 rewrite (rngl_sub_sub_distr Hop).
 rewrite <- (rngl_add_sub_swap Hop).
-remember (angle_eucl_dist θ angle_straight) as a.
+remember (angle_eucl_dist θ π) as a.
 apply (rngl_le_add_le_sub_l Hop Hor).
 apply (rngl_squ_div_2_add_1_sub_squ_mul_2_le_2 Hic Hon Hop Hiv Hor).
 split; [ | easy ].
@@ -996,7 +996,7 @@ Theorem rngl_cos_left_or_right_derivative_at_straight :
   ∀ is_left,
   left_or_right_derivative_at is_left angle_lt_for_deriv
     angle_eucl_dist rngl_dist
-    rngl_cos π ((rngl_opp ° rngl_sin) angle_straight).
+    rngl_cos π ((rngl_opp ° rngl_sin) π).
 Proof.
 destruct_ac.
 specialize (rngl_int_dom_or_inv_1_quo Hiv Hon) as Hii.
@@ -1141,7 +1141,7 @@ Theorem rngl_sin_left_or_right_derivative_at_straight :
   ∀ is_left,
   left_or_right_derivative_at is_left angle_lt_for_deriv
     angle_eucl_dist rngl_dist rngl_sin π
-    (rngl_cos angle_straight).
+    (rngl_cos π).
 Proof.
 destruct_ac.
 specialize (rngl_int_dom_or_inv_1_quo Hiv Hon) as Hii.
@@ -1246,7 +1246,7 @@ destruct (angle_eq_dec θ₀ 0) as [Htz| Htz]. {
   subst θ₀.
   apply rngl_cos_left_or_right_derivative_at_0.
 }
-destruct (angle_eq_dec θ₀ angle_straight) as [Hts| Hts]. {
+destruct (angle_eq_dec θ₀ π) as [Hts| Hts]. {
   subst θ₀.
   apply rngl_cos_left_or_right_derivative_at_straight.
 }
@@ -1257,7 +1257,7 @@ destruct (Hsr ε Hε) as (η' & Hη' & Hss').
 move η before ε.
 move η' before η.
 remember (angle_eucl_dist θ₀ 0) as x.
-remember (angle_eucl_dist θ₀ angle_straight) as y.
+remember (angle_eucl_dist θ₀ π) as y.
 exists (rngl_min3 x y (rngl_min η η')); subst x y.
 split. {
   apply rngl_min_glb_lt; [ | now apply rngl_min_glb_lt ].
@@ -1383,7 +1383,7 @@ destruct (angle_eq_dec θ₀ 0) as [Htz| Htz]. {
   subst θ₀.
   apply rngl_sin_left_or_right_derivative_at_0.
 }
-destruct (angle_eq_dec θ₀ angle_straight) as [Hts| Hts]. {
+destruct (angle_eq_dec θ₀ π) as [Hts| Hts]. {
   subst θ₀.
   apply rngl_sin_left_or_right_derivative_at_straight.
 }
@@ -1394,7 +1394,7 @@ destruct (Hcr ε Hε) as (η' & Hη' & Hcc').
 move η before ε.
 move η' before η.
 remember (angle_eucl_dist θ₀ 0) as x.
-remember (angle_eucl_dist θ₀ angle_straight) as y.
+remember (angle_eucl_dist θ₀ π) as y.
 exists (rngl_min3 x y (rngl_min η η')); subst x y.
 split. {
   apply rngl_min_glb_lt; [ | now apply rngl_min_glb_lt ].

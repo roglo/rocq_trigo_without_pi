@@ -464,7 +464,7 @@ split; intros H12. {
   apply (f_equal (λ a, angle_mul_nat a 2)) in H12.
   rewrite angle_mul_sub_distr_l in H12.
   (* lemma *)
-  rewrite (angle_mul_2_l angle_straight) in H12.
+  rewrite (angle_mul_2_l π) in H12.
   rewrite angle_straight_add_straight in H12.
   rewrite angle_sub_0_l in H12.
   do 2 rewrite angle_div_2_mul_2 in H12.
@@ -582,8 +582,8 @@ Qed.
 
 Theorem angle_le_angle_eucl_dist_le :
   ∀ θ1 θ2,
-  (θ1 ≤ angle_straight)%A
-  → (θ2 ≤ angle_straight)%A
+  (θ1 ≤ π)%A
+  → (θ2 ≤ π)%A
   → (θ1 ≤ θ2)%A ↔ (angle_eucl_dist θ1 0 ≤ angle_eucl_dist θ2 0)%L.
 Proof.
 intros * Ht1 Ht2.
@@ -1144,7 +1144,7 @@ destruct ov. 2: {
   rewrite angle_add_comm.
   now apply angle_add_not_overflow_move_add.
 } {
-  destruct (angle_lt_dec θ2 angle_straight) as [H2s| H2s]. {
+  destruct (angle_lt_dec θ2 π) as [H2s| H2s]. {
 (**)
     change_angle_sub_r θ1 π.
     change_angle_sub_r θ3 π.
@@ -1152,7 +1152,7 @@ destruct ov. 2: {
     do 2 rewrite <- angle_add_overflow_equiv2.
     progress unfold angle_add_overflow2.
     progress sin_cos_add_sub_right_goal T.
-    do 2 rewrite (angle_add_add_swap _ angle_straight).
+    do 2 rewrite (angle_add_add_swap _ π).
     rewrite <- angle_add_assoc.
     rewrite angle_straight_add_straight.
     rewrite angle_add_0_r.
@@ -1167,26 +1167,26 @@ destruct ov. 2: {
     apply angle_add_overflow_lt_straight_ge_straight in H1s; [ | easy ].
     generalize H23; intros H3s.
     apply angle_add_overflow_lt_straight_ge_straight in H3s; [ | easy ].
-    remember (θ1 - angle_straight)%A as θ.
+    remember (θ1 - π)%A as θ.
     apply angle_add_move_r in Heqθ.
     subst θ1; rename θ into θ1; move θ1 after θ2.
-    remember (θ3 - angle_straight)%A as θ.
+    remember (θ3 - π)%A as θ.
     apply angle_add_move_r in Heqθ.
     subst θ3; rename θ into θ3; move θ3 before θ2.
 ...
-  H23 : angle_add_overflow θ2 (θ3 + angle_straight) = true
-  H12 : angle_add_overflow (θ1 + angle_straight) θ2 = true
-  H2s : (θ2 < angle_straight)%A
-  H1s : (π ≤ θ1 + angle_straight)%A
-  H3s : (π ≤ θ3 + angle_straight)%A
+  H23 : angle_add_overflow θ2 (θ3 + π) = true
+  H12 : angle_add_overflow (θ1 + π) θ2 = true
+  H2s : (θ2 < π)%A
+  H1s : (π ≤ θ1 + π)%A
+  H3s : (π ≤ θ3 + π)%A
   ============================
-  angle_add_overflow (θ1 + π + θ2) (θ3 + angle_straight) =
-  angle_add_overflow (θ1 + angle_straight) (θ2 + (θ3 + angle_straight))
+  angle_add_overflow (θ1 + π + θ2) (θ3 + π) =
+  angle_add_overflow (θ1 + π) (θ2 + (θ3 + π))
 ...
 Search (π ≤ _)%A.
-Search (_ < angle_straight)%A.
+Search (_ < π)%A.
 Search (_ ≤ _ + _)%A.
-Theorem glop : ∀ θ, (π ≤ θ + angle_straight)%A → (θ < angle_straight)%A.
+Theorem glop : ∀ θ, (π ≤ θ + π)%A → (θ < π)%A.
 ...
     apply glop in H1s, H3s.
 ...

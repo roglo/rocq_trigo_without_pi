@@ -798,7 +798,7 @@ cbn; f_equal.
 apply (rngl_opp_0 Hop).
 Qed.
 
-Theorem angle_opp_straight : (- angle_straight)%A = π.
+Theorem angle_opp_straight : (- π)%A = π.
 Proof.
 destruct_ac.
 apply eq_angle_eq; cbn.

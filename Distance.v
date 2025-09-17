@@ -323,7 +323,7 @@ Qed.
 
 Theorem angle_eucl_dist_straight_r_cos_sin :
   ∀ θ,
-  ((angle_eucl_dist θ angle_straight)² = (1 + rngl_cos θ)² + rngl_sin² θ)%L.
+  ((angle_eucl_dist θ π)² = (1 + rngl_cos θ)² + rngl_sin² θ)%L.
 Proof.
 destruct_ac.
 intros.
@@ -366,7 +366,7 @@ now apply (rngl_sub_move_l Hop) in H1.
 Qed.
 
 Theorem rngl_cos_angle_eucl_dist_straight_r :
-  ∀ θ, (rngl_cos θ = (angle_eucl_dist θ angle_straight)² / 2 - 1)%L.
+  ∀ θ, (rngl_cos θ = (angle_eucl_dist θ π)² / 2 - 1)%L.
 Proof.
 destruct_ac.
 specialize (rngl_has_inv_and_1_has_inv_and_1_or_pdiv Hon Hiv) as Hi1.

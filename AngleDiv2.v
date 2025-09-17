@@ -255,7 +255,7 @@ apply (rngl_le_0_sub Hop Hor).
 apply rngl_cos_bound.
 Qed.
 
-Theorem angle_div_2_le_straight : ∀ θ, (θ /₂ ≤ angle_straight)%A.
+Theorem angle_div_2_le_straight : ∀ θ, (θ /₂ ≤ π)%A.
 Proof.
 destruct_ac.
 specialize (rngl_int_dom_or_inv_1_quo Hiv Hon) as Hii.
@@ -264,7 +264,7 @@ specialize (rngl_int_dom_or_inv_1_quo_and_eq_dec Hi1 Hed) as Hid.
 destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
   intros.
   specialize (rngl_characteristic_1_angle_0 Hc1) as H1.
-  rewrite (H1 (_ /₂))%A, (H1 angle_straight).
+  rewrite (H1 (_ /₂))%A, (H1 π).
   apply angle_le_refl.
 }
 intros.
@@ -369,7 +369,7 @@ apply (rl_sqrt_1 Hon Hop Hiq Hor).
 Qed.
 
 Theorem angle_opp_div_2 :
-  ∀ θ, (- (θ /₂) = (- θ) /₂ + if (θ =? 0)%A then 0 else angle_straight)%A.
+  ∀ θ, (- (θ /₂) = (- θ) /₂ + if (θ =? 0)%A then 0 else π)%A.
 Proof.
 destruct_ac.
 specialize (rngl_has_inv_and_1_has_inv_and_1_or_pdiv Hon Hiv) as Hi1.
@@ -677,7 +677,7 @@ Proof.
 destruct_ac.
 destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
   specialize (rngl_characteristic_1_angle_0 Hc1) as H1.
-  rewrite (H1 angle_straight).
+  rewrite (H1 π).
   apply H1.
 }
 assert (H20 : (2 ≠ 0)%L) by now apply (rngl_2_neq_0 Hon Hos Hiq Hc1 Hor).
@@ -746,7 +746,7 @@ apply (rngl_mul_1_l Hon).
 Qed.
 
 Theorem angle_mul_4_angle_straight_div_3 :
-  (4 * angle_straight_div_3 = angle_straight_div_3 + angle_straight)%A.
+  (4 * angle_straight_div_3 = angle_straight_div_3 + π)%A.
 Proof.
 destruct_ac.
 destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
@@ -817,7 +817,7 @@ Proof.
 destruct_ac.
 destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
   specialize (rngl_characteristic_1_angle_0 Hc1) as H1.
-  rewrite (H1 angle_straight).
+  rewrite (H1 π).
   apply angle_nonneg.
 }
 specialize (rngl_0_lt_2 Hon Hos Hiq Hc1 Hor) as Hz2.
@@ -916,7 +916,7 @@ split; intros Hs3. {
   rewrite Hzs in Hs3.
   rewrite (rngl_mul_opp_l Hop) in Hs3.
   rewrite (rngl_mul_1_l Hon) in Hs3.
-  remember (θ - angle_straight)%A as θ' eqn:Hθ';
+  remember (θ - π)%A as θ' eqn:Hθ';
   apply angle_add_move_r in Hθ';
   subst θ; rename θ' into θ.
   rewrite rngl_cos_add_straight_r in Hs3 |-*.

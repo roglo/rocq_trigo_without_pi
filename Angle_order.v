@@ -205,7 +205,7 @@ now apply eq_rngl_cos_1 in Hz.
 Qed.
 
 Theorem angle_straight_pos :
-  rngl_characteristic T ≠ 1 → (0 < angle_straight)%A.
+  rngl_characteristic T ≠ 1 → (0 < π)%A.
 Proof.
 destruct_ac.
 intros Hc1.
@@ -216,7 +216,7 @@ apply rngl_ltb_lt.
 apply (rngl_opp_1_lt_1 Hon Hop Hiq Hor Hc1).
 Qed.
 
-Theorem angle_straight_nonneg : (0 ≤ angle_straight)%A.
+Theorem angle_straight_nonneg : (0 ≤ π)%A.
 Proof.
 destruct_ac.
 progress unfold angle_leb.
@@ -608,7 +608,7 @@ congruence.
 Qed.
 
 Theorem rngl_sin_nonneg_angle_le_straight :
-  ∀ θ, (0 ≤ rngl_sin θ)%L ↔ (θ ≤ angle_straight)%A.
+  ∀ θ, (0 ≤ rngl_sin θ)%L ↔ (θ ≤ π)%A.
 Proof.
 destruct_ac.
 intros.
@@ -902,7 +902,7 @@ Qed.
 Theorem angle_add_overflow_lt_straight_ge_straight :
   ∀ θ1 θ2,
   angle_add_overflow θ1 θ2 = true
-  → (θ1 < angle_straight)%A
+  → (θ1 < π)%A
   → (π ≤ θ2)%A.
 Proof.
 intros * H12 H1s.
@@ -920,7 +920,7 @@ destruct (angle_eq_dec θ1 0) as [H1z| H1z]. {
 }
 right.
 apply angle_leb_gt.
-apply (angle_lt_trans _ angle_straight); [ easy | ].
+apply (angle_lt_trans _ π); [ easy | ].
 apply angle_lt_opp_r; [ easy | ].
 now rewrite angle_opp_straight.
 Qed.
