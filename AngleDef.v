@@ -554,7 +554,7 @@ apply (rngl_add_opp_r Hop).
 Qed.
 
 Theorem angle_right_add_right :
-  (angle_right + angle_right)%A = angle_straight.
+  (angle_right + π/₂)%A = angle_straight.
 Proof.
 destruct_ac.
 apply eq_angle_eq; cbn.
@@ -566,7 +566,7 @@ apply rngl_add_0_l.
 Qed.
 
 Theorem angle_straight_add_straight :
-  (angle_straight + angle_straight = 0)%A.
+  (angle_straight + π = 0)%A.
 Proof.
 destruct_ac.
 apply eq_angle_eq; cbn.
@@ -581,7 +581,7 @@ apply rngl_add_0_l.
 Qed.
 
 Theorem angle_straight_sub_right :
-  (angle_straight - angle_right)%A = angle_right.
+  (angle_straight - π/₂)%A = π/₂.
 Proof.
 destruct_ac.
 apply eq_angle_eq; cbn.

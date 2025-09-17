@@ -927,7 +927,7 @@ Qed.
 
 Theorem rngl_le_0_cos :
   ∀ θ,
-  (θ ≤ angle_right ∨ angle_straight + angle_right ≤ θ)%A
+  (θ ≤ π/₂ ∨ π + π/₂ ≤ θ)%A
   → (0 ≤ rngl_cos θ)%L.
 Proof.
 destruct_ac.
@@ -958,7 +958,7 @@ Qed.
 
 Theorem rngl_le_cos_0 :
   ∀ θ,
-  (angle_right ≤ θ ≤ angle_straight + angle_right)%A
+  (angle_right ≤ θ ≤ π + π/₂)%A
   → (rngl_cos θ ≤ 0)%L.
 Proof.
 destruct_ac.

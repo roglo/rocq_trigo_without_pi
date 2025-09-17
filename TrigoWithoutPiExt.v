@@ -29,7 +29,7 @@ Theorem rngl_cos_add_nonneg :
 Proof.
 destruct_ac.
 intros * Hs1z Hzs2 Hzc1 Hzc2.
-change_angle_add_r θ1 angle_right.
+change_angle_add_r θ1 π/₂.
 progress sin_cos_add_sub_right_hyp T Hs1z.
 progress sin_cos_add_sub_right_hyp T Hzc1.
 progress sin_cos_add_sub_right_goal T.
@@ -195,7 +195,7 @@ destruct (rngl_le_dec Hor 0 (rngl_cos θ3))%L as [Hzc3| Hc3z]. {
   now apply (H1 _ _ Hzs12 Hzs3 H Hzc3).
 }
 apply (rngl_nle_gt_iff Hor) in Hc3z.
-change_angle_sub_r θ3 angle_right.
+change_angle_sub_r θ3 π/₂.
 progress sin_cos_add_sub_right_hyp T Hzs3.
 progress sin_cos_add_sub_right_hyp T Hc123.
 progress sin_cos_add_sub_right_hyp T Hc3z.
@@ -208,7 +208,7 @@ destruct (rngl_le_dec Hor 0 (rngl_cos θ1))%L as [Hzc1| Hc1z]. {
   now apply (rngl_sin_add_nonneg).
 }
 apply (rngl_nle_gt_iff Hor) in Hc1z.
-change_angle_sub_r θ1 angle_right.
+change_angle_sub_r θ1 π/₂.
 progress sin_cos_add_sub_right_hyp T Hzs1.
 progress sin_cos_add_sub_right_hyp T Hzs12.
 progress sin_cos_add_sub_right_hyp T Hc123.
@@ -293,7 +293,7 @@ Proof.
 destruct_ac.
 intros * Hzs1 Hzs2 Hzs12.
 destruct (rngl_le_dec Hor 0 (rngl_cos θ1)) as [Hzc1| Hc1z]. {
-  change_angle_add_r θ1 angle_right.
+  change_angle_add_r θ1 π/₂.
   progress sin_cos_add_sub_right_hyp T Hzs1.
   progress sin_cos_add_sub_right_hyp T Hzc1.
   progress sin_cos_add_sub_right_hyp T Hzs12.
@@ -316,7 +316,7 @@ destruct (rngl_le_dec Hor 0 (rngl_cos θ1)) as [Hzc1| Hc1z]. {
   }
   apply (rngl_nle_gt_iff Hor) in Hc2z.
   exfalso.
-  change_angle_sub_r θ2 angle_right.
+  change_angle_sub_r θ2 π/₂.
   progress sin_cos_add_sub_right_hyp T Hzs2.
   progress sin_cos_add_sub_right_hyp T Hc2z.
   progress sin_cos_add_sub_right_hyp T Hzs12.
@@ -355,14 +355,14 @@ destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
   apply (rngl_le_refl Hor).
 }
 intros * Hco1 Hzs1 Hzs2 Hc1z Hzs12.
-change_angle_sub_r θ1 angle_right.
+change_angle_sub_r θ1 π/₂.
 progress sin_cos_add_sub_right_hyp T Hzs1.
 progress sin_cos_add_sub_right_hyp T Hco1.
 progress sin_cos_add_sub_right_hyp T Hzs12.
 progress sin_cos_add_sub_right_hyp T Hc1z.
 progress sin_cos_add_sub_right_goal T.
 destruct (rngl_le_dec Hor (rngl_cos θ2) 0) as [Hc2z| Hzc2]. {
-  change_angle_sub_r θ2 angle_right.
+  change_angle_sub_r θ2 π/₂.
   progress sin_cos_add_sub_right_hyp T Hzs12.
   progress sin_cos_add_sub_right_hyp T Hzs2.
   progress sin_cos_add_sub_right_hyp T Hc2z.
@@ -516,7 +516,7 @@ destruct (rngl_lt_dec Hor 0 (rngl_cos θ1)) as [Hzc1| Hzc1]. {
   }
 }
 apply (rngl_nlt_ge_iff Hor) in Hzc1.
-change_angle_sub_r θ1 angle_right.
+change_angle_sub_r θ1 π/₂.
 progress sin_cos_add_sub_right_hyp T Hzs1.
 progress sin_cos_add_sub_right_hyp T Hzc1.
 progress sin_cos_add_sub_right_hyp T H12.
@@ -1162,7 +1162,7 @@ Qed.
 
 Theorem angle_straight_neq_0 :
   rngl_characteristic T ≠ 1
-  → angle_straight ≠ 0%A.
+  → π ≠ 0%A.
 Proof.
 destruct_ac.
 intros Hc1.
@@ -1186,7 +1186,7 @@ destruct rngl_opt_leb; [ apply Bool.negb_involutive | easy ].
 Qed.
 
 Theorem rngl_lt_0_cos :
-  ∀ θ, (θ < angle_right ∨ - angle_right < θ)%A ↔ (0 < rngl_cos θ)%L.
+  ∀ θ, (θ < π/₂ ∨ - π/₂ < θ)%A ↔ (0 < rngl_cos θ)%L.
 Proof.
 destruct_ac.
 destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
@@ -1194,7 +1194,7 @@ destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
   specialize (rngl_characteristic_1 Hon Hos Hc1) as H1.
   specialize (rngl_characteristic_1_angle_0 Hc1) as H2.
   rewrite (H1 (rngl_cos _)).
-  rewrite (H2 θ), (H2 angle_right).
+  rewrite (H2 θ), (H2 π/₂).
   rewrite angle_opp_0.
   split; intros H; [ now destruct H; apply angle_lt_irrefl in H | ].
   now apply (rngl_lt_irrefl Hor) in H.

@@ -33,8 +33,7 @@ Context {ac : angle_ctx T}.
 Theorem angle_add_div_2_add_sub_div_2 :
   ∀ p q,
   p = ((p + q) /₂ + (p - q) /₂ +
-        if Bool.bool_dec (angle_add_overflow p q) (q ≤? p)%A then
-          angle_straight
+        if Bool.bool_dec (angle_add_overflow p q) (q ≤? p)%A then π
         else 0)%A.
 Proof.
 intros.
@@ -110,8 +109,7 @@ Qed.
 Theorem angle_add_div_2_sub_sub_div_2 :
   ∀ p q,
   q = ((p + q) /₂ - (p - q) /₂ +
-        if Bool.bool_dec (angle_add_overflow p q) (q ≤? p)%A then
-          angle_straight
+        if Bool.bool_dec (angle_add_overflow p q) (q ≤? p)%A then π
         else 0)%A.
 Proof.
 intros.
@@ -186,8 +184,8 @@ Qed.
 
 Theorem rngl_cos_sub_cos :
   ∀ p q,
-  let c₁ := if angle_add_overflow p q then angle_straight else 0%A in
-  let c₂ := if (p <? q)%A then angle_straight else 0%A in
+  let c₁ := if angle_add_overflow p q then π else 0%A in
+  let c₂ := if (p <? q)%A then π else 0%A in
   (rngl_cos p - rngl_cos q =
      - (2 * rngl_sin ((p + q) /₂ + c₁) * rngl_sin ((p - q) /₂ + c₂)))%L.
 Proof.
@@ -282,8 +280,8 @@ Qed.
 
 Theorem rngl_sin_sub_sin :
   ∀ p q,
-  let c₁ := if angle_add_overflow p q then angle_straight else 0%A in
-  let c₂ := if (p <? q)%A then angle_straight else 0%A in
+  let c₁ := if angle_add_overflow p q then π else 0%A in
+  let c₂ := if (p <? q)%A then π else 0%A in
   (rngl_sin p - rngl_sin q =
      2 * rngl_cos ((p + q) /₂ + c₁) * rngl_sin ((p - q) /₂ + c₂))%L.
 Proof.
@@ -413,7 +411,7 @@ Qed.
 
 Theorem rngl_sin_add_div_2_if_angle_eucl_dist :
   ∀ θ1 θ2,
-  rngl_sin ((θ1 - θ2) /₂ + if (θ1 <? θ2)%A then angle_straight else 0) =
+  rngl_sin ((θ1 - θ2) /₂ + if (θ1 <? θ2)%A then π else 0) =
   ((if (θ1 <? θ2)%A then -1 else 1) * angle_eucl_dist θ1 θ2 / 2)%L.
 Proof.
 destruct_ac.
@@ -998,7 +996,7 @@ Theorem rngl_cos_left_or_right_derivative_at_straight :
   ∀ is_left,
   left_or_right_derivative_at is_left angle_lt_for_deriv
     angle_eucl_dist rngl_dist
-    rngl_cos angle_straight ((rngl_opp ° rngl_sin) angle_straight).
+    rngl_cos π ((rngl_opp ° rngl_sin) angle_straight).
 Proof.
 destruct_ac.
 specialize (rngl_int_dom_or_inv_1_quo Hiv Hon) as Hii.
@@ -1142,7 +1140,7 @@ Qed.
 Theorem rngl_sin_left_or_right_derivative_at_straight :
   ∀ is_left,
   left_or_right_derivative_at is_left angle_lt_for_deriv
-    angle_eucl_dist rngl_dist rngl_sin angle_straight
+    angle_eucl_dist rngl_dist rngl_sin π
     (rngl_cos angle_straight).
 Proof.
 destruct_ac.

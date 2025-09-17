@@ -172,7 +172,7 @@ apply rngl_leb_nle in Hzs1, Hzs3.
 apply (rngl_nle_gt_iff Hor) in Hzs1, Hzs3.
 apply (rngl_ltb_ge_iff Hor) in Haov.
 move Haov at bottom.
-(* changing θ1 into θ1 - angle_straight *)
+(* changing θ1 into θ1 - π *)
 remember (θ1 - angle_straight)%A as θ.
 apply angle_add_move_r in Heqθ.
 subst θ1; rename θ into θ1.
@@ -184,7 +184,7 @@ rewrite rngl_cos_add_straight_r.
 rewrite (rngl_sub_opp_r Hop).
 rewrite (rngl_add_opp_r Hop).
 rewrite angle_add_add_swap in Haov, Hzs3 |-*.
-(* changing θ2 into θ2 - angle_straight *)
+(* changing θ2 into θ2 - π *)
 remember (θ2 - angle_straight)%A as θ.
 apply angle_add_move_r in Heqθ.
 subst θ2; rename θ into θ2.
@@ -210,7 +210,7 @@ exfalso.
 apply rngl_nlt_ge in Haov.
 apply Haov; clear Haov.
 destruct (rngl_le_dec Hor (rngl_cos θ1) 0) as [Hc1z| Hzc1]. {
-  (* changing θ1 into angle_straight - θ1 *)
+  (* changing θ1 into π - θ1 *)
   remember (angle_straight - θ1)%A as θ.
   apply angle_sub_move_r in Heqθ.
   rewrite angle_sub_opp_r in Heqθ.
@@ -260,7 +260,7 @@ destruct (rngl_le_dec Hor (rngl_cos θ1) 0) as [Hc1z| Hzc1]. {
     }
   } {
     apply (rngl_nle_gt_iff Hor) in Hc2z.
-    (* changing θ2 into angle_straight - θ2 *)
+    (* changing θ2 into π - θ2 *)
     remember (angle_straight - θ2)%A as θ.
     apply angle_sub_move_r in Heqθ.
     rewrite angle_sub_opp_r in Heqθ.
@@ -534,7 +534,7 @@ destruct zs1. {
   }
   apply (rngl_nle_gt_iff Hor) in Hc1z.
   clear Hc1ez.
-  remember (θ1 - angle_right)%A as θ.
+  remember (θ1 - π/₂)%A as θ.
   apply angle_sub_move_r in Heqθ.
   rewrite angle_sub_opp_r in Heqθ.
   subst θ1; rename θ into θ1.

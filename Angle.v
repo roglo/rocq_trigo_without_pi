@@ -177,7 +177,7 @@ apply (rngl_sub_0_l Hop).
 Qed.
 
 Theorem rngl_cos_add_right_r :
-  ∀ θ, rngl_cos (θ + angle_right) = (- rngl_sin θ)%L.
+  ∀ θ, rngl_cos (θ + π/₂) = (- rngl_sin θ)%L.
 Proof.
 destruct_ac.
 intros; cbn.
@@ -197,7 +197,7 @@ apply rngl_add_0_r.
 Qed.
 
 Theorem rngl_sin_add_right_r :
-  ∀ θ, rngl_sin (θ + angle_right) = rngl_cos θ.
+  ∀ θ, rngl_sin (θ + π/₂) = rngl_cos θ.
 Proof.
 destruct_ac.
 intros; cbn.
@@ -393,7 +393,7 @@ split. 2: {
 Qed.
 
 Theorem eq_rngl_cos_0 :
-  ∀ θ, rngl_cos θ = 0%L ↔ (θ = angle_right ∨ θ = - angle_right)%A.
+  ∀ θ, rngl_cos θ = 0%L ↔ (θ = π/₂ ∨ θ = - π/₂)%A.
 Proof.
 destruct_ac.
 specialize (rngl_has_eq_dec_or_is_ordered_r Hor) as Heo.
@@ -460,7 +460,7 @@ rewrite Heo, Bool.andb_true_r.
 apply (rngl_has_inv_and_1_has_inv_and_1_or_pdiv Hon Hiv).
 Qed.
 
-Theorem eq_rngl_sin_1 : ∀ θ, rngl_sin θ = 1%L ↔ θ = angle_right.
+Theorem eq_rngl_sin_1 : ∀ θ, rngl_sin θ = 1%L ↔ θ = π/₂.
 Proof.
 destruct_ac.
 specialize (rngl_has_eq_dec_or_is_ordered_r Hor) as Heo.
@@ -884,7 +884,7 @@ Qed.
 
 Theorem rngl_sin_nonneg_sin_nonneg_sin_nonneg :
   ∀ θ1 θ2,
-  θ1 ≠ angle_straight ∨ θ2 ≠ angle_straight
+  θ1 ≠ π ∨ θ2 ≠ π
   → (0 ≤ rngl_sin θ1)%L
   → (0 ≤ rngl_sin θ2)%L
   → (0 ≤ rngl_sin (θ1 + θ2))%L
@@ -1819,7 +1819,7 @@ apply (rngl_mul_1_l Hon).
 Qed.
 
 Theorem rngl_sin_sub_right_r :
-  ∀ θ, rngl_sin (θ - angle_right) = (- rngl_cos θ)%L.
+  ∀ θ, rngl_sin (θ - π/₂) = (- rngl_cos θ)%L.
 Proof.
 destruct_ac.
 intros; cbn.
@@ -1831,7 +1831,7 @@ apply (rngl_mul_1_r Hon).
 Qed.
 
 Theorem rngl_cos_sub_right_r :
-  ∀ θ, rngl_cos (θ - angle_right) = rngl_sin θ.
+  ∀ θ, rngl_cos (θ - π/₂) = rngl_sin θ.
 Proof.
 destruct_ac.
 intros; cbn.

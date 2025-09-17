@@ -73,7 +73,7 @@ Qed.
 Theorem seq_angle_to_div_nat_div_2_le_straight_div_pow2_log2 :
   ∀ n i θ,
   n ≠ 0
-  → (seq_angle_to_div_nat θ n i /₂ ≤ angle_straight /₂^Nat.log2 n)%A.
+  → (seq_angle_to_div_nat θ n i /₂ ≤ π /₂^Nat.log2 n)%A.
 Proof.
 intros * Hnz.
 progress unfold seq_angle_to_div_nat.
@@ -127,7 +127,7 @@ Qed.
 Theorem seq_angle_to_div_nat_le_straight_div_pow2_log2_pred :
   ∀ n i θ,
   n ≠ 1
-  → (seq_angle_to_div_nat θ n i ≤ angle_straight /₂^(Nat.log2 n - 1))%A.
+  → (seq_angle_to_div_nat θ n i ≤ π /₂^(Nat.log2 n - 1))%A.
 Proof.
 intros * Hn1.
 destruct (Nat.eq_dec n 0) as [Hnz| Hnz]. {
@@ -447,7 +447,7 @@ apply angle_div_2_le_straight.
 Qed.
 
 Theorem angle_mul_div_pow2_le_right :
-  ∀ n i θ, 4 * n ≤ 2 ^ i → (n * (θ /₂^i) ≤ angle_right)%A.
+  ∀ n i θ, 4 * n ≤ 2 ^ i → (n * (θ /₂^i) ≤ π/₂)%A.
 Proof.
 destruct_ac.
 intros * Hni.
@@ -582,7 +582,7 @@ assert (Hss : ∀ i, (seq_angle_to_div_nat θ n i ≤ angle_straight)%A). {
   eapply angle_le_trans; [ apply H1 | ].
   apply angle_div_2_pow_le_diag.
 }
-assert (Hsr : n ≤ 3 ∨ ∀ i, (seq_angle_to_div_nat θ n i ≤ angle_right)%A). {
+assert (Hsr : n ≤ 3 ∨ ∀ i, (seq_angle_to_div_nat θ n i ≤ π/₂)%A). {
   destruct (le_dec n 3) as [Hn3| Hn3]; [ now left | right ].
   apply Nat.nle_gt in Hn3.
   intros i.

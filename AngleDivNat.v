@@ -1039,7 +1039,7 @@ exfalso; clear θ2 Hz12 Hzs2 Hzs23 Hc123 H123 Hz123.
 ...
 clear θ3 Hz123 H123 Hc123 Hzs23.
 ...
-            change_angle_sub_r θ2 angle_right.
+            change_angle_sub_r θ2 π/₂.
             progress sin_cos_add_sub_right_hyp T Hz12.
             progress sin_cos_add_sub_right_hyp T Hz123.
             progress sin_cos_add_sub_right_hyp T H123.
@@ -1180,7 +1180,7 @@ destruct ov. 2: {
   H1s : (angle_straight ≤ θ1 + angle_straight)%A
   H3s : (angle_straight ≤ θ3 + angle_straight)%A
   ============================
-  angle_add_overflow (θ1 + angle_straight + θ2) (θ3 + angle_straight) =
+  angle_add_overflow (θ1 + π + θ2) (θ3 + angle_straight) =
   angle_add_overflow (θ1 + angle_straight) (θ2 + (θ3 + angle_straight))
 ...
 Search (angle_straight ≤ _)%A.
