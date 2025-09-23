@@ -264,7 +264,6 @@ Theorem rngl_sin_nonneg_cos_le_sin_le :
 Proof.
 destruct_ac.
 intros * Hzs1 Hzs2 Hc12.
-specialize (rngl_int_dom_or_inv_1_quo Hiv Hon) as Hii.
 remember (0 ≤? rngl_cos θ1)%L as zc1 eqn:Hzc1.
 symmetry in Hzc1.
 destruct zc1. {
@@ -329,7 +328,6 @@ Theorem rngl_cos_cos_sin_sin_nonneg_sin_le_cos_le_iff :
   ↔ (rngl_cos θ2 ≤ rngl_cos θ1)%L.
 Proof.
 destruct_ac.
-specialize (rngl_int_dom_or_inv_1_quo Hiv Hon) as Hii.
 intros * Hzs1 Hzs2 Hzc1 Hzc2.
 split. {
   intros Hss.
@@ -562,7 +560,6 @@ Theorem rngl_cos_cos_sin_sin_neg_sin_le_cos_le_iff :
   → (rngl_sin θ1 ≤ rngl_sin θ2)%L ↔ (rngl_cos θ1 ≤ rngl_cos θ2)%L.
 Proof.
 destruct_ac.
-specialize (rngl_int_dom_or_inv_1_quo Hiv Hon) as Hii.
 destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
   specialize (rngl_characteristic_1 Hon Hos Hc1) as H1.
   intros * Hzs1 Hzs2 Hzc1 Hzc2.
@@ -676,7 +673,6 @@ Proof.
 destruct_ac.
 intros * Hzs1 Hzs2 Hzs3 Hzc1.
 specialize (rngl_has_eq_dec_or_is_ordered_r Hor) as Heo.
-specialize (rngl_int_dom_or_inv_1_quo Hiv Hon) as Hii.
 destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
   specialize (rngl_characteristic_1 Hon Hos Hc1) as H1.
   rewrite H1.
@@ -904,7 +900,6 @@ destruct_ac.
 specialize (rngl_has_eq_dec_or_is_ordered_r Hor) as Heo.
 intros * H12ns Hzs1 Hzs2 Hzs3.
 specialize (rngl_has_inv_and_1_has_inv_and_1_or_pdiv Hon Hiv) as Hi1.
-specialize (rngl_int_dom_or_inv_1_quo Hiv Hon) as Hii.
 specialize (rngl_int_dom_or_inv_1_quo_and_eq_dec Hi1 Hed) as Hid.
 destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
   specialize (rngl_characteristic_1 Hon Hos Hc1) as H1.
@@ -1240,7 +1235,6 @@ Proof.
 destruct_ac.
 intros * Hzs1 Hzs2 Hs3z Hzc1.
 specialize (rngl_has_inv_and_1_has_inv_and_1_or_pdiv Hon Hiv) as Hi1.
-specialize (rngl_int_dom_or_inv_1_quo Hiv Hon) as Hii.
 specialize (rngl_int_dom_or_inv_1_quo_and_eq_dec Hi1 Hed) as Hid.
 destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
   specialize (rngl_characteristic_1 Hon Hos Hc1) as H1.
@@ -1642,7 +1636,6 @@ Proof.
 intros * Hzs1 Hzs2 Hzc12.
 destruct_ac.
 specialize (rngl_has_inv_and_1_has_inv_and_1_or_pdiv Hon Hiv) as Hi1.
-specialize (rngl_int_dom_or_inv_1_quo Hiv Hon) as Hii.
 specialize (rngl_int_dom_or_inv_1_quo_and_eq_dec Hi1 Hed) as Hid.
 destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
   specialize (rngl_characteristic_1 Hon Hos Hc1) as H1.
@@ -1874,7 +1867,6 @@ Proof.
 destruct_ac.
 specialize (rngl_has_eq_dec_or_is_ordered_r Hor) as Heo.
 intros * Hzs1 Hzs2 Hc12z.
-specialize (rngl_int_dom_or_inv_1_quo Hiv Hon) as Hii.
 specialize (rngl_has_inv_and_1_has_inv_and_1_or_pdiv Hon Hiv) as Hi1.
 specialize (rngl_int_dom_or_inv_1_quo_and_eq_dec Hi1 Hed) as Hid.
 destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
@@ -2024,7 +2016,6 @@ Proof. easy. Qed.
 Theorem rngl_1_add_cos_div_2_nonneg : ∀ θ, (0 ≤ (1 + rngl_cos θ) / 2)%L.
 Proof.
 destruct_ac.
-specialize (rngl_int_dom_or_inv_1_quo Hiv Hon) as Hii.
 destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
   specialize (rngl_characteristic_1 Hon Hos Hc1) as H1.
   intros.
@@ -2047,7 +2038,6 @@ Qed.
 Theorem rngl_1_sub_cos_div_2_nonneg : ∀ θ, (0 ≤ (1 - rngl_cos θ) / 2)%L.
 Proof.
 destruct_ac.
-specialize (rngl_int_dom_or_inv_1_quo Hiv Hon) as Hii.
 destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
   specialize (rngl_characteristic_1 Hon Hos Hc1) as H1.
   intros.
@@ -2090,7 +2080,6 @@ Theorem rngl_sin_sub_lt_sin_l :
   → (rngl_sin (θ1 - θ2) < rngl_sin θ1)%L.
 Proof.
 destruct_ac.
-specialize (rngl_int_dom_or_inv_1_quo Hiv Hon) as Hii.
 intros * Hc1z Hzs2 Hzc1.
 cbn.
 rewrite (rngl_mul_opp_r Hop).
@@ -2116,7 +2105,6 @@ Theorem quadrant_1_sin_sub_nonneg_cos_le :
   → (rngl_cos θ1 ≤ rngl_cos θ2)%L.
 Proof.
 destruct_ac.
-specialize (rngl_int_dom_or_inv_1_quo Hiv Hon) as Hii.
 specialize (rngl_has_eq_dec_or_is_ordered_r Hor) as Heo.
 destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
   specialize (rngl_characteristic_1 Hon Hos Hc1) as H1.

@@ -215,7 +215,6 @@ Theorem angle_add_overflow_equiv2 :
   angle_add_overflow2 θ1 θ2 = angle_add_overflow θ1 θ2.
 Proof.
 destruct_ac.
-specialize (rngl_int_dom_or_inv_1_quo Hiv Hon) as Hii.
 specialize (rngl_has_eq_dec_or_is_ordered_l Hed) as Heo.
 destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
   specialize (rngl_characteristic_1_angle_0 Hc1) as H1.

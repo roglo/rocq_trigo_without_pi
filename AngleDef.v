@@ -39,13 +39,14 @@ Notation "rngl_sin² a" := ((rngl_sin a)²) (at level 10).
 
 Ltac destruct_ac :=
   set (Hic := ac_ic);
+  set (Hon := ac_on);
   set (Hop := ac_op);
   set (Hiv := ac_iv);
   set (Hed := ac_ed);
   set (Hor := ac_or);
   specialize (rngl_has_opp_has_opp_or_psub Hop) as Hos;
   specialize (rngl_has_inv_has_inv_or_pdiv Hiv) as Hiq;
-  specialize ac_on as Hon;
+  specialize (rngl_int_dom_or_inv_1_quo Hiv Hon) as Hii;
   specialize ac_c2 as Hc2.
 
 Section a.
@@ -224,7 +225,6 @@ Theorem rngl_sin_proj_bound : ∀ c s, cos2_sin2_prop c s → (-1 ≤ s ≤ 1)%L
 Proof.
 destruct_ac.
 intros * Hcs.
-specialize (rngl_int_dom_or_inv_1_quo Hiv Hon) as Hii.
 apply cos2_sin2_prop_add_squ in Hcs.
 assert (H : (s² ≤ 1)%L). {
   rewrite <- Hcs.

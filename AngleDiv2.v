@@ -258,7 +258,6 @@ Qed.
 Theorem angle_div_2_le_straight : ∀ θ, (θ /₂ ≤ π)%A.
 Proof.
 destruct_ac.
-specialize (rngl_int_dom_or_inv_1_quo Hiv Hon) as Hii.
 specialize (rngl_has_inv_and_1_has_inv_and_1_or_pdiv Hon Hiv) as Hi1.
 specialize (rngl_int_dom_or_inv_1_quo_and_eq_dec Hi1 Hed) as Hid.
 destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
@@ -332,9 +331,7 @@ rewrite (rngl_sub_diag Hos).
 rewrite (rngl_div_0_l Hos Hi1). 2: {
   apply (rngl_2_neq_0 Hon Hos Hiq Hc1 Hor).
 }
-apply (rl_sqrt_0 Hon Hop Hor).
-rewrite Bool.orb_true_iff; right.
-apply (rngl_has_inv_and_1_has_inv_and_1_or_pdiv Hon Hiv).
+apply (rl_sqrt_0 Hon Hop Hor Hii).
 Qed.
 
 Theorem angle_straight_div_2 : (π /₂ = π/₂)%A.
@@ -357,10 +354,7 @@ rewrite (rngl_sub_diag Hos).
 rewrite (rngl_div_0_l Hos Hi1). 2: {
   apply (rngl_2_neq_0 Hon Hos Hiq Hc1 Hor).
 }
-rewrite (rl_sqrt_0 Hon Hop Hor). 2: {
-  rewrite Bool.orb_true_iff; right.
-  apply (rngl_has_inv_and_1_has_inv_and_1_or_pdiv Hon Hiv).
-}
+rewrite (rl_sqrt_0 Hon Hop Hor Hii).
 f_equal.
 rewrite (rngl_div_diag Hon Hiq). 2: {
   apply (rngl_2_neq_0 Hon Hos Hiq Hc1 Hor).
@@ -384,8 +378,7 @@ assert (Hsz2 : (√(0 / 2) = 0)%L). {
   rewrite (rngl_div_0_l Hos Hi1). 2: {
     apply (rngl_2_neq_0 Hon Hos Hiq Hc1 Hor).
   }
-  rewrite (rl_sqrt_0 Hon Hop Hor); [ easy | ].
-  now rewrite Bool.orb_true_iff; right.
+  now rewrite (rl_sqrt_0 Hon Hop Hor Hii).
 }
 remember (θ =? 0)%A as z eqn:Hz.
 symmetry in Hz.
@@ -437,7 +430,6 @@ Theorem angle_div_2_le_compat :
 Proof.
 destruct_ac.
 intros * H12.
-specialize (rngl_int_dom_or_inv_1_quo Hiv Hon) as Hii.
 destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
   specialize (rngl_characteristic_1_angle_0 Hc1) as H1.
   do 2 rewrite (H1 (_ /₂))%A.
@@ -537,7 +529,6 @@ Proof.
 destruct_ac.
 intros Hc1.
 specialize (rngl_0_lt_2 Hon Hos Hiq Hc1 Hor) as Hz2.
-specialize (rngl_int_dom_or_inv_1_quo Hiv Hon) as Hii.
 intros * Hsz.
 rewrite <- (rngl_abs_nonneg_eq Hop Hor √_)%L. 2: {
   apply rl_sqrt_nonneg.
@@ -837,7 +828,6 @@ Theorem rngl_cos_le_cos_div_2 :
   ↔ (rngl_cos θ ≤ rngl_cos (θ /₂))%L.
 Proof.
 destruct_ac.
-specialize (rngl_int_dom_or_inv_1_quo Hiv Hon) as Hii.
 destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
   specialize (rngl_characteristic_1 Hon Hos Hc1) as H1.
   specialize (rngl_characteristic_1_angle_0 Hc1) as H2.
@@ -1157,7 +1147,6 @@ Theorem rngl_cos_div_pow_2_lower_bound :
   (squ_rngl_cos_div_pow_2 (θ /₂) n ≤ rngl_cos_div_pow_2 (θ /₂) n)%L.
 Proof.
 destruct_ac.
-specialize (rngl_int_dom_or_inv_1_quo Hiv Hon) as Hii.
 destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
   intros.
   specialize (rngl_characteristic_1 Hon Hos Hc1) as H1.
@@ -1287,7 +1276,6 @@ destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
   rewrite (H1 ε) in Hε.
   now apply (rngl_lt_irrefl Hor) in Hε.
 }
-specialize (rngl_int_dom_or_inv_1_quo Hiv Hon) as Hii.
 intros.
 enough (H :
     ∀ ε, (0 < ε)%L → ∃ N, ∀ n, N ≤ n → (1 - rngl_cos (θ /₂^n) < ε)%L). {

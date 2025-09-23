@@ -380,7 +380,6 @@ Theorem angle_add_overflow_le_lemma_8 :
   → False.
 Proof.
 destruct_ac.
-specialize (rngl_int_dom_or_inv_1_quo Hiv Hon) as Hii.
 intros * Hzs1 Hzs2 Hzs3 Hzs12 Hzs13 H32.
 destruct (rngl_le_dec Hor (rngl_cos θ2) 0) as [Hc2z| Hzc2]. {
   change_angle_add_r θ2 π.
@@ -489,7 +488,6 @@ Theorem angle_add_overflow_le_lemma_9 :
   → False.
 Proof.
 destruct_ac.
-specialize (rngl_int_dom_or_inv_1_quo Hiv Hon) as Hii.
 intros * Hzs1 Hzs2 Hzs3 Hzs12 Hzs13 H32.
 destruct (rngl_le_dec Hor 0 (rngl_cos θ1)) as [Hzc1| Hc1z]. {
   change_angle_add_r θ1 π/₂.
@@ -588,7 +586,6 @@ Theorem angle_add_overflow_le_lemma_10 :
   → False.
 Proof.
 destruct_ac.
-specialize (rngl_int_dom_or_inv_1_quo Hiv Hon) as Hii.
 intros * Hzs1 Hzs2 Hzs12 H12.
 destruct (rngl_le_dec Hor 0 (rngl_cos θ1)) as [Hzc1| Hc1z]. {
   change_angle_add_r θ1 π/₂.
@@ -669,7 +666,6 @@ Theorem angle_add_overflow_le :
   → angle_add_overflow θ1 θ3 = false.
 Proof.
 destruct_ac.
-specialize (rngl_int_dom_or_inv_1_quo Hiv Hon) as Hii.
 destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
   specialize (rngl_characteristic_1 Hon Hos Hc1) as H1.
   intros * H32 H12.

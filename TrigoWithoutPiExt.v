@@ -150,7 +150,6 @@ Theorem angle_le_sub_le_add_l_lemma_1 :
 Proof.
 (* thanks Geoffroy *)
 destruct_ac.
-specialize (rngl_int_dom_or_inv_1_quo Hiv Hon) as Hii.
 specialize (rngl_has_eq_dec_or_is_ordered_r Hor) as Heo.
 destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
   specialize (rngl_characteristic_1 Hon Hos Hc1) as H1.
@@ -435,7 +434,6 @@ Proof.
 destruct_ac.
 specialize (rngl_has_eq_dec_or_is_ordered_r Hor) as Heo.
 intros * Hc11 Hzs1 Hzs2 Hzc1 Hzs12 H12.
-specialize (rngl_int_dom_or_inv_1_quo Hiv Hon) as Hii.
 destruct (rngl_lt_dec Hor 0 (rngl_cos θ2)) as [Hzc2| Hzc2]. {
   change_angle_opp θ2.
   progress sin_cos_opp_hyp T Hzs2.
@@ -712,9 +710,7 @@ induction k. {
   do 2 rewrite (rngl_sub_diag Hos).
   rewrite (rngl_squ_0 Hos).
   rewrite rngl_add_0_l.
-  rewrite (rl_sqrt_0 Hon Hop Hor); [ easy | ].
-  rewrite Hi1.
-  apply Bool.orb_true_r.
+  now rewrite (rl_sqrt_0 Hon Hop Hor Hii).
 }
 cbn.
 now apply angle_lim_add_add.
@@ -1092,7 +1088,6 @@ Theorem rngl_sin_add_pos_1 :
   → (0 < rngl_sin (θ1 + θ2))%L.
 Proof.
 destruct_ac.
-specialize (rngl_int_dom_or_inv_1_quo Hiv Hon) as Hii.
 intros  * Hs1z Hs2z Hc1z Hc2z.
 cbn.
 apply (rngl_add_nonneg_pos Hos Hor).
@@ -1109,7 +1104,6 @@ Theorem rngl_sin_add_pos_2 :
   → (0 < rngl_sin (θ1 + θ2))%L.
 Proof.
 destruct_ac.
-specialize (rngl_int_dom_or_inv_1_quo Hiv Hon) as Hii.
 intros  * Hs1z Hs2z Hc1z Hc2z.
 cbn.
 apply (rngl_lt_0_add Hos Hor).
@@ -1126,7 +1120,6 @@ Theorem rngl_cos_sub_pos_2 :
   → (0 < rngl_cos (θ1 - θ2))%L.
 Proof.
 destruct_ac.
-specialize (rngl_int_dom_or_inv_1_quo Hiv Hon) as Hii.
 intros  * Hs1z Hs2z Hc1z Hc2z.
 rewrite rngl_cos_sub.
 apply (rngl_add_nonneg_pos Hos Hor).

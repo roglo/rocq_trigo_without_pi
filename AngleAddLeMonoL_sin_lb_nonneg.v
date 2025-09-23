@@ -23,7 +23,6 @@ Theorem angle_add_le_mono_l_sin_lb_nonneg :
   → (θ1 + θ2 ≤ θ1 + θ3)%A.
 Proof.
 destruct_ac.
-specialize (rngl_int_dom_or_inv_1_quo Hiv Hon) as Hii.
 specialize (rngl_has_inv_and_1_has_inv_and_1_or_pdiv Hon Hiv) as Hi1.
 specialize (rngl_int_dom_or_inv_1_quo_and_eq_dec Hi1 Hed) as Hid.
 specialize (rngl_has_eq_dec_or_is_ordered_r Hor) as Heo.

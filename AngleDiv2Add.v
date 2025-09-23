@@ -30,7 +30,6 @@ Proof.
 destruct_ac.
 specialize (rngl_has_inv_and_1_has_inv_and_1_or_pdiv Hon Hiv) as Hi1.
 specialize (rngl_int_dom_or_inv_1_quo_and_eq_dec Hi1 Hed) as Hid.
-specialize (rngl_int_dom_or_inv_1_quo Hiv Hon) as Hii.
 destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
   specialize (rngl_characteristic_1 Hon Hos Hc1) as H1.
   intros * Haov.
@@ -291,7 +290,6 @@ destruct_ac.
 specialize (rngl_has_eq_dec_or_is_ordered_r Hor) as Heo.
 specialize (rngl_has_inv_and_1_has_inv_and_1_or_pdiv Hon Hiv) as Hi1.
 specialize (rngl_int_dom_or_inv_1_quo_and_eq_dec Hi1 Hed) as Hid.
-specialize (rngl_int_dom_or_inv_1_quo Hiv Hon) as Hii.
 destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
   specialize (rngl_characteristic_1 Hon Hos Hc1) as H1.
   intros * Haov.
@@ -642,9 +640,7 @@ destruct zs12. {
         apply (rngl_2_neq_0 Hon Hos Hiq Hc1 Hor).
       }
       rewrite (rl_sqrt_1 Hon Hop Hiq Hor).
-      rewrite (rl_sqrt_0 Hon Hop Hor). 2: {
-        now rewrite Bool.orb_true_iff; right.
-      }
+      rewrite (rl_sqrt_0 Hon Hop Hor Hii).
       rewrite (rngl_mul_0_l Hos).
       rewrite (rngl_sub_0_r Hos).
       symmetry.
@@ -839,9 +835,7 @@ destruct zs12. {
         apply (rngl_2_neq_0 Hon Hos Hiq Hc1 Hor).
       }
       rewrite (rl_sqrt_1 Hon Hop Hiq Hor).
-      rewrite (rl_sqrt_0 Hon Hop Hor). 2: {
-        now rewrite Bool.orb_true_iff; right.
-      }
+      rewrite (rl_sqrt_0 Hon Hop Hor Hii).
       rewrite (rngl_mul_0_l Hos).
       rewrite (rngl_mul_0_r Hos).
       rewrite (rngl_sub_0_r Hos).
@@ -883,8 +877,7 @@ destruct zs12. {
       rewrite (rngl_div_0_l Hos Hi1). 2: {
         apply (rngl_2_neq_0 Hon Hos Hiq Hc1 Hor).
       }
-      apply (rl_sqrt_0 Hon Hop Hor).
-      now rewrite Bool.orb_true_iff; right.
+      apply (rl_sqrt_0 Hon Hop Hor Hii).
     }
     apply rngl_sin_nonneg_sin_nonneg_sin_neg; try easy; cycle 1. {
       now apply (rngl_lt_le_incl Hor).
@@ -940,8 +933,7 @@ destruct zs12. {
       rewrite (rngl_div_0_l Hos Hi1). 2: {
         apply (rngl_2_neq_0 Hon Hos Hiq Hc1 Hor).
       }
-      apply (rl_sqrt_0 Hon Hop Hor).
-      now rewrite Bool.orb_true_iff; right.
+      apply (rl_sqrt_0 Hon Hop Hor Hii).
     }
     apply rngl_sin_nonneg_sin_nonneg_sin_neg; try easy; cycle 1. {
       now apply (rngl_lt_le_incl Hor).
@@ -1440,7 +1432,6 @@ Theorem angle_mul_nat_overflow_pow_div :
   ∀ n θ, angle_mul_nat_overflow (2 ^ n) (θ /₂^n) = false.
 Proof.
 destruct_ac.
-specialize (rngl_int_dom_or_inv_1_quo Hiv Hon) as Hii.
 specialize (rngl_has_inv_and_1_has_inv_and_1_or_pdiv Hon Hiv) as Hi1.
 destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
   intros.

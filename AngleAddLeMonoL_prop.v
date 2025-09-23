@@ -179,7 +179,6 @@ Theorem angle_lt_rngl_cos_add_pos :
   → (0 < rngl_cos (θ1 + θ2))%L.
 Proof.
 destruct_ac.
-specialize (rngl_int_dom_or_inv_1_quo Hiv Hon) as Hii.
 intros * H21 Hs1z.
 apply (rngl_nle_gt_iff Hor).
 intros Hzs12.
@@ -431,7 +430,6 @@ Theorem angle_add_le_mono_l_lemma_3 :
   → (rngl_cos (θ1 + θ3) ≤ rngl_cos (θ1 + θ2))%L.
 Proof.
 destruct_ac.
-specialize (rngl_int_dom_or_inv_1_quo Hiv Hon) as Hii.
 intros * Haov13 Hzs2 Hzs3 Hzs12 Hzs13 H23.
 destruct (rngl_le_dec Hor 0 (rngl_cos θ1))%L as [Hzc1| Hc1z]. {
   move Hzc1 before Hzs3.

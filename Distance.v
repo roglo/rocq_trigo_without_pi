@@ -63,7 +63,6 @@ Theorem angle_eucl_dist_separation :
   ∀ θ1 θ2, angle_eucl_dist θ1 θ2 = 0%L ↔ θ1 = θ2.
 Proof.
 destruct_ac.
-specialize (rngl_int_dom_or_inv_1_or_pdiv_r Hon Hiq) as Hii.
 specialize (rngl_has_inv_and_1_has_inv_and_1_or_pdiv Hon Hiv) as Hi1.
 specialize (rngl_int_dom_or_inv_1_quo_and_eq_dec Hi1 Hed) as Hid.
 intros *.
