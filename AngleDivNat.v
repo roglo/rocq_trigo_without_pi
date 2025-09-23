@@ -86,7 +86,6 @@ Theorem angle_eucl_dist_2_mul_sqrt_sub_sqrt :
       √((1 + rngl_cos θ1) / 2) * √((1 - rngl_cos θ2) / 2)))%L.
 Proof.
 destruct_ac.
-specialize (rngl_int_dom_or_inv_1_quo Hiv Hon) as Hii.
 destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
   specialize (rngl_characteristic_1 Hon Hos Hc1) as H1.
   intros.
@@ -219,7 +218,6 @@ Theorem angle_eucl_dist_2_mul_sqrt_add_sqrt :
       √((1 + rngl_cos θ1) / 2) * √((1 - rngl_cos θ2) / 2)))%L.
 Proof.
 destruct_ac.
-specialize (rngl_int_dom_or_inv_1_quo Hiv Hon) as Hii.
 destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
   specialize (rngl_characteristic_1 Hon Hos Hc1) as H1.
   intros.
@@ -502,7 +500,6 @@ Theorem rngl_cos_le_iff_angle_eucl_le :
    ↔ angle_eucl_dist θ3 θ4 ≤ angle_eucl_dist θ1 θ2)%L.
 Proof.
 destruct_ac.
-specialize (rngl_int_dom_or_inv_1_quo Hiv Hon) as Hii.
 destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
   specialize (rngl_characteristic_1 Hon Hos Hc1) as H1.
   intros.
@@ -658,7 +655,6 @@ destruct (angle_eq_dec θ 0) as [Htz| Htz]. {
   cbn.
   now rewrite angle_eucl_dist_diag.
 }
-specialize (rngl_int_dom_or_inv_1_quo Hiv Hon) as Hii.
 destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
   specialize (rngl_characteristic_1 Hon Hos Hc1) as H2.
   intros ε Hε.
