@@ -505,6 +505,7 @@ destruct (rngl_leb_dec 0 (rngl_sin θ1))%L as [Hzs1| Hs1z]. 2: {
   rewrite angle_add_comm in Hs13z.
   now apply rngl_sin_add_nonneg_angle_add_not_overflow; try easy.
 }
+apply rngl_leb_le in Hzs1.
 change_angle_sub_r θ1 π/₂.
 progress sin_cos_add_sub_right_hyp T Hzs1.
 progress sin_cos_add_sub_right_hyp T Hzs13.
@@ -514,12 +515,9 @@ progress sin_cos_add_sub_right_goal T.
 specialize rngl_sin_nonneg_cos_le_sin_le as H1.
 specialize (H1 θ3 θ2 Hzs3 Hzs2 H23).
 destruct (rngl_leb_dec 0 (rngl_cos θ3))%L as [Hzc3| Hc3z]. {
-...
-  move Hzc3 before Hzs1.
-  apply rngl_leb_le in Hzc3.
   rewrite Hzc3 in H1.
-  rename H1 into Hs23.
   apply rngl_leb_le in Hzc3.
+  rename H1 into Hs23.
   destruct (rngl_ltb_dec (rngl_cos θ2) 0)%L as [Hc2z| Hzc2]. {
     apply rngl_ltb_lt in Hc2z.
     apply rngl_nle_gt in Hc2z.
@@ -545,7 +543,6 @@ destruct (rngl_leb_dec 0 (rngl_cos θ3))%L as [Hzc3| Hc3z]. {
   rewrite angle_add_comm in Hzs13.
   now apply rngl_sin_add_nonneg_angle_add_not_overflow.
 }
-apply rngl_leb_nle in Hc3z.
 rewrite Hc3z in H1.
 apply (rngl_leb_gt_iff Hor) in Hc3z.
 apply rngl_nlt_ge in Hzs13.
