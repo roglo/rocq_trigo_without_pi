@@ -648,7 +648,8 @@ enough (H :
   rewrite seq_angle_to_div_nat_sub; [ | flia Hpq ].
   now apply HN.
 }
-destruct (rngl_lt_dec Hor (1 - ε² / 2)%L 0) as [Hez| Hze]. {
+destruct (rngl_ltb_dec (1 - ε² / 2)%L 0) as [Hez| Hze]. {
+  apply rngl_ltb_lt in Hez.
   exists 2.
   intros * Hpq.
   apply (rngl_lt_le_trans Hor _ 0); [ easy | ].
@@ -676,7 +677,7 @@ destruct (rngl_lt_dec Hor (1 - ε² / 2)%L 0) as [Hez| Hze]. {
   apply Nat.le_mul_r.
   now apply Nat.pow_nonzero.
 }
-apply (rngl_nlt_ge_iff Hor) in Hze.
+apply (rngl_ltb_ge_iff Hor) in Hze.
 move Hze after He1.
 enough (H :
   ∃ N, ∀ p q,

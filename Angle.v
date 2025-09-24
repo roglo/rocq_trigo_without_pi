@@ -983,9 +983,9 @@ rewrite <- (rngl_abs_nonneg_eq Hop Hor (√_ / _ * _))%L. 2: {
 }
 remember (√(_ * _))%L as x eqn:Hx.
 remember (√(_ * _))%L as y eqn:Hy in |-*.
-destruct (rngl_lt_dec Hor x y) as [Hxy| Hxy]. {
+destruct (rngl_ltb_dec x y) as [Hxy| Hxy]. {
   exfalso.
-  apply rngl_nle_gt in Hxy.
+  apply rngl_ltb_lt, rngl_nle_gt in Hxy.
   apply Hxy; clear Hxy.
   subst x y.
   apply rngl_add_cos_nonneg_sqrt_mul_le.
@@ -1037,7 +1037,7 @@ destruct (rngl_lt_dec Hor x y) as [Hxy| Hxy]. {
   apply (rngl_mul_nonneg_nonpos Hon Hop Hiq Hor); [ easy | ].
   now apply (rngl_lt_le_incl Hor).
 }
-apply (rngl_nlt_ge_iff Hor) in Hxy.
+apply (rngl_ltb_ge_iff Hor) in Hxy.
 rewrite <- (rngl_abs_nonneg_eq Hop Hor). 2: {
   now apply (rngl_le_0_sub Hop Hor).
 }
@@ -1887,7 +1887,8 @@ rewrite <- (rngl_abs_nonneg_eq Hop Hor). 2: {
   apply (rngl_lt_le_incl Hor) in Hzs2.
   now apply (rngl_mul_nonneg_nonneg Hon Hos Hiq Hor).
 }
-destruct (rngl_lt_dec Hor (rngl_cos θ1) 0) as [Hc1z| Hzc1]. {
+destruct (rngl_ltb_dec (rngl_cos θ1) 0) as [Hc1z| Hzc1]. {
+  apply rngl_ltb_lt in Hc1z.
   destruct (rngl_eq_dec Heo (rngl_cos θ2) 1) as [Hc21| Hc21]. {
     apply eq_rngl_cos_1 in Hc21.
     subst θ2.
@@ -1902,7 +1903,7 @@ destruct (rngl_lt_dec Hor (rngl_cos θ1) 0) as [Hc1z| Hzc1]. {
   }
   apply (rngl_abs_nonneg Hop Hor).
 }
-apply (rngl_nlt_ge_iff Hor) in Hzc1.
+apply (rngl_ltb_ge_iff Hor) in Hzc1.
 rewrite <- (rngl_abs_nonneg_eq Hop Hor (rngl_cos θ1 * _))%L. 2: {
   apply (rngl_mul_nonneg_nonneg Hon Hos Hiq Hor); [ easy | ].
   apply (rngl_le_0_sub Hop Hor).

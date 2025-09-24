@@ -538,9 +538,9 @@ rewrite <- (rngl_abs_nonneg_eq Hop Hor (√_ / _ * _))%L. 2: {
 }
 remember (√(_ * _))%L as x eqn:Hx.
 remember (√(_ * _))%L as y eqn:Hy in |-*.
-destruct (rngl_lt_dec Hor x y) as [Hxy| Hxy]. {
+destruct (rngl_ltb_dec x y) as [Hxy| Hxy]. {
   exfalso.
-  apply rngl_nle_gt in Hxy.
+  apply rngl_ltb_lt, rngl_nle_gt in Hxy.
   apply Hxy; clear Hxy.
   subst x y.
   progress unfold rngl_sub.
@@ -580,7 +580,7 @@ destruct (rngl_lt_dec Hor x y) as [Hxy| Hxy]. {
     now apply (rngl_lt_le_incl Hor).
   }
 }
-apply (rngl_nlt_ge_iff Hor) in Hxy.
+apply (rngl_ltb_ge_iff Hor) in Hxy.
 rewrite <- (rngl_abs_nonneg_eq Hop Hor). 2: {
   now apply (rngl_le_0_sub Hop Hor).
 }

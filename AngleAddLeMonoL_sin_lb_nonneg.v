@@ -61,13 +61,14 @@ destruct zs2. 2: {
     rewrite Hzs2, Hzs3.
     now apply rngl_leb_le.
   }
-  destruct (rngl_lt_dec Hor (rngl_cos θ3) 0)%L as [Hc3z| Hzc3]. {
+  destruct (rngl_ltb_dec (rngl_cos θ3) 0)%L as [Hc3z| Hzc3]. {
+    apply rngl_ltb_lt in Hc3z.
     exfalso.
     apply Bool.not_true_iff_false in Haov13.
     apply Haov13.
     now apply angle_add_le_mono_l_lemma_11.
   }
-  apply (rngl_nlt_ge_iff Hor) in Hzc3.
+  apply (rngl_ltb_ge_iff Hor) in Hzc3.
   clear - Hor Hon Hop Hiq Hiv Hos Hzs13 Hzs12 Haov13 Haov12 H23 Hzc3 Hzs3 Hzs2.
   specialize (rngl_int_dom_or_inv_1_quo Hiv Hon) as Hii.
   generalize Hzs13; intros Hzs1.
@@ -85,7 +86,8 @@ destruct zs2. 2: {
     progress sin_cos_add_sub_straight_hyp T Hzs2.
     progress sin_cos_add_sub_straight_hyp T Hzs12.
     progress sin_cos_add_sub_straight_hyp T Hc2z.
-    destruct (rngl_lt_dec Hor 0 (rngl_cos θ1))%L as [Hzc1| Hc1z]. {
+    destruct (rngl_ltb_dec 0 (rngl_cos θ1))%L as [Hzc1| Hc1z]. {
+      apply rngl_ltb_lt in Hzc1.
       clear - ac θ1 θ2 θ3 Hzc1 Hzs2 Hc2z Hzc3 Hzs3 Hzs12 Hzs13 Hor.
       destruct (rngl_le_dec Hor 0 (rngl_sin θ1))%L as [Hzs1| Hs1z]. {
         apply rngl_nlt_ge in Hzs12.
@@ -103,7 +105,7 @@ destruct zs2. 2: {
       apply (rngl_lt_le_incl Hor) in Hs1z.
       now apply rngl_sin_add_pos_2.
     }
-    apply (rngl_nlt_ge_iff Hor) in Hc1z.
+    apply (rngl_ltb_ge_iff Hor) in Hc1z.
     apply Bool.not_true_iff_false in Haov12.
     apply Haov12.
     clear - Hon Hos Hor Hiq Hop Hzs2 Hzs1 Hc1z Hzs12 Hc2z.
@@ -285,13 +287,14 @@ destruct zs3. {
 }
 clear H23.
 apply (rngl_leb_gt Hor) in Hzs3.
-destruct (rngl_lt_dec Hor (rngl_cos θ3) 0)%L as [Hc3z| Hzc3]. {
+destruct (rngl_ltb_dec (rngl_cos θ3) 0)%L as [Hc3z| Hzc3]. {
+  apply rngl_ltb_lt in Hc3z.
   exfalso.
   apply Bool.not_true_iff_false in Haov13.
   apply Haov13.
   now apply angle_add_le_mono_l_lemma_11.
 }
-apply (rngl_nlt_ge_iff Hor) in Hzc3.
+apply (rngl_ltb_ge_iff Hor) in Hzc3.
 generalize Hzs13; intros Hzs1.
 apply rngl_sin_add_nonneg_sin_nonneg in Hzs1; [ | easy ].
 change_angle_add_r θ3 π/₂.

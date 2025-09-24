@@ -537,11 +537,12 @@ rewrite <- (rngl_abs_nonneg_eq Hop Hor √_)%L. 2: {
   apply (rngl_le_opp_l Hop Hor).
   apply rngl_cos_bound.
 }
-destruct (rngl_lt_dec Hor (rngl_cos θ) 0) as [Hcz| Hzc]. {
+destruct (rngl_ltb_dec (rngl_cos θ) 0) as [Hcz| Hzc]. {
+  apply rngl_ltb_lt in Hcz.
   apply (rngl_lt_le_trans Hor _ 0); [ easy | ].
   apply (rngl_abs_nonneg Hop Hor).
 }
-apply (rngl_nlt_ge_iff Hor) in Hzc.
+apply (rngl_ltb_ge_iff Hor) in Hzc.
 rewrite <- (rngl_abs_nonneg_eq Hop Hor (rngl_cos θ)) at 1; [ | easy ].
 apply (rngl_squ_lt_abs_lt Hon Hop Hiq Hor).
 rewrite (rngl_squ_sqrt Hon). 2: {
