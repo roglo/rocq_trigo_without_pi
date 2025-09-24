@@ -478,7 +478,7 @@ destruct zstt. {
   apply (rngl_lt_le_incl Hor) in Hθ.
   now apply rngl_cos_le_cos_sub.
 }
-apply (rngl_leb_gt Hor) in Hzstt.
+apply (rngl_leb_gt_iff Hor) in Hzstt.
 apply rngl_nle_gt in Hzstt.
 exfalso; apply Hzstt; clear Hzstt.
 apply (rngl_lt_le_incl Hor) in Hθ.
@@ -501,7 +501,7 @@ rewrite (rngl_leb_refl Hor) in Hts |-*.
 remember (0 ≤? rngl_sin (θ - θ₀))%L as zstt eqn:Hzstt.
 symmetry in Hzstt.
 destruct zstt; [ apply rngl_leb_le, rngl_cos_bound | exfalso ].
-apply (rngl_leb_gt Hor) in Hzstt.
+apply (rngl_leb_gt_iff Hor) in Hzstt.
 rewrite (rngl_sin_sub_anticomm) in Hzstt.
 apply (rngl_opp_neg_pos Hop Hor) in Hzstt.
 remember (0 ≤? rngl_sin θ₀)%L as zstz eqn:Hzstz.
@@ -527,7 +527,7 @@ destruct zstz. {
 }
 clear Hts.
 destruct zst; [ easy | ].
-apply (rngl_leb_gt Hor) in Hzstz, Hzst.
+apply (rngl_leb_gt_iff Hor) in Hzstz, Hzst.
 apply rngl_ltb_lt in Hθ.
 apply rngl_nle_gt in Hθ.
 apply Hθ; clear Hθ.
@@ -611,7 +611,7 @@ destruct ss. {
   rewrite (rngl_mul_1_l Hon).
   now apply (rngl_abs_nonneg_eq Hop Hor).
 } {
-  apply (rngl_leb_gt Hor) in Hss.
+  apply (rngl_leb_gt_iff Hor) in Hss.
   apply (rngl_lt_le_incl Hor) in Hss.
   rewrite (rngl_abs_nonpos_eq Hop Hor); [ | easy ].
   rewrite (rngl_mul_opp_l Hop), (rngl_mul_opp_r Hop).
@@ -791,13 +791,14 @@ apply rngl_sin_nonneg_angle_le_straight in Htt.
 apply rngl_leb_le in Htt.
 rewrite Htt.
 rewrite (rngl_mul_1_l Hon).
-destruct (rngl_le_dec Hor 1 (angle_eucl_dist θ 0)) as [H1d| H1d]. {
+destruct (rngl_leb_dec 1 (angle_eucl_dist θ 0)) as [H1d| H1d]. {
+  apply rngl_leb_le in H1d.
   eapply (rngl_le_trans Hor); [ | apply H1d ].
   apply (rngl_le_sub_l Hop Hor).
   apply rl_sqrt_nonneg.
   apply rngl_1_add_cos_div_2_nonneg.
 }
-apply (rngl_nle_gt_iff Hor) in H1d.
+apply (rngl_leb_gt_iff Hor) in H1d.
 apply (rngl_le_sub_le_add_r Hop Hor).
 rewrite rngl_add_comm.
 apply (rngl_le_sub_le_add_r Hop Hor).
@@ -834,14 +835,14 @@ destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
 specialize (rngl_0_lt_2 Hon Hos Hiq Hc1 Hor) as Hz2.
 intros.
 cbn.
-destruct (rngl_le_dec Hor 1 (angle_eucl_dist θ π))
-  as [H1s| H1s]. {
+destruct (rngl_leb_dec 1 (angle_eucl_dist θ π)) as [H1s| H1s]. {
+  apply rngl_leb_le in H1s.
   eapply (rngl_le_trans Hor); [ | apply H1s ].
   apply (rngl_le_sub_l Hop Hor).
   apply rl_sqrt_nonneg.
   apply rngl_1_sub_cos_div_2_nonneg.
 }
-apply (rngl_nle_gt_iff Hor) in H1s.
+apply (rngl_leb_gt_iff Hor) in H1s.
 apply (rngl_le_sub_le_add_r Hop Hor).
 rewrite rngl_add_comm.
 apply (rngl_le_sub_le_add_r Hop Hor).
