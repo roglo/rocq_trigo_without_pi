@@ -20,11 +20,12 @@ Theorem rngl_cos_diff_le_eucl_dist :
 Proof.
 destruct_ac.
 intros.
-destruct (rngl_le_dec Hor (rngl_cos θ1) (rngl_cos θ2)) as [Hc12| Hc12]. {
+destruct (rngl_leb_dec (rngl_cos θ1) (rngl_cos θ2)) as [Hc12| Hc12]. {
+  apply rngl_leb_le in Hc12.
   apply (rngl_le_trans Hor _ 0); [ now apply (rngl_le_sub_0 Hop Hor) | ].
   apply angle_eucl_dist_nonneg.
 }
-apply (rngl_nle_gt_iff Hor) in Hc12.
+apply (rngl_leb_gt_iff Hor) in Hc12.
 rewrite angle_eucl_dist_is_sqrt.
 rewrite <- (rngl_abs_nonneg_eq  Hop Hor (_ - _)). 2: {
   apply (rngl_le_0_sub Hop Hor).
@@ -94,14 +95,15 @@ exists N.
 intros * Hp Hq.
 cbn.
 progress unfold rngl_dist.
-destruct (rngl_le_dec Hor (rngl_cos (θ q)) (rngl_cos (θ p))) as [Hpq| Hpq]. {
+destruct (rngl_leb_dec (rngl_cos (θ q)) (rngl_cos (θ p))) as [Hpq| Hpq]. {
+  apply rngl_leb_le in Hpq.
   rewrite (rngl_abs_nonneg_eq Hop Hor). 2: {
     now apply (rngl_le_0_sub Hop Hor).
   }
   eapply (rngl_le_lt_trans Hor); [ | apply (HN p q Hp Hq) ].
   apply rngl_cos_diff_le_eucl_dist.
 } {
-  apply (rngl_nle_gt_iff Hor), (rngl_lt_le_incl Hor) in Hpq.
+  apply (rngl_leb_gt_iff Hor), (rngl_lt_le_incl Hor) in Hpq.
   rewrite (rngl_abs_sub_comm Hop Hor).
   rewrite (rngl_abs_nonneg_eq Hop Hor). 2: {
     now apply (rngl_le_0_sub Hop Hor).
@@ -125,14 +127,15 @@ exists N.
 intros * Hp Hq.
 cbn.
 progress unfold rngl_dist.
-destruct (rngl_le_dec Hor (rngl_sin (θ q)) (rngl_sin (θ p))) as [Hpq| Hpq]. {
+destruct (rngl_leb_dec (rngl_sin (θ q)) (rngl_sin (θ p))) as [Hpq| Hpq]. {
+  apply rngl_leb_le in Hpq.
   rewrite (rngl_abs_nonneg_eq Hop Hor). 2: {
     now apply (rngl_le_0_sub Hop Hor).
   }
   eapply (rngl_le_lt_trans Hor); [ | apply (HN p q Hp Hq) ].
   apply rngl_sin_diff_le_eucl_dist.
 } {
-  apply (rngl_nle_gt_iff Hor), (rngl_lt_le_incl Hor) in Hpq.
+  apply (rngl_leb_gt_iff Hor), (rngl_lt_le_incl Hor) in Hpq.
   rewrite (rngl_abs_sub_comm Hop Hor).
   rewrite (rngl_abs_nonneg_eq Hop Hor). 2: {
     now apply (rngl_le_0_sub Hop Hor).
@@ -506,7 +509,8 @@ remember (rngl_acos c) as θ eqn:Hθ.
 assert (Hts : s = rngl_sin θ ∨ s = (- rngl_sin θ)%L). {
   rewrite Hθ.
   rewrite rngl_sin_acos; [ | easy ].
-  destruct (rngl_le_dec Hor 0 s) as [Hzs| Hzs]; [ left | right ]. {
+  destruct (rngl_leb_dec 0 s) as [Hzs| Hzs]; [ left | right ]. {
+    apply rngl_leb_le in Hzs.
     rewrite <- (rngl_abs_sqrt Hop Hor). 2: {
       apply (rngl_le_0_sub Hop Hor).
       now apply (rngl_squ_le_1_iff Hon Hop Hiq Hor).
@@ -519,7 +523,7 @@ assert (Hts : s = rngl_sin θ ∨ s = (- rngl_sin θ)%L). {
     }
     now apply (rngl_add_move_l Hop).
   } {
-    apply (rngl_nle_gt_iff Hor) in Hzs.
+    apply (rngl_leb_gt_iff Hor) in Hzs.
     remember (- s)%L as s' eqn:H.
     apply (f_equal rngl_opp) in H.
     rewrite (rngl_opp_involutive Hop) in H.

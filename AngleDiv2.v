@@ -222,7 +222,7 @@ destruct saz. {
   rewrite (rngl_mul_1_r Hon).
   now rewrite rl_nth_root_mul.
 } {
-  apply (rngl_leb_gt Hor) in Hsaz.
+  apply (rngl_leb_gt_iff Hor) in Hsaz.
   apply (rngl_opp_lt_compat Hop Hor) in Hsaz.
   rewrite (rngl_opp_0 Hop) in Hsaz.
   apply (rngl_lt_le_incl Hor) in Hsaz.
@@ -288,7 +288,7 @@ destruct zs. {
   apply (rngl_le_opp_l Hop Hor).
   apply rngl_cos_bound.
 } {
-  apply (rngl_leb_gt Hor) in Hzs.
+  apply (rngl_leb_gt_iff Hor) in Hzs.
   rewrite (rngl_mul_opp_l Hop).
   apply -> (rngl_opp_le_compat Hop Hor).
   rewrite (rngl_mul_1_l Hon).
@@ -421,7 +421,7 @@ destruct zs. {
   apply (rngl_opp_involutive Hop).
 }
 destruct sz; [ now rewrite (rngl_mul_opp_l Hop) | ].
-apply (rngl_leb_gt Hor) in Hzs, Hsz.
+apply (rngl_leb_gt_iff Hor) in Hzs, Hsz.
 now apply (rngl_lt_asymm Hor) in Hzs.
 Qed.
 
@@ -491,9 +491,9 @@ destruct zs1. {
     now apply rl_sqrt_nonneg.
   }
 }
-apply (rngl_leb_gt Hor) in Hzs1.
+apply (rngl_leb_gt_iff Hor) in Hzs1.
 destruct zs2; [ easy | ].
-apply (rngl_leb_gt Hor) in Hzs2.
+apply (rngl_leb_gt_iff Hor) in Hzs2.
 apply rngl_leb_le in H12.
 apply rngl_leb_le.
 do 2 rewrite (rngl_mul_opp_l Hop).
@@ -791,7 +791,7 @@ intros Hon Hop Hiv Hor Hc1.
 specialize (rngl_has_opp_has_opp_or_psub Hop) as Hos.
 specialize (rngl_has_inv_has_inv_or_pdiv Hiv) as Hiq.
 rewrite (rngl_leb_0_opp Hop Hor).
-apply (rngl_leb_gt Hor).
+apply (rngl_leb_gt_iff Hor).
 apply (rngl_div_pos Hon Hop Hiv Hor). 2: {
   apply (rngl_0_lt_2 Hon Hos Hiq Hc1 Hor).
 }
@@ -923,7 +923,7 @@ split; intros Hs3. {
     apply rngl_1_sub_cos_div_2_nonneg.
   }
   apply (rngl_le_div_l Hon Hop Hiv Hor) in Hs3; [ | easy ].
-  apply (rngl_leb_gt Hor) in Hzs.
+  apply (rngl_leb_gt_iff Hor) in Hzs.
   apply (rngl_opp_neg_pos Hop Hor) in Hzs.
   apply (rngl_le_sub_le_add_r Hop Hor) in Hs3.
   apply (rngl_le_0_sub Hop Hor) in Hs3.
@@ -1244,7 +1244,7 @@ destruct scz. {
   apply (rngl_le_opp_l Hop Hor).
   apply squ_rngl_cos_div_pow_2_div_2_bound.
 }
-apply (rngl_leb_gt Hor) in Hscz.
+apply (rngl_leb_gt_iff Hor) in Hscz.
 apply squ_rngl_cos_div_pow_2_div_2_bound.
 Qed.
 

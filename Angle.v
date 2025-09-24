@@ -282,7 +282,7 @@ destruct zc1. {
   rewrite <- Hcs1, <- Hcs2 in Hc12.
   now apply (rngl_sub_le_mono_l Hop Hor) in Hc12.
 }
-apply (rngl_leb_gt Hor) in Hzc1.
+apply (rngl_leb_gt_iff Hor) in Hzc1.
 remember (0 ≤? rngl_cos θ2)%L as zc2 eqn:Hzc2.
 symmetry in Hzc2.
 destruct zc2. {
@@ -298,7 +298,7 @@ destruct zc2. {
     now apply (rngl_mul_nonneg_nonneg Hon Hos Hiq Hor).
   }
 } {
-  apply (rngl_leb_gt Hor) in Hzc2.
+  apply (rngl_leb_gt_iff Hor) in Hzc2.
   apply (rngl_opp_le_compat Hop Hor) in Hc12.
   rewrite <- (rngl_abs_nonpos_eq Hop Hor) in Hc12. 2: {
     now apply (rngl_lt_le_incl Hor).
@@ -578,7 +578,8 @@ split. {
     apply (rngl_lt_le_incl Hor) in Hcc.
     specialize rngl_sin_nonneg_cos_le_sin_le as H1.
     specialize (H1 _ _ Hzs2 Hzs1 Hcc).
-    destruct (rngl_le_dec Hor 0 (rngl_cos θ1)) as [H| H]. {
+    destruct (rngl_leb_dec 0 (rngl_cos θ1)) as [H| H]. {
+      apply rngl_leb_le in H.
       apply (rngl_le_antisymm Hor) in H; [ | easy ].
       apply (eq_rngl_cos_0) in H.
       destruct H; subst θ1; [ apply rngl_sin_bound | ].
@@ -586,9 +587,10 @@ split. {
       apply rngl_nlt_ge in Hzs1.
       apply Hzs1, (rngl_opp_1_lt_0 Hon Hop Hiq Hor Hc1).
     }
-    apply (rngl_nle_gt_iff Hor) in H.
+    apply (rngl_leb_gt_iff Hor) in H.
     move H before Hzc1; clear Hzc1; rename H into Hzc1.
-    destruct (rngl_le_dec Hor 0 (rngl_cos θ2)) as [H| H]. {
+    destruct (rngl_leb_dec 0 (rngl_cos θ2)) as [H| H]. {
+      apply rngl_leb_le in H.
       apply (rngl_le_antisymm Hor) in H; [ | easy ].
       apply (eq_rngl_cos_0) in H.
       destruct H; subst θ2. {
@@ -604,13 +606,13 @@ split. {
       }
       apply rngl_sin_bound.
     }
-    apply (rngl_nle_gt_iff Hor) in H.
+    apply (rngl_leb_gt_iff Hor) in H.
     move H before Hzc2; clear Hzc2; rename H into Hzc2.
     generalize Hzc2; intros H.
-    apply (rngl_leb_gt Hor) in H.
+    apply (rngl_leb_gt_iff Hor) in H.
     rewrite H in H1; clear H.
     generalize Hzc1; intros H.
-    apply (rngl_leb_gt Hor) in H.
+    apply (rngl_leb_gt_iff Hor) in H.
     now rewrite H in H1; clear H.
   }
   intros H.
@@ -624,7 +626,8 @@ split. {
   now apply (rngl_lt_irrefl Hor) in Hcc.
 } {
   intros Hcc.
-  destruct (rngl_le_dec Hor 0 (rngl_cos θ1)) as [H| H]. {
+  destruct (rngl_leb_dec 0 (rngl_cos θ1)) as [H| H]. {
+    apply rngl_leb_le in H.
     apply (rngl_le_antisymm Hor) in H; [ | easy ].
     apply (eq_rngl_cos_0) in H.
     destruct H; subst θ1. {
@@ -637,9 +640,10 @@ split. {
     }
     apply rngl_sin_bound.
   }
-  apply (rngl_nle_gt_iff Hor) in H.
+  apply (rngl_leb_gt_iff Hor) in H.
   move H before Hzc1; clear Hzc1; rename H into Hzc1.
-  destruct (rngl_le_dec Hor 0 (rngl_cos θ2)) as [H| H]. {
+  destruct (rngl_leb_dec 0 (rngl_cos θ2)) as [H| H]. {
+    apply rngl_leb_le in H.
     apply (rngl_le_antisymm Hor) in H; [ | easy ].
     apply (eq_rngl_cos_0) in H.
     destruct H; subst θ2. {
@@ -649,15 +653,15 @@ split. {
     apply rngl_nlt_ge in Hzs2.
     apply Hzs2, (rngl_opp_1_lt_0 Hon Hop Hiq Hor Hc1).
   }
-  apply (rngl_nle_gt_iff Hor) in H.
+  apply (rngl_leb_gt_iff Hor) in H.
   move H before Hzc2; clear Hzc2; rename H into Hzc2.
   specialize rngl_sin_nonneg_cos_le_sin_le as H1.
   specialize (H1 _ _ Hzs1 Hzs2 Hcc).
   generalize Hzc1; intros H.
-  apply (rngl_leb_gt Hor) in H.
+  apply (rngl_leb_gt_iff Hor) in H.
   rewrite H in H1; clear H.
   generalize Hzc2; intros H.
-  apply (rngl_leb_gt Hor) in H.
+  apply (rngl_leb_gt_iff Hor) in H.
   now rewrite H in H1; clear H.
 }
 Qed.
@@ -679,10 +683,11 @@ destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
   apply (rngl_le_refl Hor).
 }
 remember (θ1 + θ2)%A as θ3 eqn:Hθ3.
-destruct (rngl_le_dec Hor 0 (rngl_cos θ2)) as [Hzc2| Hzc2]. {
+destruct (rngl_leb_dec 0 (rngl_cos θ2)) as [Hzc2| Hzc2]. {
+  apply rngl_leb_le in Hzc2.
   now apply (rngl_le_0_add Hos Hor).
 }
-apply (rngl_nle_gt_iff Hor) in Hzc2.
+apply (rngl_leb_gt_iff Hor) in Hzc2.
 (* here, for sin θ3 to be non negative, then the negativity
    of θ2 must not be greater than the positivity of θ1 *)
 apply (rngl_le_sub_le_add_r Hop Hor).
@@ -867,7 +872,7 @@ destruct zs2. {
   rewrite (rngl_abs_nonneg_eq Hop Hor); [ | easy ].
   easy.
 } {
-  apply (rngl_leb_gt Hor) in Hzs2, Hzs12.
+  apply (rngl_leb_gt_iff Hor) in Hzs2, Hzs12.
   apply (rngl_lt_le_incl Hor) in Hzs2, Hzs12.
   rewrite (rngl_abs_nonpos_eq Hop Hor); [ | easy ].
   rewrite (rngl_abs_nonpos_eq Hop Hor); [ | easy ].
@@ -989,15 +994,17 @@ destruct (rngl_ltb_dec x y) as [Hxy| Hxy]. {
   apply Hxy; clear Hxy.
   subst x y.
   apply rngl_add_cos_nonneg_sqrt_mul_le.
-  destruct (rngl_le_dec Hor 0 (rngl_cos θ1)) as [Hzc1| Hzc1]. {
+  destruct (rngl_leb_dec 0 (rngl_cos θ1)) as [Hzc1| Hzc1]. {
+    apply rngl_leb_le in Hzc1.
     now apply rngl_add_cos_nonneg_when_sin_nonneg.
   }
-  destruct (rngl_le_dec Hor 0 (rngl_cos θ2)) as [Hzc2| Hzc2]. {
+  destruct (rngl_leb_dec 0 (rngl_cos θ2)) as [Hzc2| Hzc2]. {
+    apply rngl_leb_le in Hzc2.
     rewrite angle_add_comm in Hzs3.
     rewrite rngl_add_comm.
     now apply rngl_add_cos_nonneg_when_sin_nonneg.
   }
-  apply (rngl_nle_gt_iff Hor) in Hzc1, Hzc2.
+  apply (rngl_leb_gt_iff Hor) in Hzc1, Hzc2.
   exfalso.
   apply rngl_nlt_ge in Hzs3.
   apply Hzs3; clear Hzs3.
@@ -1106,11 +1113,11 @@ destruct zc1. {
   rewrite (rngl_mul_comm Hic).
   now apply (rngl_mul_le_compat_nonneg Hon Hiq Hor).
 } {
-  apply (rngl_leb_gt Hor) in Hzc1.
+  apply (rngl_leb_gt_iff Hor) in Hzc1.
   remember (0 ≤? rngl_cos θ2)%L as zc2 eqn:Hzc2.
   symmetry in Hzc2.
   destruct zc2; [ easy | ].
-  apply (rngl_leb_gt Hor) in Hzc2; cbn.
+  apply (rngl_leb_gt_iff Hor) in Hzc2; cbn.
   rewrite (rngl_mul_opp_r Hop).
   rewrite (rngl_add_opp_r Hop).
   apply (rngl_le_0_sub Hop Hor).
@@ -1171,7 +1178,7 @@ destruct zc2. {
   apply (rngl_opp_nonneg_nonpos Hop Hor) in Hs2.
   now apply rngl_nle_gt in Hs1.
 }
-apply (rngl_leb_gt Hor) in Hzc2.
+apply (rngl_leb_gt_iff Hor) in Hzc2.
 remember (0 ≤? rngl_cos θ1)%L as zc1 eqn:Hzc1.
 symmetry in Hzc1.
 destruct zc1. {
@@ -1191,7 +1198,7 @@ destruct zc1. {
   apply (rngl_opp_nonneg_nonpos Hop Hor) in Hs2.
   now apply rngl_nle_gt in Hs1.
 }
-apply (rngl_leb_gt Hor) in Hzc1.
+apply (rngl_leb_gt_iff Hor) in Hzc1.
 rewrite rngl_sin_sub_anticomm in Hs12.
 apply (rngl_opp_nonneg_nonpos Hop Hor) in Hs12.
 apply rngl_nlt_ge in Hs12.
@@ -1242,7 +1249,8 @@ destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
   now apply (rngl_lt_irrefl Hor) in Hs3z.
 }
 remember (θ1 + θ2)%A as θ3 eqn:Hθ3.
-destruct (rngl_le_dec Hor 0 (rngl_cos θ2)) as [Hzc2| Hzc2]. {
+destruct (rngl_leb_dec 0 (rngl_cos θ2)) as [Hzc2| Hzc2]. {
+  apply rngl_leb_le in Hzc2.
   apply rngl_nle_gt in Hs3z.
   exfalso; apply Hs3z; clear Hs3z.
   rewrite Hθ3; cbn.
@@ -1252,7 +1260,7 @@ destruct (rngl_le_dec Hor 0 (rngl_cos θ2)) as [Hzc2| Hzc2]. {
     now apply (rngl_mul_nonneg_nonneg Hon Hos Hiq Hor).
   }
 }
-apply (rngl_nle_gt_iff Hor) in Hzc2.
+apply (rngl_leb_gt_iff Hor) in Hzc2.
 apply (rngl_nle_gt_iff Hor).
 intros Hcc.
 assert (Hs21 : (rngl_sin θ1 ≤ rngl_sin θ2)%L). {
@@ -1487,7 +1495,7 @@ destruct zs2. {
   rewrite (rngl_abs_nonneg_eq Hop Hor); [ | easy ].
   easy.
 } {
-  apply (rngl_leb_gt Hor) in Hzs2, Hzs12.
+  apply (rngl_leb_gt_iff Hor) in Hzs2, Hzs12.
   apply (rngl_lt_le_incl Hor) in Hzs2, Hzs12.
   rewrite (rngl_abs_nonpos_eq Hop Hor); [ | easy ].
   rewrite (rngl_abs_nonpos_eq Hop Hor); [ | easy ].
@@ -2151,10 +2159,11 @@ apply rngl_cos_bound.
 Qed.
 
 Theorem rngl_acos_prop :
-  ∀ x, (x² ≤ 1)%L → cos2_sin2_prop x √(1 - x²)%L.
+  ∀ x, (x² ≤? 1)%L = true → cos2_sin2_prop x √(1 - x²)%L.
 Proof.
 destruct_ac.
 intros * Hx1.
+apply rngl_leb_le in Hx1.
 progress unfold cos2_sin2_prop.
 apply (rngl_eqb_eq Hed).
 rewrite (rngl_squ_sqrt Hon). 2: {
@@ -2166,7 +2175,7 @@ apply (rngl_sub_add Hop).
 Qed.
 
 Definition rngl_acos (x : T) :=
-  match (rngl_le_dec ac_or x² 1)%L with
+  match (rngl_leb_dec x² 1)%L with
   | left Hx1 =>
       {| rngl_cos := x; rngl_sin := √(1 - x²)%L;
          rngl_cos2_sin2 := rngl_acos_prop x Hx1 |}
@@ -2185,7 +2194,8 @@ Proof.
 destruct_ac.
 intros * Hx1.
 progress unfold rngl_acos.
-destruct (rngl_le_dec ac_or x² 1) as [| H]; [ easy | ].
+destruct (rngl_leb_dec x² 1) as [| H]; [ easy | ].
+apply rngl_leb_nle in H.
 exfalso; apply H; clear H.
 now apply (rngl_squ_le_1_iff Hon Hop Hiq Hor).
 Qed.
@@ -2204,7 +2214,8 @@ Proof.
 destruct_ac.
 intros * Hx1.
 progress unfold rngl_acos.
-destruct (rngl_le_dec ac_or x² 1) as [| H]; [ easy | ].
+destruct (rngl_leb_dec x² 1) as [| H]; [ easy | ].
+apply rngl_leb_nle in H.
 exfalso; apply H; clear H.
 now apply (rngl_squ_le_1_iff Hon Hop Hiq Hor).
 Qed.
