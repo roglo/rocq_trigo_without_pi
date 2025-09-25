@@ -133,7 +133,8 @@ Proof.
 destruct_ac.
 intros * Hzs1 Hzs3 Hzs12 Hzs13 H32.
 destruct (rngl_leb_dec (rngl_cos θ1) 0) as [Hc1z| Hzc1]. {
-  destruct (rngl_eq_dec Heo (rngl_cos θ1) (-1)) as [Hc1o| Hc1o]. {
+  destruct (rngl_eqb_dec (rngl_cos θ1) (-1)) as [Hc1o| Hc1o]. {
+    apply (rngl_eqb_eq Heo) in Hc1o.
     apply eq_rngl_cos_opp_1 in Hc1o.
     subst θ1.
     rewrite rngl_sin_add_straight_l in Hzs12, Hzs13.
@@ -154,6 +155,7 @@ destruct (rngl_leb_dec (rngl_cos θ1) 0) as [Hc1z| Hzc1]. {
     subst θ2.
     now apply (rngl_lt_irrefl Hor) in Hzs12.
   }
+  apply (rngl_eqb_neq Heo) in Hc1o.
   apply rngl_leb_le in Hc1z.
   now apply angle_add_overflow_le_lemma_2.
 }
@@ -194,7 +196,8 @@ Theorem angle_add_overflow_le_lemma_4 :
 Proof.
 destruct_ac.
 intros * Hzs1 Hzs2 Hzs3 Hzs12 Hzs13.
-destruct (rngl_eq_dec Heo (rngl_cos θ1) (-1)) as [Hc1o| Hc1o]. {
+destruct (rngl_eqb_dec (rngl_cos θ1) (-1)) as [Hc1o| Hc1o]. {
+  apply (rngl_eqb_eq Heo) in Hc1o.
   apply eq_rngl_cos_opp_1 in Hc1o.
   subst θ1.
   rewrite rngl_sin_add_straight_l in Hzs13.
@@ -211,6 +214,7 @@ destruct (rngl_eq_dec Heo (rngl_cos θ1) (-1)) as [Hc1o| Hc1o]. {
   apply (rngl_lt_le_incl Hor) in Hzs12.
   now apply rngl_nlt_ge in Hzs12.
 }
+apply (rngl_eqb_neq Heo) in Hc1o.
 destruct (rngl_leb_dec 0 (rngl_cos θ1)) as [Hzc1| Hzc1]. {
   apply rngl_leb_le in Hzc1.
   apply angle_le_sub_le_add_l_lemma_1; try easy. {

@@ -66,7 +66,8 @@ eapply is_derivative_at_eq_compat; [ | | apply H2 ]. {
   apply (rngl_mul_inv_r Hiv).
 } {
   intros θ; cbn.
-  destruct (rngl_eq_dec Heo (rngl_cos θ) 0) as [Hcz| Hcz]. {
+  destruct (rngl_eqb_dec (rngl_cos θ) 0) as [Hcz| Hcz]. {
+    apply (rngl_eqb_eq Heo) in Hcz.
     rewrite Hcz.
     rewrite (rngl_squ_0 Hos).
     rewrite (rngl_mul_0_l Hos).
@@ -82,6 +83,7 @@ eapply is_derivative_at_eq_compat; [ | | apply H2 ]. {
       apply (rngl_squ_opp_1 Hon Hop).
     }
   }
+  apply (rngl_eqb_neq Heo) in Hcz.
   progress unfold "°".
   rewrite (rngl_opp_involutive Hop).
   rewrite (rngl_mul_div_assoc Hiv).

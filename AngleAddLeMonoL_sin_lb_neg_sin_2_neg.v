@@ -56,7 +56,8 @@ destruct zs13. {
   apply rngl_leb_le in Hzs13.
   apply Bool.not_true_iff_false in Haov13.
   apply Haov13; clear Haov13.
-  destruct (rngl_eq_dec Heo (rngl_sin θ1) (rngl_sin (- θ3))) as [Hs13| Hs13]. {
+  destruct (rngl_eqb_dec (rngl_sin θ1) (rngl_sin (- θ3))) as [Hs13| Hs13]. {
+    apply (rngl_eqb_eq Heo) in Hs13.
     apply (rngl_opp_lt_compat Hop Hor) in Hzs3.
     rewrite (rngl_opp_0 Hop) in Hzs3.
     rewrite rngl_sin_opp in Hs13.
@@ -81,6 +82,7 @@ destruct zs13. {
     }
     now apply (rngl_lt_le_incl Hor) in Hzs1.
   }
+  apply (rngl_eqb_neq Heo) in Hs13.
   (* perhaps a lemma; faut réfléchir *)
   clear - Hzs13 Hor θ2 H23 Hzs12 Hzs2 Heo Hop Hzs3 Hon Hs13 Hc1 Hii Hos Hiq.
   rewrite <- angle_add_overflow_equiv2.
@@ -139,7 +141,8 @@ destruct zs13. {
       progress sin_cos_add_sub_right_hyp T H23.
       progress sin_cos_add_sub_right_hyp T Hzc3.
       progress sin_cos_add_sub_right_goal T.
-      destruct (rngl_eq_dec Heo (rngl_sin θ1) 0) as [Hs1z| Hs1z]. {
+      destruct (rngl_eqb_dec (rngl_sin θ1) 0) as [Hs1z| Hs1z]. {
+        apply (rngl_eqb_eq Heo) in Hs1z.
         apply (eq_rngl_sin_0) in Hs1z.
         destruct Hs1z; subst θ1. {
           rewrite angle_sub_0_l in Hzs13.
@@ -153,6 +156,7 @@ destruct zs13. {
           apply (rngl_opp_1_le_0 Hon Hop Hiq Hor).
         }
       }
+      apply (rngl_eqb_neq Heo) in Hs1z.
       rewrite rngl_cos_sub_comm.
       apply rngl_cos_lt_cos_sub; try easy.
       apply (rngl_lt_le_incl Hor).
@@ -217,7 +221,8 @@ destruct zs13. {
     rewrite <- (rngl_opp_add_distr Hop).
     apply (rngl_opp_neg_pos Hop Hor).
     rewrite rngl_add_comm.
-    destruct (rngl_eq_dec Heo (rngl_sin θ1) 0) as [Hs1z| Hs1z]. {
+    destruct (rngl_eqb_dec (rngl_sin θ1) 0) as [Hs1z| Hs1z]. {
+      apply (rngl_eqb_eq Heo) in Hs1z.
       apply (eq_rngl_sin_0) in Hs1z.
       destruct Hs1z; subst θ1. {
         rewrite angle_add_0_l in Hzs13.
@@ -228,6 +233,7 @@ destruct zs13. {
       apply Hzs1; clear Hzs1.
       apply (rngl_opp_1_lt_0 Hon Hop Hiq Hor Hc1).
     }
+    apply (rngl_eqb_neq Heo) in Hs1z.
     apply (rngl_lt_eq_cases Hor) in Hc1z.
     apply not_eq_sym in Hs1z.
     destruct Hc1z as [Hc1z| H]; [ | easy ].

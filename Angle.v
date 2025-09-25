@@ -478,11 +478,13 @@ Theorem rngl_cos_eq :
 Proof.
 destruct_ac.
 intros * Hcc.
-destruct (rngl_eq_dec Heo (rngl_sin θ1) (rngl_sin θ2)) as [Hss| Hss]. {
+destruct (rngl_eqb_dec (rngl_sin θ1) (rngl_sin θ2)) as [Hss| Hss]. {
+  apply (rngl_eqb_eq Heo) in Hss.
   left.
   apply eq_angle_eq.
   now rewrite Hcc, Hss.
 }
+apply (rngl_eqb_neq Heo) in Hss.
 right.
 apply eq_angle_eq.
 rewrite Hcc; f_equal.
@@ -513,11 +515,13 @@ Theorem rngl_sin_eq :
 Proof.
 destruct_ac.
 intros * Hss.
-destruct (rngl_eq_dec Heo (rngl_cos θ1) (rngl_cos θ2)) as [Hcc| Hcc]. {
+destruct (rngl_eqb_dec (rngl_cos θ1) (rngl_cos θ2)) as [Hcc| Hcc]. {
+  apply (rngl_eqb_eq Heo) in Hcc.
   left.
   apply eq_angle_eq.
   now rewrite Hcc, Hss.
 }
+apply (rngl_eqb_neq Heo) in Hcc.
 right.
 apply eq_angle_eq.
 rewrite rngl_cos_sub_straight_l.
@@ -690,9 +694,11 @@ apply rngl_nlt_ge in Hzs3.
 apply Hzs3; clear Hzs3.
 subst θ3; cbn.
 (* special case for sin θ2 = 0 *)
-destruct (rngl_eq_dec Heo (rngl_sin θ2) 0) as [H2z| H2z]. {
+destruct (rngl_eqb_dec (rngl_sin θ2) 0) as [H2z| H2z]. {
+  apply (rngl_eqb_eq Heo) in H2z.
   rewrite H2z, (rngl_mul_0_r Hos), rngl_add_0_r.
-  destruct (rngl_eq_dec Heo (rngl_sin θ1) 0) as [H1z| H1z]. {
+  destruct (rngl_eqb_dec (rngl_sin θ1) 0) as [H1z| H1z]. {
+    apply (rngl_eqb_eq Heo) in H1z.
     apply (eq_rngl_sin_0) in H2z, H1z.
     destruct H2z; subst θ2. {
       apply (rngl_nle_gt_iff Hor) in Hzc2.
@@ -716,8 +722,10 @@ destruct (rngl_eq_dec Heo (rngl_sin θ2) 0) as [H2z| H2z]. {
   apply (rngl_mul_pos_neg Hon Hop Hiq Hor); [ | easy ].
   apply (rngl_le_neq Hor).
   split; [ easy | ].
+  apply (rngl_eqb_neq Heo) in H1z.
   now apply not_eq_sym.
 }
+apply (rngl_eqb_neq Heo) in H2z.
 assert (Hzls2 : (0 < rngl_sin θ2)%L). {
   apply (rngl_le_neq Hor).
   split; [ easy | ].
@@ -1001,9 +1009,11 @@ destruct (rngl_ltb_dec x y) as [Hxy| Hxy]. {
   apply Hzs3; clear Hzs3.
   cbn.
   (* special case for sin θ2 = 0 *)
-  destruct (rngl_eq_dec Heo (rngl_sin θ2) 0) as [H2z| H2z]. {
+  destruct (rngl_eqb_dec (rngl_sin θ2) 0) as [H2z| H2z]. {
+    apply (rngl_eqb_eq Heo) in H2z.
     rewrite H2z, (rngl_mul_0_r Hos), rngl_add_0_r.
-    destruct (rngl_eq_dec Heo (rngl_sin θ1) 0) as [H1z| H1z]. {
+    destruct (rngl_eqb_dec (rngl_sin θ1) 0) as [H1z| H1z]. {
+      apply (rngl_eqb_eq Heo) in H1z.
       apply (eq_rngl_sin_0) in H2z, H1z.
       destruct H2z as [H2z| H2z]. {
         subst θ2.
@@ -1019,11 +1029,13 @@ destruct (rngl_ltb_dec x y) as [Hxy| Hxy]. {
       apply Hzc1; clear Hzc1; cbn.
       apply (rngl_0_le_1 Hon Hos Hiq Hor).
     }
+    apply (rngl_eqb_neq Heo) in H1z.
     apply (rngl_mul_pos_neg Hon Hop Hiq Hor); [ | easy ].
     apply (rngl_le_neq Hor).
     split; [ easy | ].
     now apply not_eq_sym.
   }
+  apply (rngl_eqb_neq Heo) in H2z.
   rewrite rngl_add_comm.
   apply (rngl_add_neg_nonpos Hop Hor). {
     rewrite (rngl_mul_comm Hic).
@@ -1887,11 +1899,13 @@ rewrite <- (rngl_abs_nonneg_eq Hop Hor). 2: {
 }
 destruct (rngl_ltb_dec (rngl_cos θ1) 0) as [Hc1z| Hzc1]. {
   apply rngl_ltb_lt in Hc1z.
-  destruct (rngl_eq_dec Heo (rngl_cos θ2) 1) as [Hc21| Hc21]. {
+  destruct (rngl_eqb_dec (rngl_cos θ2) 1) as [Hc21| Hc21]. {
+    apply (rngl_eqb_eq Heo) in Hc21.
     apply eq_rngl_cos_1 in Hc21.
     subst θ2.
     now apply (rngl_lt_irrefl Hor) in Hzs2.
   }
+  apply (rngl_eqb_neq Heo) in Hc21.
   apply (rngl_lt_le_trans Hor _ 0). {
     rewrite (rngl_mul_comm Hic).
     apply (rngl_mul_pos_neg Hon Hop Hiq Hor); [ | easy ].
@@ -2110,7 +2124,8 @@ destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
   apply (rngl_le_refl Hor).
 }
 intros * Hsz1 Hzs2 Hzc2 Hzs12.
-destruct (rngl_eq_dec Heo (rngl_sin θ2) 0) as [Hs2z| Hs2z]. {
+destruct (rngl_eqb_dec (rngl_sin θ2) 0) as [Hs2z| Hs2z]. {
+  apply (rngl_eqb_eq Heo) in Hs2z.
   apply eq_rngl_sin_0 in Hs2z.
   destruct Hs2z; subst θ2; [ apply rngl_cos_bound | ].
   exfalso.
@@ -2118,6 +2133,7 @@ destruct (rngl_eq_dec Heo (rngl_sin θ2) 0) as [Hs2z| Hs2z]. {
   apply Hzc2; clear Hzc2; cbn.
   apply (rngl_opp_1_lt_0 Hon Hop Hiq Hor Hc1).
 }
+apply (rngl_eqb_neq Heo) in Hs2z.
 cbn in Hzs12.
 rewrite (rngl_mul_opp_r Hop) in Hzs12.
 rewrite (rngl_add_opp_r Hop) in Hzs12.

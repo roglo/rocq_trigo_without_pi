@@ -85,7 +85,8 @@ destruct (rngl_leb_dec 0 (rngl_cos θ2)) as [Hzc2| Hc2z]. {
 apply rngl_leb_nle in Hc2z.
 destruct H12 as [H12| H12]; [ easy | ].
 apply (rngl_nle_gt_iff Hor) in Hc2z.
-destruct (rngl_eq_dec Heo (rngl_sin θ1) 0) as [Hs1z| Hs1z]. {
+destruct (rngl_eqb_dec (rngl_sin θ1) 0) as [Hs1z| Hs1z]. {
+  apply (rngl_eqb_eq Heo) in Hs1z.
   apply eq_rngl_sin_0 in Hs1z.
   destruct Hs1z; subst θ1. {
     rewrite angle_add_0_l.
@@ -101,6 +102,7 @@ destruct (rngl_eq_dec Heo (rngl_sin θ1) 0) as [Hs1z| Hs1z]. {
   rewrite angle_add_0_r.
   apply (rngl_le_refl Hor).
 }
+apply (rngl_eqb_neq Heo) in Hs1z.
 exfalso.
 apply rngl_nlt_ge in Hzs12.
 apply Hzs12; clear Hzs12.
@@ -592,9 +594,11 @@ destruct s1z. {
     rewrite (rngl_add_opp_l Hop).
     apply (rngl_le_sub_0 Hop Hor).
     apply (rngl_lt_eq_cases Hor).
-    destruct (rngl_eq_dec Heo (rngl_cos θ1) (rngl_cos θ2)) as [Hc12| Hc12]. {
+    destruct (rngl_eqb_dec (rngl_cos θ1) (rngl_cos θ2)) as [Hc12| Hc12]. {
+      apply (rngl_eqb_eq Heo) in Hc12.
       now right.
     }
+    apply (rngl_eqb_neq Heo) in Hc12.
     left.
     apply (rngl_lt_le_incl Hor) in Hzc1, Hzc2.
     apply quadrant_1_sin_sub_pos_cos_lt; try easy.

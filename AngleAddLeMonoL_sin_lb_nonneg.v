@@ -335,8 +335,8 @@ destruct (rngl_leb_dec (rngl_cos θ2) 0)%L as [Hc2z| Hzc2]. 2: {
   rewrite rngl_cos_sub_comm in H123 |-*.
   destruct (rngl_leb_dec 0 (rngl_cos θ1))%L as [Hzc1| Hc1z]. {
     apply rngl_leb_le in Hzc1.
-    destruct (rngl_eq_dec Heo 0 (rngl_sin (θ1 - θ3)))
-        as [Hzs1s3| Hs1s3z]. {
+    destruct (rngl_eqb_dec 0 (rngl_sin (θ1 - θ3))) as [Hzs1s3| Hs1s3z]. {
+      apply (rngl_eqb_eq Heo) in Hzs1s3.
       symmetry in Hzs1s3.
       apply (eq_rngl_sin_0) in Hzs1s3.
       destruct Hzs1s3 as [H| H]. {
@@ -357,6 +357,7 @@ destruct (rngl_leb_dec (rngl_cos θ2) 0)%L as [Hc2z| Hzc2]. 2: {
       apply (rngl_opp_pos_neg Hop Hor) in Hzs3.
       now apply rngl_nle_gt in Hzs3.
     }
+    apply (rngl_eqb_neq Heo) in Hs1s3z.
     apply not_eq_sym in Hs1s3z.
     apply rngl_cos_lt_cos_sub; try easy.
     apply rngl_cos_cos_sin_sin_nonneg_sin_le_cos_le_iff; try easy.
@@ -371,11 +372,13 @@ destruct (rngl_leb_dec (rngl_cos θ2) 0)%L as [Hc2z| Hzc2]. 2: {
   progress sin_cos_add_sub_right_hyp T H123.
   progress sin_cos_add_sub_right_hyp T Hzs1.
   progress sin_cos_add_sub_right_goal T.
-  destruct (rngl_eq_dec Heo (rngl_cos θ3) 1) as [Hc31| Hc31]. {
+  destruct (rngl_eqb_dec (rngl_cos θ3) 1) as [Hc31| Hc31]. {
+    apply (rngl_eqb_eq Heo) in Hc31.
     apply (eq_rngl_cos_1) in Hc31.
     subst θ3.
     now apply (rngl_lt_irrefl Hor) in Hzs3.
   }
+  apply (rngl_eqb_neq Heo) in Hc31.
   cbn.
   rewrite rngl_add_assoc.
   rewrite (rngl_mul_opp_r Hop).

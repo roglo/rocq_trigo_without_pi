@@ -285,8 +285,8 @@ destruct zs3. {
       rewrite rngl_sin_sub_anticomm in Hzs13, Hzs12.
       apply (rngl_opp_neg_pos Hop Hor) in Hzs13, Hzs12.
       do 2 rewrite (rngl_cos_sub_comm θ1).
-      destruct (rngl_eq_dec Heo (rngl_sin θ2) (rngl_sin θ3)) as
-        [Hes23| Hes23]. {
+      destruct (rngl_eqb_dec (rngl_sin θ2) (rngl_sin θ3)) as [Hes23| Hes23]. {
+        apply (rngl_eqb_eq Heo) in Hes23.
         apply rngl_sin_eq in Hes23.
         destruct Hes23; subst θ2; [ apply (rngl_le_refl Hor) | ].
         rewrite rngl_cos_sub_straight_l in H23.
@@ -307,6 +307,7 @@ destruct zs3. {
         now apply (rngl_add_nonpos_nonpos Hos Hor).
         now apply (rngl_lt_le_incl Hor).
       }
+      apply (rngl_eqb_neq Heo) in Hes23.
       apply (rngl_nlt_ge_iff Hor).
       intros H.
       apply (rngl_lt_le_incl Hor) in H.
@@ -471,7 +472,8 @@ destruct zs3. {
   rewrite rngl_add_comm.
   rewrite (rngl_add_opp_r Hop).
   progress sin_cos_add_sub_right_goal T.
-  destruct (rngl_eq_dec Heo (rngl_cos θ2) 0) as [H| Hc2ez]. {
+  destruct (rngl_eqb_dec (rngl_cos θ2) 0) as [H| Hc2ez]. {
+    apply (rngl_eqb_eq Heo) in H.
     apply (eq_rngl_cos_0) in H.
     destruct H; subst θ2. {
       cbn in Hc32.
@@ -486,13 +488,15 @@ destruct zs3. {
     apply Hc2z; cbn.
     apply (rngl_opp_1_le_0 Hon Hop Hiq Hor).
   }
+  apply (rngl_eqb_neq Heo) in Hc2ez.
   assert (H : (0 < rngl_cos θ2)%L). {
     apply not_eq_sym in Hc2ez.
     now apply (rngl_le_neq Hor).
   }
   move H before Hzs2; clear Hzs2.
   rename H into Hzs2; clear Hc2ez.
-  destruct (rngl_eq_dec Heo (rngl_cos θ3) 0) as [H| Hc3ez]. {
+  destruct (rngl_eqb_dec (rngl_cos θ3) 0) as [H| Hc3ez]. {
+    apply (rngl_eqb_eq Heo) in H.
     apply (eq_rngl_cos_0) in H.
     destruct H; subst θ3. 2: {
       exfalso.
@@ -534,6 +538,7 @@ destruct zs3. {
     rewrite angle_sub_diag.
     now rewrite angle_add_0_l.
   }
+  apply (rngl_eqb_neq Heo) in Hc3ez.
   assert (H : (0 < rngl_cos θ3)%L). {
     apply not_eq_sym in Hc3ez.
     now apply (rngl_le_neq Hor).
@@ -671,11 +676,13 @@ destruct zs13. {
       change_angle_add_r θ3 π/₂.
       progress sin_cos_add_sub_right_hyp T Hzs3.
       progress sin_cos_add_sub_right_goal T.
-      destruct (rngl_eq_dec Heo (rngl_sin θ3) 1) as [Hs21| Hs21]. {
+      destruct (rngl_eqb_dec (rngl_sin θ3) 1) as [Hs21| Hs21]. {
+        apply (rngl_eqb_eq Heo) in Hs21.
         apply (eq_rngl_sin_1) in Hs21.
         subst θ3.
         now apply (rngl_lt_irrefl Hor) in Hzs3.
       }
+      apply (rngl_eqb_neq Heo) in Hs21.
       cbn.
       rewrite <- (rngl_add_sub_swap Hop).
       rewrite <- (rngl_add_sub_assoc Hop).

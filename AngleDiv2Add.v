@@ -470,7 +470,8 @@ destruct zs1. {
   exfalso. (* because goal is nonneg=nonpos *)
   clear Haov'.
   apply (rngl_leb_gt_iff Hor) in Hzs2.
-  destruct (rngl_eq_dec Heo (rngl_cos θ1) 0) as [Hc1ez| Hc1ez]. {
+  destruct (rngl_eqb_dec (rngl_cos θ1) 0) as [Hc1ez| Hc1ez]. {
+    apply (rngl_eqb_eq Heo) in Hc1ez.
     apply (eq_rngl_cos_0) in Hc1ez.
     destruct Hc1ez; subst θ1. {
       cbn in Haov.
@@ -861,7 +862,8 @@ destruct zs12. {
     progress sin_cos_add_sub_straight_hyp T Hzs12.
     progress sin_cos_add_sub_straight_goal T.
     do 2 rewrite (rngl_sub_opp_r Hop).
-    destruct (rngl_eq_dec Heo (rngl_sin (θ1 + θ2)) 0) as [Hs12| Hs12]. {
+    destruct (rngl_eqb_dec (rngl_sin (θ1 + θ2)) 0) as [Hs12| Hs12]. {
+      apply (rngl_eqb_eq Heo) in Hs12.
       apply eq_rngl_sin_0 in Hs12.
       destruct Hs12 as [Hs12| Hs12]. {
         exfalso.
@@ -885,6 +887,7 @@ destruct zs12. {
       }
       apply (rl_sqrt_0 Hon Hop Hor Hii).
     }
+    apply (rngl_eqb_neq Heo) in Hs12.
     apply rngl_sin_nonneg_sin_nonneg_sin_neg; try easy; cycle 1. {
       now apply (rngl_lt_le_incl Hor).
     } {
@@ -916,7 +919,8 @@ destruct zs12. {
     progress sin_cos_add_sub_straight_hyp T Hzs1.
     progress sin_cos_add_sub_straight_goal T.
     do 2 rewrite (rngl_sub_opp_r Hop).
-    destruct (rngl_eq_dec Heo (rngl_sin (θ1 + θ2)) 0) as [Hs12| Hs12]. {
+    destruct (rngl_eqb_dec (rngl_sin (θ1 + θ2)) 0) as [Hs12| Hs12]. {
+      apply (rngl_eqb_eq Heo) in Hs12.
       apply eq_rngl_sin_0 in Hs12.
       destruct Hs12 as [Hs12| Hs12]. {
         rewrite Hs12.
@@ -941,6 +945,7 @@ destruct zs12. {
       }
       apply (rl_sqrt_0 Hon Hop Hor Hii).
     }
+    apply (rngl_eqb_neq Heo) in Hs12.
     apply rngl_sin_nonneg_sin_nonneg_sin_neg; try easy; cycle 1. {
       now apply (rngl_lt_le_incl Hor).
     } {
