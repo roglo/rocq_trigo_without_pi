@@ -16,7 +16,7 @@ Require Import RingLike.RealLike.
 Require Import RingLike.Misc.
 
 Require Import AngleDef Angle TrigoWithoutPiExt.
-Require Import Angle_order.
+Require Import Order.
 Require Import AngleDiv2.
 Require Import AngleDiv2Add.
 Require Import AngleAddLeMonoL.

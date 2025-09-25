@@ -1,6 +1,6 @@
 Require Export AngleDef.
 Require Export Angle.
-Require Export Angle_order.
+Require Export Order.
 Require Export TrigoWithoutPiExt.
 Require Export AngleAddLeMonoL.
 Require Export AngleDiv2.

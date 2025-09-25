@@ -8,7 +8,7 @@ From Stdlib Require Import Utf8 Arith.
 Require Import RingLike.Core.
 Require Import AngleDef TrigoWithoutPiExt.
 Require Import AngleAddOverflowLe.
-Require Import Angle_order.
+Require Import Order.
 Require Import TacChangeAngle.
 Require Import AngleAddLeMonoL_sin_lb_nonneg.
 Require Import AngleAddLeMonoL_sin_lb_neg_sin_2_nonneg.

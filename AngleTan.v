@@ -11,7 +11,7 @@ Require Import RingLike.DerivMul.
 Require Import Angle.
 Require Import AngleDef.
 Require Import AngleDiv2.
-Require Import Angle_order.
+Require Import Order.
 Require Import Distance.
 Require Import TrigoWithoutPiExt.
 

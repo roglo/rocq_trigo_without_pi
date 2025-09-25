@@ -12,7 +12,7 @@ Require Import AngleDef.
 Require Import Angle.
 Require Import AngleDiv2.
 Require Import TrigoWithoutPiExt.
-Require Import Angle_order.
+Require Import Order.
 Require Import AngleDiv2Add.
 Require Import AngleDivNat.
 Require Import SeqAngleIsCauchy.

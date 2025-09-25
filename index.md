@@ -63,7 +63,7 @@ Other modules:
 - [AngleAddLeMonoL](TrigoWithoutPi.AngleAddLeMonoL.html)
 - [AngleAddOverflowLe](TrigoWithoutPi.AngleAddOverflowLe.html)
 - [AngleDiv2Add](TrigoWithoutPi.AngleDiv2Add.html)
-- [Angle_order](TrigoWithoutPi.Angle_order.html)
+- [Order](TrigoWithoutPi.Order.html)
 - [TacChangeAngle](TrigoWithoutPi.TacChangeAngle.html)
 - [TrigoWithoutPiExt](TrigoWithoutPi.TrigoWithoutPiExt.html)
 
