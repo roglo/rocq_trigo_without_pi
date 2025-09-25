@@ -47,6 +47,7 @@ Ltac destruct_ac :=
   specialize (rngl_has_opp_has_opp_or_psub Hop) as Hos;
   specialize (rngl_has_inv_has_inv_or_pdiv Hiv) as Hiq;
   specialize (rngl_int_dom_or_inv_1_quo Hiv Hon) as Hii;
+  specialize (rngl_has_eq_dec_or_is_ordered_l Hed) as Heo;
   specialize ac_c2 as Hc2.
 
 Section a.
@@ -87,7 +88,7 @@ progress unfold rngl_squ.
 rewrite (rngl_mul_1_l Hon).
 rewrite (rngl_mul_0_l Hos).
 rewrite rngl_add_0_r.
-apply (rngl_eqb_refl Hed).
+apply (rngl_eqb_refl Heo).
 Qed.
 
 Theorem angle_right_prop : cos2_sin2_prop 0 1.
@@ -97,7 +98,7 @@ progress unfold cos2_sin2_prop.
 rewrite (rngl_squ_0 Hos).
 rewrite (rngl_squ_1 Hon).
 rewrite rngl_add_0_l.
-apply (rngl_eqb_refl Hed).
+apply (rngl_eqb_refl Heo).
 Qed.
 
 Theorem angle_straight_prop : cos2_sin2_prop (-1) 0.
@@ -109,7 +110,7 @@ progress unfold rngl_squ.
 rewrite (rngl_mul_1_l Hon).
 rewrite (rngl_mul_0_l Hos).
 rewrite rngl_add_0_r.
-apply (rngl_eqb_refl Hed).
+apply (rngl_eqb_refl Heo).
 Qed.
 
 Theorem angle_add_prop :
@@ -139,7 +140,7 @@ rewrite (rngl_sub_add Hop).
 do 4 rewrite (rngl_squ_mul Hic).
 rewrite <- rngl_add_assoc.
 do 2 rewrite <- rngl_mul_add_distr_l.
-apply (rngl_eqb_eq Hed) in Hxy'.
+apply (rngl_eqb_eq Heo) in Hxy'.
 rewrite Hxy'.
 now do 2 rewrite (rngl_mul_1_r Hon).
 Qed.
@@ -186,7 +187,7 @@ Proof.
 destruct_ac.
 intros * Hcs.
 progress unfold cos2_sin2_prop in Hcs.
-now apply (rngl_eqb_eq Hed) in Hcs.
+now apply (rngl_eqb_eq Heo) in Hcs.
 Qed.
 
 Theorem cos2_sin2_1 : ∀ θ, (rngl_cos² θ + rngl_sin² θ = 1)%L.
@@ -195,7 +196,7 @@ destruct_ac.
 intros.
 destruct θ as (c, s, Hcs); cbn.
 progress unfold cos2_sin2_prop in Hcs.
-now apply (rngl_eqb_eq Hed) in Hcs.
+now apply (rngl_eqb_eq Heo) in Hcs.
 Qed.
 
 Theorem rngl_cos_proj_bound : ∀ c s, cos2_sin2_prop c s → (-1 ≤ c ≤ 1)%L.
@@ -658,13 +659,13 @@ split; intros H12. {
   progress unfold angle_eqb in H12.
   apply Bool.andb_true_iff in H12.
   destruct H12 as (Hc12, Hs12).
-  apply (rngl_eqb_eq Hed) in Hc12, Hs12.
+  apply (rngl_eqb_eq Heo) in Hc12, Hs12.
   apply eq_angle_eq.
   now rewrite Hc12, Hs12.
 } {
   subst θ2.
   progress unfold angle_eqb.
-  now do 2 rewrite (rngl_eqb_refl Hed).
+  now do 2 rewrite (rngl_eqb_refl Heo).
 }
 Qed.
 
@@ -675,14 +676,14 @@ intros.
 progress unfold angle_eqb.
 split; intros H12. {
   intros H; subst θ2.
-  now do 2 rewrite (rngl_eqb_refl Hed) in H12.
+  now do 2 rewrite (rngl_eqb_refl Heo) in H12.
 } {
   apply Bool.not_true_iff_false.
   intros H; apply H12; clear H12.
   apply eq_angle_eq; cbn.
   apply Bool.andb_true_iff in H.
   destruct H as (Hc, Hs).
-  apply (rngl_eqb_eq Hed) in Hc, Hs.
+  apply (rngl_eqb_eq Heo) in Hc, Hs.
   now rewrite Hc, Hs.
 }
 Qed.

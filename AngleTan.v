@@ -33,7 +33,6 @@ Theorem rngl_tan_derivative :
     rngl_dist rngl_tan (λ θ, (1 / rngl_cos² θ)%L) θ₀.
 Proof.
 destruct_ac.
-specialize (rngl_has_eq_dec_or_is_ordered_r Hor) as Heo.
 specialize (rngl_has_inv_and_1_has_inv_and_1_or_pdiv Hon Hiv) as Hi1.
 specialize (rngl_integral_or_inv_1_pdiv_eq_dec_order Hon Hiv Hor) as Hio.
 intros * Hczz.

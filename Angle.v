@@ -128,7 +128,6 @@ Qed.
 Theorem eq_rngl_sin_0 : ∀ θ, rngl_sin θ = 0%L → θ = 0%A ∨ θ = π.
 Proof.
 destruct_ac.
-specialize (rngl_has_eq_dec_or_is_ordered_r Hor) as Heo.
 intros * Hθ.
 destruct θ as (c, s, Hcs).
 cbn in Hθ |-*.
@@ -394,7 +393,6 @@ Theorem eq_rngl_cos_0 :
   ∀ θ, rngl_cos θ = 0%L ↔ (θ = π/₂ ∨ θ = - π/₂)%A.
 Proof.
 destruct_ac.
-specialize (rngl_has_eq_dec_or_is_ordered_r Hor) as Heo.
 intros.
 split; intros Hθ; [ | now destruct Hθ; subst θ ].
 specialize (cos2_sin2_1 θ) as H1.
@@ -419,7 +417,6 @@ Qed.
 Theorem eq_rngl_cos_1 : ∀ θ, rngl_cos θ = 1%L ↔ θ = 0%A.
 Proof.
 destruct_ac.
-specialize (rngl_has_eq_dec_or_is_ordered_r Hor) as Heo.
 intros.
 split; intros Hθ; [ | now subst θ ].
 specialize (cos2_sin2_1 θ) as H1.
@@ -439,7 +436,6 @@ Qed.
 Theorem eq_rngl_cos_opp_1 : ∀ θ, (rngl_cos θ = -1 → θ = π)%L.
 Proof.
 destruct_ac.
-specialize (rngl_has_eq_dec_or_is_ordered_r Hor) as Heo.
 intros * Hθ.
 destruct θ as (c, s, Hcs).
 cbn in Hθ |-*.
@@ -461,7 +457,6 @@ Qed.
 Theorem eq_rngl_sin_1 : ∀ θ, rngl_sin θ = 1%L ↔ θ = π/₂.
 Proof.
 destruct_ac.
-specialize (rngl_has_eq_dec_or_is_ordered_r Hor) as Heo.
 intros.
 split; intros Hθ; [ | now subst θ ].
 specialize (cos2_sin2_1 θ) as H1.
@@ -482,7 +477,6 @@ Theorem rngl_cos_eq :
   ∀ θ1 θ2, rngl_cos θ1 = rngl_cos θ2 → θ1 = θ2 ∨ θ1 = (- θ2)%A.
 Proof.
 destruct_ac.
-specialize (rngl_has_eq_dec_or_is_ordered_r Hor) as Heo.
 intros * Hcc.
 destruct (rngl_eq_dec Heo (rngl_sin θ1) (rngl_sin θ2)) as [Hss| Hss]. {
   left.
@@ -518,7 +512,6 @@ Theorem rngl_sin_eq :
   ∀ θ1 θ2, rngl_sin θ1 = rngl_sin θ2 → θ1 = θ2 ∨ θ1 = (π - θ2)%A.
 Proof.
 destruct_ac.
-specialize (rngl_has_eq_dec_or_is_ordered_r Hor) as Heo.
 intros * Hss.
 destruct (rngl_eq_dec Heo (rngl_cos θ1) (rngl_cos θ2)) as [Hcc| Hcc]. {
   left.
@@ -676,7 +669,6 @@ Theorem rngl_add_cos_nonneg_when_sin_nonneg :
 Proof.
 destruct_ac.
 intros * Hzs1 Hzs2 Hzs3 Hzc1.
-specialize (rngl_has_eq_dec_or_is_ordered_r Hor) as Heo.
 destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
   specialize (rngl_characteristic_1 Hon Hos Hc1) as H1.
   rewrite H1.
@@ -902,7 +894,6 @@ apply rngl_sin_nonneg_sin_nonneg_add_cos_nonneg; try easy.
 ...
 *)
 destruct_ac.
-specialize (rngl_has_eq_dec_or_is_ordered_r Hor) as Heo.
 intros * H12ns Hzs1 Hzs2 Hzs3.
 specialize (rngl_has_inv_and_1_has_inv_and_1_or_pdiv Hon Hiv) as Hi1.
 specialize (rngl_int_dom_or_inv_1_quo_and_eq_dec Hi1 Hed) as Hid.
@@ -1873,7 +1864,6 @@ Theorem rngl_cos_lt_cos_sub :
   → (rngl_cos θ1 < rngl_cos (θ2 - θ1))%L.
 Proof.
 destruct_ac.
-specialize (rngl_has_eq_dec_or_is_ordered_r Hor) as Heo.
 intros * Hzs1 Hzs2 Hc12z.
 specialize (rngl_has_inv_and_1_has_inv_and_1_or_pdiv Hon Hiv) as Hi1.
 specialize (rngl_int_dom_or_inv_1_quo_and_eq_dec Hi1 Hed) as Hid.
@@ -1990,7 +1980,6 @@ Theorem rngl_cos_le_cos_sub :
   → (rngl_cos θ1 ≤ rngl_cos (θ2 - θ1))%L.
 Proof.
 destruct_ac.
-specialize (rngl_has_eq_dec_or_is_ordered_r Hor) as Heo.
 intros * Hs1 Hs2 Hcc.
 apply (rngl_lt_eq_cases Hor) in Hs2.
 destruct Hs2 as [Hs2| Hs2]. {
@@ -2114,7 +2103,6 @@ Theorem quadrant_1_sin_sub_nonneg_cos_le :
   → (rngl_cos θ1 ≤ rngl_cos θ2)%L.
 Proof.
 destruct_ac.
-specialize (rngl_has_eq_dec_or_is_ordered_r Hor) as Heo.
 destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
   specialize (rngl_characteristic_1 Hon Hos Hc1) as H1.
   intros.
@@ -2165,7 +2153,7 @@ destruct_ac.
 intros * Hx1.
 apply rngl_leb_le in Hx1.
 progress unfold cos2_sin2_prop.
-apply (rngl_eqb_eq Hed).
+apply (rngl_eqb_eq Heo).
 rewrite (rngl_squ_sqrt Hon). 2: {
   apply (rngl_le_add_le_sub_r Hop Hor).
   now rewrite rngl_add_0_l.

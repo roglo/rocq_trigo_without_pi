@@ -43,7 +43,7 @@ assert (Hε : (ε² = 1)%L). {
 }
 rewrite (rngl_squ_mul Hic).
 rewrite Hε, (rngl_mul_1_l Hon).
-apply (rngl_eqb_eq Hed).
+apply (rngl_eqb_eq Heo).
 destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
   specialize (rngl_characteristic_1 Hon Hos Hc1) as H1.
   now rewrite (H1 (_ + _)%L), (H1 1%L).
@@ -653,7 +653,7 @@ Theorem angle_straight_div_3_prop : cos2_sin2_prop (1 / 2) (√3 / 2).
 Proof.
 destruct_ac.
 progress unfold cos2_sin2_prop.
-apply (rngl_eqb_eq Hed).
+apply (rngl_eqb_eq Heo).
 rewrite rngl_add_comm.
 apply (rngl_squ_sqrt_3_div_2_add_squ_half Hic Hon Hop Hiv Hor).
 Qed.

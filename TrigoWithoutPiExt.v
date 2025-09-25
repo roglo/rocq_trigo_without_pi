@@ -150,7 +150,6 @@ Theorem angle_le_sub_le_add_l_lemma_1 :
 Proof.
 (* thanks Geoffroy *)
 destruct_ac.
-specialize (rngl_has_eq_dec_or_is_ordered_r Hor) as Heo.
 destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
   specialize (rngl_characteristic_1 Hon Hos Hc1) as H1.
   intros.
@@ -438,7 +437,6 @@ Theorem angle_add_overflow_le_lemma_5 :
   → False.
 Proof.
 destruct_ac.
-specialize (rngl_has_eq_dec_or_is_ordered_r Hor) as Heo.
 intros * Hc11 Hzs1 Hzs2 Hzc1 Hzs12 H12.
 destruct (rngl_ltb_dec 0 (rngl_cos θ2)) as [Hzc2| Hzc2]. {
   apply rngl_ltb_lt in Hzc2.
@@ -502,7 +500,6 @@ Theorem angle_add_overflow_le_lemma_6 :
   → False.
 Proof.
 destruct_ac.
-specialize (rngl_has_eq_dec_or_is_ordered_r Hor) as Heo.
 destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
   specialize (rngl_characteristic_1 Hon Hos Hc1) as H1.
   intros * Hzs1 Hzs2 Hzs12 H12.

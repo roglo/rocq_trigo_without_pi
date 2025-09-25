@@ -131,7 +131,6 @@ Theorem angle_add_overflow_le_lemma_3 :
   → (rngl_cos (θ1 + θ3) ≤ rngl_cos θ1)%L.
 Proof.
 destruct_ac.
-specialize (rngl_has_eq_dec_or_is_ordered_r Hor) as Heo.
 intros * Hzs1 Hzs3 Hzs12 Hzs13 H32.
 destruct (rngl_leb_dec (rngl_cos θ1) 0) as [Hc1z| Hzc1]. {
   destruct (rngl_eq_dec Heo (rngl_cos θ1) (-1)) as [Hc1o| Hc1o]. {
@@ -194,7 +193,6 @@ Theorem angle_add_overflow_le_lemma_4 :
   → (rngl_cos (θ1 + θ3) ≤ rngl_cos θ1)%L.
 Proof.
 destruct_ac.
-specialize (rngl_has_eq_dec_or_is_ordered_r Hor) as Heo.
 intros * Hzs1 Hzs2 Hzs3 Hzs12 Hzs13.
 destruct (rngl_eq_dec Heo (rngl_cos θ1) (-1)) as [Hc1o| Hc1o]. {
   apply eq_rngl_cos_opp_1 in Hc1o.
