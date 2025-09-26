@@ -601,8 +601,6 @@ apply (rngl_mul_nonneg_nonneg Hon Hos Hiq Hor); [ easy | ].
 now apply (rngl_lt_le_incl Hor).
 Qed.
 
-Context {rl : real_like_prop T}.
-
 End a.
 
 Section a.
