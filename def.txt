@@ -58,7 +58,6 @@ angle_add_prop
 angle_add_sub
 angle_add_sub_assoc
 angle_add_sub_swap
-angle_cnt_add
 angle_div_2
 angle_div_2_add
 angle_div_2_add_not_overflow
