@@ -5,7 +5,7 @@ Require Import RingLike.Core.
 Require Import RingLike.Real_Like.
 Require Import RingLike.Misc.
 
-Require Import Angle AngleDef Distance.
+Require Import Angle Angle_Def Distance.
 
 Section a.
 

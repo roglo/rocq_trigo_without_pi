@@ -5,15 +5,15 @@ Require Import RingLike.Core.
 Require Import RingLike.Real_Like.
 Require Import RingLike.Misc.
 
-Require Import AngleDef Angle TrigoWithoutPiExt.
+Require Import Angle_Def Angle Trigo_Without_Pi_Ext.
 Require Import Order.
-Require Import AngleDiv2.
-Require Import AngleDiv2Add.
-Require Import AngleAddLeMonoL.
-Require Import AngleTypeIsComplete.
+Require Import Angle_Div2.
+Require Import Angle_Div2_Add.
+Require Import Angle_Add_Le_Mono_L.
+Require Import Angle_Type_Is_Complete.
 Require Import Distance.
-Require Import SeqAngleIsCauchy.
-Require Import TacChangeAngle.
+Require Import Seq_Angle_Is_Cauchy.
+Require Import Tac_Change_Angle.
 
 Section a.
 
@@ -784,7 +784,7 @@ Qed.
 
 (*
 
-Require Import AngleAddOverflowEquiv.
+Require Import Angle_Add_Overflow_Equiv.
 
 Definition angle_add_overflow1 θ1 θ2 :=
   if (θ1 =? 0)%A then false

@@ -2,11 +2,11 @@ Set Nested Proofs Allowed.
 From Stdlib Require Import Utf8 Arith.
 
 Require Import RingLike.Core.
-Require Import AngleDef Angle TrigoWithoutPiExt.
-Require Import AngleAddOverflowLe.
-Require Import AngleAddOverflowEquiv.
+Require Import Angle_Def Angle Trigo_Without_Pi_Ext.
+Require Import Angle_Add_Overflow_Le.
+Require Import Angle_Add_Overflow_Equiv.
 Require Import Order.
-Require Import TacChangeAngle.
+Require Import Tac_Change_Angle.
 
 Section a.
 

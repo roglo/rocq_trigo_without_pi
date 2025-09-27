@@ -3,7 +3,7 @@
    to do. *)
 
 Require Import RingLike.Core.
-Require Import Angle AngleDef.
+Require Import Angle Angle_Def.
 
 Ltac change_angle_add_r θ a :=
   remember (θ + a)%A as θ' eqn:Hθ';

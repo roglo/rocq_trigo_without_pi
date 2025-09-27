@@ -9,13 +9,13 @@ Require Import RingLike.Real_Like.
 Require Import RingLike.Deriv_Mul.
 
 Require Import Angle.
-Require Import AngleDef.
-Require Import AngleDiv2.
+Require Import Angle_Def.
+Require Import Angle_Div2.
 Require Import Order.
 Require Import Distance.
-Require Import TrigoWithoutPiExt.
+Require Import Trigo_Without_Pi_Ext.
 
-Require Import AngleDeriv.
+Require Import Angle_Deriv.
 
 Section a.
 

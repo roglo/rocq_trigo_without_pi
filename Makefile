@@ -1,4 +1,4 @@
-TARGET=Core.vo AngleDivNat.vo
+TARGET=Core.vo Angle_Div_Nat.vo
 FILESFORDEP=`LC_ALL=C ls *.v`
 ROCQ=rocq compile
 ROCQ_OPT=
