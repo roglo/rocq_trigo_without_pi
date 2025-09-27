@@ -2,10 +2,10 @@ Set Nested Proofs Allowed.
 From Stdlib Require Import Utf8 Arith.
 
 Require Import RingLike.Core.
-Require Import RingLike.Real_Like.
+Require Import RingLike.RealLike.
 Require Import RingLike.Misc.
 
-Require Import Angle Angle_Def Distance.
+Require Import Angle AngleDef Distance.
 
 Section a.
 

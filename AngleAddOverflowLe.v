@@ -3,10 +3,10 @@ From Stdlib Require Import Utf8 Arith.
 
 Require Import Init.Nat.
 Require Import RingLike.Core.
-Require Import Angle Angle_Def Trigo_Without_Pi_Ext.
+Require Import Angle AngleDef TrigoWithoutPiExt.
 Require Import Order.
-Require Import Angle_Add_Overflow_Equiv.
-Require Import Tac_Change_Angle.
+Require Import AngleAddOverflowEquiv.
+Require Import TacChangeAngle.
 
 Section a.
 

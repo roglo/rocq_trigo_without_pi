@@ -1,9 +1,9 @@
 From Stdlib Require Import Utf8 Arith.
 
 Require Import RingLike.Core.
-Require Import RingLike.Real_Like.
+Require Import RingLike.RealLike.
 
-Require Import Angle Angle_Def.
+Require Import Angle AngleDef.
 
 Section a.
 

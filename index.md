@@ -36,36 +36,36 @@ This library may be of interest to:
 
 Definition of angle, cos, sin, addition of angles:
 
-- [Angle_Def](TrigoWithoutPi.Angle_Def.html)
+- [Angle](TrigoWithoutPi.Angle.html)
 
 Division of an angle by 2:
 
-- [Angle_Div2](TrigoWithoutPi.Angle_Div2.html)
+- [AngleDiv2](TrigoWithoutPi.AngleDiv2.html)
 
 Proof that the sequence converging to division by a natural is of Cauchy:
 
-- [Seq_Angle_Is_Cauchy](TrigoWithoutPi.Seq_Angle_Is_Cauchy.html)
+- [SeqAngleIsCauchy](TrigoWithoutPi.SeqAngleIsCauchy.html)
 
 Proof that the angle type is complete:
 
-- [Angle_Type_Is_Complete](TrigoWithoutPi.Angle_Type_Is_Complete.html)
+- [AngleTypeIsComplete](TrigoWithoutPi.AngleTypeIsComplete.html)
 
 Division of an angle by a natural number:
 
-- [Angle_Div_Nat](TrigoWithoutPi.Angle_Div_Nat.html)
+- [AngleDivNat](TrigoWithoutPi.AngleDivNat.html)
 
 Other modules:
 
-- [Angle_Add_Le_MonoL_prop](TrigoWithoutPi.Angle_Add_Le_Mono_L_prop.html)
-- [Angle_Add_Le_Mono_L_1](TrigoWithoutPi.Angle_Add_Le_Mono_L_1.html)
-- [Angle_Add_Le_Mono_L_2](TrigoWithoutPi.Angle_Add_Le_Mono_L_2.html)
-- [Angle_Add_Le_Mono_L_3](TrigoWithoutPi.Angle_Add_Le_Mono_L_3.html)
-- [Angle_Add_Le_Mono_L](TrigoWithoutPi.Angle_Add_Le_Mono_L.html)
-- [Angle_Add_Overflow_Le](TrigoWithoutPi.Angle_Add_Overflow_Le.html)
-- [Angle_Div2_Add](TrigoWithoutPi.Angle_Div2_Add.html)
+- [AngleAddLeMonoL_prop](TrigoWithoutPi.AngleAddLeMonoL_prop.html)
+- [AngleAddLeMonoL_sin_lb_neg_sin_2_neg](TrigoWithoutPi.AngleAddLeMonoL_sin_lb_neg_sin_2_neg.html)
+- [AngleAddLeMonoL_sin_lb_neg_sin_2_nonneg](TrigoWithoutPi.AngleAddLeMonoL_sin_lb_neg_sin_2_nonneg.html)
+- [AngleAddLeMonoL_sin_lb_nonneg](TrigoWithoutPi.AngleAddLeMonoL_sin_lb_nonneg.html)
+- [AngleAddLeMonoL](TrigoWithoutPi.AngleAddLeMonoL.html)
+- [AngleAddOverflowLe](TrigoWithoutPi.AngleAddOverflowLe.html)
+- [AngleDiv2Add](TrigoWithoutPi.AngleDiv2Add.html)
 - [Order](TrigoWithoutPi.Order.html)
-- [Tac_Change_Angle](TrigoWithoutPi.Tac_Change_Angle.html)
-- [Trigo_Without_Pi_Ext](TrigoWithoutPi.Trigo_Without_Pi_Ext.html)
+- [TacChangeAngle](TrigoWithoutPi.TacChangeAngle.html)
+- [TrigoWithoutPiExt](TrigoWithoutPi.TrigoWithoutPiExt.html)
 
 ## Table of Contents
 

@@ -2,18 +2,18 @@ Set Nested Proofs Allowed.
 From Stdlib Require Import Utf8 Arith.
 
 Require Import RingLike.Core.
-Require Import RingLike.Real_Like.
+Require Import RingLike.RealLike.
 Require Import RingLike.Misc.
 
-Require Import Angle_Def Angle Trigo_Without_Pi_Ext.
+Require Import AngleDef Angle TrigoWithoutPiExt.
 Require Import Order.
-Require Import Angle_Div2.
-Require Import Angle_Div2_Add.
-Require Import Angle_Add_Le_Mono_L.
-Require Import Angle_Type_Is_Complete.
+Require Import AngleDiv2.
+Require Import AngleDiv2Add.
+Require Import AngleAddLeMonoL.
+Require Import AngleTypeIsComplete.
 Require Import Distance.
-Require Import Seq_Angle_Is_Cauchy.
-Require Import Tac_Change_Angle.
+Require Import SeqAngleIsCauchy.
+Require Import TacChangeAngle.
 
 Section a.
 
@@ -784,7 +784,7 @@ Qed.
 
 (*
 
-Require Import Angle_Add_Overflow_Equiv.
+Require Import AngleAddOverflowEquiv.
 
 Definition angle_add_overflow1 θ1 θ2 :=
   if (θ1 =? 0)%A then false

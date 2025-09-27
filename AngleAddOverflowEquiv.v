@@ -3,9 +3,9 @@
 From Stdlib Require Import Utf8 Arith.
 
 Require Import RingLike.Core.
-Require Import Angle Angle_Def.
+Require Import Angle AngleDef.
 Require Import Order.
-Require Import Tac_Change_Angle.
+Require Import TacChangeAngle.
 
 Section a.
 

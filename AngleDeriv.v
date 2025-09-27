@@ -5,20 +5,20 @@ Set Nested Proofs Allowed.
 From Stdlib Require Import Utf8 Arith.
 
 Require Import RingLike.Core.
-Require Import RingLike.Real_Like.
+Require Import RingLike.RealLike.
 Require Import RingLike.Misc.
 
-Require Import Angle_Def.
+Require Import AngleDef.
 Require Import Angle.
-Require Import Angle_Div2.
-Require Import Trigo_Without_Pi_Ext.
+Require Import AngleDiv2.
+Require Import TrigoWithoutPiExt.
 Require Import Order.
-Require Import Angle_Div2_Add.
-Require Import Angle_Div_Nat.
-Require Import Seq_Angle_Is_Cauchy.
-Require Import Angle_Type_Is_Complete.
+Require Import AngleDiv2Add.
+Require Import AngleDivNat.
+Require Import SeqAngleIsCauchy.
+Require Import AngleTypeIsComplete.
 Require Import Distance.
-Require Import Tac_Change_Angle.
+Require Import TacChangeAngle.
 
 Notation "a '°' b" := (comp a b) (at level 40, left associativity).
 
