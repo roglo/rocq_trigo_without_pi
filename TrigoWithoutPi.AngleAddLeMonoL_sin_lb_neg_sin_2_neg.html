@@ -1,0 +1,58 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="coqdoc.css" rel="stylesheet" type="text/css" />
+<title>TrigoWithoutPi.AngleAddLeMonoL_sin_lb_neg_sin_2_neg</title>
+</head>
+
+<body>
+
+<div id="page">
+
+<div id="header">
+</div>
+
+<div id="main">
+
+<div class="code">
+<span class="id" title="keyword">From</span> <span class="id" title="var">Stdlib</span> <span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <span class="id" title="library">Utf8</span> <span class="id" title="library">Arith</span>.<br/>
+
+<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <span class="id" title="library">RingLike.Core</span>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <a class="idref" href="TrigoWithoutPi.AngleDef.html#"><span class="id" title="library">AngleDef</span></a> <a class="idref" href="TrigoWithoutPi.Angle.html#"><span class="id" title="library">Angle</span></a> <a class="idref" href="TrigoWithoutPi.TrigoWithoutPiExt.html#"><span class="id" title="library">TrigoWithoutPiExt</span></a>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <a class="idref" href="TrigoWithoutPi.Order.html#"><span class="id" title="library">Order</span></a>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <a class="idref" href="TrigoWithoutPi.AngleAddOverflowLe.html#"><span class="id" title="library">AngleAddOverflowLe</span></a>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <a class="idref" href="TrigoWithoutPi.AngleAddOverflowEquiv.html#"><span class="id" title="library">AngleAddOverflowEquiv</span></a>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Import</span> <a class="idref" href="TrigoWithoutPi.TacChangeAngle.html#"><span class="id" title="library">TacChangeAngle</span></a>.<br/>
+<span class="id" title="keyword">Require</span> <span class="id" title="keyword">Export</span> <a class="idref" href="TrigoWithoutPi.AngleAddLeMonoL_prop.html#"><span class="id" title="library">AngleAddLeMonoL_prop</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">Section</span> <a id="a" class="idref" href="#a"><span class="id" title="section">a</span></a>.<br/>
+
+<br/>
+<span class="id" title="keyword">Context</span> {<a id="a.T" class="idref" href="#a.T"><span class="id" title="variable">T</span></a> : <span class="id" title="keyword">Type</span>}.<br/>
+<span class="id" title="keyword">Context</span> {<a id="a.ro" class="idref" href="#a.ro"><span class="id" title="variable">ro</span></a> : <span class="id" title="class">ring_like_op</span> <a class="idref" href="TrigoWithoutPi.AngleAddLeMonoL_sin_lb_neg_sin_2_neg.html#a.T"><span class="id" title="variable">T</span></a>}.<br/>
+<span class="id" title="keyword">Context</span> {<a id="a.rp" class="idref" href="#a.rp"><span class="id" title="variable">rp</span></a> : <span class="id" title="class">ring_like_prop</span> <a class="idref" href="TrigoWithoutPi.AngleAddLeMonoL_sin_lb_neg_sin_2_neg.html#a.T"><span class="id" title="variable">T</span></a>}.<br/>
+<span class="id" title="keyword">Context</span> {<a id="a.ac" class="idref" href="#a.ac"><span class="id" title="variable">ac</span></a> : <a class="idref" href="TrigoWithoutPi.AngleDef.html#angle_ctx"><span class="id" title="class">angle_ctx</span></a> <a class="idref" href="TrigoWithoutPi.AngleAddLeMonoL_sin_lb_neg_sin_2_neg.html#a.T"><span class="id" title="variable">T</span></a>}.<br/>
+
+<br/>
+<span class="id" title="keyword">Theorem</span> <a id="angle_add_le_mono_l_sin_lb_neg_sin_2_neg" class="idref" href="#angle_add_le_mono_l_sin_lb_neg_sin_2_neg"><span class="id" title="lemma">angle_add_le_mono_l_sin_lb_neg_sin_2_neg</span></a> :<br/>
+&nbsp;&nbsp;<span class="id" title="notation">∀</span> <a id="f430facb9f6942321b47069a59e021d9" class="idref" href="#f430facb9f6942321b47069a59e021d9"><span class="id" title="binder">θ1</span></a> <a id="a5a8d4cf627beeff8bc7c379af7b7268" class="idref" href="#a5a8d4cf627beeff8bc7c379af7b7268"><span class="id" title="binder">θ2</span></a> <a id="a1164749784a12d47f2676757385b0e6" class="idref" href="#a1164749784a12d47f2676757385b0e6"><span class="id" title="binder">θ3</span></a><span class="id" title="notation">,</span><br/>
+&nbsp;&nbsp;(<a class="idref" href="TrigoWithoutPi.AngleDef.html#rngl_sin"><span class="id" title="projection">rngl_sin</span></a> (<a class="idref" href="TrigoWithoutPi.AngleAddLeMonoL_sin_lb_neg_sin_2_neg.html#f430facb9f6942321b47069a59e021d9"><span class="id" title="variable">θ1</span></a> <a class="idref" href="TrigoWithoutPi.AngleDef.html#33c849289dd8c64e0695fe87e99de330"><span class="id" title="notation">+</span></a> <a class="idref" href="TrigoWithoutPi.AngleAddLeMonoL_sin_lb_neg_sin_2_neg.html#a5a8d4cf627beeff8bc7c379af7b7268"><span class="id" title="variable">θ2</span></a>) <span class="id" title="notation">&lt;</span> 0)%<span class="id" title="var">L</span><br/>
+&nbsp;&nbsp;<span class="id" title="notation">→</span> (<a class="idref" href="TrigoWithoutPi.AngleDef.html#rngl_sin"><span class="id" title="projection">rngl_sin</span></a> <a class="idref" href="TrigoWithoutPi.AngleAddLeMonoL_sin_lb_neg_sin_2_neg.html#a5a8d4cf627beeff8bc7c379af7b7268"><span class="id" title="variable">θ2</span></a> <span class="id" title="notation">&lt;</span> 0)%<span class="id" title="var">L</span><br/>
+&nbsp;&nbsp;<span class="id" title="notation">→</span> <a class="idref" href="TrigoWithoutPi.Order.html#angle_add_overflow"><span class="id" title="definition">angle_add_overflow</span></a> <a class="idref" href="TrigoWithoutPi.AngleAddLeMonoL_sin_lb_neg_sin_2_neg.html#f430facb9f6942321b47069a59e021d9"><span class="id" title="variable">θ1</span></a> <a class="idref" href="TrigoWithoutPi.AngleAddLeMonoL_sin_lb_neg_sin_2_neg.html#a1164749784a12d47f2676757385b0e6"><span class="id" title="variable">θ3</span></a> <a class="idref" href="http://coq.inria.fr/doc/V9.0.0/stdlib//Corelib.Init.Logic.html#6cd0f7b28b6092304087c7049437bb1a"><span class="id" title="notation">=</span></a> <a class="idref" href="http://coq.inria.fr/doc/V9.0.0/stdlib//Corelib.Init.Datatypes.html#false"><span class="id" title="constructor">false</span></a><br/>
+&nbsp;&nbsp;<span class="id" title="notation">→</span> (<a class="idref" href="TrigoWithoutPi.AngleAddLeMonoL_sin_lb_neg_sin_2_neg.html#a5a8d4cf627beeff8bc7c379af7b7268"><span class="id" title="variable">θ2</span></a> <a class="idref" href="TrigoWithoutPi.Order.html#2b39e6c4c546ccb5a4ab407931b27211"><span class="id" title="notation">≤</span></a> <a class="idref" href="TrigoWithoutPi.AngleAddLeMonoL_sin_lb_neg_sin_2_neg.html#a1164749784a12d47f2676757385b0e6"><span class="id" title="variable">θ3</span></a>)%<span class="id" title="var">A</span><br/>
+&nbsp;&nbsp;<span class="id" title="notation">→</span> (<a class="idref" href="TrigoWithoutPi.AngleAddLeMonoL_sin_lb_neg_sin_2_neg.html#f430facb9f6942321b47069a59e021d9"><span class="id" title="variable">θ1</span></a> <a class="idref" href="TrigoWithoutPi.AngleDef.html#33c849289dd8c64e0695fe87e99de330"><span class="id" title="notation">+</span></a> <a class="idref" href="TrigoWithoutPi.AngleAddLeMonoL_sin_lb_neg_sin_2_neg.html#a5a8d4cf627beeff8bc7c379af7b7268"><span class="id" title="variable">θ2</span></a> <a class="idref" href="TrigoWithoutPi.Order.html#2b39e6c4c546ccb5a4ab407931b27211"><span class="id" title="notation">≤</span></a> <a class="idref" href="TrigoWithoutPi.AngleAddLeMonoL_sin_lb_neg_sin_2_neg.html#f430facb9f6942321b47069a59e021d9"><span class="id" title="variable">θ1</span></a> <a class="idref" href="TrigoWithoutPi.AngleDef.html#33c849289dd8c64e0695fe87e99de330"><span class="id" title="notation">+</span></a> <a class="idref" href="TrigoWithoutPi.AngleAddLeMonoL_sin_lb_neg_sin_2_neg.html#a1164749784a12d47f2676757385b0e6"><span class="id" title="variable">θ3</span></a>)%<span class="id" title="var">A</span>.<br/>
+     
+<br/>
+<span class="id" title="keyword">End</span> <a class="idref" href="TrigoWithoutPi.AngleAddLeMonoL_sin_lb_neg_sin_2_neg.html#a"><span class="id" title="section">a</span></a>.<br/>
+</div>
+<hr/>This page has been generated by <a href="http://coq.inria.fr/">coqdoc</a>
+</div>
+
+</div>
+
+</body>
+</html>
