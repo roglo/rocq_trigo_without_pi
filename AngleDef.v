@@ -41,9 +41,6 @@ Ltac destruct_ac :=
   set (Hon := ac_on);
   set (Hop := ac_op);
   set (Hiv := ac_iv);
-(*
-  set (Hed := ac_ed);
-*)
   set (Hor := ac_or);
   specialize (rngl_has_opp_has_opp_or_psub Hop) as Hos;
   specialize (rngl_has_inv_has_inv_or_pdiv Hiv) as Hiq;
