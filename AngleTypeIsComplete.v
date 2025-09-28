@@ -224,7 +224,6 @@ Theorem rngl_limit_limit_squ :
   → is_limit_when_seq_tends_to_inf rngl_dist (λ i, (u i)²)%L l²%L.
 Proof.
 destruct_ac.
-specialize (rngl_has_inv_and_1_has_inv_and_1_or_pdiv Hon Hiv) as Hi1.
 destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
   specialize (rngl_characteristic_1 Hon Hos Hc1) as H1.
   intros * Hu.
@@ -319,7 +318,6 @@ Theorem limit_cos_cos_sin_sin :
   → is_limit_when_seq_tends_to_inf angle_eucl_dist u θ.
 Proof.
 destruct_ac.
-specialize (rngl_has_inv_and_1_has_inv_and_1_or_pdiv Hon Hiv) as Hi1.
 destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
   specialize (rngl_characteristic_1 Hon Hos Hc1) as H1.
   intros * Hc Hs ε Hε.
@@ -440,7 +438,6 @@ Theorem rngl_is_complete_angle_is_complete :
   → is_complete (angle T) angle_eucl_dist.
 Proof.
 destruct_ac.
-specialize (rngl_has_inv_and_1_has_inv_and_1_or_pdiv Hon Hiv) as Hi1.
 destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
   specialize (rngl_characteristic_1 Hon Hos Hc1) as H1.
   intros Hco u Hu.

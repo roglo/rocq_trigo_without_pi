@@ -258,7 +258,6 @@ Qed.
 Theorem angle_div_2_le_straight : ∀ θ, (θ /₂ ≤ π)%A.
 Proof.
 destruct_ac.
-specialize (rngl_has_1_has_inv_or_pdiv_has_inv_and_1_or_pdiv Hon Hiq) as Hi1.
 destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
   intros.
   specialize (rngl_characteristic_1_angle_0 Hc1) as H1.
@@ -312,7 +311,6 @@ Qed.
 Theorem angle_0_div_2 : (0 /₂ = 0)%A.
 Proof.
 destruct_ac.
-specialize (rngl_has_1_has_inv_or_pdiv_has_inv_and_1_or_pdiv Hon Hiq) as Hi1.
 destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
   intros.
   specialize (rngl_characteristic_1_angle_0 Hc1) as H1.
@@ -336,7 +334,6 @@ Qed.
 Theorem angle_straight_div_2 : (π /₂ = π/₂)%A.
 Proof.
 destruct_ac.
-specialize (rngl_has_1_has_inv_or_pdiv_has_inv_and_1_or_pdiv Hon Hiq) as Hi1.
 destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
   intros.
   specialize (rngl_characteristic_1_angle_0 Hc1) as H1.
@@ -364,7 +361,6 @@ Theorem angle_opp_div_2 :
   ∀ θ, (- (θ /₂) = (- θ) /₂ + if (θ =? 0)%A then 0 else π)%A.
 Proof.
 destruct_ac.
-specialize (rngl_has_1_has_inv_or_pdiv_has_inv_and_1_or_pdiv Hon Hiq) as Hi1.
 destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
   specialize (rngl_characteristic_1_angle_0 Hc1) as H1.
   intros.

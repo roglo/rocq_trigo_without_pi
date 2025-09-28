@@ -28,7 +28,6 @@ Theorem rngl_cos_angle_div_2_add_not_overflow :
   → rngl_cos ((θ1 + θ2) /₂) = rngl_cos (θ1 /₂ + θ2 /₂).
 Proof.
 destruct_ac.
-specialize (rngl_has_1_has_inv_or_pdiv_has_inv_and_1_or_pdiv Hon Hiq) as Hi1.
 destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
   specialize (rngl_characteristic_1 Hon Hos Hc1) as H1.
   intros * Haov.
@@ -288,7 +287,6 @@ Theorem rngl_sin_angle_div_2_add_not_overflow :
   → rngl_sin ((θ1 + θ2) /₂) = rngl_sin (θ1 /₂ + θ2 /₂).
 Proof.
 destruct_ac.
-specialize (rngl_has_1_has_inv_or_pdiv_has_inv_and_1_or_pdiv Hon Hiq) as Hi1.
 destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
   specialize (rngl_characteristic_1 Hon Hos Hc1) as H1.
   intros * Haov.
@@ -576,7 +574,6 @@ Theorem rngl_cos_angle_div_2_add_overflow :
   → rngl_cos ((θ1 + θ2) /₂) = rngl_cos (θ1 /₂ + θ2 /₂ + π).
 Proof.
 destruct_ac.
-specialize (rngl_has_1_has_inv_or_pdiv_has_inv_and_1_or_pdiv Hon Hiq) as Hi1.
 destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
   intros.
   specialize (rngl_characteristic_1 Hon Hos Hc1) as H1.
@@ -773,7 +770,6 @@ Theorem rngl_sin_angle_div_2_add_overflow :
   → rngl_sin ((θ1 + θ2) /₂) = rngl_sin (θ1 /₂ + θ2 /₂ + π).
 Proof.
 destruct_ac.
-specialize (rngl_has_1_has_inv_or_pdiv_has_inv_and_1_or_pdiv Hon Hiq) as Hi1.
 destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
   intros.
   specialize (rngl_characteristic_1 Hon Hos Hc1) as H1.
@@ -1162,7 +1158,6 @@ Theorem angle_div_2_lt_straight :
 Proof.
 destruct_ac.
 intros Hc1.
-specialize (rngl_has_1_has_inv_or_pdiv_has_inv_and_1_or_pdiv Hon Hiq) as Hi1.
 intros.
 progress unfold angle_ltb.
 specialize (rngl_sin_div_2_nonneg θ) as H1.
@@ -1438,7 +1433,6 @@ Theorem angle_mul_nat_overflow_pow_div :
   ∀ n θ, angle_mul_nat_overflow (2 ^ n) (θ /₂^n) = false.
 Proof.
 destruct_ac.
-specialize (rngl_has_1_has_inv_or_pdiv_has_inv_and_1_or_pdiv Hon Hiq) as Hi1.
 destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
   intros.
   rewrite (rngl_characteristic_1_angle_0 Hc1 (angle_div_2_pow _ _)).

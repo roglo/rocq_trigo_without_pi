@@ -44,7 +44,8 @@ Ltac destruct_ac :=
   set (Hos := rngl_has_opp_has_opp_or_psub Hop);
   set (Hiq := rngl_has_inv_has_inv_or_pdiv Hiv);
   specialize (rngl_int_dom_or_inv_1_or_pdiv_r Hon Hiq) as Hii;
-  specialize (rngl_has_eq_dec_or_is_ordered_r Hor) as Heo.
+  specialize (rngl_has_eq_dec_or_is_ordered_r Hor) as Heo;
+  specialize (rngl_has_inv_and_1_has_inv_and_1_or_pdiv Hon Hiv) as Hi1.
 
 Section a.
 

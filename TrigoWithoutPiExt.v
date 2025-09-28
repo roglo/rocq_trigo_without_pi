@@ -663,7 +663,6 @@ Theorem angle_lim_add_add :
   → angle_lim (λ i, (u i + v i))%A (θ1 + θ2).
 Proof.
 destruct_ac.
-specialize (rngl_has_inv_and_1_has_inv_and_1_or_pdiv Hon Hiv) as Hi1.
 destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
   intros * Hu Hv ε Hε.
   rewrite (rngl_characteristic_1 Hon Hos Hc1 ε) in Hε.
@@ -712,7 +711,6 @@ Theorem angle_lim_mul :
   → angle_lim (λ i, (k * u i)%A) (k * θ).
 Proof.
 destruct_ac.
-specialize (rngl_has_inv_and_1_has_inv_and_1_or_pdiv Hon Hiv) as Hi1.
 intros * Hu.
 induction k. {
   intros ε Hε.
@@ -878,7 +876,6 @@ Fixpoint squ_rngl_cos_div_pow_2 θ n :=
 Theorem rngl_cos_div_pow_2_0 : ∀ n, rngl_cos_div_pow_2 0 n = 1%L.
 Proof.
 destruct_ac.
-specialize (rngl_has_inv_and_1_has_inv_and_1_or_pdiv Hon Hiv) as Hi1.
 destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
   intros.
   specialize (rngl_characteristic_1 Hon Hos Hc1) as H1.

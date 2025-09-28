@@ -376,7 +376,6 @@ Theorem rngl_sin_angle_eucl_dist_twice_0 :
   → rngl_sin θ = (angle_eucl_dist (2 * θ) 0 / 2)%L.
 Proof.
 destruct_ac.
-specialize (rngl_has_1_has_inv_or_pdiv_has_inv_and_1_or_pdiv Hon Hiq) as Hi1.
 destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
   specialize (rngl_characteristic_1 Hon Hos Hc1) as H1.
   intros.
@@ -935,7 +934,6 @@ Theorem rngl_cos_left_or_right_derivative_at_0 :
     rngl_cos 0%A ((rngl_opp ° rngl_sin) 0%A).
 Proof.
 destruct_ac.
-specialize (rngl_has_1_has_inv_or_pdiv_has_inv_and_1_or_pdiv Hon Hiq) as Hi1.
 destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
   specialize (rngl_characteristic_1 Hon Hos Hc1) as H1.
   intros * ε Hε; rewrite (H1 ε) in Hε.
@@ -995,7 +993,6 @@ Theorem rngl_cos_left_or_right_derivative_at_straight :
     rngl_cos π ((rngl_opp ° rngl_sin) π).
 Proof.
 destruct_ac.
-specialize (rngl_has_1_has_inv_or_pdiv_has_inv_and_1_or_pdiv Hon Hiq) as Hi1.
 destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
   specialize (rngl_characteristic_1 Hon Hos Hc1) as H1.
   intros * ε Hε; rewrite (H1 ε) in Hε.
@@ -1073,7 +1070,6 @@ Theorem rngl_sin_left_or_right_derivative_at_0 :
     angle_eucl_dist rngl_dist rngl_sin 0%A (rngl_cos 0).
 Proof.
 destruct_ac.
-specialize (rngl_has_1_has_inv_or_pdiv_has_inv_and_1_or_pdiv Hon Hiq) as Hi1.
 destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
   specialize (rngl_characteristic_1 Hon Hos Hc1) as H1.
   intros * ε Hε; rewrite (H1 ε) in Hε.
@@ -1138,7 +1134,6 @@ Theorem rngl_sin_left_or_right_derivative_at_straight :
     (rngl_cos π).
 Proof.
 destruct_ac.
-specialize (rngl_has_1_has_inv_or_pdiv_has_inv_and_1_or_pdiv Hon Hiq) as Hi1.
 destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
   specialize (rngl_characteristic_1 Hon Hos Hc1) as H1.
   intros * ε Hε; rewrite (H1 ε) in Hε.
@@ -1225,7 +1220,6 @@ Theorem rngl_cos_left_or_right_derivative :
     ((rngl_opp ° rngl_sin) θ₀).
 Proof.
 destruct_ac.
-specialize (rngl_has_1_has_inv_or_pdiv_has_inv_and_1_or_pdiv Hon Hiq) as Hi1.
 destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
   specialize (rngl_characteristic_1 Hon Hos Hc1) as H1.
   intros * ε Hε; rewrite (H1 ε) in Hε.
@@ -1361,7 +1355,6 @@ Theorem rngl_sin_left_or_right_derivative :
     angle_eucl_dist rngl_dist rngl_sin θ₀ (rngl_cos θ₀).
 Proof.
 destruct_ac.
-specialize (rngl_has_1_has_inv_or_pdiv_has_inv_and_1_or_pdiv Hon Hiq) as Hi1.
 destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
   specialize (rngl_characteristic_1 Hon Hos Hc1) as H1.
   intros * ε Hε; rewrite (H1 ε) in Hε.

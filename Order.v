@@ -480,7 +480,6 @@ Theorem rngl_sin_nonneg_sin_nonneg_sin_neg :
 Proof.
 destruct_ac.
 intros * Haov Hzs1 Hzs2 Hzs3.
-specialize (rngl_has_inv_and_1_has_inv_and_1_or_pdiv Hon Hiv) as Hi1.
 destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
   specialize (rngl_characteristic_1 Hon Hos Hc1) as H1.
   rewrite H1; apply H1.
