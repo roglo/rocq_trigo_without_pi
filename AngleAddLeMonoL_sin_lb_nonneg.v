@@ -66,7 +66,7 @@ destruct zs2. 2: {
     now apply angle_add_le_mono_l_lemma_11.
   }
   apply (rngl_ltb_ge_iff Hor) in Hzc3.
-  clear - Hor Hon Hop Hiq Hiv Hos Hzs13 Hzs12 Haov13 Haov12 H23 Hzc3 Hzs3 Hzs2.
+  clear - Hor Hon Hop Hiq Hos Hzs13 Hzs12 Haov13 Haov12 H23 Hzc3 Hzs3 Hzs2.
   generalize Hzs13; intros Hzs1.
   apply rngl_sin_add_nonneg_sin_nonneg in Hzs1; try easy.
   change_angle_add_r θ3 π/₂.
