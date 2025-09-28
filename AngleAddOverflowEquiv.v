@@ -26,7 +26,6 @@ Theorem rngl_cos_add_le_cos :
 Proof.
 destruct_ac.
 specialize (rngl_has_inv_and_1_has_inv_and_1_or_pdiv Hon Hiv) as Hi1.
-specialize (rngl_int_dom_or_inv_1_quo_and_eq_dec Hi1 Hed) as Hid.
 intros * H12 Hzs1 Hzs2 Hzs12.
 rewrite <- or_assoc in H12.
 rewrite or_comm in H12.

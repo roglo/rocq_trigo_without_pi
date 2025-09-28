@@ -36,8 +36,7 @@ destruct_ac.
 specialize (rngl_has_inv_and_1_has_inv_and_1_or_pdiv Hon Hiv) as Hi1.
 specialize (rngl_integral_or_inv_1_pdiv_eq_dec_order Hon Hiv Hor) as Hio.
 intros * Hczz.
-progress unfold rngl_tan.
-specialize (@derivative_inv_at _ _ _ Hop Hor Hic Hon Hiv Hed) as H1.
+specialize (@derivative_inv_at _ _ _ Hop Hor Hic Hon Hiv) as H1.
 specialize (H1 _ angle_lt_for_deriv).
 specialize (@derivative_mul_at _ _ _ _ Hop Hor Hic Hon Hiv) as H2.
 specialize (H2 _ angle_lt_for_deriv).

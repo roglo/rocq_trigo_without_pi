@@ -22,7 +22,6 @@ Class angle_ctx :=
   { ac_ic : rngl_mul_is_comm T = true;
     ac_on : rngl_has_1 T = true;
     ac_op : rngl_has_opp T = true;
-    ac_ed : rngl_has_eq_dec T = true;
     ac_iv : rngl_has_inv T = true;
     ac_c2 : rngl_characteristic T ≠ 2;
     ac_or : rngl_is_ordered T = true }.
@@ -42,12 +41,14 @@ Ltac destruct_ac :=
   set (Hon := ac_on);
   set (Hop := ac_op);
   set (Hiv := ac_iv);
+(*
   set (Hed := ac_ed);
+*)
   set (Hor := ac_or);
   specialize (rngl_has_opp_has_opp_or_psub Hop) as Hos;
   specialize (rngl_has_inv_has_inv_or_pdiv Hiv) as Hiq;
   specialize (rngl_int_dom_or_inv_1_quo Hiv Hon) as Hii;
-  specialize (rngl_has_eq_dec_or_is_ordered_l Hed) as Heo;
+  specialize (rngl_has_eq_dec_or_is_ordered_r Hor) as Heo;
   specialize ac_c2 as Hc2.
 
 Section a.
