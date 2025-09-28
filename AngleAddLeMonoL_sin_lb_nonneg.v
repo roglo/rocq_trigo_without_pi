@@ -23,7 +23,6 @@ Theorem angle_add_le_mono_l_sin_lb_nonneg :
   → (θ1 + θ2 ≤ θ1 + θ3)%A.
 Proof.
 destruct_ac.
-specialize (rngl_has_inv_and_1_has_inv_and_1_or_pdiv Hon Hiv) as Hi1.
 destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
   specialize (rngl_characteristic_1 Hon Hos Hc1) as H1.
   intros * Hzs12 Haov13 H23.
@@ -68,7 +67,6 @@ destruct zs2. 2: {
   }
   apply (rngl_ltb_ge_iff Hor) in Hzc3.
   clear - Hor Hon Hop Hiq Hiv Hos Hzs13 Hzs12 Haov13 Haov12 H23 Hzc3 Hzs3 Hzs2.
-  specialize (rngl_int_dom_or_inv_1_quo Hiv Hon) as Hii.
   generalize Hzs13; intros Hzs1.
   apply rngl_sin_add_nonneg_sin_nonneg in Hzs1; try easy.
   change_angle_add_r θ3 π/₂.

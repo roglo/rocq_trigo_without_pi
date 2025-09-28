@@ -571,7 +571,6 @@ Theorem rngl_sin_angle_eucl_dist_0_r :
   rngl_sin θ = (rngl_cos (θ /₂) * angle_eucl_dist θ 0)%L.
 Proof.
 destruct_ac.
-specialize (rngl_has_inv_and_1_has_inv_and_1_or_pdiv Hon Hiv) as Hi1.
 destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
   specialize (rngl_characteristic_1 Hon Hos Hc1) as H1.
   intros.
@@ -626,7 +625,6 @@ Theorem rngl_sin_angle_eucl_dist_straight_r :
   → rngl_sin θ = (rngl_sin (θ /₂) * angle_eucl_dist θ π)%L.
 Proof.
 destruct_ac.
-specialize (rngl_has_inv_and_1_has_inv_and_1_or_pdiv Hon Hiv) as Hi1.
 destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
   specialize (rngl_characteristic_1 Hon Hos Hc1) as H1.
   intros.

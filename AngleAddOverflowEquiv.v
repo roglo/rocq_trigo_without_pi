@@ -25,7 +25,6 @@ Theorem rngl_cos_add_le_cos :
   → (rngl_cos (θ1 + θ2) ≤ rngl_cos θ1)%L.
 Proof.
 destruct_ac.
-specialize (rngl_has_inv_and_1_has_inv_and_1_or_pdiv Hon Hiv) as Hi1.
 intros * H12 Hzs1 Hzs2 Hzs12.
 rewrite <- or_assoc in H12.
 rewrite or_comm in H12.
