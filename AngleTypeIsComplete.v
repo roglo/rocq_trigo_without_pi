@@ -219,19 +219,11 @@ apply (rngl_abs_triangle Hop Hor).
 Qed.
 
 Theorem rngl_limit_limit_squ :
-  rngl_has_1 T = true →
-  rngl_has_opp T = true →
-  rngl_mul_is_comm T = true →
-  rngl_has_inv T = true →
-  rngl_is_ordered T = true →
   ∀ u l,
   is_limit_when_seq_tends_to_inf rngl_dist u l
   → is_limit_when_seq_tends_to_inf rngl_dist (λ i, (u i)²)%L l²%L.
 Proof.
-intros Hon Hop Hic Hiv Hor.
-specialize (rngl_has_opp_has_opp_or_psub Hop) as Hos.
-specialize (rngl_has_inv_has_inv_or_pdiv Hiv) as Hiq.
-specialize (rngl_int_dom_or_inv_1_quo Hiv Hon) as Hii.
+destruct_ac.
 specialize (rngl_has_inv_and_1_has_inv_and_1_or_pdiv Hon Hiv) as Hi1.
 destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
   specialize (rngl_characteristic_1 Hon Hos Hc1) as H1.
@@ -490,8 +482,7 @@ clear H1.
 assert (Hcs1 : (c² + s² = 1)%L). {
   generalize Hc; intros H1.
   generalize Hs; intros H2.
-  apply (rngl_limit_limit_squ Hon Hop Hic Hiv Hor) in H1.
-  apply (rngl_limit_limit_squ Hon Hop Hic Hiv Hor) in H2.
+  apply rngl_limit_limit_squ in H1, H2.
   specialize (limit_add Hon Hop Hiv Hor (rngl_dist_is_dist Hop Hor)) as H.
   specialize (H (rngl_dist_add_add_le Hop Hor)).
   specialize (H _ _ _ _ H1 H2).
