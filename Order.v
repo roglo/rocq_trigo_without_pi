@@ -213,7 +213,7 @@ progress unfold angle_ltb.
 cbn.
 rewrite (rngl_leb_refl Hor).
 apply rngl_ltb_lt.
-apply (rngl_opp_1_lt_1 Hon Hop Hiq Hor Hc1).
+apply (rngl_opp_1_lt_1 Hon Hop Hor Hc1).
 Qed.
 
 Theorem angle_straight_nonneg : (0 ≤ π)%A.
@@ -223,7 +223,7 @@ progress unfold angle_leb.
 cbn.
 rewrite (rngl_leb_refl Hor).
 apply rngl_leb_le.
-apply (rngl_opp_1_le_1 Hon Hop Hiq Hor).
+apply (rngl_opp_1_le_1 Hon Hop Hor).
 Qed.
 
 Theorem angle_leb_gt : ∀ θ1 θ2, (θ1 ≤? θ2)%A = false ↔ (θ2 < θ1)%A.
@@ -484,8 +484,8 @@ destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
   specialize (rngl_characteristic_1 Hon Hos Hc1) as H1.
   rewrite H1; apply H1.
 }
-specialize (rngl_0_lt_2 Hon Hos Hiq Hc1 Hor) as Hz2.
-specialize (rngl_2_neq_0 Hon Hos Hiq Hc1 Hor) as H20.
+specialize (rngl_0_lt_2 Hon Hos Hc1 Hor) as Hz2.
+specialize (rngl_2_neq_0 Hon Hos Hc1 Hor) as H20.
 assert (Hze2 : (0 ≤ 2)%L) by now apply (rngl_lt_le_incl Hor).
 assert (Hz1ac :  ∀ θ, (0 ≤ 1 + rngl_cos θ)%L). {
   intros.
@@ -526,7 +526,7 @@ rewrite <- (rngl_div_sub_distr_r Hop Hiv).
 apply (rngl_mul_cancel_r Hi1 _ _ 2)%L; [ easy | ].
 rewrite (rngl_div_mul Hon Hiv); [ | easy ].
 rewrite <- (rngl_abs_nonneg_eq Hop Hor (√_ / _ * _))%L. 2: {
-  apply (rngl_mul_nonneg_nonneg Hon Hos Hiq Hor); [ | easy ].
+  apply (rngl_mul_nonneg_nonneg Hos Hor); [ | easy ].
   apply (rngl_div_nonneg Hon Hop Hiv Hor). 2: {
     apply (rngl_le_neq Hor).
     split; [ now apply rl_sqrt_nonneg | ].
@@ -765,7 +765,7 @@ destruct zs2. {
       apply rngl_nle_gt in H12.
       cbn in H12.
       exfalso; apply H12.
-      apply (rngl_opp_1_le_1 Hon Hop Hiq Hor).
+      apply (rngl_opp_1_le_1 Hon Hop Hor).
     }
     apply rngl_ltb_lt in H12.
     now apply (rngl_lt_irrefl Hor) in H12.
@@ -942,10 +942,10 @@ rewrite rngl_cos_add_right_r in Htr.
 cbn in Htr.
 rewrite (rngl_opp_0 Hop) in Htr.
 rewrite (rngl_leb_0_opp Hop Hor) in Htr.
-specialize (rngl_0_le_1 Hon Hos Hiq Hor) as H1.
+specialize (rngl_0_le_1 Hon Hos Hor) as H1.
 apply rngl_leb_le in H1.
 rewrite H1 in Htr; clear H1.
-specialize (rngl_0_lt_1 Hon Hos Hiq Hc1 Hor) as H1.
+specialize (rngl_0_lt_1 Hon Hos Hc1 Hor) as H1.
 apply (rngl_leb_gt_iff Hor) in H1.
 rewrite H1 in Htr; clear H1.
 remember (0 ≤? rngl_sin θ)%L as zst eqn:Hzst.
@@ -976,10 +976,10 @@ rewrite rngl_add_0_l in Htr.
 rewrite (rngl_sub_0_r Hos) in Htr.
 rewrite (rngl_opp_0 Hop) in Htr.
 rewrite (rngl_leb_0_opp Hop Hor) in Htr.
-specialize (rngl_0_lt_1 Hon Hos Hiq Hc1 Hor) as H1.
+specialize (rngl_0_lt_1 Hon Hos Hc1 Hor) as H1.
 apply (rngl_leb_gt_iff Hor) in H1.
 rewrite H1 in Htr; clear H1.
-rewrite (rngl_0_leb_1 Hon Hos Hiq Hor) in Htr.
+rewrite (rngl_0_leb_1 Hon Hos Hor) in Htr.
 remember (0 ≤? rngl_sin θ)%L as zst eqn:Hzst.
 symmetry in Hzst.
 destruct zst; [ now apply rngl_leb_le | ].

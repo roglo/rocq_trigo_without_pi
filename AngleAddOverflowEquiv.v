@@ -36,8 +36,8 @@ destruct H12 as [H12| H12]. {
   rewrite <- (rngl_add_sub_assoc Hop).
   rewrite (rngl_sub_mul_r_diag_l Hon Hop).
   apply (rngl_le_0_add Hos Hor).
-  now apply (rngl_mul_nonneg_nonneg Hon Hos Hiq Hor).
-  apply (rngl_mul_nonneg_nonneg Hon Hos Hiq Hor); [ easy | ].
+  now apply (rngl_mul_nonneg_nonneg Hos Hor).
+  apply (rngl_mul_nonneg_nonneg Hos Hor); [ easy | ].
   apply (rngl_le_0_sub Hop Hor).
   apply rngl_cos_bound.
 }
@@ -49,8 +49,8 @@ destruct (rngl_leb_dec 0 (rngl_cos θ1)) as [Hzc1| Hc1z]. {
   rewrite <- (rngl_add_sub_assoc Hop).
   rewrite (rngl_sub_mul_r_diag_l Hon Hop).
   apply (rngl_le_0_add Hos Hor).
-  now apply (rngl_mul_nonneg_nonneg Hon Hos Hiq Hor).
-  apply (rngl_mul_nonneg_nonneg Hon Hos Hiq Hor); [ easy | ].
+  now apply (rngl_mul_nonneg_nonneg Hos Hor).
+  apply (rngl_mul_nonneg_nonneg Hos Hor); [ easy | ].
   apply (rngl_le_0_sub Hop Hor).
   apply rngl_cos_bound.
 }
@@ -75,8 +75,8 @@ destruct (rngl_leb_dec 0 (rngl_cos θ2)) as [Hzc2| Hc2z]. {
   rewrite <- (rngl_add_sub_assoc Hop).
   rewrite (rngl_sub_mul_r_diag_l Hon Hop).
   apply (rngl_le_0_add Hos Hor).
-  now apply (rngl_mul_nonneg_nonneg Hon Hos Hiq Hor).
-  apply (rngl_mul_nonneg_nonneg Hon Hos Hiq Hor); [ easy | ].
+  now apply (rngl_mul_nonneg_nonneg Hos Hor).
+  apply (rngl_mul_nonneg_nonneg Hos Hor); [ easy | ].
   apply (rngl_le_0_sub Hop Hor).
   apply rngl_cos_bound.
 }
@@ -110,7 +110,7 @@ apply (rngl_add_neg_nonpos Hop Hor). {
   apply not_eq_sym in Hs1z.
   now apply (rngl_le_neq Hor).
 } {
-  apply (rngl_mul_nonpos_nonneg Hon Hop Hiq Hor); [ | easy ].
+  apply (rngl_mul_nonpos_nonneg Hop Hor); [ | easy ].
   now apply (rngl_lt_le_incl Hor).
 }
 Qed.
@@ -151,8 +151,8 @@ apply rngl_cos_add_le_cos; try easy.
 now right; right; left.
 cbn.
 apply (rngl_le_0_add Hos Hor).
-now apply (rngl_mul_nonneg_nonneg Hon Hos Hiq Hor).
-now apply (rngl_mul_nonneg_nonneg Hon Hos Hiq Hor).
+now apply (rngl_mul_nonneg_nonneg Hos Hor).
+now apply (rngl_mul_nonneg_nonneg Hos Hor).
 Qed.
 
 Theorem rngl_cos_sub_nonneg :
@@ -169,8 +169,8 @@ cbn.
 rewrite (rngl_mul_opp_r Hop).
 rewrite (rngl_sub_opp_r Hop).
 apply (rngl_le_0_add Hos Hor).
-now apply (rngl_mul_nonneg_nonneg Hon Hos Hiq Hor).
-now apply (rngl_mul_nonneg_nonneg Hon Hos Hiq Hor).
+now apply (rngl_mul_nonneg_nonneg Hos Hor).
+now apply (rngl_mul_nonneg_nonneg Hos Hor).
 Qed.
 
 Theorem quadrant_1_sin_sub_pos_cos_lt :
@@ -279,14 +279,14 @@ destruct zs1. {
           } {
             symmetry.
             apply (rngl_leb_gt_iff Hor).
-            apply (rngl_opp_1_lt_1 Hon Hop Hiq Hor Hc1).
+            apply (rngl_opp_1_lt_1 Hon Hop Hor Hc1).
           }
         }
         cbn.
         rewrite (rngl_opp_involutive Hop).
         transitivity true. {
           apply rngl_ltb_lt.
-          apply (rngl_opp_1_lt_1 Hon Hop Hiq Hor Hc1).
+          apply (rngl_opp_1_lt_1 Hon Hop Hor Hc1).
         } {
           symmetry.
           apply rngl_leb_le.
@@ -368,10 +368,10 @@ destruct zs1. {
       apply rngl_nlt_ge in Hzs12.
       apply Hzs12; clear Hzs12.
       cbn.
-      apply (rngl_lt_0_add Hos Hor).
+      apply (rngl_lt_0_add Hor).
       now apply (rngl_mul_pos_pos Hon Hop Hiq Hor).
       apply (rngl_lt_le_incl Hor) in Hzs2.
-      now apply (rngl_mul_nonneg_nonneg Hon Hos Hiq Hor).
+      now apply (rngl_mul_nonneg_nonneg Hos Hor).
     }
     remember (rngl_cos θ1 ≤? rngl_cos θ2)%L as c12 eqn:Hc12.
     symmetry in Hc12.
@@ -739,10 +739,10 @@ destruct s1z. {
     progress sin_cos_add_sub_straight_hyp T Hs2z.
     progress sin_cos_add_sub_straight_hyp T Hzc2.
     progress sin_cos_add_sub_straight_goal T.
-    apply (rngl_lt_0_add Hos Hor); [ cbn | easy ].
+    apply (rngl_lt_0_add Hor); [ cbn | easy ].
     apply (rngl_add_nonneg_pos Hos Hor).
     apply (rngl_lt_le_incl Hor) in Hzc2.
-    now apply (rngl_mul_nonneg_nonneg Hon Hos Hiq Hor).
+    now apply (rngl_mul_nonneg_nonneg Hos Hor).
     now apply (rngl_mul_pos_pos Hon Hop Hiq Hor).
   }
   apply (rngl_leb_gt_iff Hor) in Hzc1.

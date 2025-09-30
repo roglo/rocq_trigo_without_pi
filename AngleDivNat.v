@@ -98,34 +98,34 @@ assert (H2r : √2 ≠ 0%L). {
   intros H.
   apply (f_equal rngl_squ) in H.
   rewrite (rngl_squ_sqrt Hon) in H. 2: {
-    apply (rngl_0_le_2 Hon Hos Hiq Hor).
+    apply (rngl_0_le_2 Hon Hos Hor).
   }
   rewrite (rngl_squ_0 Hos) in H.
-  now apply (rngl_2_neq_0 Hon Hos Hiq Hc1 Hor) in H.
+  now apply (rngl_2_neq_0 Hon Hos Hc1 Hor) in H.
 }
 rewrite (rl_sqrt_div Hon Hop Hiv Hor); cycle 1. {
   apply (rngl_le_0_sub Hop Hor).
   apply rngl_cos_bound.
 } {
-  apply (rngl_0_lt_2 Hon Hos Hiq Hc1 Hor).
+  apply (rngl_0_lt_2 Hon Hos Hc1 Hor).
 }
 rewrite (rl_sqrt_div Hon Hop Hiv Hor); cycle 1. {
   apply (rngl_le_opp_l Hop Hor).
   apply rngl_cos_bound.
 } {
-  apply (rngl_0_lt_2 Hon Hos Hiq Hc1 Hor).
+  apply (rngl_0_lt_2 Hon Hos Hc1 Hor).
 }
 rewrite (rl_sqrt_div Hon Hop Hiv Hor); cycle 1. {
   apply (rngl_le_opp_l Hop Hor).
   apply rngl_cos_bound.
 } {
-  apply (rngl_0_lt_2 Hon Hos Hiq Hc1 Hor).
+  apply (rngl_0_lt_2 Hon Hos Hc1 Hor).
 }
 rewrite (rl_sqrt_div Hon Hop Hiv Hor); cycle 1. {
   apply (rngl_le_0_sub Hop Hor).
   apply rngl_cos_bound.
 } {
-  apply (rngl_0_lt_2 Hon Hos Hiq Hc1 Hor).
+  apply (rngl_0_lt_2 Hon Hos Hc1 Hor).
 }
 do 2 rewrite (rngl_div_mul_mul_div Hic Hiv).
 do 2 rewrite (rngl_mul_div_assoc Hiv).
@@ -133,15 +133,15 @@ rewrite (rngl_div_div Hon Hos Hiv); [ | easy | easy ].
 rewrite (rngl_div_div Hon Hos Hiv); [ | easy | easy ].
 rewrite fold_rngl_squ.
 rewrite (rngl_squ_sqrt Hon). 2: {
-  apply (rngl_0_le_2 Hon Hos Hiq Hor).
+  apply (rngl_0_le_2 Hon Hos Hor).
 }
 rewrite (rngl_mul_sub_distr_l Hop).
 do 2 rewrite (rngl_mul_comm Hic 2).
 rewrite (rngl_div_mul Hon Hiv). 2: {
-  apply (rngl_2_neq_0 Hon Hos Hiq Hc1 Hor).
+  apply (rngl_2_neq_0 Hon Hos Hc1 Hor).
 }
 rewrite (rngl_div_mul Hon Hiv). 2: {
-  apply (rngl_2_neq_0 Hon Hos Hiq Hc1 Hor).
+  apply (rngl_2_neq_0 Hon Hos Hc1 Hor).
 }
 rewrite <- rl_sqrt_mul; cycle 1. {
   apply (rngl_le_0_sub Hop Hor).
@@ -187,7 +187,7 @@ rewrite rngl_cos_sub_straight_r in Ht21.
 apply rngl_leb_le in Ht21.
 rewrite (rngl_mul_comm Hic).
 apply (rl_sqrt_le_rl_sqrt Hon Hop Hiq Hor). {
-  apply (rngl_mul_nonneg_nonneg Hon Hos Hiq Hor).
+  apply (rngl_mul_nonneg_nonneg Hos Hor).
   apply (rngl_le_0_sub Hop Hor), rngl_cos_bound.
   apply (rngl_le_0_sub Hop Hor), rngl_cos_bound.
 }
@@ -231,34 +231,34 @@ assert (H2r : √2 ≠ 0%L). {
   intros H.
   apply (f_equal rngl_squ) in H.
   rewrite (rngl_squ_sqrt Hon) in H. 2: {
-    apply (rngl_0_le_2 Hon Hos Hiq Hor).
+    apply (rngl_0_le_2 Hon Hos Hor).
   }
   rewrite (rngl_squ_0 Hos) in H.
-  now apply (rngl_2_neq_0 Hon Hos Hiq Hc1 Hor) in H.
+  now apply (rngl_2_neq_0 Hon Hos Hc1 Hor) in H.
 }
 rewrite (rl_sqrt_div Hon Hop Hiv Hor); cycle 1. {
   apply (rngl_le_0_sub Hop Hor).
   apply rngl_cos_bound.
 } {
-  apply (rngl_0_lt_2 Hon Hos Hiq Hc1 Hor).
+  apply (rngl_0_lt_2 Hon Hos Hc1 Hor).
 }
 rewrite (rl_sqrt_div Hon Hop Hiv Hor); cycle 1. {
   apply (rngl_le_opp_l Hop Hor).
   apply rngl_cos_bound.
 } {
-  apply (rngl_0_lt_2 Hon Hos Hiq Hc1 Hor).
+  apply (rngl_0_lt_2 Hon Hos Hc1 Hor).
 }
 rewrite (rl_sqrt_div Hon Hop Hiv Hor); cycle 1. {
   apply (rngl_le_opp_l Hop Hor).
   apply rngl_cos_bound.
 } {
-  apply (rngl_0_lt_2 Hon Hos Hiq Hc1 Hor).
+  apply (rngl_0_lt_2 Hon Hos Hc1 Hor).
 }
 rewrite (rl_sqrt_div Hon Hop Hiv Hor); cycle 1. {
   apply (rngl_le_0_sub Hop Hor).
   apply rngl_cos_bound.
 } {
-  apply (rngl_0_lt_2 Hon Hos Hiq Hc1 Hor).
+  apply (rngl_0_lt_2 Hon Hos Hc1 Hor).
 }
 do 2 rewrite (rngl_div_mul_mul_div Hic Hiv).
 do 2 rewrite (rngl_mul_div_assoc Hiv).
@@ -266,15 +266,15 @@ rewrite (rngl_div_div Hon Hos Hiv); [ | easy | easy ].
 rewrite (rngl_div_div Hon Hos Hiv); [ | easy | easy ].
 rewrite fold_rngl_squ.
 rewrite (rngl_squ_sqrt Hon). 2: {
-  apply (rngl_0_le_2 Hon Hos Hiq Hor).
+  apply (rngl_0_le_2 Hon Hos Hor).
 }
 rewrite rngl_mul_add_distr_l.
 do 2 rewrite (rngl_mul_comm Hic 2).
 rewrite (rngl_div_mul Hon Hiv). 2: {
-  apply (rngl_2_neq_0 Hon Hos Hiq Hc1 Hor).
+  apply (rngl_2_neq_0 Hon Hos Hc1 Hor).
 }
 rewrite (rngl_div_mul Hon Hiv). 2: {
-  apply (rngl_2_neq_0 Hon Hos Hiq Hc1 Hor).
+  apply (rngl_2_neq_0 Hon Hos Hc1 Hor).
 }
 rewrite <- rl_sqrt_mul; cycle 1. {
   apply (rngl_le_0_sub Hop Hor).
@@ -313,11 +313,11 @@ rewrite (rngl_mul_comm Hic (_ - _)).
 apply (rngl_abs_nonneg_eq Hop Hor).
 apply (rngl_le_0_add Hos Hor).
 apply rl_sqrt_nonneg.
-apply (rngl_mul_nonneg_nonneg Hon Hos Hiq Hor).
+apply (rngl_mul_nonneg_nonneg Hos Hor).
 apply (rngl_le_opp_l Hop Hor), rngl_cos_bound.
 apply (rngl_le_opp_l Hop Hor), rngl_cos_bound.
 apply rl_sqrt_nonneg.
-apply (rngl_mul_nonneg_nonneg Hon Hos Hiq Hor).
+apply (rngl_mul_nonneg_nonneg Hos Hor).
 apply (rngl_le_0_sub Hop Hor), rngl_cos_bound.
 apply (rngl_le_0_sub Hop Hor), rngl_cos_bound.
 Qed.
@@ -444,7 +444,7 @@ split; intros H12. {
   apply (f_equal (rngl_mul 2⁻¹)) in H12.
   do 2 rewrite rngl_mul_assoc in H12.
   rewrite (rngl_mul_inv_diag_l Hon Hiv) in H12. 2: {
-    apply (rngl_2_neq_0 Hon Hos Hiq Hc1 Hor).
+    apply (rngl_2_neq_0 Hon Hos Hc1 Hor).
   }
   do 2 rewrite (rngl_mul_1_l Hon) in H12.
   apply rngl_sin_eq in H12.
@@ -520,13 +520,13 @@ do 2 rewrite rngl_cos_angle_eucl_dist_0_r.
 split; intros H1. {
   apply (rngl_sub_le_mono_l Hop Hor) in H1.
   apply (rngl_div_le_mono_pos_r Hon Hop Hiv Hor) in H1. 2: {
-    apply (rngl_0_lt_2 Hon Hos Hiq Hc1 Hor).
+    apply (rngl_0_lt_2 Hon Hos Hc1 Hor).
   }
   now apply (rngl_squ_le_abs_le Hon Hop Hiq Hor) in H1.
 } {
   apply (rngl_sub_le_mono_l Hop Hor).
   apply (rngl_div_le_mono_pos_r Hon Hop Hiv Hor). {
-    apply (rngl_0_lt_2 Hon Hos Hiq Hc1 Hor).
+    apply (rngl_0_lt_2 Hon Hos Hc1 Hor).
   }
   now apply (rngl_abs_le_squ_le Hon Hop Hiq Hor).
 }

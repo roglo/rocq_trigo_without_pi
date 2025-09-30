@@ -76,7 +76,7 @@ destruct (rngl_leb_dec 0 (rngl_cos θ1))%L as [Hzc1| Hc1z]. {
     destruct (0 ≤? rngl_cos _)%L; [ easy | ].
     apply rngl_ltb_lt.
     apply (rngl_lt_opp_l Hop Hor).
-    apply (rngl_lt_0_add Hos Hor); [ | easy ].
+    apply (rngl_lt_0_add Hor); [ | easy ].
     apply (rngl_le_neq Hor).
     split. {
       apply (rngl_lt_le_incl Hor) in Hzs2, Hc2z.
@@ -203,7 +203,7 @@ destruct H21 as [H21| H21]. {
   apply -> (rngl_le_sub_0 Hop Hor) in Hzs12.
   destruct (rngl_leb_dec 0 (rngl_sin θ1)) as [Hzs1| Hzs1]. {
     apply rngl_leb_le in Hzs1.
-    apply (rngl_mul_le_mono_nonneg_l Hon Hop Hiq Hor (rngl_cos θ1)) in Hzs12. 2: {
+    apply (rngl_mul_le_mono_nonneg_l Hop Hor (rngl_cos θ1)) in Hzs12. 2: {
       now apply (rngl_lt_le_incl Hor) in Hs1z.
     }
     rewrite rngl_mul_assoc in Hzs12.
@@ -223,7 +223,7 @@ destruct H21 as [H21| H21]. {
     rewrite <- rngl_sin_add in Hzs12.
     eapply (rngl_le_trans Hor); [ apply Hzs12 | ].
     rewrite <- (rngl_mul_1_r Hon (rngl_sin θ1)) at 2.
-    apply (rngl_mul_le_mono_nonneg_l Hon Hop Hiq Hor); [ easy | ].
+    apply (rngl_mul_le_mono_nonneg_l Hop Hor); [ easy | ].
     apply rngl_sin_bound.
   } {
     apply (rngl_leb_gt_iff Hor) in Hzs1.
@@ -234,11 +234,11 @@ destruct H21 as [H21| H21]. {
       apply Hzs12; clear Hzs12.
       apply (rngl_le_lt_trans Hor _ 0). {
         apply (rngl_lt_le_incl Hor) in Hzs1.
-        now apply (rngl_mul_nonpos_nonneg Hon Hop Hiq Hor).
+        now apply (rngl_mul_nonpos_nonneg Hop Hor).
       }
       now apply (rngl_mul_pos_pos Hon Hop Hiq Hor).
     }
-    apply (rngl_mul_le_mono_nonneg_r Hon Hop Hiq Hor _ _ (rngl_sin θ2))
+    apply (rngl_mul_le_mono_nonneg_r Hop Hor _ _ (rngl_sin θ2))
       in Hzs12; [ | easy ].
     do 2 rewrite <- rngl_mul_assoc in Hzs12.
     rewrite fold_rngl_squ in Hzs12.
@@ -554,7 +554,7 @@ split. {
   apply (rngl_le_trans Hor _ 0).
   apply (rngl_mul_nonneg_nonpos Hon Hop Hiq Hor); [ easy | ].
   now apply (rngl_lt_le_incl Hor).
-  apply (rngl_mul_nonneg_nonneg Hon Hos Hiq Hor); [ | easy ].
+  apply (rngl_mul_nonneg_nonneg Hos Hor); [ | easy ].
   now apply (rngl_lt_le_incl Hor).
 }
 intros Hc13.
