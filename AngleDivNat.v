@@ -191,7 +191,7 @@ apply (rl_sqrt_le_rl_sqrt Hon Hop Hiq Hor). {
   apply (rngl_le_0_sub Hop Hor), rngl_cos_bound.
   apply (rngl_le_0_sub Hop Hor), rngl_cos_bound.
 }
-apply (rngl_mul_le_compat_nonneg Hon Hiq Hor). {
+apply (rngl_mul_le_compat_nonneg Hor). {
   split. {
     apply (rngl_le_0_sub Hop Hor), rngl_cos_bound.
   }
@@ -528,7 +528,7 @@ split; intros H1. {
   apply (rngl_div_le_mono_pos_r Hon Hop Hiv Hor). {
     apply (rngl_0_lt_2 Hon Hos Hc1 Hor).
   }
-  now apply (rngl_abs_le_squ_le Hon Hop Hiq Hor).
+  now apply (rngl_abs_le_squ_le Hop Hor).
 }
 Qed.
 
