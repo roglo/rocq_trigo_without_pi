@@ -420,7 +420,7 @@ destruct zs1. {
       progress sin_cos_add_sub_straight_hyp T Hzs2.
       progress sin_cos_add_sub_straight_hyp T Hzc2.
       progress sin_cos_add_sub_straight_goal T.
-      apply (rngl_add_nonneg_pos Hos Hor); [ | easy ].
+      apply (rngl_add_nonneg_pos Hor); [ | easy ].
       apply (rngl_lt_le_incl Hor) in Hzs2, Hzc1, Hzc2.
       now apply rngl_cos_sub_nonneg.
     }
@@ -740,7 +740,7 @@ destruct s1z. {
     progress sin_cos_add_sub_straight_hyp T Hzc2.
     progress sin_cos_add_sub_straight_goal T.
     apply (rngl_lt_0_add Hor); [ cbn | easy ].
-    apply (rngl_add_nonneg_pos Hos Hor).
+    apply (rngl_add_nonneg_pos Hor).
     apply (rngl_lt_le_incl Hor) in Hzc2.
     now apply (rngl_mul_nonneg_nonneg Hos Hor).
     now apply (rngl_mul_pos_pos Hon Hop Hiq Hor).

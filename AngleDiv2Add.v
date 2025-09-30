@@ -232,7 +232,7 @@ destruct (rngl_leb_dec (rngl_cos θ1) 0) as [Hc1z| Hzc1]. {
   rewrite (rngl_mul_opp_r Hop).
   rewrite (rngl_sub_opp_r Hop).
   rewrite rngl_add_assoc.
-  apply (rngl_add_nonneg_pos Hos Hor). {
+  apply (rngl_add_nonneg_pos Hor). {
     rewrite (rngl_add_mul_r_diag_l Hon).
     apply (rngl_mul_nonneg_nonneg Hos Hor); [ easy | ].
     apply (rngl_le_sub_le_add_l Hop Hor).
@@ -1171,7 +1171,7 @@ symmetry in Hzs.
 destruct zs. {
   rewrite (rngl_mul_1_l Hon).
   apply (rngl_lt_le_trans Hor _ 0). {
-    apply (rngl_opp_1_lt_0 Hon Hop Hiq Hor Hc1).
+    apply (rngl_opp_1_lt_0 Hon Hop Hor Hc1).
   }
   apply rl_sqrt_nonneg.
   apply (rngl_div_nonneg Hon Hop Hiv Hor). 2: {

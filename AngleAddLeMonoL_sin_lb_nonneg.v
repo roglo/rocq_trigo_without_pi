@@ -188,7 +188,7 @@ destruct zs2. 2: {
     }
     apply rngl_nlt_ge in Hc1z.
     apply Hc1z; cbn.
-    apply (rngl_opp_1_lt_0 Hon Hop Hiq Hor Hc1).
+    apply (rngl_opp_1_lt_0 Hon Hop Hor Hc1).
   }
   apply (rngl_leb_gt_iff Hor) in Hzc2.
   change_angle_add_r θ2 π/₂.
@@ -230,7 +230,7 @@ destruct zs2. 2: {
     rewrite rngl_add_comm.
     rewrite <- (rngl_add_sub_assoc Hop).
     rewrite (rngl_sub_mul_r_diag_l Hon Hop).
-    apply (rngl_add_nonneg_pos Hos Hor).
+    apply (rngl_add_nonneg_pos Hor).
     apply (rngl_mul_nonneg_nonneg Hos Hor); [ easy | ].
     now apply (rngl_lt_le_incl Hor).
     apply (rngl_mul_pos_pos Hon Hop Hiq Hor); [ easy | ].

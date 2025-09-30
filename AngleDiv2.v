@@ -302,7 +302,7 @@ destruct zs. {
       apply (rngl_0_lt_2 Hon Hos Hc1 Hor).
     }
     rewrite (rngl_mul_1_l Hon).
-    apply (rngl_add_le_mono_l Hos Hor).
+    apply (rngl_add_le_mono_l Hor).
     apply rngl_cos_bound.
   }
 }
@@ -473,7 +473,7 @@ destruct zs1. {
     rewrite (rngl_div_mul Hon Hiv). 2: {
       apply (rngl_2_neq_0 Hon Hos Hc1 Hor).
     }
-    now apply (rngl_add_le_mono_l Hos Hor).
+    now apply (rngl_add_le_mono_l Hor).
   }
   apply rngl_leb_le.
   rewrite (rngl_mul_opp_l Hop).
@@ -511,7 +511,7 @@ rewrite (rngl_div_mul Hon Hiv). 2: {
 rewrite (rngl_div_mul Hon Hiv). 2: {
   apply (rngl_2_neq_0 Hon Hos Hc1 Hor).
 }
-now apply (rngl_add_le_mono_l Hos Hor).
+now apply (rngl_add_le_mono_l Hor).
 Qed.
 
 Theorem rngl_cos_lt_sqrt_1_add_cos_div_2 :
@@ -1132,7 +1132,7 @@ split. {
     apply (rngl_0_lt_2 Hon Hos Hc1 Hor).
   }
   rewrite (rngl_mul_1_l Hon).
-  apply (rngl_add_le_mono_l Hos Hor).
+  apply (rngl_add_le_mono_l Hor).
   apply IHn.
 }
 Qed.
@@ -1217,7 +1217,7 @@ rewrite <- rngl_add_assoc.
 rewrite (rngl_mul_add_distr_r _ _ 2)%L.
 rewrite (rngl_mul_1_l Hon).
 rewrite <- rngl_add_assoc.
-apply (rngl_add_le_mono_l Hos Hor).
+apply (rngl_add_le_mono_l Hor).
 rewrite (rngl_mul_comm Hic), rngl_add_comm.
 apply (rngl_add_le_mono Hor). 2: {
   apply (rngl_mul_le_mono_nonneg_r Hop Hor). {

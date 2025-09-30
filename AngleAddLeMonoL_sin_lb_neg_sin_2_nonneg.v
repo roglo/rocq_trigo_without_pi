@@ -109,7 +109,7 @@ destruct zs3. {
         apply rngl_leb_le in Hzc3.
         apply rngl_nlt_ge in H23.
         apply H23; clear H23.
-        now apply (rngl_add_nonneg_pos Hos Hor).
+        now apply (rngl_add_nonneg_pos Hor).
       }
       apply (rngl_leb_gt_iff Hor) in Hc3z.
       change_angle_sub_r θ3 π/₂.
@@ -185,7 +185,7 @@ destruct zs3. {
       rewrite rngl_sin_add_right_r in Hc2z.
       apply rngl_nlt_ge in Hc2z.
       apply Hc2z; clear Hc2z; cbn.
-      apply (rngl_opp_1_lt_0 Hon Hop Hiq Hor Hc1).
+      apply (rngl_opp_1_lt_0 Hon Hop Hor Hc1).
     }
     move Hzc2 after Hzs3.
     apply rngl_nle_gt in Hzs12.
@@ -318,7 +318,7 @@ destruct zs3. {
         cbn.
         rewrite rngl_add_comm.
         eapply (rngl_le_lt_trans Hor). {
-          apply (rngl_add_le_mono_l Hos Hor).
+          apply (rngl_add_le_mono_l Hor).
           apply (rngl_mul_le_mono_nonneg_l Hop Hor); [ easy | ].
           apply H23.
         }
@@ -500,7 +500,7 @@ destruct zs3. {
       exfalso.
       apply rngl_nlt_ge in Hc3z.
       apply Hc3z; cbn.
-      apply (rngl_opp_1_lt_0 Hon Hop Hiq Hor Hc1).
+      apply (rngl_opp_1_lt_0 Hon Hop Hor Hc1).
     }
     clear Hc3z Hc32 Hzs3.
     rewrite rngl_sin_add_right_r.
@@ -685,7 +685,7 @@ destruct zs13. {
       rewrite <- (rngl_add_sub_swap Hop).
       rewrite <- (rngl_add_sub_assoc Hop).
       rewrite (rngl_sub_mul_r_diag_l Hon Hop).
-      apply (rngl_add_nonneg_pos Hos Hor).
+      apply (rngl_add_nonneg_pos Hor).
       apply (rngl_mul_nonneg_nonneg Hos Hor); [ easy | ].
       now apply (rngl_lt_le_incl Hor).
       apply (rngl_mul_pos_pos Hon Hop Hiq Hor); [ easy | ].

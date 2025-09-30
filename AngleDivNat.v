@@ -196,7 +196,7 @@ apply (rngl_mul_le_compat_nonneg Hon Hiq Hor). {
     apply (rngl_le_0_sub Hop Hor), rngl_cos_bound.
   }
   rewrite <- (rngl_add_opp_r Hop).
-  apply (rngl_add_le_mono_l Hos Hor).
+  apply (rngl_add_le_mono_l Hor).
   apply (rngl_opp_le_compat Hop Hor).
   now rewrite (rngl_opp_involutive Hop).
 } {
@@ -204,7 +204,7 @@ apply (rngl_mul_le_compat_nonneg Hon Hiq Hor). {
     apply (rngl_le_0_sub Hop Hor), rngl_cos_bound.
   }
   rewrite <- (rngl_add_opp_r Hop).
-  now apply (rngl_add_le_mono_l Hos Hor).
+  now apply (rngl_add_le_mono_l Hor).
 }
 Qed.
 

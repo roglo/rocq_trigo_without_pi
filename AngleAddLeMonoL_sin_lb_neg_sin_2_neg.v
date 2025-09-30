@@ -229,13 +229,13 @@ destruct zs13. {
       exfalso.
       apply rngl_nlt_ge in Hzs1.
       apply Hzs1; clear Hzs1.
-      apply (rngl_opp_1_lt_0 Hon Hop Hiq Hor Hc1).
+      apply (rngl_opp_1_lt_0 Hon Hop Hor Hc1).
     }
     apply (rngl_eqb_neq Heo) in Hs1z.
     apply (rngl_lt_eq_cases Hor) in Hc1z.
     apply not_eq_sym in Hs1z.
     destruct Hc1z as [Hc1z| H]; [ | easy ].
-    apply (rngl_add_nonneg_pos Hos Hor); [ | easy ].
+    apply (rngl_add_nonneg_pos Hor); [ | easy ].
     apply (rngl_lt_le_incl Hor) in Hc1z, Hzs3, Hc3z.
     now apply rngl_sin_add_nonneg.
   }
@@ -403,7 +403,7 @@ destruct (rngl_leb_dec 0 (rngl_cos θ1)) as [Hzs1| Hc1z]. {
     apply rngl_leb_le in Hzc3.
     apply rngl_nlt_ge in Haov13.
     apply Haov13; clear Haov13.
-    apply (rngl_add_nonneg_pos Hos Hor); [ easy | ].
+    apply (rngl_add_nonneg_pos Hor); [ easy | ].
     now apply (rngl_sin_add_pos_1).
   }
   apply (rngl_leb_gt_iff Hor) in Hc3z.
