@@ -89,11 +89,11 @@ destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
 }
 apply (rngl_square_le_simpl_nonneg Hon Hop Hiq Hor). {
   apply rl_sqrt_nonneg.
-  now apply (rngl_mul_nonneg_nonneg Hon Hos Hiq Hor).
+  now apply (rngl_mul_nonneg_nonneg Hos Hor).
 }
 do 2 rewrite fold_rngl_squ.
 rewrite (rngl_squ_sqrt Hon). 2: {
-  now apply (rngl_mul_nonneg_nonneg Hon Hos Hiq Hor).
+  now apply (rngl_mul_nonneg_nonneg Hos Hor).
 }
 rewrite (rngl_squ_sqrt Hon). 2: {
   now apply (rngl_mul_nonneg_nonneg Hon Hos Hiq Hor).
