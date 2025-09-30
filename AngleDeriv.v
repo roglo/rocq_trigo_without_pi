@@ -747,7 +747,7 @@ apply (rngl_le_add_le_sub_l Hop Hor).
 rewrite (rngl_add_mul_l_diag_l Hon).
 rewrite (rngl_mul_comm Hic 2).
 rewrite <- rngl_mul_assoc.
-apply (rngl_mul_le_compat_nonneg Hon Hiq Hor). {
+apply (rngl_mul_le_compat_nonneg Hor). {
   split; [ apply (rngl_squ_nonneg Hos Hor) | ].
   rewrite <- (rngl_mul_1_l Hon a) at 2.
   progress unfold rngl_squ.
