@@ -250,11 +250,11 @@ destruct zs3. {
       }
       apply rngl_nle_gt in Hc2z.
       apply Hc2z; cbn.
-      apply (rngl_opp_1_le_0 Hon Hop Hiq Hor).
+      apply (rngl_opp_1_le_0 Hon Hop Hor).
     }
     apply rngl_nlt_ge in Hc1z.
     apply Hc1z.
-    apply (rngl_opp_1_le_0 Hon Hop Hiq Hor).
+    apply (rngl_opp_1_le_0 Hon Hop Hor).
   }
   apply (rngl_leb_gt_iff Hor) in Hzs13.
   apply rngl_leb_le.
@@ -484,7 +484,7 @@ destruct zs3. {
     exfalso.
     apply rngl_nle_gt in Hc2z.
     apply Hc2z; cbn.
-    apply (rngl_opp_1_le_0 Hon Hop Hiq Hor).
+    apply (rngl_opp_1_le_0 Hon Hop Hor).
   }
   apply (rngl_eqb_neq Heo) in Hc2ez.
   assert (H : (0 < rngl_cos θ2)%L). {

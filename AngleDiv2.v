@@ -182,7 +182,7 @@ do 2 rewrite <- rngl_mul_assoc.
 rewrite rl_nth_root_mul; cycle 1. {
   now apply (rngl_mul_nonneg_nonneg Hos Hor).
 } {
-  apply (rngl_mul_diag_nonneg Hon Hos Hiq Hor).
+  apply (rngl_mul_diag_nonneg Hos Hor).
 }
 rewrite rl_nth_root_mul; [ | easy | easy ].
 assert (Hz2 : (0 ≤ 2⁻¹)%L). {
@@ -277,7 +277,7 @@ symmetry in Hzs.
 destruct zs. {
   rewrite (rngl_mul_1_l Hon).
   apply (rngl_le_trans Hor _ 0). {
-    apply (rngl_opp_1_le_0 Hon Hop Hiq Hor).
+    apply (rngl_opp_1_le_0 Hon Hop Hor).
   }
   apply rl_sqrt_nonneg.
   apply (rngl_div_nonneg Hon Hop Hiv Hor). 2: {
@@ -585,7 +585,7 @@ rewrite (rngl_squ_div Hic Hon Hos Hiv); [ | easy ].
 rewrite (rngl_squ_1 Hon).
 rewrite (rngl_squ_sqrt Hon). 2: {
   apply (rngl_le_trans Hor _ 2); [ apply (rngl_0_le_2 Hon Hos Hor) | ].
-  apply (rngl_add_le_mono_r Hos Hor).
+  apply (rngl_add_le_mono_r Hor).
   apply (rngl_1_le_2 Hon Hos Hiq Hor).
 }
 rewrite <- (rngl_div_add_distr_r Hiv).
@@ -630,7 +630,7 @@ rewrite <- (rngl_div_sub_distr_r Hop Hiv).
 rewrite (rngl_squ_1 Hon).
 rewrite (rngl_squ_sqrt Hon). 2: {
   apply (rngl_le_trans Hor _ 2); [ apply (rngl_0_le_2 Hon Hos Hor) | ].
-  apply (rngl_add_le_mono_r Hos Hor).
+  apply (rngl_add_le_mono_r Hor).
   apply (rngl_1_le_2 Hon Hos Hiq Hor).
 }
 replace (3 - 1)%L with 2%L. 2: {
@@ -793,7 +793,7 @@ apply (rl_sqrt_pos Hon Hos Hor).
 apply (rngl_lt_le_trans Hor _ 2). {
   apply (rngl_0_lt_2 Hon Hos Hc1 Hor).
 }
-apply (rngl_add_le_mono_r Hos Hor).
+apply (rngl_add_le_mono_r Hor).
 apply (rngl_1_le_2 Hon Hos Hiq Hor).
 Qed.
 
@@ -1098,7 +1098,7 @@ destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
 intros.
 induction n; cbn - [ angle_div_2 ]; [ apply rngl_cos_bound | ].
 apply (rngl_le_trans Hor _ 0). {
-  apply (rngl_opp_1_le_0 Hon Hop Hiq Hor).
+  apply (rngl_opp_1_le_0 Hon Hop Hor).
 }
 apply rl_sqrt_nonneg.
 apply (rngl_div_nonneg Hon Hop Hiv Hor). 2: {
@@ -1121,7 +1121,7 @@ intros.
 induction n; cbn - [ angle_div_2 ]; [ apply rngl_cos_bound | ].
 split. {
   apply (rngl_le_trans Hor _ 0). {
-    apply (rngl_opp_1_le_0 Hon Hop Hiq Hor).
+    apply (rngl_opp_1_le_0 Hon Hop Hor).
   }
   apply (rngl_div_nonneg Hon Hop Hiv Hor). 2: {
     apply (rngl_0_lt_2 Hon Hos Hc1 Hor).

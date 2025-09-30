@@ -577,7 +577,7 @@ intros H.
 apply angle_add_move_0_r in H; subst θ1.
 apply rngl_nle_gt in Hc1z.
 apply Hc1z; cbn.
-apply (rngl_opp_1_le_0 Hon Hop Hiq Hor).
+apply (rngl_opp_1_le_0 Hon Hop Hor).
 Qed.
 
 End a.

@@ -103,7 +103,7 @@ destruct (rngl_leb_dec (rngl_cos θ2) 0) as [Hc2z| Hzc2]. {
   }
   apply rngl_nle_gt in Hc1z.
   apply Hc1z; cbn.
-  apply (rngl_opp_1_le_0 Hon Hop Hiq Hor).
+  apply (rngl_opp_1_le_0 Hon Hop Hor).
 }
 apply (rngl_leb_gt_iff Hor) in Hzc2.
 apply rngl_sin_sub_nonneg_sin_le_sin; try easy. {
@@ -293,7 +293,7 @@ destruct (rngl_leb_dec (rngl_cos θ3) 0) as [Hc3z| Hzc3]. {
   destruct Hzs3; subst θ1; [ easy | ].
   apply rngl_nle_gt in Hzc1.
   apply Hzc1; cbn.
-  apply (rngl_opp_1_le_0 Hon Hop Hiq Hor).
+  apply (rngl_opp_1_le_0 Hon Hop Hor).
 }
 apply (rngl_leb_gt_iff Hor) in Hzc3.
 move Hzc3 before Hzc2.

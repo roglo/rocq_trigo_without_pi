@@ -151,7 +151,7 @@ destruct zs13. {
           exfalso.
           apply rngl_nle_gt in Hzc1.
           apply Hzc1; clear Hzc1.
-          apply (rngl_opp_1_le_0 Hon Hop Hiq Hor).
+          apply (rngl_opp_1_le_0 Hon Hop Hor).
         }
       }
       apply (rngl_eqb_neq Heo) in Hs1z.
