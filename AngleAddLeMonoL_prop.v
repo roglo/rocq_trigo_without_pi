@@ -552,7 +552,7 @@ split. {
   cbn.
   apply (rngl_le_sub_0 Hop Hor).
   apply (rngl_le_trans Hor _ 0).
-  apply (rngl_mul_nonneg_nonpos Hon Hop Hiq Hor); [ easy | ].
+  apply (rngl_mul_nonneg_nonpos Hop Hor); [ easy | ].
   now apply (rngl_lt_le_incl Hor).
   apply (rngl_mul_nonneg_nonneg Hos Hor); [ | easy ].
   now apply (rngl_lt_le_incl Hor).

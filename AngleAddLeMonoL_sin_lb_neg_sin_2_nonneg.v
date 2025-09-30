@@ -302,7 +302,7 @@ destruct zs3. {
         rewrite <- rngl_mul_add_distr_r.
         apply (rngl_mul_nonpos_nonneg Hop Hor); [ | ].
         apply (rngl_lt_le_incl Hor) in Hzc2.
-        now apply (rngl_add_nonpos_nonpos Hos Hor).
+        now apply (rngl_add_nonpos_nonpos Hor).
         now apply (rngl_lt_le_incl Hor).
       }
       apply (rngl_eqb_neq Heo) in Hes23.

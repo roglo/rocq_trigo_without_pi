@@ -586,7 +586,7 @@ rewrite (rngl_squ_1 Hon).
 rewrite (rngl_squ_sqrt Hon). 2: {
   apply (rngl_le_trans Hor _ 2); [ apply (rngl_0_le_2 Hon Hos Hor) | ].
   apply (rngl_add_le_mono_r Hor).
-  apply (rngl_1_le_2 Hon Hos Hiq Hor).
+  apply (rngl_1_le_2 Hon Hos Hor).
 }
 rewrite <- (rngl_div_add_distr_r Hiv).
 replace (3 + 1)%L with 2²%L. 2: {
@@ -602,7 +602,7 @@ intros H.
 apply (eq_rngl_squ_rngl_abs Hop Hor Hii) in H. 2: {
   apply (rngl_mul_comm Hic).
 }
-rewrite (rngl_abs_2 Hon Hos Hiq Hor) in H.
+rewrite (rngl_abs_2 Hon Hos Hor) in H.
 rewrite (rngl_abs_0 Hop) in H.
 easy.
 Qed.
@@ -631,7 +631,7 @@ rewrite (rngl_squ_1 Hon).
 rewrite (rngl_squ_sqrt Hon). 2: {
   apply (rngl_le_trans Hor _ 2); [ apply (rngl_0_le_2 Hon Hos Hor) | ].
   apply (rngl_add_le_mono_r Hor).
-  apply (rngl_1_le_2 Hon Hos Hiq Hor).
+  apply (rngl_1_le_2 Hon Hos Hor).
 }
 replace (3 - 1)%L with 2%L. 2: {
   symmetry.
@@ -794,7 +794,7 @@ apply (rngl_lt_le_trans Hor _ 2). {
   apply (rngl_0_lt_2 Hon Hos Hc1 Hor).
 }
 apply (rngl_add_le_mono_r Hor).
-apply (rngl_1_le_2 Hon Hos Hiq Hor).
+apply (rngl_1_le_2 Hon Hos Hor).
 Qed.
 
 Theorem angle_straight_le_4_angle_straight_div_3 :
@@ -909,7 +909,7 @@ split; intros Hs3. {
   apply (rngl_opp_le_compat Hop Hor) in Hs3.
   apply -> (rngl_opp_le_compat Hop Hor).
   rewrite (rngl_add_opp_r Hop) in Hs3.
-  apply (rngl_le_le_squ Hon Hop Hiq Hor) in Hs3. 2: {
+  apply (rngl_le_le_squ Hop Hor) in Hs3. 2: {
     apply rl_sqrt_nonneg.
     apply rngl_1_sub_cos_div_2_nonneg.
   }
@@ -1226,8 +1226,8 @@ apply (rngl_add_le_mono Hor). 2: {
   now apply IHn.
 }
 rewrite <- (rngl_squ_1 Hon).
-apply (rngl_abs_le_squ_le Hon Hop Hiq Hor).
-rewrite (rngl_abs_1 Hon Hos Hiq Hor).
+apply (rngl_abs_le_squ_le Hop Hor).
+rewrite (rngl_abs_1 Hon Hos Hor).
 progress unfold rngl_abs.
 remember (squ_rngl_cos_div_pow_2 (θ /₂) n ≤? 0)%L as scz eqn:Hscz.
 symmetry in Hscz.
@@ -1365,7 +1365,7 @@ enough (H :
 }
 intros ε Hε.
 remember ((1 - rngl_cos (θ /₂)))%L as a eqn:Ha.
-specialize (int_part Hon Hop Hiq Hc1 Hor Har) as H1.
+specialize (int_part Hon Hop Hc1 Hor Har) as H1.
 specialize (H1 (a / ε))%L.
 destruct H1 as (N, HN).
 exists (Nat.log2 N + 1).
@@ -1385,7 +1385,7 @@ rewrite <- (rngl_abs_nonneg_eq Hop Hor (_ / _))%L. 2: {
 }
 eapply (rngl_lt_le_trans Hor); [ apply HN | ].
 apply (Nat.pow_le_mono_r 2) in Hn; [ | easy ].
-apply (rngl_of_nat_inj_le Hon Hos Hiq Hc1 Hor) in Hn.
+apply (rngl_of_nat_inj_le Hon Hos Hc1 Hor) in Hn.
 do 2 rewrite (rngl_of_nat_pow Hon Hos) in Hn.
 cbn in Hn.
 rewrite rngl_add_0_r in Hn.
@@ -1395,7 +1395,7 @@ replace 2%L with (rngl_of_nat 2). 2: {
   now rewrite rngl_add_0_r.
 }
 rewrite <- (rngl_of_nat_pow Hon Hos).
-apply (rngl_of_nat_inj_le Hon Hos Hiq Hc1 Hor).
+apply (rngl_of_nat_inj_le Hon Hos Hc1 Hor).
 rewrite Nat.add_1_r.
 apply Nat.le_succ_l.
 clear HN Hn.
