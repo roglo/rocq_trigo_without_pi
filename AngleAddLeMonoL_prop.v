@@ -255,7 +255,7 @@ destruct H21 as [H21| H21]. {
     rewrite <- rngl_sin_add in Hzs12.
     eapply (rngl_le_trans Hor); [ | apply Hzs12 ].
     rewrite <- (rngl_mul_1_r Hon (rngl_cos θ2)) at 1.
-    apply (rngl_mul_le_mono_nonpos_l Hon Hop Hiq Hor); [ easy | ].
+    apply (rngl_mul_le_mono_nonpos_l Hop Hor); [ easy | ].
     apply rngl_sin_bound.
   }
 } {

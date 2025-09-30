@@ -342,8 +342,8 @@ destruct zs3. {
       apply rngl_leb_le in Hzc1.
       cbn.
       apply (rngl_sub_le_compat Hop Hor).
-      now apply (rngl_mul_le_mono_nonpos_l Hon Hop Hiq Hor).
-      apply (rngl_mul_le_mono_nonpos_l Hon Hop Hiq Hor); [ easy | ].
+      now apply (rngl_mul_le_mono_nonpos_l Hop Hor).
+      apply (rngl_mul_le_mono_nonpos_l Hop Hor); [ easy | ].
       apply rngl_cos_cos_sin_sin_nonneg_sin_le_cos_le_iff; try easy.
       now apply (rngl_lt_le_incl Hor).
       now apply (rngl_lt_le_incl Hor).
