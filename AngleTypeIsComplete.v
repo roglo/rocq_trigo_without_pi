@@ -31,13 +31,13 @@ rewrite <- (rngl_abs_nonneg_eq  Hop Hor (_ - _)). 2: {
   apply (rngl_le_0_sub Hop Hor).
   now apply (rngl_lt_le_incl Hor) in Hc12.
 }
-rewrite <- (rl_sqrt_squ Hon Hop Hor).
-apply (rl_sqrt_le_rl_sqrt Hon Hop Hiq Hor). {
+rewrite <- (rl_sqrt_squ Hop Hor).
+apply (rl_sqrt_le_rl_sqrt Hop Hiq Hor). {
   apply (rngl_squ_nonneg Hos Hor).
 }
-rewrite (rngl_squ_sub Hop Hic Hon).
+rewrite (rngl_squ_sub Hop Hic).
 rewrite (rngl_mul_sub_distr_l Hop).
-rewrite (rngl_mul_1_r Hon).
+rewrite rngl_mul_1_r.
 rewrite rngl_cos_sub.
 rewrite rngl_mul_add_distr_l.
 rewrite (rngl_sub_add_distr Hos).
@@ -57,7 +57,7 @@ apply (rngl_sub_le_mono_l Hop Hor).
 apply (rngl_le_0_sub Hop Hor).
 rewrite (rngl_mul_mul_swap Hic).
 rewrite (rngl_add_sub_swap Hop).
-rewrite <- (rngl_squ_sub Hop Hic Hon).
+rewrite <- (rngl_squ_sub Hop Hic).
 apply (rngl_squ_nonneg Hos Hor).
 Qed.
 
@@ -147,7 +147,6 @@ Qed.
 
 (* to be moved somewhere else *)
 Theorem rngl_dist_to_limit_bounded :
-  rngl_has_1 T = true →
   rngl_has_opp T = true →
   rngl_has_inv_or_pdiv T = true →
   rngl_is_ordered T = true →
@@ -156,16 +155,15 @@ Theorem rngl_dist_to_limit_bounded :
   is_limit_when_seq_tends_to_inf rngl_dist u l
   → ∃ N, ∀ n, N ≤ n → (rngl_dist (u n) l < 1)%L.
 Proof.
-intros Hon Hop Hiq Hor Hc1.
+intros Hop Hiq Hor Hc1.
 specialize (rngl_has_opp_has_opp_or_psub Hop) as Hos.
 intros * Hlim.
 specialize (Hlim 1)%L.
-specialize (rngl_0_lt_1 Hon Hos Hc1 Hor) as H.
+specialize (rngl_0_lt_1 Hos Hc1 Hor) as H.
 now apply Hlim.
 Qed.
 
 Theorem rngl_converging_seq_bounded :
-  rngl_has_1 T = true →
   rngl_has_opp T = true →
   rngl_has_inv_or_pdiv T = true →
   rngl_is_ordered T = true →
@@ -174,10 +172,10 @@ Theorem rngl_converging_seq_bounded :
   is_limit_when_seq_tends_to_inf rngl_dist u l
   → ∃ N, ∀ n, N ≤ n → (rngl_abs (u n) < rngl_abs l + 1)%L.
 Proof.
-intros Hon Hop Hiq Hor Hc1.
+intros Hop Hiq Hor Hc1.
 specialize (rngl_has_opp_has_opp_or_psub Hop) as Hos.
 intros * Hlim.
-apply (rngl_dist_to_limit_bounded Hon Hop Hiq Hor Hc1) in Hlim.
+apply (rngl_dist_to_limit_bounded Hop Hiq Hor Hc1) in Hlim.
 destruct Hlim as (N, HN).
 exists N.
 intros n Hn.
@@ -192,7 +190,6 @@ apply (rngl_le_refl Hor).
 Qed.
 
 Theorem rngl_converging_seq_add_limit_bounded :
-  rngl_has_1 T = true →
   rngl_has_opp T = true →
   rngl_has_inv_or_pdiv T = true →
   rngl_is_ordered T = true →
@@ -201,15 +198,15 @@ Theorem rngl_converging_seq_add_limit_bounded :
   is_limit_when_seq_tends_to_inf rngl_dist u k
   → ∃ N, ∀ n, N ≤ n → (rngl_abs (u n + k) < 2 * rngl_abs k + 1)%L.
 Proof.
-intros Hon Hop Hiq Hor Hc1.
+intros Hop Hiq Hor Hc1.
 specialize (rngl_has_opp_has_opp_or_psub Hop) as Hos.
 intros * Hlim.
-apply (rngl_converging_seq_bounded Hon Hop Hiq Hor Hc1) in Hlim.
+apply (rngl_converging_seq_bounded Hop Hiq Hor Hc1) in Hlim.
 destruct Hlim as (N, HN).
 exists N.
 intros n Hn.
 specialize (HN n Hn).
-rewrite (rngl_mul_2_l Hon).
+rewrite rngl_mul_2_l.
 rewrite <- rngl_add_assoc.
 eapply (rngl_le_lt_trans Hor). 2: {
   apply (rngl_add_lt_mono_l Hos Hor), HN.
@@ -225,25 +222,25 @@ Theorem rngl_limit_limit_squ :
 Proof.
 destruct_ac.
 destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
-  specialize (rngl_characteristic_1 Hon Hos Hc1) as H1.
+  specialize (rngl_characteristic_1 Hos Hc1) as H1.
   intros * Hu.
   intros ε Hε.
   rewrite (H1 ε) in Hε.
   now apply (rngl_lt_irrefl Hor) in Hε.
 }
 intros * Hu.
-specialize (rngl_converging_seq_add_limit_bounded Hon Hop Hiq Hor Hc1) as H2.
+specialize (rngl_converging_seq_add_limit_bounded Hop Hiq Hor Hc1) as H2.
 specialize (H2 _ _ Hu).
 intros ε Hε.
 specialize (Hu (ε / (2 * rngl_abs l + 1)))%L.
 assert (H : (0 < ε / (2 * rngl_abs l + 1))%L). {
-  apply (rngl_lt_div_r Hon Hop Hiv Hor); [ | now rewrite (rngl_mul_0_l Hos) ].
+  apply (rngl_lt_div_r Hop Hiv Hor); [ | now rewrite (rngl_mul_0_l Hos) ].
   apply (rngl_lt_le_trans Hor _ 1). {
-    apply (rngl_0_lt_1 Hon Hos Hc1 Hor).
+    apply (rngl_0_lt_1 Hos Hc1 Hor).
   }
   apply (rngl_le_add_l Hor).
   apply (rngl_mul_nonneg_nonneg Hos Hor).
-  apply (rngl_0_le_2 Hon Hos Hor).
+  apply (rngl_0_le_2 Hos Hor).
   apply (rngl_abs_nonneg Hop Hor).
 }
 specialize (Hu H); clear H.
@@ -268,7 +265,7 @@ progress unfold rngl_dist.
 rewrite (rngl_squ_sub_squ Hop).
 rewrite (rngl_mul_comm Hic (u n)).
 rewrite (rngl_add_sub Hos).
-rewrite (rngl_abs_mul Hon Hop Hiq Hor).
+rewrite (rngl_abs_mul Hop Hiq Hor).
 eapply (rngl_le_lt_trans Hor). {
   apply (rngl_mul_le_mono_nonneg_l Hop Hor). {
     apply (rngl_abs_nonneg Hop Hor).
@@ -277,17 +274,17 @@ eapply (rngl_le_lt_trans Hor). {
   apply HN1.
 }
 rewrite (rngl_mul_div_assoc Hiv).
-apply (rngl_lt_div_l Hon Hop Hiv Hor). {
+apply (rngl_lt_div_l Hop Hiv Hor). {
   apply (rngl_lt_le_trans Hor _ 1). {
-    apply (rngl_0_lt_1 Hon Hos Hc1 Hor).
+    apply (rngl_0_lt_1 Hos Hc1 Hor).
   }
   apply (rngl_le_add_l Hor).
   apply (rngl_mul_nonneg_nonneg Hos Hor).
-  apply (rngl_0_le_2 Hon Hos Hor).
+  apply (rngl_0_le_2 Hos Hor).
   apply (rngl_abs_nonneg Hop Hor).
 }
 rewrite (rngl_mul_comm Hic).
-now apply (rngl_mul_lt_mono_pos_l Hon Hop Hiq Hor).
+now apply (rngl_mul_lt_mono_pos_l Hop Hiq Hor).
 Qed.
 
 Theorem is_limit_when_seq_tends_to_inf_eq_compat :
@@ -319,7 +316,7 @@ Theorem limit_cos_cos_sin_sin :
 Proof.
 destruct_ac.
 destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
-  specialize (rngl_characteristic_1 Hon Hos Hc1) as H1.
+  specialize (rngl_characteristic_1 Hos Hc1) as H1.
   intros * Hc Hs ε Hε.
   rewrite H1 in Hε.
   now apply (rngl_lt_irrefl Hor) in Hε.
@@ -327,12 +324,12 @@ destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
 intros * Hc Hs.
 intros ε Hε.
 assert (H : (0 < √(ε² / 2))%L). {
-  apply (rl_sqrt_pos Hon Hos Hor).
-  apply (rngl_lt_div_r Hon Hop Hiv Hor).
-  apply (rngl_0_lt_2 Hon Hos Hc1 Hor).
+  apply (rl_sqrt_pos Hos Hor).
+  apply (rngl_lt_div_r Hop Hiv Hor).
+  apply (rngl_0_lt_2 Hos Hc1 Hor).
   rewrite (rngl_mul_0_l Hos).
   progress unfold rngl_squ.
-  now apply (rngl_mul_pos_pos Hon Hop Hiq Hor).
+  now apply (rngl_mul_pos_pos Hop Hiq Hor).
 }
 specialize (Hc _ H).
 specialize (Hs _ H).
@@ -360,29 +357,29 @@ cbn in Hnc, Hns.
 progress unfold rngl_dist in Hnc.
 progress unfold rngl_dist in Hns.
 assert (H : (0 ≤ ε² / 2)%L). {
-  apply (rngl_div_nonneg Hon Hop Hiv Hor).
+  apply (rngl_div_nonneg Hop Hiv Hor).
   apply (rngl_squ_nonneg Hos Hor).
-  apply (rngl_0_lt_2 Hon Hos Hc1 Hor).
+  apply (rngl_0_lt_2 Hos Hc1 Hor).
 }
 rewrite <- (rngl_abs_sqrt Hop Hor) in Hnc; [ | easy ].
 rewrite <- (rngl_abs_sqrt Hop Hor) in Hns; [ | easy ].
-apply (rngl_abs_lt_squ_lt Hon Hop Hiq Hor) in Hnc, Hns; cycle 1. {
+apply (rngl_abs_lt_squ_lt Hop Hiq Hor) in Hnc, Hns; cycle 1. {
   apply (rngl_mul_comm Hic).
 } {
   apply (rngl_mul_comm Hic).
 }
-rewrite (rngl_squ_sqrt Hon _ H) in Hnc, Hns.
+rewrite (rngl_squ_sqrt _ H) in Hnc, Hns.
 clear H.
 generalize Hε; intros H.
 apply (rngl_lt_le_incl Hor) in H.
 rewrite <- (rngl_abs_nonneg_eq Hop Hor ε H).
-rewrite <- (rl_sqrt_squ Hon Hop Hor ε).
-apply (rl_sqrt_lt_rl_sqrt Hon Hor). {
+rewrite <- (rl_sqrt_squ Hop Hor ε).
+apply (rl_sqrt_lt_rl_sqrt Hor). {
   apply (rngl_add_squ_nonneg Hos Hor).
 }
 rewrite <- (rngl_mul_div Hi1 ε² 2)%L.
-rewrite (rngl_mul_2_r Hon ε²)%L. 2: {
-  apply (rngl_2_neq_0 Hon Hos Hc1 Hor).
+rewrite (rngl_mul_2_r ε²)%L. 2: {
+  apply (rngl_2_neq_0 Hos Hc1 Hor).
 }
 rewrite (rngl_div_add_distr_r Hiv).
 rewrite (rngl_squ_sub_comm Hop (rngl_cos _))%L.
@@ -439,7 +436,7 @@ Theorem rngl_is_complete_angle_is_complete :
 Proof.
 destruct_ac.
 destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
-  specialize (rngl_characteristic_1 Hon Hos Hc1) as H1.
+  specialize (rngl_characteristic_1 Hos Hc1) as H1.
   intros Hco u Hu.
   exists 0%A.
   intros ε Hε.
@@ -462,7 +459,7 @@ specialize (H2 H); clear H.
 destruct H2 as (s, Hs).
 move s before c.
 generalize Hc; intros Hci.
-specialize (rngl_limit_interv Hon Hop Hiv Hor (rngl_dist_is_dist Hop Hor))
+specialize (rngl_limit_interv Hop Hiv Hor (rngl_dist_is_dist Hop Hor))
   as H1.
 specialize (rngl_dist_left_mono Hop Hor) as H.
 specialize (H1 H); clear H.
@@ -480,7 +477,7 @@ assert (Hcs1 : (c² + s² = 1)%L). {
   generalize Hc; intros H1.
   generalize Hs; intros H2.
   apply rngl_limit_limit_squ in H1, H2.
-  specialize (limit_add Hon Hop Hiv Hor (rngl_dist_is_dist Hop Hor)) as H.
+  specialize (limit_add Hop Hiv Hor (rngl_dist_is_dist Hop Hor)) as H.
   specialize (H (rngl_dist_add_add_le Hop Hor)).
   specialize (H _ _ _ _ H1 H2).
   cbn in H.
@@ -500,13 +497,13 @@ assert (Hts : s = rngl_sin θ ∨ s = (- rngl_sin θ)%L). {
     apply rngl_leb_le in Hzs.
     rewrite <- (rngl_abs_sqrt Hop Hor). 2: {
       apply (rngl_le_0_sub Hop Hor).
-      now apply (rngl_squ_le_1_iff Hon Hop Hiq Hor).
+      now apply (rngl_squ_le_1_iff Hop Hiq Hor).
     }
     rewrite <- (rngl_abs_nonneg_eq Hop Hor s Hzs).
     apply (eq_rngl_squ_rngl_abs Hop Hor Hii); [ apply (rngl_mul_comm Hic) | ].
-    rewrite (rngl_squ_sqrt Hon). 2: {
+    rewrite rngl_squ_sqrt. 2: {
       apply (rngl_le_0_sub Hop Hor).
-      now apply (rngl_squ_le_1_iff Hon Hop Hiq Hor).
+      now apply (rngl_squ_le_1_iff Hop Hiq Hor).
     }
     now apply (rngl_add_move_l Hop).
   } {
@@ -520,14 +517,14 @@ assert (Hts : s = rngl_sin θ ∨ s = (- rngl_sin θ)%L). {
     f_equal.
     rewrite <- (rngl_abs_sqrt Hop Hor). 2: {
       apply (rngl_le_0_sub Hop Hor).
-      now apply (rngl_squ_le_1_iff Hon Hop Hiq Hor).
+      now apply (rngl_squ_le_1_iff Hop Hiq Hor).
     }
     apply (rngl_lt_le_incl Hor) in Hzs.
     rewrite <- (rngl_abs_nonneg_eq Hop Hor s Hzs).
     apply (eq_rngl_squ_rngl_abs Hop Hor Hii); [ apply (rngl_mul_comm Hic) | ].
-    rewrite (rngl_squ_sqrt Hon). 2: {
+    rewrite rngl_squ_sqrt. 2: {
       apply (rngl_le_0_sub Hop Hor).
-      now apply (rngl_squ_le_1_iff Hon Hop Hiq Hor).
+      now apply (rngl_squ_le_1_iff Hop Hiq Hor).
     }
     now apply (rngl_add_move_l Hop).
   }

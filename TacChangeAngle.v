@@ -27,7 +27,6 @@ Ltac change_angle_opp θ :=
   subst θ; rename θ' into θ.
 
 Ltac sin_cos_add_sub_right_hyp T H :=
-  set (Hon' := ac_on);
   set (Hop' := ac_op);
   repeat rewrite -> (angle_add_assoc _ _ π/₂) in H;
   repeat rewrite -> (angle_add_sub_assoc _ π/₂) in H;
@@ -69,10 +68,9 @@ Ltac sin_cos_add_sub_right_hyp T H :=
   try apply -> (rngl_le_opp_r Hop' Hor') in H;
   try apply -> (rngl_lt_opp_l Hop' Hor') in H;
   repeat rewrite (rngl_opp_involutive Hop') in H;
-  clear Hon' Hop' Hos' Hor'.
+  clear Hop' Hos' Hor'.
 
 Ltac sin_cos_add_sub_straight_hyp T H :=
-  set (Hon' := ac_on);
   set (Hop' := ac_op);
   repeat rewrite angle_add_sub_assoc in H;
   repeat rewrite <- (angle_sub_sub_distr π) in H;
@@ -102,7 +100,7 @@ Ltac sin_cos_add_sub_straight_hyp T H :=
   repeat rewrite (rngl_opp_involutive Hop') in H;
   try apply -> (rngl_lt_opp_l Hop' Hor') in H;
   try apply -> (rngl_opp_pos_neg Hop' Hor') in H;
-  clear Hon' Hop' Hos' Hor'.
+  clear Hop' Hos' Hor'.
 
 Ltac sin_cos_opp_hyp T H :=
   set (Hop' := ac_op);
@@ -121,7 +119,6 @@ Ltac sin_cos_opp_hyp T H :=
   clear Hop' Hor'.
 
 Ltac sin_cos_add_sub_right_goal T :=
-  set (Hon' := ac_on);
   set (Hop' := ac_op);
   repeat rewrite angle_add_assoc;
   repeat rewrite -> angle_add_sub_assoc;
@@ -152,10 +149,9 @@ Ltac sin_cos_add_sub_right_goal T :=
   try apply <- (rngl_lt_0_sub Hop' Hor');
   try (remember rngl_cos as c; apply <- (rngl_le_sub_0 Hop' Hor'); subst c);
   try (remember rngl_cos as c; apply <- (rngl_le_0_sub Hop' Hor'); subst c);
-  clear Hon' Hop' Hor' Hos'.
+  clear Hop' Hor' Hos'.
 
 Ltac sin_cos_add_sub_straight_goal T :=
-  set (Hon' := ac_on);
   set (Hop' := ac_op);
   repeat rewrite -> angle_add_sub_assoc;
   repeat rewrite -> (angle_add_add_swap _ π);
@@ -180,7 +176,7 @@ Ltac sin_cos_add_sub_straight_goal T :=
   try apply <- (rngl_le_opp_r Hop' Hor');
   try apply <- (rngl_lt_opp_r Hop' Hor');
   try apply <- (rngl_le_0_sub Hop' Hor');
-  clear Hon' Hop' Hor'.
+  clear Hop' Hor'.
 
 Ltac sin_cos_opp_goal T :=
   repeat rewrite angle_add_opp_l;

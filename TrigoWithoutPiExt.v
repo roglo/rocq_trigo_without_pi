@@ -151,7 +151,7 @@ Proof.
 (* thanks Geoffroy *)
 destruct_ac.
 destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
-  specialize (rngl_characteristic_1 Hon Hos Hc1) as H1.
+  specialize (rngl_characteristic_1 Hos Hc1) as H1.
   intros.
   rewrite H1, (H1 (rngl_cos _)).
   apply (rngl_le_refl Hor).
@@ -175,7 +175,7 @@ destruct (rngl_leb_dec 0 (rngl_cos θ3))%L as [Hzc3| Hc3z]. {
   apply (rngl_add_move_r Hop) in H1.
   rewrite H1 in Hc123; clear H1.
   rewrite (rngl_mul_sub_distr_l Hop) in Hc123.
-  rewrite (rngl_mul_1_r Hon) in Hc123.
+  rewrite rngl_mul_1_r in Hc123.
   eapply (rngl_le_trans Hor); [ apply Hc123 | ].
   rewrite <- (rngl_add_sub_swap Hop).
   rewrite <- (rngl_add_sub_assoc Hop).
@@ -205,7 +205,7 @@ destruct (rngl_leb_dec 0 (rngl_cos θ1))%L as [Hzc1| Hc1z]. {
   move Hzc1 before Hc3z.
   apply (rngl_le_0_add Hos Hor); [ | easy ].
   apply (rngl_lt_le_incl Hor) in Hc3z.
-  now apply (rngl_sin_add_nonneg).
+  now apply rngl_sin_add_nonneg.
 }
 apply (rngl_leb_gt_iff Hor) in Hc1z.
 change_angle_sub_r θ1 π/₂.
@@ -227,10 +227,10 @@ destruct (rngl_eqb_dec (rngl_cos θ2) 0) as [Hc2z| Hc2z]. {
   rewrite (rngl_mul_0_l Hos).
   rewrite (rngl_sub_0_l Hop).
   apply (rngl_opp_neg_pos Hop Hor).
-  apply (rngl_mul_pos_pos Hon Hop Hiq Hor); [ | easy ].
+  apply (rngl_mul_pos_pos Hop Hiq Hor); [ | easy ].
   apply eq_rngl_cos_0 in Hc2z.
   destruct Hc2z; subst θ2. {
-    apply (rngl_0_lt_1 Hon Hos Hc1 Hor).
+    apply (rngl_0_lt_1 Hos Hc1 Hor).
   }
   rewrite angle_sub_opp_r in Hzs12.
   rewrite rngl_cos_add_right_r in Hzs12.
@@ -242,7 +242,7 @@ rename Hc123 into Hs123.
 destruct (rngl_leb_dec (rngl_cos θ1) (rngl_cos (θ2 + θ3)))
     as [Hc123| Hc231]. {
   apply rngl_leb_le in Hc123.
-  apply (rngl_mul_le_mono_pos_r Hon Hop Hiq Hor _ _ (rngl_cos θ2)). {
+  apply (rngl_mul_le_mono_pos_r Hop Hiq Hor _ _ (rngl_cos θ2)). {
     apply not_eq_sym in Hc2z.
     now apply (rngl_le_neq Hor).
   }
@@ -258,7 +258,7 @@ destruct (rngl_leb_dec (rngl_cos θ1) (rngl_cos (θ2 + θ3)))
   apply (rngl_add_move_r Hop) in H1.
   rewrite H1; clear H1.
   rewrite (rngl_mul_sub_distr_r Hop).
-  rewrite (rngl_mul_1_l Hon).
+  rewrite rngl_mul_1_l.
   rewrite <- (rngl_add_sub_swap Hop).
   rewrite <- (rngl_add_sub_assoc Hop).
   apply (rngl_le_sub_le_add_l Hop Hor).
@@ -354,7 +354,7 @@ Theorem angle_add_overflow_le_lemma_2 :
 Proof.
 destruct_ac.
 destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
-  specialize (rngl_characteristic_1 Hon Hos Hc1) as H1.
+  specialize (rngl_characteristic_1 Hos Hc1) as H1.
   intros * Hco1 Hzs1 Hzs2 Hc1z Hzs12.
   do 2 rewrite (H1 (rngl_cos _)).
   apply (rngl_le_refl Hor).
@@ -403,7 +403,7 @@ destruct (rngl_leb_dec (rngl_cos θ2) 0) as [Hc2z| Hzc2]. {
   destruct Hzs2; subst θ1; [ easy | ].
   apply rngl_nlt_ge in Hc1z.
   apply Hc1z; clear Hc1z.
-  apply (rngl_opp_1_lt_0 Hon Hop Hor Hc1).
+  apply (rngl_opp_1_lt_0 Hop Hor Hc1).
 }
 apply (rngl_leb_gt_iff Hor) in Hzc2.
 move Hzc2 before Hzs1.
@@ -470,7 +470,7 @@ destruct (rngl_ltb_dec 0 (rngl_cos θ2)) as [Hzc2| Hzc2]. {
     apply (rngl_opp_neg_pos Hop Hor).
     rewrite (rngl_mul_comm Hic).
     apply (rngl_lt_0_add Hor).
-    now apply (rngl_mul_pos_pos Hon Hop Hiq Hor).
+    now apply (rngl_mul_pos_pos Hop Hiq Hor).
     apply (rngl_mul_nonneg_nonneg Hos Hor).
     now apply (rngl_lt_le_incl Hor).
     now apply (rngl_lt_le_incl Hor).
@@ -491,7 +491,7 @@ apply rngl_nlt_ge in Hzs12.
 apply Hzs12; clear Hzs12; cbn.
 apply (rngl_add_nonneg_pos Hor).
 now apply (rngl_mul_nonneg_nonneg Hos Hor).
-now apply (rngl_mul_pos_pos Hon Hop Hiq Hor).
+now apply (rngl_mul_pos_pos Hop Hiq Hor).
 Qed.
 
 Theorem angle_add_overflow_le_lemma_6 :
@@ -504,7 +504,7 @@ Theorem angle_add_overflow_le_lemma_6 :
 Proof.
 destruct_ac.
 destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
-  specialize (rngl_characteristic_1 Hon Hos Hc1) as H1.
+  specialize (rngl_characteristic_1 Hos Hc1) as H1.
   intros * Hzs1 Hzs2 Hzs12 H12.
   rewrite (H1 (rngl_sin _)) in Hzs2.
   now apply (rngl_lt_irrefl Hor) in Hzs2.
@@ -562,7 +562,7 @@ destruct (rngl_ltb_dec 0 (rngl_cos θ2)) as [Hzc2| Hzc2]. {
     exfalso.
     apply rngl_nlt_ge in Hzc1.
     apply Hzc1; cbn.
-    apply (rngl_opp_1_lt_0 Hon Hop Hor Hc1).
+    apply (rngl_opp_1_lt_0 Hop Hor Hc1).
   }
   apply (rngl_eqb_neq Heo) in Hc1z.
   apply rngl_sin_sub_lt_sin_l; [ easy | easy | ].
@@ -587,7 +587,7 @@ destruct (rngl_eqb_dec (rngl_sin θ1) 0) as [Hs1z| Hs1z]. {
   exfalso.
   apply rngl_nlt_ge in Hzs1.
   apply Hzs1; cbn.
-  apply (rngl_opp_1_lt_0 Hon Hop Hor Hc1).
+  apply (rngl_opp_1_lt_0 Hop Hor Hc1).
 }
 apply (rngl_eqb_neq Heo) in Hs1z.
 apply (rngl_lt_0_add Hor). {
@@ -665,14 +665,14 @@ Proof.
 destruct_ac.
 destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
   intros * Hu Hv ε Hε.
-  rewrite (rngl_characteristic_1 Hon Hos Hc1 ε) in Hε.
+  rewrite (rngl_characteristic_1 Hos Hc1 ε) in Hε.
   now apply (rngl_lt_irrefl Hor) in Hε.
 }
 intros * Hu Hv.
 intros ε Hε.
 assert (Hε2 : (0 < ε / 2)%L). {
-  apply (rngl_lt_div_r Hon Hop Hiv Hor).
-  apply (rngl_0_lt_2 Hon Hos Hc1 Hor).
+  apply (rngl_lt_div_r Hop Hiv Hor).
+  apply (rngl_0_lt_2 Hos Hc1 Hor).
   now rewrite (rngl_mul_0_l Hos).
 }
 specialize (Hu _ Hε2).
@@ -687,9 +687,9 @@ cbn in HM, HN |-*.
 rewrite angle_eucl_dist_move_0_l in HM, HN.
 rewrite angle_eucl_dist_move_0_l.
 specialize (rngl_div_add_distr_r Hiv ε ε 2)%L as Hεε2.
-rewrite <- (rngl_mul_2_r Hon) in Hεε2.
+rewrite <- rngl_mul_2_r in Hεε2.
 rewrite (rngl_mul_div Hi1) in Hεε2. 2: {
-  apply (rngl_2_neq_0 Hon Hos Hc1 Hor).
+  apply (rngl_2_neq_0 Hos Hc1 Hor).
 }
 rewrite Hεε2.
 eapply (rngl_le_lt_trans Hor). {
@@ -723,7 +723,7 @@ induction k. {
   do 2 rewrite (rngl_sub_diag Hos).
   rewrite (rngl_squ_0 Hos).
   rewrite rngl_add_0_l.
-  now rewrite (rl_sqrt_0 Hon Hop Hor Hii).
+  now rewrite (rl_sqrt_0 Hop Hor Hii).
 }
 cbn.
 now apply angle_lim_add_add.
@@ -735,7 +735,7 @@ destruct_ac.
 intros.
 apply eq_angle_eq; cbn.
 induction n; [ easy | cbn ].
-do 2 rewrite (rngl_mul_1_l Hon).
+do 2 rewrite rngl_mul_1_l.
 do 2 rewrite (rngl_mul_0_l Hos).
 rewrite (rngl_sub_0_r Hos).
 now rewrite rngl_add_0_l.
@@ -878,17 +878,17 @@ Proof.
 destruct_ac.
 destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
   intros.
-  specialize (rngl_characteristic_1 Hon Hos Hc1) as H1.
+  specialize (rngl_characteristic_1 Hos Hc1) as H1.
   rewrite (H1 1%L).
   apply H1.
 }
 intros n.
 induction n; [ easy | cbn ].
 rewrite IHn.
-rewrite (rngl_div_diag Hon Hiq). 2: {
-  apply (rngl_2_neq_0 Hon Hos Hc1 Hor).
+rewrite (rngl_div_diag Hiq). 2: {
+  apply (rngl_2_neq_0 Hos Hc1 Hor).
 }
-now apply (rl_sqrt_1 Hon Hop Hiq Hor).
+now apply (rl_sqrt_1 Hop Hiq Hor).
 Qed.
 
 Theorem squ_rngl_cos_div_pow_2_0 : ∀ n, squ_rngl_cos_div_pow_2 0 n = 1%L.
@@ -896,15 +896,15 @@ Proof.
 destruct_ac.
 destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
   intros.
-  specialize (rngl_characteristic_1 Hon Hos Hc1) as H1.
+  specialize (rngl_characteristic_1 Hos Hc1) as H1.
   rewrite (H1 1%L).
   apply H1.
 }
 intros n.
 induction n; [ easy | cbn ].
 rewrite IHn.
-apply (rngl_div_diag Hon Hiq).
-apply (rngl_2_neq_0 Hon Hos Hc1 Hor).
+apply (rngl_div_diag Hiq).
+apply (rngl_2_neq_0 Hos Hc1 Hor).
 Qed.
 
 Theorem rngl_cos_decr :
@@ -1103,7 +1103,7 @@ intros  * Hs1z Hs2z Hc1z Hc2z.
 cbn.
 apply (rngl_add_nonneg_pos Hor).
 now apply (rngl_mul_nonneg_nonneg Hos Hor).
-now apply (rngl_mul_pos_pos Hon Hop Hiq Hor).
+now apply (rngl_mul_pos_pos Hop Hiq Hor).
 Qed.
 
 Theorem rngl_sin_add_pos_2 :
@@ -1118,7 +1118,7 @@ destruct_ac.
 intros  * Hs1z Hs2z Hc1z Hc2z.
 cbn.
 apply (rngl_lt_0_add Hor).
-now apply (rngl_mul_pos_pos Hon Hop Hiq Hor).
+now apply (rngl_mul_pos_pos Hop Hiq Hor).
 now apply (rngl_mul_nonneg_nonneg Hos Hor).
 Qed.
 
@@ -1135,7 +1135,7 @@ intros  * Hs1z Hs2z Hc1z Hc2z.
 rewrite rngl_cos_sub.
 apply (rngl_add_nonneg_pos Hor).
 now apply (rngl_mul_nonneg_nonneg Hos Hor).
-now apply (rngl_mul_pos_pos Hon Hop Hiq Hor).
+now apply (rngl_mul_pos_pos Hop Hiq Hor).
 Qed.
 
 Theorem rngl_sin_mul_2_l :
@@ -1143,13 +1143,13 @@ Theorem rngl_sin_mul_2_l :
 Proof.
 destruct_ac.
 intros; cbn.
-do 2 rewrite (rngl_mul_1_r Hon).
+do 2 rewrite rngl_mul_1_r.
 do 2 rewrite (rngl_mul_0_r Hos).
 rewrite (rngl_sub_0_r Hos).
 rewrite rngl_add_0_r.
 rewrite (rngl_mul_comm Hic (rngl_cos θ)).
 rewrite <- rngl_mul_assoc; symmetry.
-apply (rngl_mul_2_l Hon).
+apply rngl_mul_2_l.
 Qed.
 
 Theorem rngl_cos_mul_2_l :
@@ -1157,7 +1157,7 @@ Theorem rngl_cos_mul_2_l :
 Proof.
 destruct_ac.
 intros; cbn.
-do 2 rewrite (rngl_mul_1_r Hon).
+do 2 rewrite rngl_mul_1_r.
 do 2 rewrite (rngl_mul_0_r Hos).
 rewrite (rngl_sub_0_r Hos).
 rewrite rngl_add_0_r.
@@ -1173,7 +1173,7 @@ intros Hc1.
 intros H.
 apply eq_angle_eq in H.
 injection H; clear H; intros H.
-specialize (rngl_opp_1_lt_1 Hon Hop Hor Hc1) as H1.
+specialize (rngl_opp_1_lt_1 Hop Hor Hc1) as H1.
 rewrite H in H1.
 now apply (rngl_lt_irrefl Hor) in H1.
 Qed.
@@ -1195,7 +1195,7 @@ Proof.
 destruct_ac.
 destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
   intros.
-  specialize (rngl_characteristic_1 Hon Hos Hc1) as H1.
+  specialize (rngl_characteristic_1 Hos Hc1) as H1.
   specialize (rngl_characteristic_1_angle_0 Hc1) as H2.
   rewrite (H1 (rngl_cos _)).
   rewrite (H2 θ), (H2 π/₂).
@@ -1208,8 +1208,8 @@ progress unfold angle_ltb.
 cbn.
 rewrite (rngl_leb_0_opp Hop Hor).
 rewrite <- (rngl_negb_ltb Hor 0 1)%L.
-specialize (rngl_0_le_1 Hon Hos Hor) as H1.
-specialize (rngl_0_lt_1 Hon Hos Hc1 Hor) as H2.
+specialize (rngl_0_le_1 Hos Hor) as H1.
+specialize (rngl_0_lt_1 Hos Hc1 Hor) as H2.
 apply rngl_leb_le in H1.
 apply rngl_ltb_lt in H2.
 rewrite H1, H2.

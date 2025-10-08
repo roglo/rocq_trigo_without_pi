@@ -34,7 +34,7 @@ destruct H12 as [H12| H12]. {
   apply (rngl_le_sub_le_add_l Hop Hor).
   apply (rngl_le_0_sub Hop Hor).
   rewrite <- (rngl_add_sub_assoc Hop).
-  rewrite (rngl_sub_mul_r_diag_l Hon Hop).
+  rewrite (rngl_sub_mul_r_diag_l Hop).
   apply (rngl_le_0_add Hos Hor).
   now apply (rngl_mul_nonneg_nonneg Hos Hor).
   apply (rngl_mul_nonneg_nonneg Hos Hor); [ easy | ].
@@ -47,7 +47,7 @@ destruct (rngl_leb_dec 0 (rngl_cos θ1)) as [Hzc1| Hc1z]. {
   apply (rngl_le_sub_le_add_l Hop Hor).
   apply (rngl_le_0_sub Hop Hor).
   rewrite <- (rngl_add_sub_assoc Hop).
-  rewrite (rngl_sub_mul_r_diag_l Hon Hop).
+  rewrite (rngl_sub_mul_r_diag_l Hop).
   apply (rngl_le_0_add Hos Hor).
   now apply (rngl_mul_nonneg_nonneg Hos Hor).
   apply (rngl_mul_nonneg_nonneg Hos Hor); [ easy | ].
@@ -73,7 +73,7 @@ destruct (rngl_leb_dec 0 (rngl_cos θ2)) as [Hzc2| Hc2z]. {
   apply (rngl_le_sub_le_add_l Hop Hor).
   apply (rngl_le_0_sub Hop Hor).
   rewrite <- (rngl_add_sub_assoc Hop).
-  rewrite (rngl_sub_mul_r_diag_l Hon Hop).
+  rewrite (rngl_sub_mul_r_diag_l Hop).
   apply (rngl_le_0_add Hos Hor).
   now apply (rngl_mul_nonneg_nonneg Hos Hor).
   apply (rngl_mul_nonneg_nonneg Hos Hor); [ easy | ].
@@ -106,7 +106,7 @@ apply rngl_nlt_ge in Hzs12.
 apply Hzs12; clear Hzs12.
 cbn.
 apply (rngl_add_neg_nonpos Hop Hor). {
-  apply (rngl_mul_pos_neg Hon Hop Hiq Hor); [ | easy ].
+  apply (rngl_mul_pos_neg Hop Hiq Hor); [ | easy ].
   apply not_eq_sym in Hs1z.
   now apply (rngl_le_neq Hor).
 } {
@@ -279,14 +279,14 @@ destruct zs1. {
           } {
             symmetry.
             apply (rngl_leb_gt_iff Hor).
-            apply (rngl_opp_1_lt_1 Hon Hop Hor Hc1).
+            apply (rngl_opp_1_lt_1 Hop Hor Hc1).
           }
         }
         cbn.
         rewrite (rngl_opp_involutive Hop).
         transitivity true. {
           apply rngl_ltb_lt.
-          apply (rngl_opp_1_lt_1 Hon Hop Hor Hc1).
+          apply (rngl_opp_1_lt_1 Hop Hor Hc1).
         } {
           symmetry.
           apply rngl_leb_le.
@@ -369,7 +369,7 @@ destruct zs1. {
       apply Hzs12; clear Hzs12.
       cbn.
       apply (rngl_lt_0_add Hor).
-      now apply (rngl_mul_pos_pos Hon Hop Hiq Hor).
+      now apply (rngl_mul_pos_pos Hop Hiq Hor).
       apply (rngl_lt_le_incl Hor) in Hzs2.
       now apply (rngl_mul_nonneg_nonneg Hos Hor).
     }
@@ -679,7 +679,7 @@ destruct s1z. {
       progress sin_cos_add_sub_right_hyp T Hzs12.
       progress sin_cos_add_sub_right_goal T.
       apply rngl_sin_sub_nonneg_sin_le_sin. {
-        apply (rngl_sin_add_nonneg); try easy.
+        apply rngl_sin_add_nonneg; try easy.
         apply (rngl_lt_le_incl Hor) in Hc21.
         now apply (rngl_le_trans Hor _ (rngl_sin θ1)).
       } {
@@ -743,7 +743,7 @@ destruct s1z. {
     apply (rngl_add_nonneg_pos Hor).
     apply (rngl_lt_le_incl Hor) in Hzc2.
     now apply (rngl_mul_nonneg_nonneg Hos Hor).
-    now apply (rngl_mul_pos_pos Hon Hop Hiq Hor).
+    now apply (rngl_mul_pos_pos Hop Hiq Hor).
   }
   apply (rngl_leb_gt_iff Hor) in Hzc1.
   change_angle_add_r θ1 π.

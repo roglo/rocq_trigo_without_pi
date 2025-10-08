@@ -20,7 +20,6 @@ Record angle := mk_angle
 
 Class angle_ctx :=
   { ac_ic : rngl_mul_is_comm T = true;
-    ac_on : rngl_has_1 T = true;
     ac_op : rngl_has_opp T = true;
     ac_iv : rngl_has_inv T = true;
     ac_or : rngl_is_ordered T = true }.
@@ -37,15 +36,14 @@ Notation "rngl_sin² a" := ((rngl_sin a)²) (at level 10).
 
 Ltac destruct_ac :=
   set (Hic := ac_ic);
-  set (Hon := ac_on);
   set (Hop := ac_op);
   set (Hiv := ac_iv);
   set (Hor := ac_or);
   set (Hos := rngl_has_opp_has_opp_or_psub Hop);
   set (Hiq := rngl_has_inv_has_inv_or_pdiv Hiv);
-  specialize (rngl_int_dom_or_inv_1_or_pdiv_r Hon Hiq) as Hii;
+  specialize (rngl_int_dom_or_inv_or_pdiv_r Hiq) as Hii;
   specialize (rngl_has_eq_dec_or_is_ordered_r Hor) as Heo;
-  specialize (rngl_has_inv_and_1_has_inv_and_1_or_pdiv Hon Hiv) as Hi1.
+  specialize (rngl_has_inv_has_inv_or_pdiv Hiv) as Hi1.
 
 Section a.
 
@@ -82,7 +80,7 @@ Proof.
 destruct_ac.
 progress unfold cos2_sin2_prop.
 progress unfold rngl_squ.
-rewrite (rngl_mul_1_l Hon).
+rewrite rngl_mul_1_l.
 rewrite (rngl_mul_0_l Hos).
 rewrite rngl_add_0_r.
 apply (rngl_eqb_refl Heo).
@@ -93,7 +91,7 @@ Proof.
 destruct_ac.
 progress unfold cos2_sin2_prop.
 rewrite (rngl_squ_0 Hos).
-rewrite (rngl_squ_1 Hon).
+rewrite rngl_squ_1.
 rewrite rngl_add_0_l.
 apply (rngl_eqb_refl Heo).
 Qed.
@@ -104,7 +102,7 @@ destruct_ac.
 progress unfold cos2_sin2_prop.
 rewrite (rngl_squ_opp Hop).
 progress unfold rngl_squ.
-rewrite (rngl_mul_1_l Hon).
+rewrite rngl_mul_1_l.
 rewrite (rngl_mul_0_l Hos).
 rewrite rngl_add_0_r.
 apply (rngl_eqb_refl Heo).
@@ -124,8 +122,8 @@ destruct b as (x', y', Hxy'); cbn.
 move x' before y; move y' before x'.
 progress unfold cos2_sin2_prop in Hxy, Hxy' |-*.
 cbn in Hxy, Hxy' |-*.
-rewrite (rngl_squ_add Hic Hon).
-rewrite (rngl_squ_sub Hop Hic Hon).
+rewrite (rngl_squ_add Hic).
+rewrite (rngl_squ_sub Hop Hic).
 rewrite rngl_add_add_swap.
 do 2 rewrite rngl_add_assoc.
 rewrite <- (rngl_add_sub_swap Hop).
@@ -139,7 +137,7 @@ rewrite <- rngl_add_assoc.
 do 2 rewrite <- rngl_mul_add_distr_l.
 apply (rngl_eqb_eq Heo) in Hxy'.
 rewrite Hxy'.
-now do 2 rewrite (rngl_mul_1_r Hon).
+now do 2 rewrite rngl_mul_1_r.
 Qed.
 
 Theorem angle_opp_prop : ∀ a, cos2_sin2_prop (rngl_cos a) (- rngl_sin a).
@@ -207,15 +205,15 @@ assert (H : (c² ≤ 1)%L). {
   apply (rngl_squ_nonneg Hos Hor).
 }
 replace 1%L with 1²%L in H. 2: {
-  apply (rngl_mul_1_l Hon).
+  apply rngl_mul_1_l.
 }
 rewrite <- (rngl_squ_abs Hop c) in H.
 rewrite <- (rngl_squ_abs Hop 1%L) in H.
-apply (rngl_square_le_simpl_nonneg Hon Hop Hiq Hor) in H. 2: {
-  rewrite (rngl_abs_1 Hon Hos Hor).
-  apply (rngl_0_le_1 Hon Hos Hor).
+apply (rngl_square_le_simpl_nonneg Hop Hiq Hor) in H. 2: {
+  rewrite (rngl_abs_1 Hos Hor).
+  apply (rngl_0_le_1 Hos Hor).
 }
-rewrite (rngl_abs_1 Hon Hos Hor) in H.
+rewrite (rngl_abs_1 Hos Hor) in H.
 now apply (rngl_abs_le Hop Hor) in H.
 Qed.
 
@@ -230,15 +228,15 @@ assert (H : (s² ≤ 1)%L). {
   apply (rngl_squ_nonneg Hos Hor).
 }
 replace 1%L with 1²%L in H. 2: {
-  apply (rngl_mul_1_l Hon).
+  apply rngl_mul_1_l.
 }
 rewrite <- (rngl_squ_abs Hop s) in H.
 rewrite <- (rngl_squ_abs Hop 1%L) in H.
-apply (rngl_square_le_simpl_nonneg Hon Hop Hiq Hor) in H. 2: {
-  rewrite (rngl_abs_1 Hon Hos Hor).
-  apply (rngl_0_le_1 Hon Hos Hor).
+apply (rngl_square_le_simpl_nonneg Hop Hiq Hor) in H. 2: {
+  rewrite (rngl_abs_1 Hos Hor).
+  apply (rngl_0_le_1 Hos Hor).
 }
-rewrite (rngl_abs_1 Hon Hos Hor) in H.
+rewrite (rngl_abs_1 Hos Hor) in H.
 now apply (rngl_abs_le Hop Hor) in H.
 Qed.
 
@@ -265,7 +263,7 @@ Definition angle_eqb a b :=
 
 End a.
 
-Notation "'π'" := (angle_straight) (at level 0).
+Notation "'π'" := angle_straight (at level 0).
 Notation "'π/₂'" := angle_right.
 
 Declare Scope angle_scope.
@@ -366,7 +364,7 @@ Proof.
 destruct_ac.
 intros.
 apply eq_angle_eq; cbn.
-do 2 rewrite (rngl_mul_1_l Hon).
+do 2 rewrite rngl_mul_1_l.
 do 2 rewrite (rngl_mul_0_l Hos).
 rewrite (rngl_sub_0_r Hos).
 now rewrite rngl_add_0_l.
@@ -377,7 +375,7 @@ Proof.
 destruct_ac.
 intros.
 apply eq_angle_eq; cbn.
-do 2 rewrite (rngl_mul_1_r Hon).
+do 2 rewrite rngl_mul_1_r.
 do 2 rewrite (rngl_mul_0_r Hos).
 rewrite (rngl_sub_0_r Hos).
 now rewrite rngl_add_0_r.
@@ -456,7 +454,7 @@ destruct_ac; intros.
 progress unfold angle_sub.
 rewrite <- angle_add_assoc.
 rewrite angle_add_opp_diag_l.
-apply (angle_add_0_r).
+apply angle_add_0_r.
 Qed.
 
 Theorem angle_add_move_l : ∀ θ1 θ2 θ3, (θ1 + θ2)%A = θ3 ↔ θ2 = (θ3 - θ1)%A.
@@ -516,7 +514,7 @@ Proof.
 destruct_ac.
 intros.
 apply eq_angle_eq; cbn.
-do 2 rewrite (rngl_mul_1_l Hon).
+do 2 rewrite rngl_mul_1_l.
 do 2 rewrite (rngl_mul_0_l Hos).
 rewrite (rngl_sub_0_r Hos).
 now rewrite rngl_add_0_l.
@@ -527,7 +525,7 @@ Proof.
 destruct_ac.
 intros.
 apply eq_angle_eq; cbn.
-do 2 rewrite (rngl_mul_1_r Hon).
+do 2 rewrite rngl_mul_1_r.
 rewrite (rngl_opp_0 Hop).
 do 2 rewrite (rngl_mul_0_r Hos).
 rewrite (rngl_sub_0_r Hos).
@@ -556,7 +554,7 @@ Proof.
 destruct_ac.
 apply eq_angle_eq; cbn.
 do 2 rewrite (rngl_mul_0_l Hos).
-do 2 rewrite (rngl_mul_1_l Hon).
+do 2 rewrite rngl_mul_1_l.
 rewrite (rngl_sub_0_l Hop).
 f_equal.
 apply rngl_add_0_l.
@@ -567,7 +565,7 @@ Proof.
 destruct_ac.
 apply eq_angle_eq; cbn.
 rewrite (rngl_mul_opp_opp Hop).
-rewrite (rngl_mul_1_l Hon).
+rewrite rngl_mul_1_l.
 rewrite (rngl_mul_0_l Hos).
 rewrite (rngl_sub_0_r Hos).
 f_equal.
@@ -585,7 +583,7 @@ do 2 rewrite (rngl_mul_0_r Hos).
 rewrite (rngl_mul_0_l Hos).
 rewrite (rngl_sub_diag Hos).
 f_equal.
-rewrite (rngl_squ_opp_1 Hon Hop).
+rewrite (rngl_squ_opp_1 Hop).
 apply rngl_add_0_l.
 Qed.
 

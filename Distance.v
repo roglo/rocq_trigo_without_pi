@@ -26,8 +26,8 @@ intros.
 progress unfold angle_eucl_dist.
 progress unfold rl_modl.
 f_equal.
-do 2 rewrite (rngl_squ_sub Hop Hic Hon).
-rewrite (rngl_add_add_swap).
+do 2 rewrite (rngl_squ_sub Hop Hic).
+rewrite rngl_add_add_swap.
 rewrite <- (rngl_add_sub_swap Hop).
 rewrite rngl_add_assoc.
 rewrite (rngl_add_sub_assoc Hop).
@@ -42,7 +42,7 @@ rewrite (rngl_sub_sub_swap Hop).
 rewrite <- (rngl_sub_add_distr Hos).
 do 2 rewrite <- rngl_mul_assoc.
 rewrite <- rngl_mul_add_distr_l.
-rewrite (rngl_sub_mul_r_diag_l Hon Hop).
+rewrite (rngl_sub_mul_r_diag_l Hop).
 rewrite <- rngl_cos_sub.
 easy.
 Qed.
@@ -71,10 +71,10 @@ split; intros H12. 2: {
   do 2 rewrite (rngl_sub_diag Hos).
   rewrite (rngl_squ_0 Hos).
   rewrite rngl_add_0_r.
-  apply (rl_sqrt_0 Hon Hop Hor Hii).
+  apply (rl_sqrt_0 Hop Hor Hii).
 }
 apply eq_angle_eq.
-apply (eq_rl_sqrt_0 Hon Hos) in H12. 2: {
+apply (eq_rl_sqrt_0 Hos) in H12. 2: {
   apply (rngl_add_squ_nonneg Hos Hor).
 }
 apply (rngl_eq_add_0 Hor) in H12; cycle 1. {
@@ -108,7 +108,7 @@ destruct θ2 as (c2, s2, Hcs2).
 destruct θ3 as (c3, s3, Hcs3).
 progress unfold angle_eucl_dist.
 cbn.
-apply (euclidean_distance_triangular Hic Hon Hop Hiv Hor).
+apply (euclidean_distance_triangular Hic Hop Hiv Hor).
 Qed.
 
 Theorem angle_eucl_dist_is_dist : is_dist angle_eucl_dist.
@@ -238,9 +238,9 @@ intros.
 progress unfold angle_eucl_dist.
 progress unfold rl_modl.
 remember (θ - Δθ)%A as x; cbn; subst x.
-do 4 rewrite (rngl_squ_sub Hop Hic Hon).
-rewrite (rngl_squ_1 Hon).
-rewrite (rngl_mul_1_r Hon).
+do 4 rewrite (rngl_squ_sub Hop Hic).
+rewrite rngl_squ_1.
+rewrite rngl_mul_1_r.
 rewrite (rngl_squ_0 Hos).
 rewrite (rngl_mul_0_r Hos).
 rewrite (rngl_mul_0_l Hos).
@@ -256,7 +256,7 @@ rewrite <- rngl_add_assoc.
 rewrite cos2_sin2_1.
 rewrite <- (rngl_add_sub_swap Hop 1)%L.
 do 2 rewrite <- rngl_mul_assoc.
-rewrite (rngl_sub_mul_r_diag_l Hon Hop).
+rewrite (rngl_sub_mul_r_diag_l Hop).
 rewrite <- (rngl_mul_sub_distr_l Hop).
 rewrite <- (rngl_sub_add_distr Hos).
 remember (θ - Δθ)%A as x.
@@ -272,7 +272,7 @@ rewrite angle_add_0_l.
 rewrite <- rngl_add_assoc.
 rewrite cos2_sin2_1.
 rewrite <- (rngl_add_sub_swap Hop).
-now rewrite (rngl_sub_mul_r_diag_l Hon Hop).
+now rewrite (rngl_sub_mul_r_diag_l Hop).
 Qed.
 
 Theorem angle_eucl_dist_move_0_l :
@@ -313,7 +313,7 @@ progress unfold angle_eucl_dist.
 progress unfold rl_modl; cbn.
 rewrite (rngl_sub_0_l Hop).
 rewrite (rngl_squ_opp Hop).
-apply (rngl_squ_sqrt Hon).
+apply rngl_squ_sqrt.
 apply (rngl_le_0_add Hos Hor);
 apply (rngl_squ_nonneg Hos Hor).
 Qed.
@@ -331,7 +331,7 @@ rewrite (rngl_squ_opp Hop).
 rewrite <- (rngl_opp_add_distr Hop).
 rewrite (rngl_squ_opp Hop).
 rewrite (rngl_add_comm 1).
-apply (rngl_squ_sqrt Hon).
+apply rngl_squ_sqrt.
 apply (rngl_le_0_add Hos Hor);
 apply (rngl_squ_nonneg Hos Hor).
 Qed.
@@ -341,22 +341,22 @@ Theorem rngl_cos_angle_eucl_dist_0_r :
 Proof.
 destruct_ac.
 destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
-  specialize (rngl_characteristic_1 Hon Hos Hc1) as H1.
+  specialize (rngl_characteristic_1 Hos Hc1) as H1.
   intros.
   rewrite H1; apply H1.
 }
 intros.
 specialize (angle_eucl_dist_0_r_cos_sin θ) as H1.
-rewrite (rngl_squ_sub Hop Hic Hon) in H1.
-rewrite (rngl_squ_1 Hon) in H1.
-rewrite (rngl_mul_1_r Hon) in H1.
+rewrite (rngl_squ_sub Hop Hic) in H1.
+rewrite rngl_squ_1 in H1.
+rewrite rngl_mul_1_r in H1.
 rewrite <- rngl_add_assoc in H1.
 rewrite cos2_sin2_1 in H1.
 rewrite <- (rngl_add_sub_swap Hop) in H1.
-rewrite (rngl_sub_mul_r_diag_l Hon Hop) in H1.
+rewrite (rngl_sub_mul_r_diag_l Hop) in H1.
 symmetry in H1.
 apply (rngl_mul_move_l Hic Hi1) in H1. 2: {
-  apply (rngl_2_neq_0 Hon Hos Hc1 Hor).
+  apply (rngl_2_neq_0 Hos Hc1 Hor).
 }
 now apply (rngl_sub_move_l Hop) in H1.
 Qed.
@@ -366,22 +366,22 @@ Theorem rngl_cos_angle_eucl_dist_straight_r :
 Proof.
 destruct_ac.
 destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
-  specialize (rngl_characteristic_1 Hon Hos Hc1) as H1.
+  specialize (rngl_characteristic_1 Hos Hc1) as H1.
   intros.
   rewrite H1; apply H1.
 }
 intros.
 specialize (angle_eucl_dist_straight_r_cos_sin θ) as H1.
-rewrite (rngl_squ_add Hic Hon) in H1.
-rewrite (rngl_squ_1 Hon) in H1.
-rewrite (rngl_mul_1_r Hon) in H1.
+rewrite (rngl_squ_add Hic) in H1.
+rewrite rngl_squ_1 in H1.
+rewrite rngl_mul_1_r in H1.
 rewrite <- rngl_add_assoc in H1.
 rewrite cos2_sin2_1 in H1.
 rewrite <- rngl_add_add_swap in H1.
-rewrite (rngl_add_mul_r_diag_l Hon) in H1.
+rewrite rngl_add_mul_r_diag_l in H1.
 symmetry in H1.
 apply (rngl_mul_move_l Hic Hi1) in H1. 2: {
-  apply (rngl_2_neq_0 Hon Hos Hc1 Hor).
+  apply (rngl_2_neq_0 Hos Hc1 Hor).
 }
 now apply (rngl_add_move_l Hop) in H1.
 Qed.
@@ -396,14 +396,14 @@ Theorem angle_eucl_dist_nonneg : ∀ θ1 θ2, (0 ≤ angle_eucl_dist θ1 θ2)%L.
 Proof.
 destruct_ac.
 intros.
-apply (dist_nonneg Hon Hop Hiv Hor angle_eucl_dist_is_dist).
+apply (dist_nonneg Hop Hiv Hor angle_eucl_dist_is_dist).
 Qed.
 
 Theorem angle_taxi_dist_nonneg : ∀ θ1 θ2, (0 ≤ angle_taxi_dist θ1 θ2)%L.
 Proof.
 destruct_ac.
 intros.
-apply (dist_nonneg Hon Hop Hiv Hor angle_taxi_dist_is_dist).
+apply (dist_nonneg Hop Hiv Hor angle_taxi_dist_is_dist).
 Qed.
 
 Theorem angle_lim_const :
@@ -429,17 +429,17 @@ destruct H3 as [H3| H3]; [ | easy ].
 clear Hzx; exfalso.
 specialize (H1 (x / 2)%L).
 assert (H : (0 < x / 2)%L). {
-  apply (rngl_div_pos Hon Hop Hiv Hor); [ easy | ].
-  apply (rngl_0_lt_2 Hon Hos Hc1 Hor).
+  apply (rngl_div_pos Hop Hiv Hor); [ easy | ].
+  apply (rngl_0_lt_2 Hos Hc1 Hor).
 }
 specialize (H1 H); clear H.
 destruct H1 as (N, HN).
 specialize (HN N (Nat.le_refl _)).
 apply rngl_nle_gt in HN.
 apply HN; clear HN.
-apply (rngl_le_div_l Hon Hop Hiv Hor).
-apply (rngl_0_lt_2 Hon Hos Hc1 Hor).
-rewrite (rngl_mul_2_r Hon).
+apply (rngl_le_div_l Hop Hiv Hor).
+apply (rngl_0_lt_2 Hos Hc1 Hor).
+rewrite rngl_mul_2_r.
 apply (rngl_le_add_l Hor).
 now apply (rngl_lt_le_incl Hor).
 Qed.

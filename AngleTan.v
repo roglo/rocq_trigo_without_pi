@@ -33,11 +33,11 @@ Theorem rngl_tan_derivative :
     rngl_dist rngl_tan (λ θ, (1 / rngl_cos² θ)%L) θ₀.
 Proof.
 destruct_ac.
-specialize (rngl_integral_or_inv_1_pdiv_eq_dec_order Hon Hiv Hor) as Hio.
+specialize (rngl_integral_or_inv_pdiv_eq_dec_order Hiv Hor) as Hio.
 intros * Hczz.
-specialize (@derivative_inv_at _ _ _ Hop Hor Hic Hon Hiv) as H1.
+specialize (@derivative_inv_at _ _ _ Hop Hor Hic Hiv) as H1.
 specialize (H1 _ angle_lt_for_deriv).
-specialize (@derivative_mul_at _ _ _ _ Hop Hor Hic Hon Hiv) as H2.
+specialize (@derivative_mul_at _ _ _ _ Hop Hor Hic Hiv) as H2.
 specialize (H2 _ angle_lt_for_deriv).
 assert (H : ∀ x, ¬ angle_lt_for_deriv x x). {
   intros x.
@@ -74,11 +74,11 @@ eapply is_derivative_at_eq_compat; [ | | apply H2 ]. {
     rewrite (rngl_opp_involutive Hop).
     apply eq_rngl_cos_0 in Hcz.
     destruct Hcz; subst θ; cbn. {
-      apply (rngl_mul_1_l Hon).
+      apply rngl_mul_1_l.
     } {
       rewrite (rngl_mul_div_assoc Hiv).
       f_equal.
-      apply (rngl_squ_opp_1 Hon Hop).
+      apply (rngl_squ_opp_1 Hop).
     }
   }
   apply (rngl_eqb_neq Heo) in Hcz.
@@ -86,15 +86,15 @@ eapply is_derivative_at_eq_compat; [ | | apply H2 ]. {
   rewrite (rngl_opp_involutive Hop).
   rewrite (rngl_mul_div_assoc Hiv).
   rewrite fold_rngl_squ.
-  rewrite (rngl_mul_inv_diag_r Hon Hiv); [ | easy ].
+  rewrite (rngl_mul_inv_diag_r Hiv); [ | easy ].
   assert (Hcz2 : rngl_cos² θ ≠ 0%L). {
     intros H; apply Hcz.
     now apply (eq_rngl_squ_0 Hos Hio) in H.
   }
   apply (rngl_mul_move_r Hi1); [ easy | ].
   rewrite rngl_mul_add_distr_r.
-  rewrite (rngl_div_mul Hon Hiv); [ | easy ].
-  rewrite (rngl_mul_1_l Hon).
+  rewrite (rngl_div_mul Hiv); [ | easy ].
+  rewrite rngl_mul_1_l.
   rewrite rngl_add_comm.
   apply cos2_sin2_1.
 }
