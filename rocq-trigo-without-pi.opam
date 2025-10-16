@@ -1,5 +1,5 @@
 opam-version: "2.0"
-name: "trigo-without-pi"
+name: "rocq-trigo-without-pi"
 version: "1.0.0"
 maintainer: "daniel.roglo@free.fr"
 authors: "Daniel de Rauglaudre"
@@ -24,6 +24,7 @@ build: [
 install: [make "install"]
 remove: [make "uninstall"]
 depends: [
-  "coq" {= "9.0.0"}
+  "rocq-core" {>= "9.0.0"}
+  "coq-core" {>= "9.0.0"}
   "rocq-ring-like"
 ]
