@@ -1,14 +1,12 @@
 Set Nested Proofs Allowed.
-From Stdlib Require Import Arith.
-From RingLike Require Import Utf8.
+Require Import Stdlib.Arith.Arith.
 
+Require Import RingLike.Utf8.
 Require Import RingLike.Core.
 Require Import RingLike.RealLike.
 Require Import RingLike.Misc.
-Require Import Angle AngleDef.
-Require Import Order.
-Require Import AngleAddOverflowEquiv.
-Require Import Distance.
+
+Require Import Angle AngleDef Order AngleAddOverflowEquiv Distance.
 Require Import TacChangeAngle.
 
 Section a.

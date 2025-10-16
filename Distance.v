@@ -1,5 +1,5 @@
-From Stdlib Require Import Arith.
-From RingLike Require Import Utf8.
+Require Import Stdlib.Arith.Arith.
+Require Import RingLike.Utf8.
 
 Require Import RingLike.Core.
 Require Import RingLike.RealLike.
