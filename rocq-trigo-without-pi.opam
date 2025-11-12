@@ -24,7 +24,7 @@ build: [
 install: [make "install"]
 remove: [make "uninstall"]
 depends: [
-  "rocq-core" {>= "9.0.0"}
-  "coq-core" {>= "9.0.0"}
+  "rocq-core" {= "9.0.0"}
+  "coq-core" {= "9.0.0"}
   "rocq-ring-like"
 ]
