@@ -78,7 +78,7 @@ apply eq_angle_eq.
 apply (eq_rl_sqrt_0 Hos) in H12. 2: {
   apply (rngl_add_squ_nonneg Hos Hor).
 }
-apply (rngl_eq_add_0 Hor) in H12; cycle 1. {
+apply (rngl_eq_add_0 Hos Hor) in H12; cycle 1. {
   apply (rngl_squ_nonneg Hos Hor).
 } {
   apply (rngl_squ_nonneg Hos Hor).
@@ -146,7 +146,7 @@ Proof.
 destruct_ac; intros.
 progress unfold angle_taxi_dist.
 split; intros H12. {
-  apply (rngl_eq_add_0 Hor) in H12; cycle 1.
+  apply (rngl_eq_add_0 Hos Hor) in H12; cycle 1.
   apply (rngl_abs_nonneg Hop Hor).
   apply (rngl_abs_nonneg Hop Hor).
   destruct H12 as (Hcc, Hss).
@@ -178,7 +178,7 @@ Search (rngl_abs _ - rngl_abs _)%L.
 rewrite rngl_add_assoc.
 rewrite (rngl_add_add_swap (rngl_abs (c2 - c1))).
 rewrite <- rngl_add_assoc.
-apply (rngl_add_le_mono Hor). {
+apply (rngl_add_le_mono Hos Hor). {
   eapply (rngl_le_trans Hor); [ | apply H1 ].
   rewrite rngl_add_comm.
   rewrite (rngl_add_sub_assoc Hop).
@@ -441,7 +441,7 @@ apply HN; clear HN.
 apply (rngl_le_div_l Hop Hiv Hor).
 apply (rngl_0_lt_2 Hos Hc1 Hor).
 rewrite rngl_mul_2_r.
-apply (rngl_le_add_l Hor).
+apply (rngl_le_add_l Hos Hor).
 now apply (rngl_lt_le_incl Hor).
 Qed.
 

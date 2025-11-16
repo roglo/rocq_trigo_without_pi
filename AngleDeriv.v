@@ -762,8 +762,8 @@ split. {
 }
 rewrite rngl_mul_add_distr_r.
 rewrite rngl_mul_1_l.
-apply (rngl_add_le_mono_l Hor).
-apply (rngl_le_add_l Hor).
+apply (rngl_add_le_mono_l Hos Hor).
+apply (rngl_le_add_l Hos Hor).
 now apply (rngl_le_0_add Hos Hor).
 Qed.
 

@@ -231,7 +231,7 @@ destruct zs2. 2: {
     rewrite rngl_add_comm.
     rewrite <- (rngl_add_sub_assoc Hop).
     rewrite (rngl_sub_mul_r_diag_l Hop).
-    apply (rngl_add_nonneg_pos Hor).
+    apply (rngl_add_nonneg_pos Hos Hor).
     apply (rngl_mul_nonneg_nonneg Hos Hor); [ easy | ].
     now apply (rngl_lt_le_incl Hor).
     apply (rngl_mul_pos_pos Hop Hiq Hor); [ easy | ].
@@ -383,7 +383,7 @@ destruct (rngl_leb_dec (rngl_cos θ2) 0)%L as [Hc2z| Hzc2]. 2: {
   rewrite (rngl_add_opp_r Hop).
   rewrite (rngl_add_sub_swap Hop).
   rewrite (rngl_sub_mul_r_diag_r Hop).
-  apply (rngl_lt_0_add Hor).
+  apply (rngl_lt_0_add Hos Hor).
   apply (rngl_mul_pos_pos Hop Hiq Hor); [ | easy ].
   apply (rngl_lt_0_sub Hop Hor).
   apply (rngl_le_neq Hor).
@@ -402,13 +402,13 @@ destruct (rngl_leb_dec 0 (rngl_cos θ1))%L as [Hzc1| Hc1z]. 2: {
   apply (rngl_leb_gt_iff Hor) in Hc1z.
   destruct (rngl_leb_dec (rngl_sin θ1) 0)%L as [Hs1z| Hs1z]. {
     apply rngl_leb_le in Hs1z.
-    apply (rngl_add_nonpos_nonpos Hor); cbn.
-    apply (rngl_add_nonpos_nonpos Hor); cbn.
+    apply (rngl_add_nonpos_nonpos Hos Hor); cbn.
+    apply (rngl_add_nonpos_nonpos Hos Hor); cbn.
     apply (rngl_mul_nonpos_nonneg Hop Hor); [ easy | ].
     now apply (rngl_lt_le_incl Hor).
     apply (rngl_mul_nonpos_nonneg Hop Hor); [ | easy ].
     now apply (rngl_lt_le_incl Hor).
-    apply (rngl_add_nonpos_nonpos Hor); cbn.
+    apply (rngl_add_nonpos_nonpos Hos Hor); cbn.
     now apply (rngl_mul_nonpos_nonneg Hop Hor).
     apply (rngl_mul_nonpos_nonneg Hop Hor); [ | easy ].
     now apply (rngl_lt_le_incl Hor).

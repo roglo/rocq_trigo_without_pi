@@ -233,7 +233,7 @@ destruct (rngl_leb_dec (rngl_cos θ1) 0) as [Hc1z| Hzc1]. {
   rewrite (rngl_mul_opp_r Hop).
   rewrite (rngl_sub_opp_r Hop).
   rewrite rngl_add_assoc.
-  apply (rngl_add_nonneg_pos Hor). {
+  apply (rngl_add_nonneg_pos Hos Hor). {
     rewrite rngl_add_mul_r_diag_l.
     apply (rngl_mul_nonneg_nonneg Hos Hor); [ easy | ].
     apply (rngl_le_sub_le_add_l Hop Hor).
@@ -398,7 +398,7 @@ destruct zs1. {
   apply (rngl_leb_gt_iff Hor) in Hc2z.
   apply rngl_nle_gt in Hzs12.
   exfalso; apply Hzs12; clear Hzs12; cbn.
-  apply (rngl_add_nonpos_nonpos Hor). {
+  apply (rngl_add_nonpos_nonpos Hos Hor). {
     apply (rngl_lt_le_incl Hor) in Hc2z.
     now apply (rngl_mul_nonneg_nonpos Hop Hor).
   } {
@@ -456,7 +456,7 @@ destruct zs1. {
     apply (rngl_leb_gt_iff Hor) in Hc2z.
     apply rngl_nle_gt in Hzs12.
     exfalso; apply Hzs12; clear Hzs12; cbn.
-    apply (rngl_add_nonpos_nonpos Hor). {
+    apply (rngl_add_nonpos_nonpos Hos Hor). {
       apply (rngl_lt_le_incl Hor) in Hzs1, Hc2z.
       apply (rngl_mul_nonneg_nonpos Hop Hor); try easy.
     } {
@@ -557,7 +557,7 @@ destruct zs1. {
   rewrite <- rngl_add_assoc.
   rewrite rngl_add_comm.
   rewrite <- rngl_add_assoc.
-  apply (rngl_lt_0_add Hor). {
+  apply (rngl_lt_0_add Hos Hor). {
     now apply (rngl_mul_pos_pos Hop Hiq Hor).
   }
   rewrite rngl_add_mul_r_diag_l.

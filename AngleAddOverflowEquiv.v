@@ -369,7 +369,7 @@ destruct zs1. {
       apply rngl_nlt_ge in Hzs12.
       apply Hzs12; clear Hzs12.
       cbn.
-      apply (rngl_lt_0_add Hor).
+      apply (rngl_lt_0_add Hos Hor).
       now apply (rngl_mul_pos_pos Hop Hiq Hor).
       apply (rngl_lt_le_incl Hor) in Hzs2.
       now apply (rngl_mul_nonneg_nonneg Hos Hor).
@@ -421,7 +421,7 @@ destruct zs1. {
       progress sin_cos_add_sub_straight_hyp T Hzs2.
       progress sin_cos_add_sub_straight_hyp T Hzc2.
       progress sin_cos_add_sub_straight_goal T.
-      apply (rngl_add_nonneg_pos Hor); [ | easy ].
+      apply (rngl_add_nonneg_pos Hos Hor); [ | easy ].
       apply (rngl_lt_le_incl Hor) in Hzs2, Hzc1, Hzc2.
       now apply rngl_cos_sub_nonneg.
     }
@@ -740,8 +740,8 @@ destruct s1z. {
     progress sin_cos_add_sub_straight_hyp T Hs2z.
     progress sin_cos_add_sub_straight_hyp T Hzc2.
     progress sin_cos_add_sub_straight_goal T.
-    apply (rngl_lt_0_add Hor); [ cbn | easy ].
-    apply (rngl_add_nonneg_pos Hor).
+    apply (rngl_lt_0_add Hos Hor); [ cbn | easy ].
+    apply (rngl_add_nonneg_pos Hos Hor).
     apply (rngl_lt_le_incl Hor) in Hzc2.
     now apply (rngl_mul_nonneg_nonneg Hos Hor).
     now apply (rngl_mul_pos_pos Hop Hiq Hor).

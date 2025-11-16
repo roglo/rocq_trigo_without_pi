@@ -109,11 +109,11 @@ rewrite rngl_mul_1_r.
 rewrite rngl_mul_add_distr_r.
 rewrite rngl_mul_1_l.
 rewrite rngl_add_assoc.
-apply (rngl_add_le_mono_r Hor).
+apply (rngl_add_le_mono_r Hos Hor).
 rewrite <- (rngl_sub_add_distr Hos).
 apply (rngl_le_sub_le_add_r Hop Hor).
 do 2 rewrite <- rngl_add_assoc.
-apply (rngl_le_add_r Hor).
+apply (rngl_le_add_r Hos Hor).
 rewrite rngl_add_assoc.
 rewrite rngl_add_add_swap.
 rewrite rngl_add_assoc.
@@ -753,7 +753,7 @@ apply
   (rngl_le_lt_trans Hor _
      ((- rngl_cos θ2) * rngl_sin θ2 +
         rngl_sin θ1 * rngl_cos θ2))%L. {
-  apply (rngl_add_le_mono_r Hor).
+  apply (rngl_add_le_mono_r Hos Hor).
   apply (rngl_mul_le_mono_pos_r Hop Hiq Hor); [ easy | ].
   now apply (rngl_lt_le_incl Hor).
 }

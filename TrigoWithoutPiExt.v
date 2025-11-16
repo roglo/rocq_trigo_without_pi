@@ -178,7 +178,7 @@ destruct (rngl_leb_dec 0 (rngl_cos θ3))%L as [Hzc3| Hc3z]. {
   eapply (rngl_le_trans Hor); [ apply Hc123 | ].
   rewrite <- (rngl_add_sub_swap Hop).
   rewrite <- (rngl_add_sub_assoc Hop).
-  apply (rngl_add_le_mono_l Hor).
+  apply (rngl_add_le_mono_l Hos Hor).
   progress unfold rngl_squ.
   do 2 rewrite rngl_mul_assoc.
   rewrite <- (rngl_mul_sub_distr_r Hop).
@@ -468,7 +468,7 @@ destruct (rngl_ltb_dec 0 (rngl_cos θ2)) as [Hzc2| Hzc2]. {
     rewrite <- (rngl_opp_add_distr Hop).
     apply (rngl_opp_neg_pos Hop Hor).
     rewrite (rngl_mul_comm Hic).
-    apply (rngl_lt_0_add Hor).
+    apply (rngl_lt_0_add Hos Hor).
     now apply (rngl_mul_pos_pos Hop Hiq Hor).
     apply (rngl_mul_nonneg_nonneg Hos Hor).
     now apply (rngl_lt_le_incl Hor).
@@ -488,7 +488,7 @@ progress sin_cos_add_sub_straight_hyp T Hzc2.
 exfalso.
 apply rngl_nlt_ge in Hzs12.
 apply Hzs12; clear Hzs12; cbn.
-apply (rngl_add_nonneg_pos Hor).
+apply (rngl_add_nonneg_pos Hos Hor).
 now apply (rngl_mul_nonneg_nonneg Hos Hor).
 now apply (rngl_mul_pos_pos Hop Hiq Hor).
 Qed.
@@ -589,7 +589,7 @@ destruct (rngl_eqb_dec (rngl_sin θ1) 0) as [Hs1z| Hs1z]. {
   apply (rngl_opp_1_lt_0 Hop Hor Hc1).
 }
 apply (rngl_eqb_neq Heo) in Hs1z.
-apply (rngl_lt_0_add Hor). {
+apply (rngl_lt_0_add Hos Hor). {
   apply not_eq_sym in Hs1z.
   now apply (rngl_le_neq Hor).
 }
@@ -1100,7 +1100,7 @@ Proof.
 destruct_ac.
 intros  * Hs1z Hs2z Hc1z Hc2z.
 cbn.
-apply (rngl_add_nonneg_pos Hor).
+apply (rngl_add_nonneg_pos Hos Hor).
 now apply (rngl_mul_nonneg_nonneg Hos Hor).
 now apply (rngl_mul_pos_pos Hop Hiq Hor).
 Qed.
@@ -1116,7 +1116,7 @@ Proof.
 destruct_ac.
 intros  * Hs1z Hs2z Hc1z Hc2z.
 cbn.
-apply (rngl_lt_0_add Hor).
+apply (rngl_lt_0_add Hos Hor).
 now apply (rngl_mul_pos_pos Hop Hiq Hor).
 now apply (rngl_mul_nonneg_nonneg Hos Hor).
 Qed.
@@ -1132,7 +1132,7 @@ Proof.
 destruct_ac.
 intros  * Hs1z Hs2z Hc1z Hc2z.
 rewrite rngl_cos_sub.
-apply (rngl_add_nonneg_pos Hor).
+apply (rngl_add_nonneg_pos Hos Hor).
 now apply (rngl_mul_nonneg_nonneg Hos Hor).
 now apply (rngl_mul_pos_pos Hop Hiq Hor).
 Qed.

@@ -239,7 +239,7 @@ assert (H : (0 < ε / (2 * rngl_abs l + 1))%L). {
   apply (rngl_lt_le_trans Hor _ 1). {
     apply (rngl_0_lt_1 Hos Hc1 Hor).
   }
-  apply (rngl_le_add_l Hor).
+  apply (rngl_le_add_l Hos Hor).
   apply (rngl_mul_nonneg_nonneg Hos Hor).
   apply (rngl_0_le_2 Hos Hor).
   apply (rngl_abs_nonneg Hop Hor).
@@ -279,7 +279,7 @@ apply (rngl_lt_div_l Hop Hiv Hor). {
   apply (rngl_lt_le_trans Hor _ 1). {
     apply (rngl_0_lt_1 Hos Hc1 Hor).
   }
-  apply (rngl_le_add_l Hor).
+  apply (rngl_le_add_l Hos Hor).
   apply (rngl_mul_nonneg_nonneg Hos Hor).
   apply (rngl_0_le_2 Hos Hor).
   apply (rngl_abs_nonneg Hop Hor).

@@ -202,7 +202,7 @@ intros * Hcs.
 apply cos2_sin2_prop_add_squ in Hcs.
 assert (H : (c² ≤ 1)%L). {
   rewrite <- Hcs.
-  apply (rngl_le_add_r Hor).
+  apply (rngl_le_add_r Hos Hor).
   apply (rngl_squ_nonneg Hos Hor).
 }
 replace 1%L with 1²%L in H. 2: {
@@ -225,7 +225,7 @@ intros * Hcs.
 apply cos2_sin2_prop_add_squ in Hcs.
 assert (H : (s² ≤ 1)%L). {
   rewrite <- Hcs.
-  apply (rngl_le_add_l Hor).
+  apply (rngl_le_add_l Hos Hor).
   apply (rngl_squ_nonneg Hos Hor).
 }
 replace 1%L with 1²%L in H. 2: {
