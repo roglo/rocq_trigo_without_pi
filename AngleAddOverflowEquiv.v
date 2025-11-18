@@ -591,7 +591,7 @@ destruct s1z. {
     progress sin_cos_add_sub_straight_hyp T Hzc2.
     progress sin_cos_add_sub_straight_goal T.
     rewrite (rngl_add_opp_l Hop).
-    apply (rngl_le_sub_0 Hop Hor).
+    apply (rngl_le_sub_0 Hop Hto).
     apply (rngl_lt_eq_cases Hto).
     destruct (rngl_eqb_dec (rngl_cos θ1) (rngl_cos θ2)) as [Hc12| Hc12]. {
       apply (rngl_eqb_eq Heo) in Hc12.
@@ -662,7 +662,7 @@ destruct s1z. {
       progress sin_cos_add_sub_straight_hyp T Hzs12.
       progress sin_cos_add_sub_straight_hyp T Hs2z.
       progress sin_cos_add_sub_straight_hyp T Hc21.
-      apply -> (rngl_le_sub_0 Hop Hor) in Hc21.
+      apply -> (rngl_le_sub_0 Hop Hto) in Hc21.
       apply rngl_nle_gt in Hzs12.
       apply Hzs12; clear Hzs12.
       now apply rngl_sin_sub_nonneg.

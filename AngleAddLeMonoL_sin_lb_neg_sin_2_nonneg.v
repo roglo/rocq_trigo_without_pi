@@ -1228,7 +1228,7 @@ progress sin_cos_add_sub_right_hyp T Hzs12.
 progress sin_cos_add_sub_right_hyp T Hc2z.
 progress sin_cos_add_sub_right_goal T.
 rewrite (rngl_add_opp_l Hop).
-apply (rngl_le_sub_0 Hop Hor).
+apply (rngl_le_sub_0 Hop Hto).
 destruct (rngl_leb_dec 0 (rngl_sin θ1)) as [Hzs1| Hs1z]. 2: {
   exfalso.
   apply (rngl_leb_gt_iff Hto) in Hs1z.

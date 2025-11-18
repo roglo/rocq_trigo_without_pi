@@ -198,7 +198,7 @@ destruct zs13. {
     progress sin_cos_add_sub_straight_hyp T Hc3z.
     progress sin_cos_add_sub_straight_goal T.
     rewrite (rngl_add_opp_l Hop) in H23.
-    apply -> (rngl_le_sub_0 Hop Hor) in H23.
+    apply -> (rngl_le_sub_0 Hop Hto) in H23.
     move Hzs2 after Hzs1; move Hzs3 after Hzs2.
     destruct (rngl_ltb_dec 0 (rngl_cos θ1)) as [Hzc1| Hc1z]. {
       apply rngl_ltb_lt in Hzc1.
@@ -337,7 +337,7 @@ progress sin_cos_add_sub_straight_hyp T Hzs13.
 progress sin_cos_add_sub_straight_hyp T Hzs3.
 progress sin_cos_add_sub_straight_goal T.
 rewrite (rngl_add_opp_l Hop) in H23.
-apply -> (rngl_le_sub_0 Hop Hor) in H23.
+apply -> (rngl_le_sub_0 Hop Hto) in H23.
 apply angle_add_le_mono_l_lemma_3; try easy; cycle 1.
 now apply (rngl_lt_le_incl Hto).
 now apply (rngl_lt_le_incl Hto).
