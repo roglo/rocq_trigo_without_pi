@@ -23,7 +23,7 @@ Class angle_ctx :=
   { ac_ic : rngl_mul_is_comm T = true;
     ac_op : rngl_has_opp T = true;
     ac_iv : rngl_has_inv T = true;
-    ac_or : rngl_is_ordered T = true }.
+    ac_to : rngl_is_totally_ordered T = true }.
 
 End a.
 
@@ -39,7 +39,8 @@ Ltac destruct_ac :=
   set (Hic := ac_ic);
   set (Hop := ac_op);
   set (Hiv := ac_iv);
-  set (Hor := ac_or);
+  set (Hto := ac_to);
+  set (Hor := rngl_is_totally_ordered_is_ordered Hto);
   set (Hos := rngl_has_opp_has_opp_or_psub Hop);
   set (Hiq := rngl_has_inv_has_inv_or_pdiv Hiv);
   specialize (rngl_int_dom_or_inv_or_pdiv_r Hiq) as Hii;
@@ -203,19 +204,19 @@ apply cos2_sin2_prop_add_squ in Hcs.
 assert (H : (c² ≤ 1)%L). {
   rewrite <- Hcs.
   apply (rngl_le_add_r Hos Hor).
-  apply (rngl_squ_nonneg Hos Hor).
+  apply (rngl_squ_nonneg Hos Hto).
 }
 replace 1%L with 1²%L in H. 2: {
   apply rngl_mul_1_l.
 }
 rewrite <- (rngl_squ_abs Hop c) in H.
 rewrite <- (rngl_squ_abs Hop 1%L) in H.
-apply (rngl_square_le_simpl_nonneg Hop Hiq Hor) in H. 2: {
-  rewrite (rngl_abs_1 Hos Hor).
-  apply (rngl_0_le_1 Hos Hor).
+apply (rngl_square_le_simpl_nonneg Hop Hiq Hto) in H. 2: {
+  rewrite (rngl_abs_1 Hos Hto).
+  apply (rngl_0_le_1 Hos Hto).
 }
-rewrite (rngl_abs_1 Hos Hor) in H.
-now apply (rngl_abs_le Hop Hor) in H.
+rewrite (rngl_abs_1 Hos Hto) in H.
+now apply (rngl_abs_le Hop Hto) in H.
 Qed.
 
 Theorem rngl_sin_proj_bound : ∀ c s, cos2_sin2_prop c s → (-1 ≤ s ≤ 1)%L.
@@ -226,19 +227,19 @@ apply cos2_sin2_prop_add_squ in Hcs.
 assert (H : (s² ≤ 1)%L). {
   rewrite <- Hcs.
   apply (rngl_le_add_l Hos Hor).
-  apply (rngl_squ_nonneg Hos Hor).
+  apply (rngl_squ_nonneg Hos Hto).
 }
 replace 1%L with 1²%L in H. 2: {
   apply rngl_mul_1_l.
 }
 rewrite <- (rngl_squ_abs Hop s) in H.
 rewrite <- (rngl_squ_abs Hop 1%L) in H.
-apply (rngl_square_le_simpl_nonneg Hop Hiq Hor) in H. 2: {
-  rewrite (rngl_abs_1 Hos Hor).
-  apply (rngl_0_le_1 Hos Hor).
+apply (rngl_square_le_simpl_nonneg Hop Hiq Hto) in H. 2: {
+  rewrite (rngl_abs_1 Hos Hto).
+  apply (rngl_0_le_1 Hos Hto).
 }
-rewrite (rngl_abs_1 Hos Hor) in H.
-now apply (rngl_abs_le Hop Hor) in H.
+rewrite (rngl_abs_1 Hos Hto) in H.
+now apply (rngl_abs_le Hop Hto) in H.
 Qed.
 
 Theorem rngl_cos_bound : ∀ a, (-1 ≤ rngl_cos a ≤ 1)%L.

@@ -57,12 +57,12 @@ Ltac sin_cos_add_sub_right_hyp T H :=
     (remember rngl_cos as c; apply -> (rngl_le_sub_0 Hop' Hor') in H;
      subst c);
   try
-    (remember rngl_cos as c; apply -> (rngl_le_0_sub Hop' Hor') in H;
+    (remember rngl_cos as c; apply -> (rngl_le_0_sub Hop' Hto') in H;
      subst c);
-  try apply <- (rngl_opp_le_compat Hop' Hor') in H;
-  try apply -> (rngl_opp_nonneg_nonpos Hop' Hor') in H;
-  try apply -> (rngl_opp_nonpos_nonneg Hop' Hor') in H;
-  try apply -> (rngl_opp_neg_pos Hop' Hor') in H;
+  try apply <- (rngl_opp_le_compat Hop' Hto') in H;
+  try apply -> (rngl_opp_nonneg_nonpos Hop' Hto') in H;
+  try apply -> (rngl_opp_nonpos_nonneg Hop' Hto') in H;
+  try apply -> (rngl_opp_neg_pos Hop' Hto') in H;
   try apply -> (rngl_opp_pos_neg Hop' Hor') in H;
   try apply -> (rngl_le_opp_l Hop' Hor') in H;
   try apply -> (rngl_le_opp_r Hop' Hor') in H;
@@ -91,9 +91,9 @@ Ltac sin_cos_add_sub_straight_hyp T H :=
   repeat rewrite -> rngl_cos_sub_straight_r in H;
   repeat rewrite (rngl_add_opp_l Hop') in H;
   repeat rewrite <- (rngl_opp_add_distr Hop') in H;
-  try apply -> (rngl_opp_nonpos_nonneg Hop' Hor') in H;
-  try apply -> (rngl_opp_nonneg_nonpos Hop' Hor') in H;
-  try apply -> (rngl_opp_neg_pos Hop' Hor') in H;
+  try apply -> (rngl_opp_nonpos_nonneg Hop' Hto') in H;
+  try apply -> (rngl_opp_nonneg_nonpos Hop' Hto') in H;
+  try apply -> (rngl_opp_neg_pos Hop' Hto') in H;
   try apply -> (rngl_opp_pos_neg Hop' Hor') in H;
   try apply -> (rngl_le_opp_r Hop' Hor') in H;
   try apply <- (rngl_opp_lt_compat Hop' Hor') in H;
@@ -115,7 +115,7 @@ Ltac sin_cos_opp_hyp T H :=
   repeat rewrite -> rngl_sin_opp in H;
   repeat rewrite -> rngl_cos_opp in H;
   repeat rewrite (rngl_leb_0_opp Hop' Hor') in H;
-  try apply -> (rngl_opp_neg_pos Hop' Hor') in H;
+  try apply -> (rngl_opp_neg_pos Hop' Hto') in H;
   clear Hop' Hor'.
 
 Ltac sin_cos_add_sub_right_goal T :=
@@ -138,17 +138,17 @@ Ltac sin_cos_add_sub_right_goal T :=
   repeat rewrite rngl_cos_sub_right_r;
   repeat rewrite -> (rngl_add_opp_r Hop');
   repeat rewrite (rngl_opp_involutive Hop');
-  try apply -> (rngl_opp_le_compat Hop' Hor');
-  try apply <- (rngl_opp_nonpos_nonneg Hop' Hor');
-  try apply <- (rngl_opp_nonneg_nonpos Hop' Hor');
-  try apply <- (rngl_opp_neg_pos Hop' Hor');
+  try apply -> (rngl_opp_le_compat Hop' Hto');
+  try apply <- (rngl_opp_nonpos_nonneg Hop' Hto');
+  try apply <- (rngl_opp_nonneg_nonpos Hop' Hto');
+  try apply <- (rngl_opp_neg_pos Hop' Hto');
   repeat rewrite -> (rngl_add_opp_r Hop');
   try apply <- (rngl_le_opp_l Hop' Hor');
   try apply <- (rngl_le_opp_r Hop' Hor');
   try apply <- (rngl_lt_opp_l Hop' Hor');
-  try apply <- (rngl_lt_0_sub Hop' Hor');
+  try apply <- (rngl_lt_0_sub Hop' Hto');
   try (remember rngl_cos as c; apply <- (rngl_le_sub_0 Hop' Hor'); subst c);
-  try (remember rngl_cos as c; apply <- (rngl_le_0_sub Hop' Hor'); subst c);
+  try (remember rngl_cos as c; apply <- (rngl_le_0_sub Hop' Hto'); subst c);
   clear Hop' Hor' Hos'.
 
 Ltac sin_cos_add_sub_straight_goal T :=
@@ -167,15 +167,15 @@ Ltac sin_cos_add_sub_straight_goal T :=
   repeat rewrite rngl_sin_sub_straight_r;
   repeat rewrite rngl_cos_sub_straight_r;
   repeat rewrite (rngl_opp_involutive Hop');
-  try apply <- (rngl_opp_nonpos_nonneg Hop' Hor');
-  try apply <- (rngl_opp_nonneg_nonpos Hop' Hor');
-  try apply <- (rngl_opp_neg_pos Hop' Hor');
+  try apply <- (rngl_opp_nonpos_nonneg Hop' Hto');
+  try apply <- (rngl_opp_nonneg_nonpos Hop' Hto');
+  try apply <- (rngl_opp_neg_pos Hop' Hto');
   try apply <- (rngl_le_opp_l Hop' Hor');
   repeat rewrite -> (rngl_add_opp_r Hop');
   try apply <- (rngl_lt_opp_l Hop' Hor');
   try apply <- (rngl_le_opp_r Hop' Hor');
-  try apply <- (rngl_lt_opp_r Hop' Hor');
-  try apply <- (rngl_le_0_sub Hop' Hor');
+  try apply <- (rngl_lt_opp_r Hop' Hto');
+  try apply <- (rngl_le_0_sub Hop' Hto');
   clear Hop' Hor'.
 
 Ltac sin_cos_opp_goal T :=

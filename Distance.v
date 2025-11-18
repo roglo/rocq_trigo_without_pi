@@ -79,9 +79,9 @@ apply (eq_rl_sqrt_0 Hos) in H12. 2: {
   apply (rngl_add_squ_nonneg Hos Hor).
 }
 apply (rngl_eq_add_0 Hos Hor) in H12; cycle 1. {
-  apply (rngl_squ_nonneg Hos Hor).
+  apply (rngl_squ_nonneg Hos Hto).
 } {
-  apply (rngl_squ_nonneg Hos Hor).
+  apply (rngl_squ_nonneg Hos Hto).
 }
 destruct H12 as (Hc, Hs).
 apply (eq_rngl_squ_0 Hos) in Hc, Hs; cycle 1. {
@@ -147,8 +147,8 @@ destruct_ac; intros.
 progress unfold angle_taxi_dist.
 split; intros H12. {
   apply (rngl_eq_add_0 Hos Hor) in H12; cycle 1.
-  apply (rngl_abs_nonneg Hop Hor).
-  apply (rngl_abs_nonneg Hop Hor).
+  apply (rngl_abs_nonneg Hop Hto).
+  apply (rngl_abs_nonneg Hop Hto).
   destruct H12 as (Hcc, Hss).
   apply (eq_rngl_abs_0 Hop) in Hcc, Hss.
   apply -> (rngl_sub_move_0_r Hop) in Hcc.
@@ -315,8 +315,8 @@ progress unfold rl_modl; cbn.
 rewrite (rngl_sub_0_l Hop).
 rewrite (rngl_squ_opp Hop).
 apply rngl_squ_sqrt.
-apply (rngl_le_0_add Hos Hor);
-apply (rngl_squ_nonneg Hos Hor).
+apply (rngl_le_0_add Hos Hto);
+apply (rngl_squ_nonneg Hos Hto).
 Qed.
 
 Theorem angle_eucl_dist_straight_r_cos_sin :
@@ -333,8 +333,8 @@ rewrite <- (rngl_opp_add_distr Hop).
 rewrite (rngl_squ_opp Hop).
 rewrite (rngl_add_comm 1).
 apply rngl_squ_sqrt.
-apply (rngl_le_0_add Hos Hor);
-apply (rngl_squ_nonneg Hos Hor).
+apply (rngl_le_0_add Hos Hto);
+apply (rngl_squ_nonneg Hos Hto).
 Qed.
 
 Theorem rngl_cos_angle_eucl_dist_0_r :
@@ -357,7 +357,7 @@ rewrite <- (rngl_add_sub_swap Hop) in H1.
 rewrite (rngl_sub_mul_r_diag_l Hop) in H1.
 symmetry in H1.
 apply (rngl_mul_move_l Hic Hi1) in H1. 2: {
-  apply (rngl_2_neq_0 Hos Hc1 Hor).
+  apply (rngl_2_neq_0 Hos Hc1 Hto).
 }
 now apply (rngl_sub_move_l Hop) in H1.
 Qed.
@@ -382,7 +382,7 @@ rewrite <- rngl_add_add_swap in H1.
 rewrite rngl_add_mul_r_diag_l in H1.
 symmetry in H1.
 apply (rngl_mul_move_l Hic Hi1) in H1. 2: {
-  apply (rngl_2_neq_0 Hos Hc1 Hor).
+  apply (rngl_2_neq_0 Hos Hc1 Hto).
 }
 now apply (rngl_add_move_l Hop) in H1.
 Qed.
@@ -431,7 +431,7 @@ clear Hzx; exfalso.
 specialize (H1 (x / 2)%L).
 assert (H : (0 < x / 2)%L). {
   apply (rngl_div_pos Hop Hiv Hor); [ easy | ].
-  apply (rngl_0_lt_2 Hos Hc1 Hor).
+  apply (rngl_0_lt_2 Hos Hc1 Hto).
 }
 specialize (H1 H); clear H.
 destruct H1 as (N, HN).
@@ -439,10 +439,10 @@ specialize (HN N (Nat.le_refl _)).
 apply rngl_nle_gt in HN.
 apply HN; clear HN.
 apply (rngl_le_div_l Hop Hiv Hor).
-apply (rngl_0_lt_2 Hos Hc1 Hor).
+apply (rngl_0_lt_2 Hos Hc1 Hto).
 rewrite rngl_mul_2_r.
 apply (rngl_le_add_l Hos Hor).
-now apply (rngl_lt_le_incl Hor).
+now apply (rngl_lt_le_incl Hto).
 Qed.
 
 End a.
