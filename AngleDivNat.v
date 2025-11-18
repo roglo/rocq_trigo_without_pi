@@ -179,7 +179,7 @@ rewrite (rl_sqrt_squ Hop Hto).
 cbn.
 rewrite (rngl_mul_comm Hic).
 rewrite (rngl_mul_comm Hic (_ - _)).
-apply (rngl_abs_nonneg_eq Hop Hto).
+apply (rngl_abs_nonneg_eq Hop Hor).
 apply (rngl_le_0_sub Hop Hto).
 progress unfold angle_leb in Ht21.
 apply rngl_leb_le in Hzs1, Hzs2.
@@ -311,7 +311,7 @@ rewrite rngl_sin_nonneg_sin_nonneg_add_1_cos_add_add. 2: {
 rewrite (rl_sqrt_squ Hop Hto).
 rewrite (rngl_mul_comm Hic).
 rewrite (rngl_mul_comm Hic (_ - _)).
-apply (rngl_abs_nonneg_eq Hop Hto).
+apply (rngl_abs_nonneg_eq Hop Hor).
 apply (rngl_le_0_add Hos Hto).
 apply rl_sqrt_nonneg.
 apply (rngl_mul_nonneg_nonneg Hos Hor).
@@ -509,10 +509,10 @@ destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
   easy.
 }
 intros.
-rewrite <- (rngl_abs_nonneg_eq Hop Hto (angle_eucl_dist _ _)). 2: {
+rewrite <- (rngl_abs_nonneg_eq Hop Hor (angle_eucl_dist _ _)). 2: {
   apply (dist_nonneg Hop Hiv Hor angle_eucl_dist_is_dist).
 }
-rewrite <- (rngl_abs_nonneg_eq Hop Hto (angle_eucl_dist θ1 _)). 2: {
+rewrite <- (rngl_abs_nonneg_eq Hop Hor (angle_eucl_dist θ1 _)). 2: {
   apply (dist_nonneg Hop Hiv Hor angle_eucl_dist_is_dist).
 }
 rewrite angle_eucl_dist_move_0_r.

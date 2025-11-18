@@ -224,7 +224,7 @@ progress unfold angle_leb.
 cbn.
 rewrite (rngl_leb_refl Hor).
 apply rngl_leb_le.
-apply (rngl_opp_1_le_1 Hop Hor).
+apply (rngl_opp_1_le_1 Hop Hto).
 Qed.
 
 Theorem angle_leb_gt : ∀ θ1 θ2, (θ1 ≤? θ2)%A = false ↔ (θ2 < θ1)%A.
@@ -522,11 +522,11 @@ rewrite (rngl_div_div Hos Hiv); [ | easy | easy ].
 rewrite <- rl_sqrt_mul; [ | easy | easy ].
 rewrite fold_rngl_squ.
 rewrite (rl_sqrt_squ Hop Hto).
-rewrite (rngl_abs_nonneg_eq Hop Hto); [ | easy ].
+rewrite (rngl_abs_nonneg_eq Hop Hor); [ | easy ].
 rewrite <- (rngl_div_sub_distr_r Hop Hiv).
 apply (rngl_mul_cancel_r Hi1 _ _ 2)%L; [ easy | ].
 rewrite (rngl_div_mul Hiv); [ | easy ].
-rewrite <- (rngl_abs_nonneg_eq Hop Hto (√_ / _ * _))%L. 2: {
+rewrite <- (rngl_abs_nonneg_eq Hop Hor (√_ / _ * _))%L. 2: {
   apply (rngl_mul_nonneg_nonneg Hos Hor); [ | easy ].
   apply (rngl_div_nonneg Hop Hiv Hto). 2: {
     apply (rngl_le_neq Hto).
@@ -581,7 +581,7 @@ destruct (rngl_ltb_dec x y) as [Hxy| Hxy]. {
   }
 }
 apply (rngl_ltb_ge_iff Hto) in Hxy.
-rewrite <- (rngl_abs_nonneg_eq Hop Hto). 2: {
+rewrite <- (rngl_abs_nonneg_eq Hop Hor). 2: {
   now apply (rngl_le_0_sub Hop Hto).
 }
 apply (eq_rngl_squ_rngl_abs Hop Hto). {
@@ -766,7 +766,7 @@ destruct zs2. {
       apply rngl_nle_gt in H12.
       cbn in H12.
       exfalso; apply H12.
-      apply (rngl_opp_1_le_1 Hop Hor).
+      apply (rngl_opp_1_le_1 Hop Hto).
     }
     apply rngl_ltb_lt in H12.
     now apply (rngl_lt_irrefl Hor) in H12.

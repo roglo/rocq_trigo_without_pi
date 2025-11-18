@@ -66,7 +66,7 @@ destruct (rngl_leb_dec 0 (rngl_cos θ1))%L as [Hzc1| Hc1z]. {
   rewrite (rngl_opp_involutive Hop).
   rewrite rngl_sin_sub_right_r.
   generalize Hs1z; intros H.
-  apply (rngl_lt_eq_cases Hor) in H.
+  apply (rngl_lt_eq_cases Hto) in H.
   destruct H as [H| H]. {
     apply (rngl_opp_lt_compat Hop Hor) in H.
     rewrite (rngl_opp_0 Hop) in H.
@@ -237,9 +237,9 @@ destruct H21 as [H21| H21]. {
         apply (rngl_lt_le_incl Hto) in Hzs1.
         now apply (rngl_mul_nonpos_nonneg Hop Hto).
       }
-      now apply (rngl_mul_pos_pos Hop Hiq Hor).
+      now apply (rngl_mul_pos_pos Hop Hiq Hto).
     }
-    apply (rngl_mul_le_mono_nonneg_r Hop Hor _ _ (rngl_sin θ2))
+    apply (rngl_mul_le_mono_nonneg_r Hop Hto _ _ (rngl_sin θ2))
       in Hzs12; [ | easy ].
     do 2 rewrite <- rngl_mul_assoc in Hzs12.
     rewrite fold_rngl_squ in Hzs12.

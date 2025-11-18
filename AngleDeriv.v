@@ -607,7 +607,7 @@ symmetry in Hss.
 destruct ss. {
   apply rngl_leb_le in Hss.
   rewrite rngl_mul_1_l.
-  now apply (rngl_abs_nonneg_eq Hop Hto).
+  now apply (rngl_abs_nonneg_eq Hop Hor).
 } {
   apply (rngl_leb_gt_iff Hto) in Hss.
   apply (rngl_lt_le_incl Hto) in Hss.
@@ -656,7 +656,7 @@ rewrite <- H1, rngl_add_comm.
 rewrite (rngl_add_sub Hos).
 symmetry.
 rewrite (rl_sqrt_squ Hop Hto).
-apply (rngl_abs_nonneg_eq Hop Hto).
+apply (rngl_abs_nonneg_eq Hop Hor).
 now apply rngl_sin_nonneg_angle_le_straight.
 Qed.
 
@@ -750,7 +750,7 @@ apply (rngl_mul_le_compat_nonneg Hor). {
   split; [ apply (rngl_squ_nonneg Hos Hto) | ].
   rewrite <- (rngl_mul_1_l a) at 2.
   progress unfold rngl_squ.
-  apply (rngl_mul_le_mono_nonneg_r Hop Hor); [ easy | ].
+  apply (rngl_mul_le_mono_nonneg_r Hop Hto); [ easy | ].
   now apply (rngl_lt_le_incl Hto).
 }
 specialize (rngl_0_le_1 Hos Hto) as H01.
@@ -798,7 +798,7 @@ apply (rngl_leb_gt_iff Hto) in H1d.
 apply (rngl_le_sub_le_add_r Hop Hto).
 rewrite rngl_add_comm.
 apply (rngl_le_sub_le_add_r Hop Hto).
-rewrite <- (rngl_abs_nonneg_eq Hop Hto (_ - _)). 2: {
+rewrite <- (rngl_abs_nonneg_eq Hop Hor (_ - _)). 2: {
   apply (rngl_le_0_sub Hop Hto).
   now apply (rngl_lt_le_incl Hto) in H1d.
 }
@@ -842,7 +842,7 @@ apply (rngl_leb_gt_iff Hto) in H1s.
 apply (rngl_le_sub_le_add_r Hop Hto).
 rewrite rngl_add_comm.
 apply (rngl_le_sub_le_add_r Hop Hto).
-rewrite <- (rngl_abs_nonneg_eq Hop Hto (_ - _)). 2: {
+rewrite <- (rngl_abs_nonneg_eq Hop Hor (_ - _)). 2: {
   apply (rngl_le_0_sub Hop Hto).
   now apply (rngl_lt_le_incl Hto) in H1s.
 }
@@ -974,14 +974,14 @@ rewrite (rngl_mul_div Hi1). 2: {
   rewrite H in H1.
   now apply angle_lt_irrefl in H1.
 }
-rewrite (rngl_abs_nonneg_eq Hop Hto). 2: {
+rewrite (rngl_abs_nonneg_eq Hop Hor). 2: {
   apply (rngl_div_nonneg Hop Hiv Hto); [ | easy ].
   apply angle_eucl_dist_nonneg.
 }
 apply (rngl_lt_div_l Hop Hiv Hor); [ easy | ].
 eapply (rngl_lt_le_trans Hto _ ε); [ easy | ].
 rewrite <- (rngl_mul_1_r ε) at 1.
-apply (rngl_mul_le_mono_pos_l Hop Hiq Hor); [ easy | ].
+apply (rngl_mul_le_mono_pos_l Hop Hiq Hto); [ easy | ].
 apply (rngl_1_le_2 Hos Hor).
 Qed.
 
@@ -1025,14 +1025,14 @@ destruct is_left. {
   progress unfold rngl_dist.
   rewrite (rngl_sub_0_r Hos).
   rewrite (rngl_abs_opp Hop Hor).
-  rewrite (rngl_abs_nonneg_eq Hop Hto). 2: {
+  rewrite (rngl_abs_nonneg_eq Hop Hor). 2: {
     apply (rngl_div_nonneg Hop Hiv Hto); [ | easy ].
     apply angle_eucl_dist_nonneg.
   }
   apply (rngl_lt_div_l Hop Hiv Hor); [ easy | ].
   eapply (rngl_lt_le_trans Hto _ ε); [ easy | ].
   rewrite <- (rngl_mul_1_r ε) at 1.
-  apply (rngl_mul_le_mono_pos_l Hop Hiq Hor); [ easy | ].
+  apply (rngl_mul_le_mono_pos_l Hop Hiq Hto); [ easy | ].
   apply (rngl_1_le_2 Hos Hor).
 } {
   rewrite (rngl_mul_opp_l Hop).
@@ -1051,14 +1051,14 @@ destruct is_left. {
   }
   progress unfold rngl_dist.
   rewrite (rngl_sub_0_r Hos).
-  rewrite (rngl_abs_nonneg_eq Hop Hto). 2: {
+  rewrite (rngl_abs_nonneg_eq Hop Hor). 2: {
     apply (rngl_div_nonneg Hop Hiv Hto); [ | easy ].
     apply angle_eucl_dist_nonneg.
   }
   apply (rngl_lt_div_l Hop Hiv Hor); [ easy | ].
   eapply (rngl_lt_le_trans Hto _ ε); [ easy | ].
   rewrite <- (rngl_mul_1_r ε) at 1.
-  apply (rngl_mul_le_mono_pos_l Hop Hiq Hor); [ easy | ].
+  apply (rngl_mul_le_mono_pos_l Hop Hiq Hto); [ easy | ].
   apply (rngl_1_le_2 Hos Hor).
 }
 Qed.
@@ -1163,7 +1163,7 @@ destruct is_left. {
   rewrite (rngl_sub_opp_r Hop).
   rewrite (rngl_add_opp_l Hop).
   rewrite rngl_mul_1_l.
-  rewrite (rngl_abs_nonneg_eq Hop Hto). 2: {
+  rewrite (rngl_abs_nonneg_eq Hop Hor). 2: {
     apply (rngl_le_0_sub Hop Hto).
     apply rngl_sin_bound.
   }
@@ -1187,7 +1187,7 @@ destruct is_left. {
   progress unfold rngl_dist.
   rewrite (rngl_sub_opp_r Hop).
   rewrite (rngl_add_opp_l Hop).
-  rewrite (rngl_abs_nonneg_eq Hop Hto). 2: {
+  rewrite (rngl_abs_nonneg_eq Hop Hor). 2: {
     apply (rngl_le_0_sub Hop Hto).
     apply rngl_sin_bound.
   }

@@ -184,7 +184,7 @@ destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
 }
 intros * Hza.
 rewrite angle_eucl_dist_is_sqrt.
-rewrite <- (rngl_abs_nonneg_eq Hop Hto √_). 2: {
+rewrite <- (rngl_abs_nonneg_eq Hop Hor √_). 2: {
   apply rl_sqrt_nonneg.
   apply (rngl_mul_nonneg_nonneg Hos Hor). {
     apply (rngl_0_le_2 Hos Hor).
@@ -192,10 +192,10 @@ rewrite <- (rngl_abs_nonneg_eq Hop Hto √_). 2: {
   apply (rngl_le_0_sub Hop Hto).
   apply rngl_cos_bound.
 }
-rewrite <- (rngl_abs_nonneg_eq Hop Hto a) at 2; [ | easy ].
+rewrite <- (rngl_abs_nonneg_eq Hop Hor a) at 2; [ | easy ].
 split. {
   intros Hc.
-  apply (rngl_squ_lt_abs_lt Hop Hiq Hor).
+  apply (rngl_squ_lt_abs_lt Hop Hiq Hto).
   rewrite rngl_squ_sqrt. 2: {
     apply (rngl_mul_nonneg_nonneg Hos Hor). {
       apply (rngl_0_le_2 Hos Hor).
@@ -208,7 +208,7 @@ split. {
     apply (rngl_0_lt_2 Hos Hc1 Hto).
   }
   apply (rngl_lt_sub_lt_add_l Hop Hto).
-  now apply (rngl_lt_sub_lt_add_r Hop Hor).
+  now apply (rngl_lt_sub_lt_add_r Hop Hto).
 } {
   intros Ha.
   apply (rngl_abs_lt_squ_lt Hop Hiq Hor) in Ha. 2: {
@@ -226,7 +226,7 @@ split. {
     apply (rngl_0_lt_2 Hos Hc1 Hto).
   }
   apply (rngl_lt_sub_lt_add_l Hop Hto) in Ha.
-  now apply (rngl_lt_sub_lt_add_r Hop Hor) in Ha.
+  now apply (rngl_lt_sub_lt_add_r Hop Hto) in Ha.
 }
 Qed.
 
@@ -248,8 +248,8 @@ destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
 }
 intros * Hza.
 split; intros H12. {
-  apply (rngl_lt_eq_cases Hor) in H12.
-  apply (rngl_lt_eq_cases Hor).
+  apply (rngl_lt_eq_cases Hto) in H12.
+  apply (rngl_lt_eq_cases Hto).
   destruct H12 as [H12| H12]. {
     now left; apply rngl_cos_lt_angle_eucl_dist_lt.
   }
@@ -265,10 +265,10 @@ split; intros H12. {
     apply (rngl_2_neq_0 Hos Hc1 Hto).
   }
   rewrite (rl_sqrt_squ Hop Hto).
-  now apply (rngl_abs_nonneg_eq Hop Hto).
+  now apply (rngl_abs_nonneg_eq Hop Hor).
 } {
-  apply (rngl_lt_eq_cases Hor) in H12.
-  apply (rngl_lt_eq_cases Hor).
+  apply (rngl_lt_eq_cases Hto) in H12.
+  apply (rngl_lt_eq_cases Hto).
   destruct H12 as [H12| H12]. {
     now left; apply rngl_cos_lt_angle_eucl_dist_lt.
   }
@@ -510,10 +510,10 @@ exists N.
 intros p Hp.
 specialize (HN p Hp).
 rewrite (rngl_abs_sub_comm Hop Hor) in HN.
-rewrite (rngl_abs_nonneg_eq Hop Hto) in HN. 2: {
+rewrite (rngl_abs_nonneg_eq Hop Hor) in HN. 2: {
   apply (rngl_le_0_sub Hop Hto), rngl_cos_bound.
 }
-apply (rngl_lt_sub_lt_add_r Hop Hor) in HN.
+apply (rngl_lt_sub_lt_add_r Hop Hto) in HN.
 apply (rngl_lt_sub_lt_add_l Hop Hto) in HN.
 easy.
 Qed.
@@ -591,13 +591,13 @@ assert (Hsr : n ≤ 3 ∨ ∀ i, (seq_angle_to_div_nat θ n i ≤ π/₂)%A). {
   apply Nat.log2_le_pow2; cbn; flia Hn3.
 }
 assert (He1 : (1 - ε² / 2 < 1)%L). {
-  apply (rngl_lt_sub_lt_add_r Hop Hor).
+  apply (rngl_lt_sub_lt_add_r Hop Hto).
   apply (rngl_lt_sub_lt_add_l Hop Hto).
   rewrite (rngl_sub_diag Hos).
   apply (rngl_div_pos Hop Hiv Hor). 2: {
     apply (rngl_0_lt_2 Hos Hc1 Hto).
   }
-  now apply (rngl_mul_pos_pos Hop Hiq Hor).
+  now apply (rngl_mul_pos_pos Hop Hiq Hto).
 }
 enough (H :
   ∃ N, ∀ p q,

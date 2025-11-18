@@ -370,7 +370,7 @@ destruct zs1. {
       apply Hzs12; clear Hzs12.
       cbn.
       apply (rngl_lt_0_add Hos Hor).
-      now apply (rngl_mul_pos_pos Hop Hiq Hor).
+      now apply (rngl_mul_pos_pos Hop Hiq Hto).
       apply (rngl_lt_le_incl Hto) in Hzs2.
       now apply (rngl_mul_nonneg_nonneg Hos Hor).
     }
@@ -592,7 +592,7 @@ destruct s1z. {
     progress sin_cos_add_sub_straight_goal T.
     rewrite (rngl_add_opp_l Hop).
     apply (rngl_le_sub_0 Hop Hor).
-    apply (rngl_lt_eq_cases Hor).
+    apply (rngl_lt_eq_cases Hto).
     destruct (rngl_eqb_dec (rngl_cos θ1) (rngl_cos θ2)) as [Hc12| Hc12]. {
       apply (rngl_eqb_eq Heo) in Hc12.
       now right.
@@ -744,7 +744,7 @@ destruct s1z. {
     apply (rngl_add_nonneg_pos Hos Hor).
     apply (rngl_lt_le_incl Hto) in Hzc2.
     now apply (rngl_mul_nonneg_nonneg Hos Hor).
-    now apply (rngl_mul_pos_pos Hop Hiq Hor).
+    now apply (rngl_mul_pos_pos Hop Hiq Hto).
   }
   apply (rngl_leb_gt_iff Hto) in Hzc1.
   change_angle_add_r θ1 π.

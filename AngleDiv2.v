@@ -456,10 +456,10 @@ destruct zs1. {
     apply rngl_leb_le in H12.
     rewrite rngl_mul_1_l.
     apply rngl_leb_le.
-    rewrite <- (rngl_abs_nonneg_eq Hop Hto). 2: {
+    rewrite <- (rngl_abs_nonneg_eq Hop Hor). 2: {
       now apply rl_sqrt_nonneg.
     }
-    rewrite <- (rngl_abs_nonneg_eq Hop Hto (√_))%L. 2: {
+    rewrite <- (rngl_abs_nonneg_eq Hop Hor (√_))%L. 2: {
       now apply rl_sqrt_nonneg.
     }
     apply (rngl_squ_le_abs_le Hop Hiq Hto).
@@ -494,10 +494,10 @@ apply rngl_leb_le.
 do 2 rewrite (rngl_mul_opp_l Hop).
 do 2 rewrite rngl_mul_1_l.
 apply -> (rngl_opp_le_compat Hop Hto).
-rewrite <- (rngl_abs_nonneg_eq Hop Hto). 2: {
+rewrite <- (rngl_abs_nonneg_eq Hop Hor). 2: {
   now apply rl_sqrt_nonneg.
 }
-rewrite <- (rngl_abs_nonneg_eq Hop Hto (√_))%L. 2: {
+rewrite <- (rngl_abs_nonneg_eq Hop Hor (√_))%L. 2: {
   now apply rl_sqrt_nonneg.
 }
 apply (rngl_squ_le_abs_le Hop Hiq Hto).
@@ -525,7 +525,7 @@ destruct_ac.
 intros Hc1.
 specialize (rngl_0_lt_2 Hos Hc1 Hto) as Hz2.
 intros * Hsz.
-rewrite <- (rngl_abs_nonneg_eq Hop Hto √_)%L. 2: {
+rewrite <- (rngl_abs_nonneg_eq Hop Hor √_)%L. 2: {
   apply rl_sqrt_nonneg.
   apply (rngl_le_div_r Hop Hiv Hor); [ easy | ].
   rewrite (rngl_mul_0_l Hos).
@@ -538,8 +538,8 @@ destruct (rngl_ltb_dec (rngl_cos θ) 0) as [Hcz| Hzc]. {
   apply (rngl_abs_nonneg Hop Hto).
 }
 apply (rngl_ltb_ge_iff Hto) in Hzc.
-rewrite <- (rngl_abs_nonneg_eq Hop Hto (rngl_cos θ)) at 1; [ | easy ].
-apply (rngl_squ_lt_abs_lt Hop Hiq Hor).
+rewrite <- (rngl_abs_nonneg_eq Hop Hor (rngl_cos θ)) at 1; [ | easy ].
+apply (rngl_squ_lt_abs_lt Hop Hiq Hto).
 rewrite rngl_squ_sqrt. 2: {
   apply (rngl_le_div_r Hop Hiv Hor); [ easy | ].
   rewrite (rngl_mul_0_l Hos).
@@ -933,7 +933,7 @@ split; intros Hs3. {
     now rewrite rngl_mul_1_l.
   }
   apply (rngl_le_0_sub Hop Hto).
-  apply (rngl_mul_le_mono_pos_l Hop Hiq Hor 2); [ easy | ].
+  apply (rngl_mul_le_mono_pos_l Hop Hiq Hto 2); [ easy | ].
   rewrite (rngl_mul_0_r Hos).
   rewrite (rngl_mul_sub_distr_l Hop).
   rewrite (rngl_div_1_l Hiv).
@@ -1165,7 +1165,7 @@ cbn.
 remember (1 + squ_rngl_cos_div_pow_2 _ _)%L as a eqn:Ha.
 remember (1 + rngl_cos_div_pow_2 _ _)%L as b eqn:Hb.
 move b before a.
-rewrite <- (rngl_abs_nonneg_eq Hop Hto). 2: {
+rewrite <- (rngl_abs_nonneg_eq Hop Hor). 2: {
   apply rl_sqrt_nonneg; subst b.
   apply (rngl_le_div_r Hop Hiv Hor). {
     apply (rngl_0_lt_2 Hos Hc1 Hto).
@@ -1174,7 +1174,7 @@ rewrite <- (rngl_abs_nonneg_eq Hop Hto). 2: {
   apply (rngl_le_opp_l Hop Hor).
   apply rngl_cos_div_pow_2_div_2_bound.
 }
-rewrite <- (rngl_abs_nonneg_eq Hop Hto (a / 2))%L. 2: {
+rewrite <- (rngl_abs_nonneg_eq Hop Hor (a / 2))%L. 2: {
   apply (rngl_le_div_r Hop Hiv Hor). {
     apply (rngl_0_lt_2 Hos Hc1 Hto).
   }
@@ -1218,7 +1218,7 @@ rewrite <- rngl_add_assoc.
 apply (rngl_add_le_mono_l Hos Hor).
 rewrite (rngl_mul_comm Hic), rngl_add_comm.
 apply (rngl_add_le_mono Hos Hor). 2: {
-  apply (rngl_mul_le_mono_nonneg_r Hop Hor). {
+  apply (rngl_mul_le_mono_nonneg_r Hop Hto). {
     apply (rngl_0_le_2 Hos Hor).
   }
   now apply IHn.
@@ -1300,7 +1300,7 @@ enough (H :
   specialize (HN n Hn).
   rewrite rngl_cos_div_pow_2_eq.
   apply (rngl_lt_sub_lt_add_l Hop Hto).
-  apply (rngl_lt_sub_lt_add_r Hop Hor).
+  apply (rngl_lt_sub_lt_add_r Hop Hto).
   easy.
 }
 enough (H :
@@ -1332,7 +1332,7 @@ enough (H :
     cbn in HN |-*.
     rewrite (rngl_div_1_r Hiq) in HN; [ | now left ].
     apply (rngl_lt_sub_lt_add_l Hop Hto).
-    apply (rngl_lt_sub_lt_add_r Hop Hor).
+    apply (rngl_lt_sub_lt_add_r Hop Hto).
     easy.
   }
   cbn.
@@ -1374,7 +1374,7 @@ apply (rngl_lt_div_l Hop Hiv Hor). {
 }
 rewrite (rngl_mul_comm Hic).
 apply (rngl_lt_div_l Hop Hiv Hor); [ easy | ].
-rewrite <- (rngl_abs_nonneg_eq Hop Hto (_ / _))%L. 2: {
+rewrite <- (rngl_abs_nonneg_eq Hop Hor (_ / _))%L. 2: {
   apply (rngl_le_div_r Hop Hiv Hor); [ easy | ].
   rewrite (rngl_mul_0_l Hos).
   rewrite Ha.
