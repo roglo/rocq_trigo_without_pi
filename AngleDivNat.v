@@ -302,7 +302,7 @@ rewrite (rngl_sub_opp_r Hop).
 rewrite (rngl_mul_comm Hic).
 rewrite rngl_sin_nonneg_sin_nonneg_add_1_cos_add_add. 2: {
   rewrite rngl_sin_sub_straight_r in Hs1z.
-  rewrite (rngl_leb_0_opp Hop Hor) in Hs1z.
+  rewrite (rngl_leb_0_opp Hop Hto) in Hs1z.
   apply (rngl_leb_gt_iff Hto) in Hs1z.
   apply (rngl_lt_le_incl Hto) in Hs1z.
   apply rngl_leb_le in Hs1z.
@@ -510,10 +510,10 @@ destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
 }
 intros.
 rewrite <- (rngl_abs_nonneg_eq Hop Hor (angle_eucl_dist _ _)). 2: {
-  apply (dist_nonneg Hop Hiv Hor angle_eucl_dist_is_dist).
+  apply (dist_nonneg Hop Hiv Hto angle_eucl_dist_is_dist).
 }
 rewrite <- (rngl_abs_nonneg_eq Hop Hor (angle_eucl_dist θ1 _)). 2: {
-  apply (dist_nonneg Hop Hiv Hor angle_eucl_dist_is_dist).
+  apply (dist_nonneg Hop Hiv Hto angle_eucl_dist_is_dist).
 }
 rewrite angle_eucl_dist_move_0_r.
 rewrite (angle_eucl_dist_move_0_r θ1).
@@ -846,7 +846,7 @@ destruct zs1. {
     apply rngl_ltb_lt in Hzs2.
     destruct zse2; [ easy | ].
     apply (rngl_leb_gt_iff Hto) in Hzse2.
-    now apply (rngl_lt_asymm Hor) in Hzs2.
+    now apply (rngl_lt_asymm Hto) in Hzs2.
   }
   apply (rngl_ltb_ge_iff Hto) in Hzs2.
   destruct zse2; [ | easy ].
@@ -868,7 +868,7 @@ destruct zs2. {
   destruct zse2; [ easy | ].
   apply rngl_ltb_lt in Hzs2.
   apply (rngl_leb_gt_iff Hto) in Hzse2.
-  now apply (rngl_lt_asymm Hor) in Hzs2.
+  now apply (rngl_lt_asymm Hto) in Hzs2.
 }
 symmetry.
 destruct zse2; [ | easy ].

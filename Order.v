@@ -214,7 +214,7 @@ progress unfold angle_ltb.
 cbn.
 rewrite (rngl_leb_refl Hor).
 apply rngl_ltb_lt.
-apply (rngl_opp_1_lt_1 Hop Hor Hc1).
+apply (rngl_opp_1_lt_1 Hop Hto Hc1).
 Qed.
 
 Theorem angle_straight_nonneg : (0 ≤ π)%A.
@@ -355,7 +355,7 @@ destruct z2. {
   apply angle_neqb_neq in Hz1, Hz2.
   progress unfold angle_leb.
   cbn.
-  do 2 rewrite (rngl_leb_0_opp Hop Hor).
+  do 2 rewrite (rngl_leb_0_opp Hop Hto).
   remember (rngl_sin θ1 ≤? 0)%L as s1z eqn:Hs1z.
   remember (rngl_sin θ2 ≤? 0)%L as s2z eqn:Hs2z.
   remember (0 ≤? rngl_sin θ1)%L as zs1 eqn:Hzs1.
@@ -391,7 +391,7 @@ destruct z2. {
       }
       exfalso.
       apply (rngl_leb_gt_iff Hto) in Hs2z, Hzs2.
-      now apply (rngl_lt_asymm Hor) in Hs2z.
+      now apply (rngl_lt_asymm Hto) in Hs2z.
     }
     destruct zs2. {
       destruct s2z; [ | easy ].
@@ -405,7 +405,7 @@ destruct z2. {
     symmetry.
     destruct s2z; [ easy | ].
     apply (rngl_leb_gt_iff Hto) in Hs2z, Hzs2.
-    now apply (rngl_lt_asymm Hor) in Hs2z.
+    now apply (rngl_lt_asymm Hto) in Hs2z.
   }
   destruct zs1. {
     destruct zs2. {
@@ -425,10 +425,10 @@ destruct z2. {
     }
     destruct s2z; [ easy | ].
     apply (rngl_leb_gt_iff Hto) in Hs2z, Hzs2.
-    now apply (rngl_lt_asymm Hor) in Hs2z.
+    now apply (rngl_lt_asymm Hto) in Hs2z.
   }
   apply (rngl_leb_gt_iff Hto) in Hs1z, Hzs1.
-  now apply (rngl_lt_asymm Hor) in Hs1z.
+  now apply (rngl_lt_asymm Hto) in Hs1z.
 }
 apply Bool.negb_false_iff in Hz2.
 apply angle_eqb_eq in Hz2.
@@ -437,7 +437,7 @@ subst θ2; cbn.
 progress unfold angle_leb.
 cbn.
 rewrite (rngl_leb_refl Hor).
-rewrite (rngl_leb_0_opp Hop Hor).
+rewrite (rngl_leb_0_opp Hop Hto).
 destruct (rngl_sin θ1 ≤? 0)%L; [ | easy ].
 apply (rngl_leb_gt_iff Hto).
 apply (rngl_le_neq Hto).
@@ -648,7 +648,7 @@ Qed.
 Theorem angle_lt_le_incl :
   ∀ θ1 θ2, (θ1 < θ2 → θ1 ≤ θ2)%A.
 Proof.
-specialize ac_or as Hor.
+specialize ac_to as Hto.
 intros * H12.
 progress unfold angle_ltb in H12.
 progress unfold angle_leb.
@@ -675,7 +675,7 @@ intros * H2z H2.
 progress unfold angle_leb in H2.
 progress unfold angle_leb.
 cbn in H2 |-*.
-rewrite (rngl_leb_0_opp Hop Hor) in H2.
+rewrite (rngl_leb_0_opp Hop Hto) in H2.
 rewrite (rngl_leb_opp_r Hop Hor).
 rewrite (rngl_opp_0 Hop).
 remember (0 ≤? rngl_sin θ1)%L as zs2 eqn:Hzs2.
@@ -696,7 +696,7 @@ destruct zs. {
 destruct zs2. 2: {
   destruct sz; [ easy | ].
   apply (rngl_leb_gt_iff Hto) in Hzs2, Hsz, Hzs.
-  now apply (rngl_lt_asymm Hor) in Hzs.
+  now apply (rngl_lt_asymm Hto) in Hzs.
 }
 apply rngl_leb_le in Hzs2.
 apply (rngl_leb_gt_iff Hto) in Hzs.
@@ -724,10 +724,10 @@ destruct sz2. {
   apply eq_rngl_sin_0 in Hzs2.
   destruct Hzs2; [ easy | subst θ1 ].
   apply (rngl_leb_gt_iff Hto) in Hsz.
-  now apply (rngl_lt_asymm Hor) in Hzs.
+  now apply (rngl_lt_asymm Hto) in Hzs.
 }
 apply (rngl_leb_gt_iff Hto) in Hsz.
-now apply (rngl_lt_asymm Hor) in Hzs.
+now apply (rngl_lt_asymm Hto) in Hzs.
 Qed.
 
 Theorem angle_lt_opp_r :
@@ -741,8 +741,8 @@ intros * Hz1 H12.
 progress unfold angle_ltb in H12.
 progress unfold angle_ltb.
 cbn in H12 |-*.
-rewrite (rngl_leb_0_opp Hop Hor) in H12.
-rewrite (rngl_leb_0_opp Hop Hor).
+rewrite (rngl_leb_0_opp Hop Hto) in H12.
+rewrite (rngl_leb_0_opp Hop Hto).
 remember (0 ≤? rngl_sin θ1)%L as zs1 eqn:Hzs1.
 remember (0 ≤? rngl_sin θ2)%L as zs2 eqn:Hzs2.
 remember (rngl_sin θ1 ≤? 0)%L as s1z eqn:Hs1z.
@@ -796,20 +796,20 @@ destruct s1z. {
       apply rngl_cos_bound.
     }
     apply (rngl_leb_gt_iff Hto) in Hs2z, Hzs2.
-    now apply (rngl_lt_asymm Hor) in Hs2z.
+    now apply (rngl_lt_asymm Hto) in Hs2z.
   }
   destruct s2z; [ easy | ].
   apply (rngl_leb_gt_iff Hto) in Hs2z, Hzs2.
-  now apply (rngl_lt_asymm Hor) in Hs2z.
+  now apply (rngl_lt_asymm Hto) in Hs2z.
 }
 destruct zs1. {
   destruct s2z; [ easy | ].
   apply (rngl_leb_gt_iff Hto) in Hs2z, Hzs2.
-  now apply (rngl_lt_asymm Hor) in Hs2z.
+  now apply (rngl_lt_asymm Hto) in Hs2z.
 }
 destruct s2z; [ easy | ].
 apply (rngl_leb_gt_iff Hto) in Hs2z, Hzs2.
-now apply (rngl_lt_asymm Hor) in Hs2z.
+now apply (rngl_lt_asymm Hto) in Hs2z.
 Qed.
 
 Theorem angle_le_trans :
@@ -942,7 +942,7 @@ rewrite rngl_sin_add_right_r in Htr.
 rewrite rngl_cos_add_right_r in Htr.
 cbn in Htr.
 rewrite (rngl_opp_0 Hop) in Htr.
-rewrite (rngl_leb_0_opp Hop Hor) in Htr.
+rewrite (rngl_leb_0_opp Hop Hto) in Htr.
 specialize (rngl_0_le_1 Hos Hto) as H1.
 apply rngl_leb_le in H1.
 rewrite H1 in Htr; clear H1.
@@ -976,7 +976,7 @@ do 2 rewrite rngl_mul_1_l in Htr.
 rewrite rngl_add_0_l in Htr.
 rewrite (rngl_sub_0_r Hos) in Htr.
 rewrite (rngl_opp_0 Hop) in Htr.
-rewrite (rngl_leb_0_opp Hop Hor) in Htr.
+rewrite (rngl_leb_0_opp Hop Hto) in Htr.
 specialize (rngl_0_lt_1 Hos Hc1 Hto) as H1.
 apply (rngl_leb_gt_iff Hto) in H1.
 rewrite H1 in Htr; clear H1.

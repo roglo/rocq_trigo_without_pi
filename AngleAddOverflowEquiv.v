@@ -280,14 +280,14 @@ destruct zs1. {
           } {
             symmetry.
             apply (rngl_leb_gt_iff Hto).
-            apply (rngl_opp_1_lt_1 Hop Hor Hc1).
+            apply (rngl_opp_1_lt_1 Hop Hto Hc1).
           }
         }
         cbn.
         rewrite (rngl_opp_involutive Hop).
         transitivity true. {
           apply rngl_ltb_lt.
-          apply (rngl_opp_1_lt_1 Hop Hor Hc1).
+          apply (rngl_opp_1_lt_1 Hop Hto Hc1).
         } {
           symmetry.
           apply rngl_leb_le.
@@ -316,7 +316,7 @@ destruct zs1. {
     }
     exfalso.
     apply (rngl_leb_gt_iff Hto) in Hzs2, Hs2z.
-    now apply (rngl_lt_asymm Hor) in Hzs2.
+    now apply (rngl_lt_asymm Hto) in Hzs2.
   }
   remember (0 ≤? rngl_sin (θ1 + θ2))%L as zs12 eqn:Hzs12.
   remember (0 ≤? rngl_sin θ2)%L as zs2 eqn:Hzs2.
@@ -779,7 +779,7 @@ destruct s1z. {
   now apply rngl_sin_add_nonneg.
 }
 apply (rngl_leb_gt_iff Hto) in Hzs1, Hs1z.
-now apply (rngl_lt_asymm Hor) in Hzs1.
+now apply (rngl_lt_asymm Hto) in Hzs1.
 Qed.
 
 End a.

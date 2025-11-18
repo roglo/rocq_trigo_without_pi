@@ -728,7 +728,7 @@ specialize (rngl_0_le_2 Hos Hor) as Hz2'.
 intros * Ha1.
 rewrite rngl_add_comm.
 apply (rngl_le_add_le_sub_l Hop Hto).
-apply (rngl_le_div_l Hop Hiv Hor); [ easy | ].
+apply (rngl_le_div_l Hop Hiv Hto); [ easy | ].
 rewrite (rngl_mul_sub_distr_r Hop).
 rewrite <- rngl_mul_assoc.
 rewrite <- rngl_4_eq_2_mul_2.

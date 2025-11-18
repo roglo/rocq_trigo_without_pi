@@ -722,7 +722,7 @@ induction k. {
   do 2 rewrite (rngl_sub_diag Hos).
   rewrite (rngl_squ_0 Hos).
   rewrite rngl_add_0_l.
-  now rewrite (rl_sqrt_0 Hop Hor Hii).
+  now rewrite (rl_sqrt_0 Hop Hto Hii).
 }
 cbn.
 now apply angle_lim_add_add.
@@ -1016,7 +1016,7 @@ intros * H1z H12.
 progress unfold angle_ltb in H12.
 progress unfold angle_ltb.
 cbn.
-do 2 rewrite (rngl_leb_0_opp Hop Hor).
+do 2 rewrite (rngl_leb_0_opp Hop Hto).
 remember (0 ≤? rngl_sin θ1)%L as zs1 eqn:Hzs1.
 remember (rngl_sin θ1 ≤? 0)%L as s1z eqn:Hs1z.
 remember (0 ≤? rngl_sin θ2)%L as zs2 eqn:Hzs2.
@@ -1057,7 +1057,7 @@ destruct s2z. {
 apply (rngl_leb_gt_iff Hto) in Hs2z.
 destruct zs2. 2: {
   apply (rngl_leb_gt_iff Hto) in Hzs2.
-  now apply (rngl_lt_asymm Hor) in Hzs2.
+  now apply (rngl_lt_asymm Hto) in Hzs2.
 }
 clear Hzs2.
 destruct zs1; [ | easy ].
@@ -1172,7 +1172,7 @@ intros Hc1.
 intros H.
 apply eq_angle_eq in H.
 injection H; clear H; intros H.
-specialize (rngl_opp_1_lt_1 Hop Hor Hc1) as H1.
+specialize (rngl_opp_1_lt_1 Hop Hto Hc1) as H1.
 rewrite H in H1.
 now apply (rngl_lt_irrefl Hor) in H1.
 Qed.
@@ -1205,7 +1205,7 @@ destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
 intros.
 progress unfold angle_ltb.
 cbn.
-rewrite (rngl_leb_0_opp Hop Hor).
+rewrite (rngl_leb_0_opp Hop Hto).
 rewrite <- (rngl_negb_ltb Hor 0 1)%L.
 specialize (rngl_0_le_1 Hos Hto) as H1.
 specialize (rngl_0_lt_1 Hos Hc1 Hto) as H2.

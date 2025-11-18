@@ -72,11 +72,11 @@ split; intros H12. 2: {
   do 2 rewrite (rngl_sub_diag Hos).
   rewrite (rngl_squ_0 Hos).
   rewrite rngl_add_0_r.
-  apply (rl_sqrt_0 Hop Hor Hii).
+  apply (rl_sqrt_0 Hop Hto Hii).
 }
 apply eq_angle_eq.
 apply (eq_rl_sqrt_0 Hos) in H12. 2: {
-  apply (rngl_add_squ_nonneg Hos Hor).
+  apply (rngl_add_squ_nonneg Hos Hto).
 }
 apply (rngl_eq_add_0 Hos Hor) in H12; cycle 1. {
   apply (rngl_squ_nonneg Hos Hto).
@@ -109,7 +109,7 @@ destruct θ2 as (c2, s2, Hcs2).
 destruct θ3 as (c3, s3, Hcs3).
 progress unfold angle_eucl_dist.
 cbn.
-apply (euclidean_distance_triangular Hic Hop Hiv Hor).
+apply (euclidean_distance_triangular Hic Hop Hiv Hto).
 Qed.
 
 Theorem angle_eucl_dist_is_dist : is_dist angle_eucl_dist.
@@ -135,9 +135,9 @@ Theorem angle_taxi_dist_symmetry :
 Proof.
 destruct_ac; intros.
 progress unfold angle_taxi_dist.
-rewrite (rngl_abs_sub_comm Hop Hor).
+rewrite (rngl_abs_sub_comm Hop Hto).
 f_equal.
-apply (rngl_abs_sub_comm Hop Hor).
+apply (rngl_abs_sub_comm Hop Hto).
 Qed.
 
 Theorem angle_taxi_dist_separation :
@@ -173,7 +173,7 @@ destruct θ2 as (c2, s2, Hcs2).
 destruct θ3 as (c3, s3, Hcs3).
 progress unfold angle_taxi_dist.
 cbn.
-specialize (rngl_abs_triangle Hop Hor) as H1.
+specialize (rngl_abs_triangle Hop Hto) as H1.
 Search (rngl_abs _ - rngl_abs _)%L.
 rewrite rngl_add_assoc.
 rewrite (rngl_add_add_swap (rngl_abs (c2 - c1))).
@@ -397,14 +397,14 @@ Theorem angle_eucl_dist_nonneg : ∀ θ1 θ2, (0 ≤ angle_eucl_dist θ1 θ2)%L.
 Proof.
 destruct_ac.
 intros.
-apply (dist_nonneg Hop Hiv Hor angle_eucl_dist_is_dist).
+apply (dist_nonneg Hop Hiv Hto angle_eucl_dist_is_dist).
 Qed.
 
 Theorem angle_taxi_dist_nonneg : ∀ θ1 θ2, (0 ≤ angle_taxi_dist θ1 θ2)%L.
 Proof.
 destruct_ac.
 intros.
-apply (dist_nonneg Hop Hiv Hor angle_taxi_dist_is_dist).
+apply (dist_nonneg Hop Hiv Hto angle_taxi_dist_is_dist).
 Qed.
 
 Theorem angle_lim_const :
@@ -430,7 +430,7 @@ destruct H3 as [H3| H3]; [ | easy ].
 clear Hzx; exfalso.
 specialize (H1 (x / 2)%L).
 assert (H : (0 < x / 2)%L). {
-  apply (rngl_div_pos Hop Hiv Hor); [ easy | ].
+  apply (rngl_div_pos Hop Hiv Hto); [ easy | ].
   apply (rngl_0_lt_2 Hos Hc1 Hto).
 }
 specialize (H1 H); clear H.
@@ -438,7 +438,7 @@ destruct H1 as (N, HN).
 specialize (HN N (Nat.le_refl _)).
 apply rngl_nle_gt in HN.
 apply HN; clear HN.
-apply (rngl_le_div_l Hop Hiv Hor).
+apply (rngl_le_div_l Hop Hiv Hto).
 apply (rngl_0_lt_2 Hos Hc1 Hto).
 rewrite rngl_mul_2_r.
 apply (rngl_le_add_l Hos Hor).

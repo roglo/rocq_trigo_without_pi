@@ -51,7 +51,7 @@ rewrite angle_straight_add_straight.
 progress unfold angle_ltb; cbn.
 rewrite (rngl_leb_refl Hor).
 apply rngl_ltb_lt.
-apply (rngl_opp_1_lt_1 Hop Hor Hc1).
+apply (rngl_opp_1_lt_1 Hop Hto Hc1).
 Qed.
 
 Theorem angle_add_le_mono_l_sin_lb_neg_sin_2_nonneg :
@@ -180,7 +180,7 @@ destruct zs3. {
         progress unfold angle_ltb; cbn.
         rewrite (rngl_leb_refl Hor).
         apply rngl_ltb_lt.
-        apply (rngl_opp_1_lt_1 Hop Hor Hc1).
+        apply (rngl_opp_1_lt_1 Hop Hto Hc1).
       }
       rewrite angle_sub_opp_r in Hc2z.
       rewrite rngl_sin_add_right_r in Hc2z.

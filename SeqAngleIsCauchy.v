@@ -490,7 +490,7 @@ cbn in H1.
 progress unfold rngl_dist in H1.
 specialize (H1 (ε² / 2))%L.
 assert (Hε2 : (0 < ε² / 2)%L). {
-  apply (rngl_div_pos Hop Hiv Hor). 2: {
+  apply (rngl_div_pos Hop Hiv Hto). 2: {
     apply (rngl_0_lt_2 Hos Hc1 Hto).
   }
   apply (rngl_le_neq Hto).
@@ -509,7 +509,7 @@ destruct H1 as (N, HN).
 exists N.
 intros p Hp.
 specialize (HN p Hp).
-rewrite (rngl_abs_sub_comm Hop Hor) in HN.
+rewrite (rngl_abs_sub_comm Hop Hto) in HN.
 rewrite (rngl_abs_nonneg_eq Hop Hor) in HN. 2: {
   apply (rngl_le_0_sub Hop Hto), rngl_cos_bound.
 }
@@ -594,7 +594,7 @@ assert (He1 : (1 - ε² / 2 < 1)%L). {
   apply (rngl_lt_sub_lt_add_r Hop Hto).
   apply (rngl_lt_sub_lt_add_l Hop Hto).
   rewrite (rngl_sub_diag Hos).
-  apply (rngl_div_pos Hop Hiv Hor). 2: {
+  apply (rngl_div_pos Hop Hiv Hto). 2: {
     apply (rngl_0_lt_2 Hos Hc1 Hto).
   }
   now apply (rngl_mul_pos_pos Hop Hiq Hto).

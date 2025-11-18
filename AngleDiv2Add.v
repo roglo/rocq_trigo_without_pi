@@ -643,7 +643,7 @@ destruct zs12. {
         apply (rngl_2_neq_0 Hos Hc1 Hto).
       }
       rewrite (rl_sqrt_1 Hop Hiq Hor).
-      rewrite (rl_sqrt_0 Hop Hor Hii).
+      rewrite (rl_sqrt_0 Hop Hto Hii).
       rewrite (rngl_mul_0_l Hos).
       rewrite (rngl_sub_0_r Hos).
       symmetry.
@@ -835,7 +835,7 @@ destruct zs12. {
         apply (rngl_2_neq_0 Hos Hc1 Hto).
       }
       rewrite (rl_sqrt_1 Hop Hiq Hor).
-      rewrite (rl_sqrt_0 Hop Hor Hii).
+      rewrite (rl_sqrt_0 Hop Hto Hii).
       rewrite (rngl_mul_0_l Hos).
       rewrite (rngl_mul_0_r Hos).
       rewrite (rngl_sub_0_r Hos).
@@ -878,7 +878,7 @@ destruct zs12. {
       rewrite (rngl_div_0_l Hos Hi1). 2: {
         apply (rngl_2_neq_0 Hos Hc1 Hto).
       }
-      apply (rl_sqrt_0 Hop Hor Hii).
+      apply (rl_sqrt_0 Hop Hto Hii).
     }
     apply (rngl_eqb_neq Heo) in Hs12.
     apply rngl_sin_nonneg_sin_nonneg_sin_neg; try easy; cycle 1. {
@@ -936,7 +936,7 @@ destruct zs12. {
       rewrite (rngl_div_0_l Hos Hi1). 2: {
         apply (rngl_2_neq_0 Hos Hc1 Hto).
       }
-      apply (rl_sqrt_0 Hop Hor Hii).
+      apply (rl_sqrt_0 Hop Hto Hii).
     }
     apply (rngl_eqb_neq Heo) in Hs12.
     apply rngl_sin_nonneg_sin_nonneg_sin_neg; try easy; cycle 1. {
@@ -1261,7 +1261,7 @@ progress unfold angle_ltb in H1.
 progress unfold angle_leb.
 cbn in H1 |-*.
 rewrite (rngl_leb_refl Hor) in H1.
-rewrite (rngl_leb_0_opp Hop Hor).
+rewrite (rngl_leb_0_opp Hop Hto).
 remember (0 ≤? rngl_sin θ1)%L as zs1 eqn:Hzs1.
 remember (0 ≤? rngl_sin θ2)%L as zs2 eqn:Hzs2.
 symmetry in Hzs1, Hzs2.

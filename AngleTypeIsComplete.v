@@ -105,7 +105,7 @@ destruct (rngl_leb_dec (rngl_cos (θ q)) (rngl_cos (θ p))) as [Hpq| Hpq]. {
   apply rngl_cos_diff_le_eucl_dist.
 } {
   apply (rngl_leb_gt_iff Hto), (rngl_lt_le_incl Hto) in Hpq.
-  rewrite (rngl_abs_sub_comm Hop Hor).
+  rewrite (rngl_abs_sub_comm Hop Hto).
   rewrite (rngl_abs_nonneg_eq Hop Hor). 2: {
     now apply (rngl_le_0_sub Hop Hto).
   }
@@ -137,7 +137,7 @@ destruct (rngl_leb_dec (rngl_sin (θ q)) (rngl_sin (θ p))) as [Hpq| Hpq]. {
   apply rngl_sin_diff_le_eucl_dist.
 } {
   apply (rngl_leb_gt_iff Hto), (rngl_lt_le_incl Hto) in Hpq.
-  rewrite (rngl_abs_sub_comm Hop Hor).
+  rewrite (rngl_abs_sub_comm Hop Hto).
   rewrite (rngl_abs_nonneg_eq Hop Hor). 2: {
     now apply (rngl_le_0_sub Hop Hto).
   }
@@ -185,7 +185,7 @@ progress unfold rngl_dist in HN.
 eapply (rngl_le_lt_trans Hto). 2: {
   apply (rngl_add_lt_mono_l Hos Hor), HN.
 }
-eapply (rngl_le_trans Hor); [ | apply (rngl_abs_triangle Hop Hor) ].
+eapply (rngl_le_trans Hor); [ | apply (rngl_abs_triangle Hop Hto) ].
 rewrite rngl_add_comm, (rngl_sub_add Hop).
 apply (rngl_le_refl Hor).
 Qed.
@@ -213,7 +213,7 @@ eapply (rngl_le_lt_trans Hto). 2: {
   apply (rngl_add_lt_mono_l Hos Hor), HN.
 }
 rewrite rngl_add_comm.
-apply (rngl_abs_triangle Hop Hor).
+apply (rngl_abs_triangle Hop Hto).
 Qed.
 
 Theorem rngl_limit_limit_squ :
@@ -376,7 +376,7 @@ apply (rngl_lt_le_incl Hto) in H.
 rewrite <- (rngl_abs_nonneg_eq Hop Hor ε H).
 rewrite <- (rl_sqrt_squ Hop Hto ε).
 apply (rl_sqrt_lt_rl_sqrt Hor). {
-  apply (rngl_add_squ_nonneg Hos Hor).
+  apply (rngl_add_squ_nonneg Hos Hto).
 }
 rewrite <- (rngl_mul_div Hi1 ε² 2)%L.
 rewrite (rngl_mul_2_r ε²)%L. 2: {
