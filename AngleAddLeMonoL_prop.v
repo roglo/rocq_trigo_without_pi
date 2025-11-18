@@ -68,7 +68,7 @@ destruct (rngl_leb_dec 0 (rngl_cos θ1))%L as [Hzc1| Hc1z]. {
   generalize Hs1z; intros H.
   apply (rngl_lt_eq_cases Hto) in H.
   destruct H as [H| H]. {
-    apply (rngl_opp_lt_compat Hop Hor) in H.
+    apply (rngl_opp_lt_compat Hop Hto) in H.
     rewrite (rngl_opp_0 Hop) in H.
     apply (rngl_leb_gt_iff Hto) in H.
     rewrite H; clear H.
@@ -166,7 +166,7 @@ rewrite angle_sub_0_r.
 progress unfold angle_ltb.
 rewrite rngl_sin_sub_straight_r.
 generalize Hs1z; intros H.
-apply (rngl_opp_lt_compat Hop Hor) in H.
+apply (rngl_opp_lt_compat Hop Hto) in H.
 rewrite (rngl_opp_0 Hop) in H.
 apply rngl_nle_gt in H.
 apply rngl_leb_nle in H.

@@ -676,7 +676,7 @@ progress unfold angle_leb in H2.
 progress unfold angle_leb.
 cbn in H2 |-*.
 rewrite (rngl_leb_0_opp Hop Hto) in H2.
-rewrite (rngl_leb_opp_r Hop Hor).
+rewrite (rngl_leb_opp_r Hop Hto).
 rewrite (rngl_opp_0 Hop).
 remember (0 ≤? rngl_sin θ1)%L as zs2 eqn:Hzs2.
 remember (0 ≤? rngl_sin θ2)%L as zs eqn:Hzs.
@@ -980,7 +980,7 @@ rewrite (rngl_leb_0_opp Hop Hto) in Htr.
 specialize (rngl_0_lt_1 Hos Hc1 Hto) as H1.
 apply (rngl_leb_gt_iff Hto) in H1.
 rewrite H1 in Htr; clear H1.
-rewrite (rngl_0_leb_1 Hos Hor) in Htr.
+rewrite (rngl_0_leb_1 Hos Hto) in Htr.
 remember (0 ≤? rngl_sin θ)%L as zst eqn:Hzst.
 symmetry in Hzst.
 destruct zst; [ now apply rngl_leb_le | ].

@@ -187,7 +187,7 @@ rewrite angle_eucl_dist_is_sqrt.
 rewrite <- (rngl_abs_nonneg_eq Hop Hor √_). 2: {
   apply rl_sqrt_nonneg.
   apply (rngl_mul_nonneg_nonneg Hos Hor). {
-    apply (rngl_0_le_2 Hos Hor).
+    apply (rngl_0_le_2 Hos Hto).
   }
   apply (rngl_le_0_sub Hop Hto).
   apply rngl_cos_bound.
@@ -198,31 +198,31 @@ split. {
   apply (rngl_squ_lt_abs_lt Hop Hiq Hto).
   rewrite rngl_squ_sqrt. 2: {
     apply (rngl_mul_nonneg_nonneg Hos Hor). {
-      apply (rngl_0_le_2 Hos Hor).
+      apply (rngl_0_le_2 Hos Hto).
     }
     apply (rngl_le_0_sub Hop Hto).
     apply rngl_cos_bound.
   }
   rewrite (rngl_mul_comm Hic).
-  apply (rngl_lt_div_r Hop Hiv Hor). {
+  apply (rngl_lt_div_r Hop Hiv Hto). {
     apply (rngl_0_lt_2 Hos Hc1 Hto).
   }
   apply (rngl_lt_sub_lt_add_l Hop Hto).
   now apply (rngl_lt_sub_lt_add_r Hop Hto).
 } {
   intros Ha.
-  apply (rngl_abs_lt_squ_lt Hop Hiq Hor) in Ha. 2: {
+  apply (rngl_abs_lt_squ_lt Hop Hiq Hto) in Ha. 2: {
     apply (rngl_mul_comm Hic).
   }
   rewrite rngl_squ_sqrt in Ha. 2: {
     apply (rngl_mul_nonneg_nonneg Hos Hor). {
-      apply (rngl_0_le_2 Hos Hor).
+      apply (rngl_0_le_2 Hos Hto).
     }
     apply (rngl_le_0_sub Hop Hto).
     apply rngl_cos_bound.
   }
   rewrite (rngl_mul_comm Hic) in Ha.
-  apply (rngl_lt_div_r Hop Hiv Hor) in Ha. 2: {
+  apply (rngl_lt_div_r Hop Hiv Hto) in Ha. 2: {
     apply (rngl_0_lt_2 Hos Hc1 Hto).
   }
   apply (rngl_lt_sub_lt_add_l Hop Hto) in Ha.
@@ -277,7 +277,7 @@ split; intros H12. {
   rewrite <- H12.
   rewrite rngl_squ_sqrt. 2: {
     apply (rngl_mul_nonneg_nonneg Hos Hor). {
-      apply (rngl_0_le_2 Hos Hor).
+      apply (rngl_0_le_2 Hos Hto).
     }
     apply (rngl_le_0_sub Hop Hto).
     apply rngl_cos_bound.

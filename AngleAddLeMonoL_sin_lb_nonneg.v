@@ -262,7 +262,7 @@ destruct zs2. 2: {
     apply rngl_leb_le in Hzc3.
     rewrite rngl_sin_sub_right_r.
     generalize Hzs3; intros H.
-    apply (rngl_opp_lt_compat Hop Hor) in H.
+    apply (rngl_opp_lt_compat Hop Hto) in H.
     rewrite (rngl_opp_0 Hop) in H.
     apply rngl_nle_gt in H.
     apply rngl_leb_nle in H.

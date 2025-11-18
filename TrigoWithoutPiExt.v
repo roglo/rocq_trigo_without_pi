@@ -670,7 +670,7 @@ destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
 intros * Hu Hv.
 intros ε Hε.
 assert (Hε2 : (0 < ε / 2)%L). {
-  apply (rngl_lt_div_r Hop Hiv Hor).
+  apply (rngl_lt_div_r Hop Hiv Hto).
   apply (rngl_0_lt_2 Hos Hc1 Hto).
   now rewrite (rngl_mul_0_l Hos).
 }
@@ -694,7 +694,7 @@ rewrite Hεε2.
 eapply (rngl_le_lt_trans Hto). {
   apply (angle_eucl_dist_triangular _ (θ1 - u n)).
 }
-apply (rngl_add_lt_compat Hos Hor); [ | easy ].
+apply (rngl_add_lt_compat Hos Hto); [ | easy ].
 rewrite angle_add_comm.
 rewrite angle_eucl_dist_move_0_r.
 rewrite angle_sub_sub_swap.

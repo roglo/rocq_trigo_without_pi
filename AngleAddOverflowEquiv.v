@@ -246,7 +246,7 @@ apply angle_eqb_neq in Hz1.
 progress unfold angle_ltb.
 progress unfold angle_leb.
 cbn - [ angle_add ].
-rewrite (rngl_leb_opp_r Hop Hor).
+rewrite (rngl_leb_opp_r Hop Hto).
 rewrite (rngl_opp_0 Hop).
 remember (0 ≤? rngl_sin θ1)%L as zs1 eqn:Hzs1.
 remember (rngl_sin θ1 ≤? 0)%L as s1z eqn:Hs1z.
@@ -262,7 +262,7 @@ destruct zs1. {
     rewrite rngl_sin_add_straight_l.
     rewrite rngl_cos_add_straight_l.
     cbn.
-    rewrite (rngl_leb_opp_r Hop Hor).
+    rewrite (rngl_leb_opp_r Hop Hto).
     rewrite (rngl_opp_0 Hop).
     remember (0 ≤? rngl_sin θ2)%L as zs2 eqn:Hzs2.
     remember (rngl_sin θ2 ≤? 0)%L as s2z eqn:Hs2z.
@@ -305,7 +305,7 @@ destruct zs1. {
     }
     destruct s2z. {
       apply rngl_ltb_lt.
-      apply (rngl_opp_lt_compat Hop Hor).
+      apply (rngl_opp_lt_compat Hop Hto).
       do 2 rewrite (rngl_opp_involutive Hop).
       apply (rngl_le_neq Hto).
       split; [ apply rngl_cos_bound | ].

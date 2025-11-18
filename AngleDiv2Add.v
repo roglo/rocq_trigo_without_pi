@@ -220,7 +220,7 @@ destruct (rngl_leb_dec (rngl_cos θ1) 0) as [Hc1z| Hzc1]. {
   rewrite rngl_sin_sub_straight_l in Hzs1, Hzs3.
   rewrite rngl_cos_sub_straight_l in Hc12z, Hc1z.
   do 2 rewrite rngl_cos_sub_straight_l.
-  apply -> (rngl_opp_lt_compat Hop Hor).
+  apply -> (rngl_opp_lt_compat Hop Hto).
   rewrite rngl_add_comm in Hc12z.
   rewrite (rngl_add_opp_r Hop) in Hc12z.
   apply (rngl_lt_sub_lt_add_l Hop Hto) in Hc12z.
@@ -1183,21 +1183,21 @@ destruct zs. {
 } {
   apply (rngl_leb_gt_iff Hto) in Hzs.
   rewrite (rngl_mul_opp_l Hop).
-  apply -> (rngl_opp_lt_compat Hop Hor).
+  apply -> (rngl_opp_lt_compat Hop Hto).
   rewrite rngl_mul_1_l.
   rewrite <- (rl_sqrt_1 Hop Hiq Hor) at 4.
-  apply (rl_sqrt_lt_rl_sqrt Hor). {
+  apply (rl_sqrt_lt_rl_sqrt Hto). {
     apply (rngl_div_nonneg Hop Hiv Hto). 2: {
       apply (rngl_0_lt_2 Hos Hc1 Hto).
     }
     apply (rngl_le_opp_l Hop Hor).
     apply rngl_cos_bound.
   } {
-    apply (rngl_lt_div_l Hop Hiv Hor). {
+    apply (rngl_lt_div_l Hop Hiv Hto). {
       apply (rngl_0_lt_2 Hos Hc1 Hto).
     }
     rewrite rngl_mul_1_l.
-    apply (rngl_add_lt_mono_l Hos Hor).
+    apply (rngl_add_lt_mono_l Hos Hto).
     apply (rngl_le_neq Hto).
     split; [ apply rngl_cos_bound | ].
     intros H.
