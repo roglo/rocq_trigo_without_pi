@@ -36,9 +36,9 @@ Proof.
 destruct_ac.
 specialize (rngl_integral_or_inv_pdiv_eq_dec_order Hiv Hor) as Hio.
 intros * Hczz.
-specialize (@derivative_inv_at _ _ _ Hop Hor Hic Hiv) as H1.
+specialize (@derivative_inv_at _ _ _ Hop Hto Hic Hiv) as H1.
 specialize (H1 _ angle_lt_for_deriv).
-specialize (@derivative_mul_at _ _ _ _ Hop Hor Hic Hiv) as H2.
+specialize (@derivative_mul_at _ _ _ _ Hop Hto Hic Hiv) as H2.
 specialize (H2 _ angle_lt_for_deriv).
 assert (H : ∀ x, ¬ angle_lt_for_deriv x x). {
   intros x.

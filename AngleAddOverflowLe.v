@@ -104,7 +104,7 @@ destruct (rngl_leb_dec (rngl_cos θ2) 0) as [Hc2z| Hzc2]. {
   }
   apply rngl_nle_gt in Hc1z.
   apply Hc1z; cbn.
-  apply (rngl_opp_1_le_0 Hop Hor).
+  apply (rngl_opp_1_le_0 Hop Hto).
 }
 apply (rngl_leb_gt_iff Hto) in Hzc2.
 apply rngl_sin_sub_nonneg_sin_le_sin; try easy. {
@@ -294,7 +294,7 @@ destruct (rngl_leb_dec (rngl_cos θ3) 0) as [Hc3z| Hzc3]. {
   destruct Hzs3; subst θ1; [ easy | ].
   apply rngl_nle_gt in Hzc1.
   apply Hzc1; cbn.
-  apply (rngl_opp_1_le_0 Hop Hor).
+  apply (rngl_opp_1_le_0 Hop Hto).
 }
 apply (rngl_leb_gt_iff Hto) in Hzc3.
 move Hzc3 before Hzc2.
@@ -545,7 +545,7 @@ destruct (rngl_leb_dec 0 (rngl_cos θ1)) as [Hzc1| Hc1z]. {
   apply rngl_leb_le in H.
   rewrite H in H1; clear H.
   cbn.
-  apply (rngl_sub_le_compat Hop Hor).
+  apply (rngl_sub_le_compat Hop Hto).
   apply (rngl_mul_le_mono_nonneg_l Hop Hto); [ | easy ].
   now apply (rngl_lt_le_incl Hto).
   now apply (rngl_mul_le_mono_nonneg_l Hop Hto).
@@ -590,7 +590,7 @@ specialize rngl_cos_cos_sin_sin_nonneg_sin_le_cos_le_iff as H1.
 specialize (H1 θ3 θ2 Hc3z Hc2z Hzs3 Hzs2).
 specialize (proj1 H1 H32) as H23; clear H1.
 cbn.
-apply (rngl_sub_le_compat Hop Hor).
+apply (rngl_sub_le_compat Hop Hto).
 apply (rngl_mul_le_mono_nonneg_l Hop Hto); [ | easy ].
 now apply (rngl_lt_le_incl Hto).
 apply (rngl_mul_le_mono_nonneg_l Hop Hto); [ | easy ].
@@ -654,7 +654,7 @@ destruct (rngl_leb_dec (rngl_cos θ2) 0) as [Hc2z| Hzc2]. {
   progress sin_cos_add_sub_straight_hyp T Hc2z.
   progress sin_cos_add_sub_straight_hyp T Hzs12.
   progress sin_cos_add_sub_straight_hyp T H12.
-  apply -> (rngl_le_opp_l Hop Hor) in H12.
+  apply -> (rngl_le_opp_l Hop Hto) in H12.
   apply rngl_nle_gt in Hzs12.
   apply Hzs12; clear Hzs12; cbn.
   apply (rngl_le_0_add Hos Hto).

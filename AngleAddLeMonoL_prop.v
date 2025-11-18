@@ -256,7 +256,7 @@ destruct H21 as [H21| H21]. {
     rewrite <- rngl_sin_add in Hzs12.
     eapply (rngl_le_trans Hor); [ | apply Hzs12 ].
     rewrite <- (rngl_mul_1_r (rngl_cos θ2)) at 1.
-    apply (rngl_mul_le_mono_nonpos_l Hop Hor); [ easy | ].
+    apply (rngl_mul_le_mono_nonpos_l Hop Hto); [ easy | ].
     apply rngl_sin_bound.
   }
 } {
@@ -281,7 +281,7 @@ destruct H21 as [H21| H21]. {
   rewrite (rngl_opp_involutive Hop).
   rewrite rngl_mul_1_r.
   apply (rngl_leb_gt_iff Hto) in Hs1z, Hzs2.
-  apply (rngl_le_opp_r Hop Hor).
+  apply (rngl_le_opp_r Hop Hto).
   destruct (rngl_leb_dec 0 (rngl_cos θ2)) as [Hzc2| Hc2z]. {
     apply rngl_leb_le in Hzc2.
     change_angle_add_r θ2 π/₂.
@@ -578,7 +578,7 @@ intros H.
 apply angle_add_move_0_r in H; subst θ1.
 apply rngl_nle_gt in Hc1z.
 apply Hc1z; cbn.
-apply (rngl_opp_1_le_0 Hop Hor).
+apply (rngl_opp_1_le_0 Hop Hto).
 Qed.
 
 End a.

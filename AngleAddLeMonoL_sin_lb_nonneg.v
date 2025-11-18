@@ -146,7 +146,7 @@ destruct zs2. 2: {
       rewrite rngl_add_mul_r_diag_l.
       apply (rngl_le_0_add Hos Hto).
       apply (rngl_mul_nonneg_nonneg Hos Hor); [ easy | ].
-      apply (rngl_le_opp_l Hop Hor).
+      apply (rngl_le_opp_l Hop Hto).
       apply rngl_cos_bound.
       apply (rngl_mul_nonneg_nonneg Hos Hor); [ easy | ].
       now apply (rngl_lt_le_incl Hto).

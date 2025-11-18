@@ -111,13 +111,13 @@ rewrite (rl_sqrt_div Hop Hiv Hto); cycle 1. {
   apply (rngl_0_lt_2 Hos Hc1 Hto).
 }
 rewrite (rl_sqrt_div Hop Hiv Hto); cycle 1. {
-  apply (rngl_le_opp_l Hop Hor).
+  apply (rngl_le_opp_l Hop Hto).
   apply rngl_cos_bound.
 } {
   apply (rngl_0_lt_2 Hos Hc1 Hto).
 }
 rewrite (rl_sqrt_div Hop Hiv Hto); cycle 1. {
-  apply (rngl_le_opp_l Hop Hor).
+  apply (rngl_le_opp_l Hop Hto).
   apply rngl_cos_bound.
 } {
   apply (rngl_0_lt_2 Hos Hc1 Hto).
@@ -148,11 +148,11 @@ rewrite <- rl_sqrt_mul; cycle 1. {
   apply (rngl_le_0_sub Hop Hto).
   apply rngl_cos_bound.
 } {
-  apply (rngl_le_opp_l Hop Hor).
+  apply (rngl_le_opp_l Hop Hto).
   apply rngl_cos_bound.
 }
 rewrite <- rl_sqrt_mul; cycle 1. {
-  apply (rngl_le_opp_l Hop Hor).
+  apply (rngl_le_opp_l Hop Hto).
   apply rngl_cos_bound.
 } {
   apply (rngl_le_0_sub Hop Hto).
@@ -244,13 +244,13 @@ rewrite (rl_sqrt_div Hop Hiv Hto); cycle 1. {
   apply (rngl_0_lt_2 Hos Hc1 Hto).
 }
 rewrite (rl_sqrt_div Hop Hiv Hto); cycle 1. {
-  apply (rngl_le_opp_l Hop Hor).
+  apply (rngl_le_opp_l Hop Hto).
   apply rngl_cos_bound.
 } {
   apply (rngl_0_lt_2 Hos Hc1 Hto).
 }
 rewrite (rl_sqrt_div Hop Hiv Hto); cycle 1. {
-  apply (rngl_le_opp_l Hop Hor).
+  apply (rngl_le_opp_l Hop Hto).
   apply rngl_cos_bound.
 } {
   apply (rngl_0_lt_2 Hos Hc1 Hto).
@@ -281,11 +281,11 @@ rewrite <- rl_sqrt_mul; cycle 1. {
   apply (rngl_le_0_sub Hop Hto).
   apply rngl_cos_bound.
 } {
-  apply (rngl_le_opp_l Hop Hor).
+  apply (rngl_le_opp_l Hop Hto).
   apply rngl_cos_bound.
 }
 rewrite <- rl_sqrt_mul; cycle 1. {
-  apply (rngl_le_opp_l Hop Hor).
+  apply (rngl_le_opp_l Hop Hto).
   apply rngl_cos_bound.
 } {
   apply (rngl_le_0_sub Hop Hto).
@@ -315,8 +315,8 @@ apply (rngl_abs_nonneg_eq Hop Hor).
 apply (rngl_le_0_add Hos Hto).
 apply rl_sqrt_nonneg.
 apply (rngl_mul_nonneg_nonneg Hos Hor).
-apply (rngl_le_opp_l Hop Hor), rngl_cos_bound.
-apply (rngl_le_opp_l Hop Hor), rngl_cos_bound.
+apply (rngl_le_opp_l Hop Hto), rngl_cos_bound.
+apply (rngl_le_opp_l Hop Hto), rngl_cos_bound.
 apply rl_sqrt_nonneg.
 apply (rngl_mul_nonneg_nonneg Hos Hor).
 apply (rngl_le_0_sub Hop Hto), rngl_cos_bound.
@@ -520,13 +520,13 @@ rewrite (angle_eucl_dist_move_0_r θ1).
 do 2 rewrite rngl_cos_angle_eucl_dist_0_r.
 split; intros H1. {
   apply (rngl_sub_le_mono_l Hop Hto) in H1.
-  apply (rngl_div_le_mono_pos_r Hop Hiv Hor) in H1. 2: {
+  apply (rngl_div_le_mono_pos_r Hop Hiv Hto) in H1. 2: {
     apply (rngl_0_lt_2 Hos Hc1 Hto).
   }
   now apply (rngl_squ_le_abs_le Hop Hiq Hto) in H1.
 } {
   apply (rngl_sub_le_mono_l Hop Hto).
-  apply (rngl_div_le_mono_pos_r Hop Hiv Hor). {
+  apply (rngl_div_le_mono_pos_r Hop Hiv Hto). {
     apply (rngl_0_lt_2 Hos Hc1 Hto).
   }
   now apply (rngl_abs_le_squ_le Hop Hto).
@@ -636,7 +636,7 @@ progress unfold angle_div_nat in Hdn.
 rename Hdn into Hlim.
 specialize (angle_lim_mul n _ _ Hlim) as H1.
 enough (H2 : angle_lim (λ i, (n * seq_angle_to_div_nat θ n i)%A) θ). {
-  specialize (limit_unique Hop Hiv Hor angle_eucl_dist_is_dist) as H3.
+  specialize (limit_unique Hop Hiv Hto angle_eucl_dist_is_dist) as H3.
   now apply (H3 _ (n * θ')%A) in H2.
 }
 clear θ' Hlim H1.

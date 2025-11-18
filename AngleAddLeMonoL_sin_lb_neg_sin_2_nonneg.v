@@ -31,7 +31,7 @@ Proof.
 destruct_ac.
 intros * Hzs1 Hzs2 Hzs3 Hzc1 Hzc2 Hzc3 H23 Hzc13.
 eapply (rngl_le_trans Hor); [ apply Hzc13 | cbn ].
-apply (rngl_sub_le_compat Hop Hor). {
+apply (rngl_sub_le_compat Hop Hto). {
   apply (rngl_mul_le_mono_nonneg_l Hop Hto); [ easy | ].
   generalize H23; intros H32.
   now apply rngl_cos_cos_sin_sin_nonneg_sin_le_cos_le_iff in H32.
@@ -251,11 +251,11 @@ destruct zs3. {
       }
       apply rngl_nle_gt in Hc2z.
       apply Hc2z; cbn.
-      apply (rngl_opp_1_le_0 Hop Hor).
+      apply (rngl_opp_1_le_0 Hop Hto).
     }
     apply rngl_nlt_ge in Hc1z.
     apply Hc1z.
-    apply (rngl_opp_1_le_0 Hop Hor).
+    apply (rngl_opp_1_le_0 Hop Hto).
   }
   apply (rngl_leb_gt_iff Hto) in Hzs13.
   apply rngl_leb_le.
@@ -293,7 +293,7 @@ destruct zs3. {
         rewrite rngl_sin_sub_straight_l in Hzs12.
         rewrite rngl_cos_sub_straight_l in Hzc2 |-*.
         apply (rngl_opp_pos_neg Hop Hto) in Hzc2.
-        apply (rngl_le_opp_r Hop Hor).
+        apply (rngl_le_opp_r Hop Hto).
         cbn.
         rewrite (rngl_mul_opp_r Hop).
         rewrite (rngl_sub_opp_r Hop).
@@ -342,9 +342,9 @@ destruct zs3. {
     destruct (rngl_leb_dec (rngl_cos θ1) 0) as [Hzc1| Hc1z]. {
       apply rngl_leb_le in Hzc1.
       cbn.
-      apply (rngl_sub_le_compat Hop Hor).
-      now apply (rngl_mul_le_mono_nonpos_l Hop Hor).
-      apply (rngl_mul_le_mono_nonpos_l Hop Hor); [ easy | ].
+      apply (rngl_sub_le_compat Hop Hto).
+      now apply (rngl_mul_le_mono_nonpos_l Hop Hto).
+      apply (rngl_mul_le_mono_nonpos_l Hop Hto); [ easy | ].
       apply rngl_cos_cos_sin_sin_nonneg_sin_le_cos_le_iff; try easy.
       now apply (rngl_lt_le_incl Hto).
       now apply (rngl_lt_le_incl Hto).
@@ -485,7 +485,7 @@ destruct zs3. {
     exfalso.
     apply rngl_nle_gt in Hc2z.
     apply Hc2z; cbn.
-    apply (rngl_opp_1_le_0 Hop Hor).
+    apply (rngl_opp_1_le_0 Hop Hto).
   }
   apply (rngl_eqb_neq Heo) in Hc2ez.
   assert (H : (0 < rngl_cos θ2)%L). {
@@ -1164,7 +1164,7 @@ destruct (rngl_leb_dec 0 (rngl_cos θ2)) as [Hzc2| Hc2z]. {
       progress sin_cos_add_sub_right_hyp T Hc1z.
       progress sin_cos_add_sub_right_hyp T Hzs1.
       progress sin_cos_add_sub_right_goal T.
-      apply (rngl_le_opp_l Hop Hor).
+      apply (rngl_le_opp_l Hop Hto).
       apply (rngl_lt_le_incl Hto) in Hc1z.
       apply (rngl_le_0_add Hos Hto).
       now apply rngl_sin_add_nonneg.

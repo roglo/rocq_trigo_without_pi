@@ -551,7 +551,7 @@ destruct zs1. {
   rename Hzs1 into Hzc1; rename Hc1z into Hzs1.
   move Hzs1 after Hzs2.
   move Hzc1 after Hzs2.
-  apply (rngl_le_opp_r Hop Hor) in Haov.
+  apply (rngl_le_opp_r Hop Hto) in Haov.
   apply rngl_nlt_ge in Haov.
   apply Haov; clear Haov; cbn.
   rewrite <- rngl_add_assoc.
@@ -1178,7 +1178,7 @@ destruct zs. {
   apply (rngl_div_nonneg Hop Hiv Hto). 2: {
     apply (rngl_0_lt_2 Hos Hc1 Hto).
   }
-  apply (rngl_le_opp_l Hop Hor).
+  apply (rngl_le_opp_l Hop Hto).
   apply rngl_cos_bound.
 } {
   apply (rngl_leb_gt_iff Hto) in Hzs.
@@ -1190,7 +1190,7 @@ destruct zs. {
     apply (rngl_div_nonneg Hop Hiv Hto). 2: {
       apply (rngl_0_lt_2 Hos Hc1 Hto).
     }
-    apply (rngl_le_opp_l Hop Hor).
+    apply (rngl_le_opp_l Hop Hto).
     apply rngl_cos_bound.
   } {
     apply (rngl_lt_div_l Hop Hiv Hto). {

@@ -152,7 +152,7 @@ destruct zs13. {
           exfalso.
           apply rngl_nle_gt in Hzc1.
           apply Hzc1; clear Hzc1.
-          apply (rngl_opp_1_le_0 Hop Hor).
+          apply (rngl_opp_1_le_0 Hop Hto).
         }
       }
       apply (rngl_eqb_neq Heo) in Hs1z.
@@ -389,7 +389,7 @@ apply rngl_nle_gt in H.
 apply rngl_leb_nle in H.
 rewrite H in Haov13; clear H.
 apply (rngl_ltb_ge_iff Hto) in Haov13.
-apply (rngl_le_opp_r Hop Hor) in Haov13.
+apply (rngl_le_opp_r Hop Hto) in Haov13.
 move Hzs2 at bottom; move Hzs3 at bottom.
 destruct (rngl_leb_dec 0 (rngl_cos θ1)) as [Hzs1| Hc1z]. {
   apply rngl_leb_le in Hzs1.
