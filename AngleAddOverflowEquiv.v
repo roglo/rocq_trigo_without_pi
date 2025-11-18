@@ -421,7 +421,7 @@ destruct zs1. {
       progress sin_cos_add_sub_straight_hyp T Hzs2.
       progress sin_cos_add_sub_straight_hyp T Hzc2.
       progress sin_cos_add_sub_straight_goal T.
-      apply (rngl_add_nonneg_pos Hos Hor); [ | easy ].
+      apply (rngl_add_nonneg_pos Hos Hto); [ | easy ].
       apply (rngl_lt_le_incl Hto) in Hzs2, Hzc1, Hzc2.
       now apply rngl_cos_sub_nonneg.
     }
@@ -551,7 +551,7 @@ destruct s1z. {
       }
       apply angle_sub_move_r in H1; subst θ1.
       rewrite rngl_sin_add_straight_l in Hzs1.
-      apply (rngl_opp_pos_neg Hop Hor) in Hzs1.
+      apply (rngl_opp_pos_neg Hop Hto) in Hzs1.
       now apply rngl_nle_gt in Hzs1.
     }
     apply (rngl_leb_gt_iff Hto) in Hzc1.
@@ -576,12 +576,12 @@ destruct s1z. {
       apply eq_rngl_sin_0 in H.
       destruct H as [H1| H1]. {
         apply -> angle_add_move_0_r in H1; subst θ1.
-        apply (rngl_opp_pos_neg Hop Hor) in Hzs1.
+        apply (rngl_opp_pos_neg Hop Hto) in Hzs1.
         now apply rngl_nle_gt in Hzs1.
       }
       apply angle_add_move_r in H1; subst θ1.
       rewrite rngl_cos_sub_straight_l in Hzc1.
-      apply (rngl_opp_pos_neg Hop Hor) in Hzc1.
+      apply (rngl_opp_pos_neg Hop Hto) in Hzc1.
       now apply rngl_nle_gt in Hzc1.
     }
     apply (rngl_leb_gt_iff Hto) in Hzc2.
@@ -610,7 +610,7 @@ destruct s1z. {
     }
     apply angle_sub_move_r in H1; subst θ1.
     rewrite rngl_sin_add_straight_l in Hzs1.
-    apply (rngl_opp_pos_neg Hop Hor) in Hzs1.
+    apply (rngl_opp_pos_neg Hop Hto) in Hzs1.
     now apply rngl_nle_gt in Hzs1.
   }
   destruct s2z. {
@@ -697,7 +697,7 @@ destruct s1z. {
     progress sin_cos_add_sub_straight_hyp T Hzc1.
     progress sin_cos_add_sub_straight_hyp T Hc21.
     progress sin_cos_add_sub_straight_goal T.
-    apply (rngl_lt_opp_l Hop Hor) in Hc21.
+    apply (rngl_lt_opp_l Hop Hto) in Hc21.
     destruct (rngl_leb_dec 0 (rngl_cos θ2)) as [Hzc2| Hzc2]. {
       apply rngl_leb_le in Hzc2.
       apply (rngl_lt_le_incl Hto) in Hzc1.
@@ -741,7 +741,7 @@ destruct s1z. {
     progress sin_cos_add_sub_straight_hyp T Hzc2.
     progress sin_cos_add_sub_straight_goal T.
     apply (rngl_lt_0_add Hos Hto); [ cbn | easy ].
-    apply (rngl_add_nonneg_pos Hos Hor).
+    apply (rngl_add_nonneg_pos Hos Hto).
     apply (rngl_lt_le_incl Hto) in Hzc2.
     now apply (rngl_mul_nonneg_nonneg Hos Hor).
     now apply (rngl_mul_pos_pos Hop Hiq Hto).

@@ -291,7 +291,7 @@ destruct zs. {
   rewrite (rngl_mul_opp_l Hop).
   apply -> (rngl_opp_le_compat Hop Hto).
   rewrite rngl_mul_1_l.
-  rewrite <- (rl_sqrt_1 Hop Hiq Hor) at 4.
+  rewrite <- (rl_sqrt_1 Hop Hiq Hto) at 4.
   apply (rl_sqrt_le_rl_sqrt Hop Hiq Hto). {
     apply (rngl_div_nonneg Hop Hiv Hto). 2: {
       apply (rngl_0_lt_2 Hos Hc1 Hto).
@@ -323,7 +323,7 @@ rewrite rngl_mul_1_l.
 rewrite (rngl_div_diag Hiq). 2: {
   apply (rngl_2_neq_0 Hos Hc1 Hto).
 }
-rewrite (rl_sqrt_1 Hop Hiq Hor).
+rewrite (rl_sqrt_1 Hop Hiq Hto).
 f_equal.
 rewrite (rngl_sub_diag Hos).
 rewrite (rngl_div_0_l Hos Hi1). 2: {
@@ -355,7 +355,7 @@ f_equal.
 rewrite (rngl_div_diag Hiq). 2: {
   apply (rngl_2_neq_0 Hos Hc1 Hto).
 }
-apply (rl_sqrt_1 Hop Hiq Hor).
+apply (rl_sqrt_1 Hop Hiq Hto).
 Qed.
 
 Theorem angle_opp_div_2 :
@@ -945,7 +945,7 @@ split; intros Hs3. {
   apply rngl_nlt_ge in H2.
   apply H2; clear H2.
   rewrite rngl_add_comm.
-  apply (rngl_lt_opp_l Hop Hor).
+  apply (rngl_lt_opp_l Hop Hto).
   subst c.
   apply (rngl_le_neq Hto).
   split; [ apply rngl_cos_bound | ].

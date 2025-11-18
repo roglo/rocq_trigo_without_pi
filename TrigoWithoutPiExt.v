@@ -488,7 +488,7 @@ progress sin_cos_add_sub_straight_hyp T Hzc2.
 exfalso.
 apply rngl_nlt_ge in Hzs12.
 apply Hzs12; clear Hzs12; cbn.
-apply (rngl_add_nonneg_pos Hos Hor).
+apply (rngl_add_nonneg_pos Hos Hto).
 now apply (rngl_mul_nonneg_nonneg Hos Hor).
 now apply (rngl_mul_pos_pos Hop Hiq Hto).
 Qed.
@@ -887,7 +887,7 @@ rewrite IHn.
 rewrite (rngl_div_diag Hiq). 2: {
   apply (rngl_2_neq_0 Hos Hc1 Hto).
 }
-now apply (rl_sqrt_1 Hop Hiq Hor).
+now apply (rl_sqrt_1 Hop Hiq Hto).
 Qed.
 
 Theorem squ_rngl_cos_div_pow_2_0 : ∀ n, squ_rngl_cos_div_pow_2 0 n = 1%L.
@@ -1100,7 +1100,7 @@ Proof.
 destruct_ac.
 intros  * Hs1z Hs2z Hc1z Hc2z.
 cbn.
-apply (rngl_add_nonneg_pos Hos Hor).
+apply (rngl_add_nonneg_pos Hos Hto).
 now apply (rngl_mul_nonneg_nonneg Hos Hor).
 now apply (rngl_mul_pos_pos Hop Hiq Hto).
 Qed.
@@ -1132,7 +1132,7 @@ Proof.
 destruct_ac.
 intros  * Hs1z Hs2z Hc1z Hc2z.
 rewrite rngl_cos_sub.
-apply (rngl_add_nonneg_pos Hos Hor).
+apply (rngl_add_nonneg_pos Hos Hto).
 now apply (rngl_mul_nonneg_nonneg Hos Hor).
 now apply (rngl_mul_pos_pos Hop Hiq Hto).
 Qed.
@@ -1185,7 +1185,8 @@ intros Hor *.
 progress unfold rngl_is_ordered in Hor.
 progress unfold rngl_ltb.
 progress unfold rngl_leb.
-destruct rngl_opt_leb; [ apply Bool.negb_involutive | easy ].
+destruct rngl_opt_leb as [(leb, tot)| ]; [ | easy ].
+apply Bool.negb_involutive.
 Qed.
 
 Theorem rngl_lt_0_cos :

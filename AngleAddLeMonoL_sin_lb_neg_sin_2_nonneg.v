@@ -110,7 +110,7 @@ destruct zs3. {
         apply rngl_leb_le in Hzc3.
         apply rngl_nlt_ge in H23.
         apply H23; clear H23.
-        now apply (rngl_add_nonneg_pos Hos Hor).
+        now apply (rngl_add_nonneg_pos Hos Hto).
       }
       apply (rngl_leb_gt_iff Hto) in Hc3z.
       change_angle_sub_r θ3 π/₂.
@@ -292,7 +292,7 @@ destruct zs3. {
         rewrite <- angle_sub_add_distr in Hzs12 |-*.
         rewrite rngl_sin_sub_straight_l in Hzs12.
         rewrite rngl_cos_sub_straight_l in Hzc2 |-*.
-        apply (rngl_opp_pos_neg Hop Hor) in Hzc2.
+        apply (rngl_opp_pos_neg Hop Hto) in Hzc2.
         apply (rngl_le_opp_r Hop Hor).
         cbn.
         rewrite (rngl_mul_opp_r Hop).
@@ -686,7 +686,7 @@ destruct zs13. {
       rewrite <- (rngl_add_sub_swap Hop).
       rewrite <- (rngl_add_sub_assoc Hop).
       rewrite (rngl_sub_mul_r_diag_l Hop).
-      apply (rngl_add_nonneg_pos Hos Hor).
+      apply (rngl_add_nonneg_pos Hos Hto).
       apply (rngl_mul_nonneg_nonneg Hos Hor); [ easy | ].
       now apply (rngl_lt_le_incl Hto).
       apply (rngl_mul_pos_pos Hop Hiq Hto); [ easy | ].
@@ -1010,7 +1010,7 @@ destruct (rngl_leb_dec 0 (rngl_cos θ3)) as [Hzc3| Hc3z]. {
         rewrite rngl_cos_sub_straight_r.
         rewrite rngl_cos_sub_right_r.
         apply rngl_ltb_lt.
-        apply (rngl_lt_opp_l Hop Hor).
+        apply (rngl_lt_opp_l Hop Hto).
         cbn.
         rewrite <- (rngl_add_sub_swap Hop).
         rewrite <- (rngl_add_sub_assoc Hop).
@@ -1084,7 +1084,7 @@ destruct (rngl_leb_dec 0 (rngl_cos θ3)) as [Hzc3| Hc3z]. {
     rewrite rngl_cos_sub_straight_r.
     rewrite rngl_cos_sub_right_r.
     apply rngl_ltb_lt.
-    apply (rngl_lt_opp_l Hop Hor).
+    apply (rngl_lt_opp_l Hop Hto).
     cbn.
     rewrite <- (rngl_add_sub_swap Hop).
     rewrite <- (rngl_add_sub_assoc Hop).
