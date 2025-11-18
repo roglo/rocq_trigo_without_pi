@@ -468,7 +468,7 @@ destruct (rngl_ltb_dec 0 (rngl_cos θ2)) as [Hzc2| Hzc2]. {
     rewrite <- (rngl_opp_add_distr Hop).
     apply (rngl_opp_neg_pos Hop Hto).
     rewrite (rngl_mul_comm Hic).
-    apply (rngl_lt_0_add Hos Hor).
+    apply (rngl_lt_0_add Hos Hto).
     now apply (rngl_mul_pos_pos Hop Hiq Hto).
     apply (rngl_mul_nonneg_nonneg Hos Hor).
     now apply (rngl_lt_le_incl Hto).
@@ -589,7 +589,7 @@ destruct (rngl_eqb_dec (rngl_sin θ1) 0) as [Hs1z| Hs1z]. {
   apply (rngl_opp_1_lt_0 Hop Hto Hc1).
 }
 apply (rngl_eqb_neq Heo) in Hs1z.
-apply (rngl_lt_0_add Hos Hor). {
+apply (rngl_lt_0_add Hos Hto). {
   apply not_eq_sym in Hs1z.
   now apply (rngl_le_neq Hto).
 }
@@ -1116,7 +1116,7 @@ Proof.
 destruct_ac.
 intros  * Hs1z Hs2z Hc1z Hc2z.
 cbn.
-apply (rngl_lt_0_add Hos Hor).
+apply (rngl_lt_0_add Hos Hto).
 now apply (rngl_mul_pos_pos Hop Hiq Hto).
 now apply (rngl_mul_nonneg_nonneg Hos Hor).
 Qed.

@@ -402,7 +402,7 @@ destruct (rngl_leb_dec (rngl_cos θ2) 0) as [Hc2z| Hzc2]. {
     apply rngl_ltb_lt in Hzc3.
     apply rngl_nlt_ge in H32.
     apply H32; clear H32.
-    now apply (rngl_lt_0_add Hos Hor).
+    now apply (rngl_lt_0_add Hos Hto).
   }
   apply (rngl_ltb_ge_iff Hto) in Hc3z.
   change_angle_add_r θ3 π.
@@ -560,7 +560,7 @@ destruct (rngl_ltb_dec 0 (rngl_cos θ3)) as [Hzc3| Hc3z]. {
   apply rngl_ltb_lt in Hzc3.
   apply rngl_nlt_ge in Hzs13.
   apply Hzs13; clear Hzs13; cbn.
-  apply (rngl_lt_0_add Hos Hor).
+  apply (rngl_lt_0_add Hos Hto).
   now apply (rngl_mul_pos_pos Hop Hiq Hto).
   apply (rngl_mul_nonneg_nonneg Hos Hor); [ | easy ].
   now apply (rngl_lt_le_incl Hto).
@@ -575,7 +575,7 @@ destruct (rngl_ltb_dec 0 (rngl_cos θ2)) as [Hzc2| Hc2z]. {
   apply rngl_ltb_lt in Hzc2.
   apply rngl_nlt_ge in H32.
   apply H32; clear H32.
-  now apply (rngl_lt_0_add Hos Hor).
+  now apply (rngl_lt_0_add Hos Hto).
 }
 apply (rngl_ltb_ge_iff Hto) in Hc2z.
 change_angle_sub_r θ2 π/₂.

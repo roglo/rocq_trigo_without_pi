@@ -480,8 +480,8 @@ assert (Hcs1 : (c² + s² = 1)%L). {
   generalize Hc; intros H1.
   generalize Hs; intros H2.
   apply rngl_limit_limit_squ in H1, H2.
-  specialize (limit_add Hop Hiv Hor (rngl_dist_is_dist Hop Hto)) as H.
-  specialize (H (rngl_dist_add_add_le Hop Hor)).
+  specialize (limit_add Hop Hiv Hto (rngl_dist_is_dist Hop Hto)) as H.
+  specialize (H (rngl_dist_add_add_le Hop Hto)).
   specialize (H _ _ _ _ H1 H2).
   cbn in H.
   eapply (is_limit_when_seq_tends_to_inf_eq_compat _ _ 0 0) in H. 2: {
@@ -489,7 +489,7 @@ assert (Hcs1 : (c² + s² = 1)%L). {
     rewrite Nat.add_0_r.
     now rewrite cos2_sin2_1.
   }
-  now apply (limit_const Hop Hor) in H.
+  now apply (limit_const Hop Hto) in H.
 }
 rewrite <- (rngl_cos_acos c) in Hc; [ | easy ].
 remember (rngl_acos c) as θ eqn:Hθ.
