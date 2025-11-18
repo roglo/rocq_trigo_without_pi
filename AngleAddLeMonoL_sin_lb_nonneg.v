@@ -383,7 +383,7 @@ destruct (rngl_leb_dec (rngl_cos θ2) 0)%L as [Hc2z| Hzc2]. 2: {
   rewrite (rngl_add_opp_r Hop).
   rewrite (rngl_add_sub_swap Hop).
   rewrite (rngl_sub_mul_r_diag_r Hop).
-  apply (rngl_lt_0_add Hos Hor).
+  apply (rngl_lt_0_add Hos Hto).
   apply (rngl_mul_pos_pos Hop Hiq Hto); [ | easy ].
   apply (rngl_lt_0_sub Hop Hto).
   apply (rngl_le_neq Hto).

@@ -557,7 +557,7 @@ destruct zs1. {
   rewrite <- rngl_add_assoc.
   rewrite rngl_add_comm.
   rewrite <- rngl_add_assoc.
-  apply (rngl_lt_0_add Hos Hor). {
+  apply (rngl_lt_0_add Hos Hto). {
     now apply (rngl_mul_pos_pos Hop Hiq Hto).
   }
   rewrite rngl_add_mul_r_diag_l.
