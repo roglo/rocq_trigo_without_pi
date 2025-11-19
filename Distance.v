@@ -425,7 +425,7 @@ specialize (angle_eucl_dist_nonneg θ1 θ2) as Hzx.
 cbn in H1.
 remember (angle_eucl_dist θ1 θ2) as x eqn:Hx.
 clear θ1 θ2 Hx.
-specialize (proj1 (rngl_lt_eq_cases Hto _ x) Hzx) as H3.
+specialize (proj1 (rngl_lt_eq_cases Hor _ x) Hzx) as H3.
 destruct H3 as [H3| H3]; [ | easy ].
 clear Hzx; exfalso.
 specialize (H1 (x / 2)%L).
@@ -442,7 +442,7 @@ apply (rngl_le_div_l Hop Hiv Hto).
 apply (rngl_0_lt_2 Hos Hc1 Hto).
 rewrite rngl_mul_2_r.
 apply (rngl_le_add_l Hos Hor).
-now apply (rngl_lt_le_incl Hto).
+now apply rngl_lt_le_incl.
 Qed.
 
 End a.

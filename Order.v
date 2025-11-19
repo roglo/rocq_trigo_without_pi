@@ -71,10 +71,10 @@ destruct zs1. {
       apply rngl_ltb_lt in H12.
       split. {
         apply rngl_leb_le.
-        now apply (rngl_lt_le_incl Hto).
+        now apply rngl_lt_le_incl.
       }
       intros H; subst θ2.
-      now apply (rngl_lt_irrefl Hor) in H12.
+      now apply rngl_lt_irrefl in H12.
     } {
       destruct H12 as (Hc12, H12).
       apply rngl_leb_le in Hc12.
@@ -113,10 +113,10 @@ destruct zs1. {
     apply rngl_ltb_lt in H12.
     split. {
       apply rngl_leb_le.
-      now apply (rngl_lt_le_incl Hto).
+      now apply rngl_lt_le_incl.
     }
     intros H; subst θ2.
-    now apply (rngl_lt_irrefl Hor) in H12.
+    now apply rngl_lt_irrefl in H12.
   }
   destruct H12 as (Hc12, H12).
   apply rngl_leb_le in Hc12.
@@ -128,7 +128,7 @@ destruct zs1. {
   destruct H; subst θ1; [ easy | ].
   cbn in Hzs1.
   apply (rngl_opp_neg_pos Hop Hto) in Hzs1.
-  now apply (rngl_lt_le_incl Hto), rngl_nlt_ge in Hzs1.
+  now apply rngl_lt_le_incl, rngl_nlt_ge in Hzs1.
 }
 Qed.
 
@@ -269,10 +269,10 @@ remember (0 ≤? rngl_sin θ)%L as zs eqn:Hzs.
 symmetry in Hzs.
 destruct zs. {
   apply rngl_ltb_lt in H.
-  now apply (rngl_lt_irrefl Hor) in H.
+  now apply rngl_lt_irrefl in H.
 } {
   apply rngl_ltb_lt in H.
-  now apply (rngl_lt_irrefl Hor) in H.
+  now apply rngl_lt_irrefl in H.
 }
 Qed.
 
@@ -391,7 +391,7 @@ destruct z2. {
       }
       exfalso.
       apply (rngl_leb_gt_iff Hto) in Hs2z, Hzs2.
-      now apply (rngl_lt_asymm Hto) in Hs2z.
+      now apply (rngl_lt_asymm Hor) in Hs2z.
     }
     destruct zs2. {
       destruct s2z; [ | easy ].
@@ -405,7 +405,7 @@ destruct z2. {
     symmetry.
     destruct s2z; [ easy | ].
     apply (rngl_leb_gt_iff Hto) in Hs2z, Hzs2.
-    now apply (rngl_lt_asymm Hto) in Hs2z.
+    now apply (rngl_lt_asymm Hor) in Hs2z.
   }
   destruct zs1. {
     destruct zs2. {
@@ -425,10 +425,10 @@ destruct z2. {
     }
     destruct s2z; [ easy | ].
     apply (rngl_leb_gt_iff Hto) in Hs2z, Hzs2.
-    now apply (rngl_lt_asymm Hto) in Hs2z.
+    now apply (rngl_lt_asymm Hor) in Hs2z.
   }
   apply (rngl_leb_gt_iff Hto) in Hs1z, Hzs1.
-  now apply (rngl_lt_asymm Hto) in Hs1z.
+  now apply (rngl_lt_asymm Hor) in Hs1z.
 }
 apply Bool.negb_false_iff in Hz2.
 apply angle_eqb_eq in Hz2.
@@ -487,7 +487,7 @@ destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
 }
 specialize (rngl_0_lt_2 Hos Hc1 Hto) as Hz2.
 specialize (rngl_2_neq_0 Hos Hc1 Hto) as H20.
-assert (Hze2 : (0 ≤ 2)%L) by now apply (rngl_lt_le_incl Hto).
+assert (Hze2 : (0 ≤ 2)%L) by now apply rngl_lt_le_incl.
 assert (Hz1ac :  ∀ θ, (0 ≤ 1 + rngl_cos θ)%L). {
   intros.
   apply (rngl_le_sub_le_add_l Hop Hto).
@@ -504,7 +504,7 @@ assert (Hz1sc : ∀ θ, (0 ≤ 1 - rngl_cos θ)%L). {
 assert (Hs2z : (√2 ≠ 0)%L). {
   intros H.
   apply (f_equal rngl_squ) in H.
-  rewrite rngl_squ_sqrt in H; [ | now apply (rngl_lt_le_incl Hto) ].
+  rewrite rngl_squ_sqrt in H; [ | now apply rngl_lt_le_incl ].
   now rewrite (rngl_squ_0 Hos) in H.
 }
 remember (θ1 + θ2)%A as θ3 eqn:Hθ3.
@@ -554,7 +554,7 @@ destruct (rngl_ltb_dec x y) as [Hxy| Hxy]. {
       rewrite <- (rngl_opp_add_distr Hop).
       apply (rngl_opp_nonneg_nonpos Hop Hto).
       rewrite Hθ3 in Hzs3.
-      apply (rngl_lt_le_incl Hto).
+      apply rngl_lt_le_incl.
       now apply rngl_add_cos_neg_when_sin_nonneg_neg.
     }
     apply (rngl_leb_gt_iff Hto) in Hzc1.
@@ -573,11 +573,11 @@ destruct (rngl_ltb_dec x y) as [Hxy| Hxy]. {
       rewrite angle_straight_add_straight.
       rewrite angle_add_0_l.
       rewrite Hθ3 in Hzs3.
-      now apply (rngl_lt_le_incl Hto).
+      now apply rngl_lt_le_incl.
     }
     rewrite rngl_cos_add_straight_r.
     apply (rngl_opp_nonneg_nonpos Hop Hto).
-    now apply (rngl_lt_le_incl Hto).
+    now apply rngl_lt_le_incl.
   }
 }
 apply (rngl_ltb_ge_iff Hto) in Hxy.
@@ -659,12 +659,12 @@ destruct z1. {
   destruct z2; [ | easy ].
   apply rngl_ltb_lt in H12.
   apply rngl_leb_le.
-  now apply (rngl_lt_le_incl Hto).
+  now apply rngl_lt_le_incl.
 } {
   destruct z2; [ easy | ].
   apply rngl_ltb_lt in H12.
   apply rngl_leb_le.
-  now apply (rngl_lt_le_incl Hto).
+  now apply rngl_lt_le_incl.
 }
 Qed.
 
@@ -696,7 +696,7 @@ destruct zs. {
 destruct zs2. 2: {
   destruct sz; [ easy | ].
   apply (rngl_leb_gt_iff Hto) in Hzs2, Hsz, Hzs.
-  now apply (rngl_lt_asymm Hto) in Hzs.
+  now apply (rngl_lt_asymm Hor) in Hzs.
 }
 apply rngl_leb_le in Hzs2.
 apply (rngl_leb_gt_iff Hto) in Hzs.
@@ -714,7 +714,7 @@ destruct sz. {
   symmetry in Hcc.
   apply eq_rngl_cos_opp_1 in Hcc.
   subst θ2.
-  now apply (rngl_lt_irrefl Hor) in Hzs.
+  now apply rngl_lt_irrefl in Hzs.
 }
 clear H2.
 destruct sz2. {
@@ -724,10 +724,10 @@ destruct sz2. {
   apply eq_rngl_sin_0 in Hzs2.
   destruct Hzs2; [ easy | subst θ1 ].
   apply (rngl_leb_gt_iff Hto) in Hsz.
-  now apply (rngl_lt_asymm Hto) in Hzs.
+  now apply (rngl_lt_asymm Hor) in Hzs.
 }
 apply (rngl_leb_gt_iff Hto) in Hsz.
-now apply (rngl_lt_asymm Hto) in Hzs.
+now apply (rngl_lt_asymm Hor) in Hzs.
 Qed.
 
 Theorem angle_lt_opp_r :
@@ -769,7 +769,7 @@ destruct zs2. {
       apply (rngl_opp_1_le_1 Hop Hto).
     }
     apply rngl_ltb_lt in H12.
-    now apply (rngl_lt_irrefl Hor) in H12.
+    now apply rngl_lt_irrefl in H12.
   }
   cbn.
   apply rngl_ltb_lt.
@@ -796,20 +796,20 @@ destruct s1z. {
       apply rngl_cos_bound.
     }
     apply (rngl_leb_gt_iff Hto) in Hs2z, Hzs2.
-    now apply (rngl_lt_asymm Hto) in Hs2z.
+    now apply (rngl_lt_asymm Hor) in Hs2z.
   }
   destruct s2z; [ easy | ].
   apply (rngl_leb_gt_iff Hto) in Hs2z, Hzs2.
-  now apply (rngl_lt_asymm Hto) in Hs2z.
+  now apply (rngl_lt_asymm Hor) in Hs2z.
 }
 destruct zs1. {
   destruct s2z; [ easy | ].
   apply (rngl_leb_gt_iff Hto) in Hs2z, Hzs2.
-  now apply (rngl_lt_asymm Hto) in Hs2z.
+  now apply (rngl_lt_asymm Hor) in Hs2z.
 }
 destruct s2z; [ easy | ].
 apply (rngl_leb_gt_iff Hto) in Hs2z, Hzs2.
-now apply (rngl_lt_asymm Hto) in Hs2z.
+now apply (rngl_lt_asymm Hor) in Hs2z.
 Qed.
 
 Theorem angle_le_trans :
@@ -866,14 +866,14 @@ destruct z1. {
   destruct z2; [ | easy ].
   apply rngl_leb_le in Hz2, H23.
   apply rngl_ltb_lt in H12.
-  now apply (rngl_le_lt_trans Hto _ (rngl_cos θ2)).
+  now apply (rngl_le_lt_trans Hor _ (rngl_cos θ2)).
 } {
   destruct z2; [ easy | ].
   destruct z3; [ easy | ].
   apply rngl_ltb_lt in H12.
   apply rngl_leb_le in H23.
   apply rngl_ltb_lt.
-  now apply (rngl_lt_le_trans Hto _ (rngl_cos θ2)).
+  now apply (rngl_lt_le_trans Hor _ (rngl_cos θ2)).
 }
 Qed.
 

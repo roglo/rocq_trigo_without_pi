@@ -248,8 +248,8 @@ destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
 }
 intros * Hza.
 split; intros H12. {
-  apply (rngl_lt_eq_cases Hto) in H12.
-  apply (rngl_lt_eq_cases Hto).
+  apply (rngl_lt_eq_cases Hor) in H12.
+  apply (rngl_lt_eq_cases Hor).
   destruct H12 as [H12| H12]. {
     now left; apply rngl_cos_lt_angle_eucl_dist_lt.
   }
@@ -267,8 +267,8 @@ split; intros H12. {
   rewrite (rl_sqrt_squ Hop Hto).
   now apply (rngl_abs_nonneg_eq Hop Hor).
 } {
-  apply (rngl_lt_eq_cases Hto) in H12.
-  apply (rngl_lt_eq_cases Hto).
+  apply (rngl_lt_eq_cases Hor) in H12.
+  apply (rngl_lt_eq_cases Hor).
   destruct H12 as [H12| H12]. {
     now left; apply rngl_cos_lt_angle_eucl_dist_lt.
   }
@@ -480,7 +480,7 @@ destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
   specialize (rngl_characteristic_1 Hos Hc1) as H1.
   intros * Hε.
   rewrite (H1 ε) in Hε.
-  now apply (rngl_lt_irrefl Hor) in Hε.
+  now apply rngl_lt_irrefl in Hε.
 }
 intros * Hε.
 specialize rngl_cos_angle_div_2_pow_tending_to_1 as H1.
@@ -502,7 +502,7 @@ assert (Hε2 : (0 < ε² / 2)%L). {
     rewrite Hi1; cbn.
     apply (rngl_has_eq_dec_or_is_ordered_r Hor).
   }
-  now subst ε; apply (rngl_lt_irrefl Hor) in Hε.
+  now subst ε; apply rngl_lt_irrefl in Hε.
 }
 specialize (H1 Hε2); clear Hε2.
 destruct H1 as (N, HN).
@@ -529,7 +529,7 @@ destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
   specialize (rngl_characteristic_1 Hos Hc1) as H1.
   intros * ε Hε.
   rewrite (H1 ε) in Hε.
-  now apply (rngl_lt_irrefl Hor) in Hε.
+  now apply rngl_lt_irrefl in Hε.
 }
 destruct (angle_eq_dec θ 0) as [Htz| Htz]. {
   subst θ.
@@ -609,7 +609,7 @@ enough (H :
   destruct H as (N, HN).
   exists N.
   intros p q Hp Hq.
-  apply (rngl_lt_le_incl Hto) in Hε.
+  apply rngl_lt_le_incl in Hε.
   apply rngl_cos_lt_angle_eucl_dist_lt; [ easy | ].
   apply (HN _ _ Hq Hp).
 }
@@ -626,7 +626,7 @@ enough (H :
     subst q.
     now rewrite angle_sub_diag; cbn.
   }
-  apply (rngl_lt_le_incl Hto) in Hε.
+  apply rngl_lt_le_incl in Hε.
   destruct (lt_dec p q) as [Hpq| Hpq]; [ now apply HN | ].
   apply Nat.nlt_ge in Hpq.
   rewrite rngl_cos_sub_comm.
@@ -649,7 +649,7 @@ destruct (rngl_ltb_dec (1 - ε² / 2)%L 0) as [Hez| Hze]. {
   apply rngl_ltb_lt in Hez.
   exists 2.
   intros * Hpq.
-  apply (rngl_lt_le_trans Hto _ 0); [ easy | ].
+  apply (rngl_lt_le_trans Hor _ 0); [ easy | ].
   rewrite pow2_mod_mul_div; [ | flia Hpq ].
   apply rngl_le_0_cos; left.
   apply angle_mul_div_pow2_le_right.
@@ -684,7 +684,7 @@ enough (H :
   exists (N + 1).
   intros * Hpq.
   assert (Hpq' : N ≤ p < q) by flia Hpq.
-  eapply (rngl_lt_le_trans Hto); [ now apply HN | ].
+  eapply (rngl_lt_le_trans Hor); [ now apply HN | ].
   apply rngl_cos_decr.
   split. {
     apply angle_mul_le_mono_r. {
