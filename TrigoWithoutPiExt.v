@@ -694,7 +694,7 @@ rewrite Hεε2.
 eapply (rngl_le_lt_trans Hor). {
   apply (angle_eucl_dist_triangular _ (θ1 - u n)).
 }
-apply (rngl_add_lt_compat Hos Hto); [ | easy ].
+apply (rngl_add_lt_compat Hos Hor); [ | easy ].
 rewrite angle_add_comm.
 rewrite angle_eucl_dist_move_0_r.
 rewrite angle_sub_sub_swap.

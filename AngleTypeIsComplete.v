@@ -387,7 +387,7 @@ rewrite (rngl_mul_2_r ε²)%L. 2: {
 rewrite (rngl_div_add_distr_r Hiv).
 rewrite (rngl_squ_sub_comm Hop (rngl_cos _))%L.
 rewrite (rngl_squ_sub_comm Hop (rngl_sin _))%L.
-now apply (rngl_add_lt_compat Hos Hto).
+now apply (rngl_add_lt_compat Hos Hor).
 Qed.
 
 Theorem limit_const :

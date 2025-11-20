@@ -1968,7 +1968,7 @@ apply (rngl_le_lt_trans Hor _ (2 * rngl_cos θ2))%L. {
   now apply rngl_cos_bound.
 }
 rewrite rngl_mul_2_l.
-apply (rngl_add_lt_mono_r Hos Hto).
+apply (rngl_add_lt_mono_r Hos Hor).
 apply rngl_le_neq.
 split; [ now apply rngl_cos_bound | ].
 intros H.
