@@ -11,9 +11,9 @@ Require Import AngleDef TrigoWithoutPiExt.
 Require Import AngleAddOverflowLe.
 Require Import Order.
 Require Import TacChangeAngle.
-Require Import AngleAddLeMonoL_sin_lb_nonneg.
-Require Import AngleAddLeMonoL_sin_lb_neg_sin_2_nonneg.
-Require Import AngleAddLeMonoL_sin_lb_neg_sin_2_neg.
+Require Import AngleAddLeMonoL_1.
+Require Import AngleAddLeMonoL_2.
+Require Import AngleAddLeMonoL_3.
 Require Export AngleAddLeMonoL_prop.
 
 Section a.
