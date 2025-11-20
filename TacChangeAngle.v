@@ -146,7 +146,9 @@ Ltac sin_cos_add_sub_right_goal T :=
   try apply <- (rngl_le_opp_l Hop' Hto');
   try apply <- (rngl_le_opp_r Hop' Hto');
   try apply <- (rngl_lt_opp_l Hop' Hto');
+(*
   try apply <- (rngl_lt_0_sub Hop' Hto');
+*)
   try (remember rngl_cos as c; apply <- (rngl_le_sub_0 Hop' Hto'); subst c);
   try (remember rngl_cos as c; apply <- (rngl_le_0_sub Hop' Hto'); subst c);
   clear Hop' Hto' Hos'.

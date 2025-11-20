@@ -212,7 +212,9 @@ progress sin_cos_add_sub_right_hyp T Hzs1.
 progress sin_cos_add_sub_right_hyp T Hzs12.
 progress sin_cos_add_sub_right_hyp T Hc123.
 progress sin_cos_add_sub_right_hyp T Hc1z.
+...
 progress sin_cos_add_sub_right_goal T.
+...
 destruct (rngl_eqb_dec (rngl_cos θ2) 0) as [Hc2z| Hc2z]. {
   apply (rngl_eqb_eq Heo) in Hc2z.
   exfalso.
@@ -241,6 +243,7 @@ rename Hc123 into Hs123.
 destruct (rngl_leb_dec (rngl_cos θ1) (rngl_cos (θ2 + θ3)))
     as [Hc123| Hc231]. {
   apply rngl_leb_le in Hc123.
+Check rngl_mul_le_mono_pos_r.
 ...
   apply (rngl_mul_le_mono_pos_r Hop Hiq Hto _ _ (rngl_cos θ2)). {
     apply not_eq_sym in Hc2z.

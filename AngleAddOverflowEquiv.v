@@ -499,11 +499,13 @@ destruct zs1. {
   progress sin_cos_add_sub_right_hyp T Hzs2.
   progress sin_cos_add_sub_right_hyp T Hzc2.
   progress sin_cos_add_sub_right_goal T.
+...
   rewrite rngl_sin_sub_anticomm in Hzs12.
   apply (rngl_opp_neg_pos Hop Hto) in Hzs12.
   apply rngl_le_neq.
   split. {
     apply rngl_lt_le_incl in Hzc2, Hzs2, Hzs12.
+    apply (rngl_le_0_sub Hop Hto).
     now apply rngl_sin_sub_nonneg_sin_le_sin.
   }
   intros H12.
