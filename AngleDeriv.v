@@ -468,7 +468,7 @@ remember (0 ≤? rngl_sin θ1)%L as tst eqn:Htst.
 symmetry in Htst.
 destruct tst; [ | easy ].
 apply rngl_leb_le in Htst.
-apply rngl_ltb_lt in Hθ.
+apply (rngl_ltb_lt Heo) in Hθ.
 remember (0 ≤? rngl_sin (θ2 - θ1))%L as zstt eqn:Hzstt.
 symmetry in Hzstt.
 destruct zstt. {
@@ -508,7 +508,7 @@ remember (0 ≤? rngl_sin θ)%L as zst eqn:Hzst.
 symmetry in Hzstz, Hzst.
 destruct zstz. {
   apply rngl_leb_le in Hzstz, Hts.
-  apply rngl_nlt_ge in Hts.
+  apply (rngl_nlt_ge Hor) in Hts.
   apply Hts; clear Hts.
   apply (rngl_le_neq Hto).
   split; [ apply rngl_cos_bound | ].
@@ -520,14 +520,14 @@ destruct zstz. {
   apply rngl_lt_le_incl in Hzstt.
   apply rngl_leb_le in Hzstt.
   rewrite Hzstt in Hzst; subst zst.
-  apply rngl_ltb_lt in Hθ.
+  apply (rngl_ltb_lt Heo) in Hθ.
   apply rngl_nle_gt in Hθ.
   apply Hθ, rngl_cos_bound.
 }
 clear Hts.
 destruct zst; [ easy | ].
 apply (rngl_leb_gt_iff Hto) in Hzstz, Hzst.
-apply rngl_ltb_lt in Hθ.
+apply (rngl_ltb_lt Heo) in Hθ.
 apply rngl_nle_gt in Hθ.
 apply Hθ; clear Hθ.
 change_angle_add_r θ₀ π.

@@ -646,7 +646,7 @@ enough (H :
   now apply HN.
 }
 destruct (rngl_ltb_dec (1 - ε² / 2)%L 0) as [Hez| Hze]. {
-  apply rngl_ltb_lt in Hez.
+  apply (rngl_ltb_lt Heo) in Hez.
   exists 2.
   intros * Hpq.
   apply (rngl_lt_le_trans Hor _ 0); [ easy | ].

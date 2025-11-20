@@ -60,7 +60,7 @@ destruct zs2. 2: {
     now apply rngl_leb_le.
   }
   destruct (rngl_ltb_dec (rngl_cos θ3) 0)%L as [Hc3z| Hzc3]. {
-    apply rngl_ltb_lt in Hc3z.
+    apply (rngl_ltb_lt Heo) in Hc3z.
     exfalso.
     apply Bool.not_true_iff_false in Haov13.
     apply Haov13.
@@ -85,7 +85,7 @@ destruct zs2. 2: {
     progress sin_cos_add_sub_straight_hyp T Hzs12.
     progress sin_cos_add_sub_straight_hyp T Hc2z.
     destruct (rngl_ltb_dec 0 (rngl_cos θ1))%L as [Hzc1| Hc1z]. {
-      apply rngl_ltb_lt in Hzc1.
+      apply (rngl_ltb_lt Heo) in Hzc1.
       clear - ac θ1 θ2 θ3 Hzc1 Hzs2 Hc2z Hzc3 Hzs3 Hzs12 Hzs13 Hor.
       destruct (rngl_leb_dec 0 (rngl_sin θ1))%L as [Hzs1| Hs1z]. {
         apply rngl_leb_le in Hzs1.
@@ -137,7 +137,7 @@ destruct zs2. 2: {
     apply rngl_leb_le in Hzs1.
     rewrite rngl_cos_sub_right_r.
     rewrite rngl_cos_add_right_r.
-    apply rngl_ltb_lt.
+    apply (rngl_ltb_lt Heo).
     apply (rngl_lt_opp_l Hop Hto).
     apply (rngl_le_neq Hto).
     split. {
@@ -217,7 +217,7 @@ destruct zs2. 2: {
     apply rngl_leb_le in Hzs1.
     rewrite Hzs1.
     apply rngl_leb_le in Hzs1.
-    apply rngl_ltb_lt.
+    apply (rngl_ltb_lt Heo).
     rewrite rngl_cos_sub_right_r.
     change_angle_sub_r θ1 π/₂.
     progress sin_cos_add_sub_right_hyp T Hzs1.
@@ -288,7 +288,7 @@ destruct zs3. {
 clear H23.
 apply (rngl_leb_gt_iff Hto) in Hzs3.
 destruct (rngl_ltb_dec (rngl_cos θ3) 0)%L as [Hc3z| Hzc3]. {
-  apply rngl_ltb_lt in Hc3z.
+  apply (rngl_ltb_lt Heo) in Hc3z.
   exfalso.
   apply Bool.not_true_iff_false in Haov13.
   apply Haov13.
@@ -323,7 +323,7 @@ destruct (rngl_leb_dec (rngl_cos θ2) 0)%L as [Hc2z| Hzc2]. 2: {
   rewrite Hzs1.
   apply rngl_leb_le in Hzs1.
   rewrite rngl_cos_sub_right_r.
-  apply rngl_ltb_lt.
+  apply (rngl_ltb_lt Heo).
   change_angle_sub_l θ3 π/₂.
   progress sin_cos_add_sub_right_hyp T Hzs3.
   progress sin_cos_add_sub_right_hyp T Hzs13.
@@ -464,7 +464,7 @@ rewrite H; clear H.
 apply rngl_leb_le in Hzs1.
 rewrite Hzs1.
 apply rngl_leb_le in Hzs1.
-apply rngl_ltb_lt.
+apply (rngl_ltb_lt Heo).
 rewrite rngl_cos_sub_right_r.
 change_angle_sub_l θ2 π/₂.
 progress sin_cos_add_sub_right_hyp T Hzc3.

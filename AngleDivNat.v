@@ -836,14 +836,14 @@ remember (0 <? rngl_sin θ2)%L as zs2 eqn:Hzs2.
 remember (0 ≤? rngl_sin θ2)%L as zse2 eqn:Hzse2.
 symmetry in Hzs2, Hzse2.
 destruct zs1. {
-  apply rngl_ltb_lt in Hzs1.
+  apply (rngl_ltb_lt Heo) in Hzs1.
   destruct s1z. {
     apply rngl_leb_le in Hs1z.
-    now apply rngl_nlt_ge in Hs1z.
+    now apply (rngl_nlt_ge Hor) in Hs1z.
   }
   clear Hs1z.
   destruct zs2. {
-    apply rngl_ltb_lt in Hzs2.
+    apply (rngl_ltb_lt Heo) in Hzs2.
     destruct zse2; [ easy | ].
     apply (rngl_leb_gt_iff Hto) in Hzse2.
     now apply (rngl_lt_asymm Hor) in Hzs2.
@@ -866,7 +866,7 @@ destruct s1z; [ | now apply (rngl_leb_gt_iff Hto) in Hs1z ].
 apply rngl_leb_le in Hs1z.
 destruct zs2. {
   destruct zse2; [ easy | ].
-  apply rngl_ltb_lt in Hzs2.
+  apply (rngl_ltb_lt Heo) in Hzs2.
   apply (rngl_leb_gt_iff Hto) in Hzse2.
   now apply (rngl_lt_asymm Hor) in Hzs2.
 }

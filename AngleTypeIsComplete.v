@@ -399,7 +399,7 @@ Proof.
 intros Hop Hto * Hlim.
 specialize (rngl_is_totally_ordered_is_ordered Hto) as Hor.
 destruct (rngl_ltb_dec lim c) as [Hlc| Hcl]. {
-  apply rngl_ltb_lt in Hlc.
+  apply (rngl_ltb_lt Heo) in Hlc.
   exfalso.
   specialize (Hlim (c - lim)%L).
   apply (rngl_lt_0_sub Hop Hto) in Hlc.
@@ -414,7 +414,7 @@ destruct (rngl_ltb_dec lim c) as [Hlc| Hcl]. {
 }
 apply (rngl_ltb_ge_iff Hto) in Hcl.
 destruct (rngl_ltb_dec c lim) as [Hlc| Hlc]. {
-  apply rngl_ltb_lt in Hlc.
+  apply (rngl_ltb_lt Heo) in Hlc.
   exfalso.
   specialize (Hlim (lim - c)%L).
   generalize Hlc; intros H.

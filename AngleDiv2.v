@@ -533,7 +533,7 @@ rewrite <- (rngl_abs_nonneg_eq Hop Hor √_)%L. 2: {
   apply rngl_cos_bound.
 }
 destruct (rngl_ltb_dec (rngl_cos θ) 0) as [Hcz| Hzc]. {
-  apply rngl_ltb_lt in Hcz.
+  apply (rngl_ltb_lt Heo) in Hcz.
   apply (rngl_lt_le_trans Hor _ 0); [ easy | ].
   apply (rngl_abs_nonneg Hop Hto).
 }
@@ -945,7 +945,7 @@ split; intros Hs3. {
   destruct Hs3 as [(H1, H2)| (H1, H2)]; [ easy | ].
   apply (rngl_nlt_ge_iff Hto).
   intros H3.
-  apply rngl_nlt_ge in H2.
+  apply (rngl_nlt_ge Hor) in H2.
   apply H2; clear H2.
   rewrite rngl_add_comm.
   apply (rngl_lt_opp_l Hop Hto).
