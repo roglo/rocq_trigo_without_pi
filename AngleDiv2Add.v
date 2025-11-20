@@ -881,10 +881,8 @@ destruct zs12. {
       apply (rl_sqrt_0 Hop Hto Hii).
     }
     apply (rngl_eqb_neq Heo) in Hs12.
-    apply rngl_sin_nonneg_sin_nonneg_sin_neg; try easy; cycle 1. {
+    apply rngl_sin_nonneg_sin_nonneg_sin_neg; try easy. 2: {
       now apply rngl_lt_le_incl.
-    } {
-      now apply rngl_le_neq.
     }
     progress unfold angle_leb.
     generalize Hzs1; intros H.
@@ -939,10 +937,8 @@ destruct zs12. {
       apply (rl_sqrt_0 Hop Hto Hii).
     }
     apply (rngl_eqb_neq Heo) in Hs12.
-    apply rngl_sin_nonneg_sin_nonneg_sin_neg; try easy; cycle 1. {
+    apply rngl_sin_nonneg_sin_nonneg_sin_neg; try easy. 2: {
       now apply rngl_lt_le_incl.
-    } {
-      now apply rngl_le_neq.
     }
     progress unfold angle_leb.
     generalize Hzs1; intros H.

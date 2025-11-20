@@ -94,7 +94,7 @@ destruct zs3. {
     apply rngl_leb_le in Hzs13.
     apply (rngl_nle_gt Hor) in Hzs12.
     apply Hzs12; clear Hzs12.
-    apply ((rngl_nlt_ge Hor)_iff Hto).
+    apply (rngl_nlt_ge_iff Hto).
     intros Hzs12.
     generalize Hzs13; intros Hzs1.
     apply rngl_sin_add_nonneg_sin_nonneg in Hzs1; try easy.
@@ -132,7 +132,7 @@ destruct zs3. {
       apply Hc1z; clear Hc1z.
       apply rngl_lt_le_incl.
       rewrite angle_add_overflow_comm in Haov13.
-      clear - ac Hc1 Haov13 Hc3z Hzs1 Hzs3 Hzs13 Hor Hop Hiq Hos.
+      clear - ac Hc1 Haov13 Hc3z Hzs1 Hzs3 Hzs13 Hor Hop Hiq Hos Heo.
       rename θ1 into θ2; rename θ3 into θ1.
       rename Hzs1 into Hzs2.
       rename Hzs13 into Hzs12.
@@ -200,7 +200,7 @@ destruct zs3. {
     rename Hzs2 into Hzs3.
     rename H into Hzs2.
     rename Haov13 into Haov12.
-    apply ((rngl_nlt_ge Hor)_iff Hto).
+    apply (rngl_nlt_ge_iff Hto).
     intros Hzs13.
     apply rngl_leb_le in Hzc3.
     destruct (rngl_leb_dec 0 (rngl_cos θ1)) as [Hzc1| Hc1z]. {
@@ -307,7 +307,7 @@ destruct zs3. {
         now apply rngl_lt_le_incl.
       }
       apply (rngl_eqb_neq Heo) in Hes23.
-      apply ((rngl_nlt_ge Hor)_iff Hto).
+      apply (rngl_nlt_ge_iff Hto).
       intros H.
       apply rngl_lt_le_incl in H.
       apply rngl_sin_sub_nonneg in H; try easy. {
@@ -712,7 +712,7 @@ destruct zs13. {
     progress sin_cos_add_sub_right_goal T.
     destruct (rngl_ltb_dec (rngl_cos θ3) 0) as [Hc3z| Hzc3]. {
       apply (rngl_ltb_lt Heo) in Hc3z.
-      apply ((rngl_nlt_ge Hor)_iff Hto).
+      apply (rngl_nlt_ge_iff Hto).
       intros Hzc12.
       apply Bool.not_true_iff_false in Haov13.
       apply Haov13; clear Haov13.
@@ -822,7 +822,7 @@ destruct zs13. {
   apply (rngl_leb_gt_iff Hto) in Hzs1.
   destruct (rngl_leb_dec 0 (rngl_cos θ3)) as [Hzc3| Hc3z]. {
     apply rngl_leb_le in Hzc3.
-    apply ((rngl_nlt_ge Hor)_iff Hto).
+    apply (rngl_nlt_ge_iff Hto).
     intros Hc12z.
     apply Bool.not_true_iff_false in Haov13.
     apply Haov13; clear Haov13.
@@ -1269,7 +1269,7 @@ destruct (rngl_leb_dec 0 (rngl_cos θ1)) as [Hzc1| Hc1z]. {
   progress sin_cos_add_sub_right_goal T.
   rewrite rngl_sin_sub_anticomm in Hc12z.
   apply (rngl_opp_nonpos_nonneg Hop Hto) in Hc12z.
-  apply ((rngl_nlt_ge Hor)_iff Hto).
+  apply (rngl_nlt_ge_iff Hto).
   intros Hc12s13.
   rename Hzs13 into Hzc13.
   assert (Hzs13 : (0 ≤ rngl_sin (θ1 - θ3))%L). {

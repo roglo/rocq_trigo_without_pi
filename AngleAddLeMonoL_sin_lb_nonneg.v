@@ -67,7 +67,7 @@ destruct zs2. 2: {
     now apply angle_add_le_mono_l_lemma_11.
   }
   apply (rngl_ltb_ge_iff Hto) in Hzc3.
-  clear - Hor Hop Hiq Hos Hzs13 Hzs12 Haov13 Haov12 H23 Hzc3 Hzs3 Hzs2.
+  clear - Hor Hop Hiq Hos Heo Hzs13 Hzs12 Haov13 Haov12 H23 Hzc3 Hzs3 Hzs2.
   generalize Hzs13; intros Hzs1.
   apply rngl_sin_add_nonneg_sin_nonneg in Hzs1; try easy.
   change_angle_add_r θ3 π/₂.
@@ -107,7 +107,7 @@ destruct zs2. 2: {
     apply (rngl_ltb_ge_iff Hto) in Hc1z.
     apply Bool.not_true_iff_false in Haov12.
     apply Haov12.
-    clear - Hos Hor Hiq Hop Hzs2 Hzs1 Hc1z Hzs12 Hc2z.
+    clear - Hos Hor Hiq Hop Heo Hzs2 Hzs1 Hc1z Hzs12 Hc2z.
     destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
       specialize (rngl_characteristic_1 Hos Hc1) as H1.
       rewrite (H1 (rngl_sin _)) in Hzs2.
@@ -200,7 +200,7 @@ destruct zs2. 2: {
   progress sin_cos_add_sub_right_goal T.
   destruct (rngl_leb_dec 0 (rngl_cos θ1)) as [Hzc1| Hc1z]. 2: {
     apply (rngl_leb_gt_iff Hto) in Hc1z.
-    apply ((rngl_nlt_ge Hor)_iff Hto).
+    apply (rngl_nlt_ge_iff Hto).
     intros Hs123.
     rewrite <- angle_add_overflow_equiv2 in Haov12.
     progress unfold angle_add_overflow2 in Haov12.
@@ -305,7 +305,7 @@ progress sin_cos_add_sub_right_goal T.
 destruct (rngl_leb_dec (rngl_cos θ2) 0)%L as [Hc2z| Hzc2]. 2: {
   apply (rngl_leb_gt_iff Hto) in Hzc2.
   move Hzc2 after Hzs3.
-  apply ((rngl_nlt_ge Hor)_iff Hto).
+  apply (rngl_nlt_ge_iff Hto).
   intros H123.
   rewrite <- angle_add_overflow_equiv2 in Haov13.
   progress unfold angle_add_overflow2 in Haov13.

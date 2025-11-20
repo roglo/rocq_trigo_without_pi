@@ -419,7 +419,7 @@ destruct (rngl_leb_dec 0 (rngl_cos θ1)) as [Hzs1| Hc1z]. {
     apply Bool.not_true_iff_false in Haov12.
     apply Haov12; clear Haov12.
     (* perhaps a lemma *)
-    clear - ac Hop Hos Hzs12 Hs1z Hor Hzs1 Hzs2 Hzc2.
+    clear - ac Hop Hos Heo Hzs12 Hs1z Hor Hzs1 Hzs2 Hzc2.
     rewrite <- angle_add_overflow_equiv2.
     progress unfold angle_add_overflow2.
     rewrite angle_add_sub_assoc.

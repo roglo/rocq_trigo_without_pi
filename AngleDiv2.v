@@ -1349,7 +1349,7 @@ enough (H :
   apply IHn. {
     rewrite rngl_mul_add_distr_l.
     rewrite rngl_mul_1_r.
-    apply (rngl_lt_trans Hto _ ε); [ easy | ].
+    apply (rngl_lt_trans Hor _ ε); [ easy | ].
     now apply (rngl_lt_add_l Hos Hto).
   }
   apply (rngl_lt_div_l Hop Hiv Hto). {
