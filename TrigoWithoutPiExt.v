@@ -1178,16 +1178,11 @@ now apply rngl_lt_irrefl in H1.
 Qed.
 
 Theorem rngl_negb_ltb :
-  rngl_is_ordered T = true →
+  rngl_is_totally_ordered T = true →
   ∀ a b, (negb (a <? b) = (b ≤? a))%L.
 Proof.
-intros Hor *.
-progress unfold rngl_is_ordered in Hor.
-progress unfold rngl_ltb.
-progress unfold rngl_leb.
-destruct rngl_opt_leb as [(leb, tot)| ]; [ | easy ].
-...
-apply Bool.negb_involutive.
+intros Hto *.
+now rewrite (rngl_leb_neg_ltb Hto).
 Qed.
 
 Theorem rngl_lt_0_cos :
@@ -1208,7 +1203,7 @@ intros.
 progress unfold angle_ltb.
 cbn.
 rewrite (rngl_leb_0_opp Hop Hto).
-rewrite <- (rngl_negb_ltb Hor 0 1)%L.
+rewrite <- (rngl_negb_ltb Hto 0 1)%L.
 specialize (rngl_0_le_1 Hos Hto) as H1.
 specialize (rngl_0_lt_1 Hos Hc1 Hto) as H2.
 apply rngl_leb_le in H1.
