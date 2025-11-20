@@ -499,7 +499,6 @@ destruct zs1. {
   progress sin_cos_add_sub_right_hyp T Hzs2.
   progress sin_cos_add_sub_right_hyp T Hzc2.
   progress sin_cos_add_sub_right_goal T.
-...
   rewrite rngl_sin_sub_anticomm in Hzs12.
   apply (rngl_opp_neg_pos Hop Hto) in Hzs12.
   apply rngl_le_neq.
@@ -508,7 +507,9 @@ destruct zs1. {
     apply (rngl_le_0_sub Hop Hto).
     now apply rngl_sin_sub_nonneg_sin_le_sin.
   }
-  intros H12.
+  symmetry; intros H12.
+  apply -> (rngl_sub_move_0_r Hop) in H12.
+  symmetry in H12.
   apply rngl_sin_eq in H12.
   destruct H12; subst θ1. {
     rewrite angle_sub_diag in Hzs12.
