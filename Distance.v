@@ -436,7 +436,7 @@ assert (H : (0 < x / 2)%L). {
 specialize (H1 H); clear H.
 destruct H1 as (N, HN).
 specialize (HN N (Nat.le_refl _)).
-apply rngl_nle_gt in HN.
+apply (rngl_nle_gt Hor) in HN.
 apply HN; clear HN.
 apply (rngl_le_div_l Hop Hiv Hto).
 apply (rngl_0_lt_2 Hos Hc1 Hto).

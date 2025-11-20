@@ -184,7 +184,7 @@ intros n Hn.
 specialize (HN n Hn).
 progress unfold rngl_dist in HN.
 eapply (rngl_le_lt_trans Hor). 2: {
-  apply (rngl_add_lt_mono_l Hos Hto), HN.
+  apply (rngl_add_lt_mono_l Hos Hor), HN.
 }
 eapply (rngl_le_trans Hor); [ | apply (rngl_abs_triangle Hop Hto) ].
 rewrite rngl_add_comm, (rngl_sub_add Hop).
@@ -201,6 +201,7 @@ Theorem rngl_converging_seq_add_limit_bounded :
   → ∃ N, ∀ n, N ≤ n → (rngl_abs (u n + k) < 2 * rngl_abs k + 1)%L.
 Proof.
 intros Hop Hiq Hto Hc1.
+specialize (rngl_is_totally_ordered_is_ordered Hto) as Hor.
 specialize (rngl_has_opp_has_opp_or_psub Hop) as Hos.
 intros * Hlim.
 apply (rngl_converging_seq_bounded Hop Hiq Hto Hc1) in Hlim.
@@ -211,7 +212,7 @@ specialize (HN n Hn).
 rewrite rngl_mul_2_l.
 rewrite <- rngl_add_assoc.
 eapply (rngl_le_lt_trans Hor). 2: {
-  apply (rngl_add_lt_mono_l Hos Hto), HN.
+  apply (rngl_add_lt_mono_l Hos Hor), HN.
 }
 rewrite rngl_add_comm.
 apply (rngl_abs_triangle Hop Hto).
@@ -398,6 +399,7 @@ Theorem limit_const :
 Proof.
 intros Hop Hto * Hlim.
 specialize (rngl_is_totally_ordered_is_ordered Hto) as Hor.
+specialize (rngl_has_eq_dec_or_is_ordered_r Hor) as Heo.
 destruct (rngl_ltb_dec lim c) as [Hlc| Hcl]. {
   apply (rngl_ltb_lt Heo) in Hlc.
   exfalso.

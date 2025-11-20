@@ -478,7 +478,7 @@ destruct zstt. {
   now apply rngl_cos_le_cos_sub.
 }
 apply (rngl_leb_gt_iff Hto) in Hzstt.
-apply rngl_nle_gt in Hzstt.
+apply (rngl_nle_gt Hor) in Hzstt.
 exfalso; apply Hzstt; clear Hzstt.
 apply rngl_lt_le_incl in Hθ.
 now apply rngl_sin_sub_nonneg.
@@ -510,7 +510,7 @@ destruct zstz. {
   apply rngl_leb_le in Hzstz, Hts.
   apply (rngl_nlt_ge Hor) in Hts.
   apply Hts; clear Hts.
-  apply (rngl_le_neq Hto).
+  apply rngl_le_neq.
   split; [ apply rngl_cos_bound | ].
   intros H; symmetry in H.
   apply eq_rngl_cos_opp_1 in H; subst θ₀.
@@ -521,14 +521,14 @@ destruct zstz. {
   apply rngl_leb_le in Hzstt.
   rewrite Hzstt in Hzst; subst zst.
   apply (rngl_ltb_lt Heo) in Hθ.
-  apply rngl_nle_gt in Hθ.
+  apply (rngl_nle_gt Hor) in Hθ.
   apply Hθ, rngl_cos_bound.
 }
 clear Hts.
 destruct zst; [ easy | ].
 apply (rngl_leb_gt_iff Hto) in Hzstz, Hzst.
 apply (rngl_ltb_lt Heo) in Hθ.
-apply rngl_nle_gt in Hθ.
+apply (rngl_nle_gt Hor) in Hθ.
 apply Hθ; clear Hθ.
 change_angle_add_r θ₀ π.
 change_angle_add_r θ π.
@@ -1248,12 +1248,12 @@ exists (rngl_min3 x y (rngl_min η η')); subst x y.
 split. {
   apply rngl_min_glb_lt; [ | now apply rngl_min_glb_lt ].
   apply rngl_min_glb_lt. {
-    apply (rngl_le_neq Hto).
+    apply rngl_le_neq.
     split; [ apply angle_eucl_dist_nonneg | ].
     intros H; symmetry in H.
     now apply angle_eucl_dist_separation in H.
   } {
-    apply (rngl_le_neq Hto).
+    apply rngl_le_neq.
     split; [ apply angle_eucl_dist_nonneg | ].
     intros H; symmetry in H.
     now apply angle_eucl_dist_separation in H.
@@ -1383,12 +1383,12 @@ exists (rngl_min3 x y (rngl_min η η')); subst x y.
 split. {
   apply rngl_min_glb_lt; [ | now apply rngl_min_glb_lt ].
   apply rngl_min_glb_lt. {
-    apply (rngl_le_neq Hto).
+    apply rngl_le_neq.
     split; [ apply angle_eucl_dist_nonneg | ].
     intros H; symmetry in H.
     now apply angle_eucl_dist_separation in H.
   } {
-    apply (rngl_le_neq Hto).
+    apply rngl_le_neq.
     split; [ apply angle_eucl_dist_nonneg | ].
     intros H; symmetry in H.
     now apply angle_eucl_dist_separation in H.

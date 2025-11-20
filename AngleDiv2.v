@@ -551,7 +551,7 @@ apply (rngl_le_lt_trans Hor _ (rngl_cos θ * 2))%L. 2: {
   rewrite rngl_mul_add_distr_l.
   rewrite rngl_mul_1_r.
   apply (rngl_add_lt_le_mono Hos Hto); [ | now apply (rngl_le_refl Hor) ].
-  apply (rngl_le_neq Hto).
+  apply rngl_le_neq.
   split; [ apply rngl_cos_bound | ].
   intros H.
   now apply eq_rngl_cos_1 in H.
@@ -950,7 +950,7 @@ split; intros Hs3. {
   rewrite rngl_add_comm.
   apply (rngl_lt_opp_l Hop Hto).
   subst c.
-  apply (rngl_le_neq Hto).
+  apply rngl_le_neq.
   split; [ apply rngl_cos_bound | ].
   intros H; symmetry in H.
   apply eq_rngl_cos_opp_1 in H.
@@ -1345,7 +1345,7 @@ enough (H :
   rewrite (rngl_mul_sub_distr_r Hop).
   rewrite rngl_mul_1_l.
   rewrite <- (rngl_add_sub_assoc Hop).
-  apply (rngl_add_lt_mono_l Hos Hto).
+  apply (rngl_add_lt_mono_l Hos Hor).
   apply IHn. {
     rewrite rngl_mul_add_distr_l.
     rewrite rngl_mul_1_r.

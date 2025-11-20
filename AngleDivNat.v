@@ -541,7 +541,7 @@ Proof.
 destruct_ac.
 intros.
 split; intros Htt. {
-  apply (rngl_le_neq Hto).
+  apply rngl_le_neq.
   split. {
     apply rngl_lt_le_incl in Htt.
     now apply rngl_cos_le_iff_angle_eucl_le.
@@ -560,7 +560,7 @@ split; intros Htt. {
   rewrite H in Htt.
   now apply rngl_lt_irrefl in Htt.
 } {
-  apply (rngl_le_neq Hto).
+  apply rngl_le_neq.
   split. {
     apply rngl_lt_le_incl in Htt.
     now apply rngl_cos_le_iff_angle_eucl_le.
@@ -855,7 +855,7 @@ destruct zs1. {
   apply eq_rngl_sin_0 in Hzse2.
   destruct Hzse2; [ easy | subst; cbn ].
   apply (rngl_leb_gt_iff Hto).
-  apply (rngl_le_neq Hto).
+  apply rngl_le_neq.
   split; [ apply rngl_cos_bound | ].
   intros H; symmetry in H.
   apply eq_rngl_cos_opp_1 in H; subst.

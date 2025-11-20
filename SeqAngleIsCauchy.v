@@ -493,7 +493,7 @@ assert (Hε2 : (0 < ε² / 2)%L). {
   apply (rngl_div_pos Hop Hiv Hto). 2: {
     apply (rngl_0_lt_2 Hos Hc1 Hto).
   }
-  apply (rngl_le_neq Hto).
+  apply rngl_le_neq.
   split; [ apply (rngl_squ_nonneg Hos Hto) | ].
   apply not_eq_sym.
   intros H.

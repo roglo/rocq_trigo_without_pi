@@ -78,7 +78,7 @@ destruct (rngl_leb_dec 0 (rngl_cos θ1))%L as [Hzc1| Hc1z]. {
     apply (rngl_ltb_lt Heo).
     apply (rngl_lt_opp_l Hop Hto).
     apply (rngl_lt_0_add Hos Hto); [ | easy ].
-    apply (rngl_le_neq Hto).
+    apply rngl_le_neq.
     split. {
       apply rngl_lt_le_incl in Hzs2, Hc2z.
       now apply rngl_sin_add_nonneg.
@@ -91,13 +91,13 @@ destruct (rngl_leb_dec 0 (rngl_cos θ1))%L as [Hzc1| Hc1z]. {
       subst θ2.
       cbn in Hzs2.
       apply (rngl_opp_pos_neg Hop Hto) in Hzs2.
-      now apply rngl_nle_gt in Hzs2.
+      now apply (rngl_nle_gt Hor) in Hzs2.
     }
     apply angle_add_move_l in H.
     subst θ2.
     rewrite rngl_cos_sub_straight_l in Hc2z.
     apply (rngl_opp_pos_neg Hop Hto) in Hc2z.
-    now apply rngl_nle_gt in Hc2z.
+    now apply (rngl_nle_gt Hor) in Hc2z.
   }
   exfalso.
   symmetry in H.
@@ -168,7 +168,7 @@ rewrite rngl_sin_sub_straight_r.
 generalize Hs1z; intros H.
 apply (rngl_opp_lt_compat Hop Hto) in H.
 rewrite (rngl_opp_0 Hop) in H.
-apply rngl_nle_gt in H.
+apply (rngl_nle_gt Hor) in H.
 apply rngl_leb_nle in H.
 rewrite H; clear H.
 rewrite rngl_cos_sub_straight_r.
@@ -521,7 +521,7 @@ destruct (rngl_leb_dec 0 (rngl_cos θ3))%L as [Hzc3| Hc3z]. {
   rename H1 into Hs23.
   destruct (rngl_ltb_dec (rngl_cos θ2) 0)%L as [Hc2z| Hzc2]. {
     apply (rngl_ltb_lt Heo) in Hc2z.
-    apply rngl_nle_gt in Hc2z.
+    apply (rngl_nle_gt Hor) in Hc2z.
     exfalso; apply Hc2z; clear Hc2z.
     eapply (rngl_le_trans Hor); [ apply Hzc3 | easy ].
   }
@@ -548,7 +548,7 @@ rewrite Hc3z in H1.
 apply (rngl_leb_gt_iff Hto) in Hc3z.
 apply (rngl_nlt_ge Hor) in Hzs13.
 exfalso; apply Hzs13; clear Hzs13.
-apply (rngl_le_neq Hto).
+apply rngl_le_neq.
 split. {
   cbn.
   apply (rngl_le_sub_0 Hop Hto).
@@ -563,7 +563,7 @@ apply eq_rngl_cos_0 in Hc13.
 destruct Hc13 as [Hc13| Hc13]. {
   apply angle_add_move_l in Hc13.
   subst θ3.
-  apply rngl_nle_gt in Hc3z.
+  apply (rngl_nle_gt Hor) in Hc3z.
   apply Hc3z.
   rewrite rngl_cos_sub_right_l.
   now apply rngl_lt_le_incl.
@@ -576,7 +576,7 @@ apply Haov13; clear Haov13.
 apply angle_add_overflow_opp_r.
 intros H.
 apply angle_add_move_0_r in H; subst θ1.
-apply rngl_nle_gt in Hc1z.
+apply (rngl_nle_gt Hor) in Hc1z.
 apply Hc1z; cbn.
 apply (rngl_opp_1_le_0 Hop Hto).
 Qed.
