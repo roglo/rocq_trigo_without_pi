@@ -267,7 +267,7 @@ destruct zs13. {
     rewrite (rngl_sub_mul_r_diag_l Hop).
     apply (rngl_lt_0_add Hos Hto). {
       apply (rngl_mul_pos_pos Hop Hiq Hto); [ easy | ].
-      apply (rngl_lt_0_sub Hop Hto).
+      apply (rngl_lt_0_sub Hop Hor).
       apply rngl_le_neq.
       split; [ apply rngl_sin_bound | ].
       intros H.
@@ -490,7 +490,7 @@ destruct (rngl_leb_dec 0 (rngl_cos θ1)) as [Hzs1| Hc1z]. {
     now apply (rngl_mul_pos_pos Hop Hiq Hto).
   }
   apply (rngl_mul_nonneg_nonneg Hos Hor); [ easy | ].
-  apply (rngl_le_0_sub Hop Hto).
+  apply (rngl_le_0_sub Hop Hor).
   apply rngl_sin_bound.
 }
 apply (rngl_leb_gt_iff Hto) in Hc1z.

@@ -41,6 +41,7 @@ Ltac sin_cos_add_sub_right_hyp T H :=
   repeat rewrite -> (angle_add_comm (_ - π/₂))%A in H;
   repeat rewrite -> (angle_add_sub_assoc _ _ π/₂)%A in H;
   set (Hto' := ac_to);
+  set (Hor' := rngl_is_totally_ordered_is_ordered Hto');
   assert (Hos' : rngl_has_opp_or_psub T = true) by
     apply (rngl_has_opp_has_opp_or_psub Hop');
   repeat rewrite rngl_sin_add_right_r in H;
@@ -57,7 +58,7 @@ Ltac sin_cos_add_sub_right_hyp T H :=
     (remember rngl_cos as c; apply -> (rngl_le_sub_0 Hop' Hto') in H;
      subst c);
   try
-    (remember rngl_cos as c; apply -> (rngl_le_0_sub Hop' Hto') in H;
+    (remember rngl_cos as c; apply -> (rngl_le_0_sub Hop' Hor') in H;
      subst c);
   try apply <- (rngl_opp_le_compat Hop' Hto') in H;
   try apply -> (rngl_opp_nonneg_nonpos Hop' Hto') in H;
@@ -68,7 +69,7 @@ Ltac sin_cos_add_sub_right_hyp T H :=
   try apply -> (rngl_le_opp_r Hop' Hto') in H;
   try apply -> (rngl_lt_opp_l Hop' Hto') in H;
   repeat rewrite (rngl_opp_involutive Hop') in H;
-  clear Hop' Hos' Hto'.
+  clear Hop' Hos' Hto' Hor'.
 
 Ltac sin_cos_add_sub_straight_hyp T H :=
   set (Hop' := ac_op);
@@ -128,6 +129,7 @@ Ltac sin_cos_add_sub_right_goal T :=
   repeat rewrite <- (angle_sub_sub_distr π/₂);
   repeat rewrite -> angle_sub_add_distr;
   set (Hto' := ac_to);
+  set (Hor' := rngl_is_totally_ordered_is_ordered Hto');
   assert (Hos' : rngl_has_opp_or_psub T = true) by
     apply (rngl_has_opp_has_opp_or_psub Hop');
   repeat rewrite -> rngl_sin_sub_right_l;
@@ -150,8 +152,8 @@ Ltac sin_cos_add_sub_right_goal T :=
   try apply <- (rngl_lt_0_sub Hop' Hto');
 *)
   try (remember rngl_cos as c; apply <- (rngl_le_sub_0 Hop' Hto'); subst c);
-  try (remember rngl_cos as c; apply <- (rngl_le_0_sub Hop' Hto'); subst c);
-  clear Hop' Hto' Hos'.
+  try (remember rngl_cos as c; apply <- (rngl_le_0_sub Hop' Hor'); subst c);
+  clear Hop' Hto' Hos' Hor'.
 
 Ltac sin_cos_add_sub_straight_goal T :=
   set (Hop' := ac_op);
@@ -162,6 +164,7 @@ Ltac sin_cos_add_sub_straight_goal T :=
   repeat rewrite -> (angle_sub_sub_swap _ π);
   repeat rewrite <- (angle_sub_sub_distr π);
   set (Hto' := ac_to);
+  set (Hor' := rngl_is_totally_ordered_is_ordered Hto');
   repeat rewrite -> rngl_sin_sub_straight_l;
   repeat rewrite -> rngl_cos_sub_straight_l;
   repeat rewrite rngl_sin_add_straight_r;
@@ -177,8 +180,8 @@ Ltac sin_cos_add_sub_straight_goal T :=
   try apply <- (rngl_lt_opp_l Hop' Hto');
   try apply <- (rngl_le_opp_r Hop' Hto');
   try apply <- (rngl_lt_opp_r Hop' Hto');
-  try apply <- (rngl_le_0_sub Hop' Hto');
-  clear Hop' Hto'.
+  try apply <- (rngl_le_0_sub Hop' Hor');
+  clear Hop' Hto' Hor'.
 
 Ltac sin_cos_opp_goal T :=
   repeat rewrite angle_add_opp_l;

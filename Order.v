@@ -582,7 +582,7 @@ destruct (rngl_ltb_dec x y) as [Hxy| Hxy]. {
 }
 apply (rngl_ltb_ge_iff Hto) in Hxy.
 rewrite <- (rngl_abs_nonneg_eq Hop Hor). 2: {
-  now apply (rngl_le_0_sub Hop Hto).
+  now apply (rngl_le_0_sub Hop Hor).
 }
 apply (eq_rngl_squ_rngl_abs Hop Hto). {
   rewrite Bool.orb_true_iff; right.

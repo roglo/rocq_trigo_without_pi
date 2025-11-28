@@ -189,7 +189,7 @@ rewrite <- (rngl_abs_nonneg_eq Hop Hor √_). 2: {
   apply (rngl_mul_nonneg_nonneg Hos Hor). {
     apply (rngl_0_le_2 Hos Hto).
   }
-  apply (rngl_le_0_sub Hop Hto).
+  apply (rngl_le_0_sub Hop Hor).
   apply rngl_cos_bound.
 }
 rewrite <- (rngl_abs_nonneg_eq Hop Hor a) at 2; [ | easy ].
@@ -200,7 +200,7 @@ split. {
     apply (rngl_mul_nonneg_nonneg Hos Hor). {
       apply (rngl_0_le_2 Hos Hto).
     }
-    apply (rngl_le_0_sub Hop Hto).
+    apply (rngl_le_0_sub Hop Hor).
     apply rngl_cos_bound.
   }
   rewrite (rngl_mul_comm Hic).
@@ -218,7 +218,7 @@ split. {
     apply (rngl_mul_nonneg_nonneg Hos Hor). {
       apply (rngl_0_le_2 Hos Hto).
     }
-    apply (rngl_le_0_sub Hop Hto).
+    apply (rngl_le_0_sub Hop Hor).
     apply rngl_cos_bound.
   }
   rewrite (rngl_mul_comm Hic) in Ha.
@@ -279,7 +279,7 @@ split; intros H12. {
     apply (rngl_mul_nonneg_nonneg Hos Hor). {
       apply (rngl_0_le_2 Hos Hto).
     }
-    apply (rngl_le_0_sub Hop Hto).
+    apply (rngl_le_0_sub Hop Hor).
     apply rngl_cos_bound.
   }
   rewrite (rngl_mul_comm Hic).
@@ -511,7 +511,7 @@ intros p Hp.
 specialize (HN p Hp).
 rewrite (rngl_abs_sub_comm Hop Hto) in HN.
 rewrite (rngl_abs_nonneg_eq Hop Hor) in HN. 2: {
-  apply (rngl_le_0_sub Hop Hto), rngl_cos_bound.
+  apply (rngl_le_0_sub Hop Hor), rngl_cos_bound.
 }
 apply (rngl_lt_sub_lt_add_r Hop Hto) in HN.
 apply (rngl_lt_sub_lt_add_l Hop Hto) in HN.

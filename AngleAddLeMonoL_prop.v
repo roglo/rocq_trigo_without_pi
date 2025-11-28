@@ -204,7 +204,7 @@ destruct H21 as [H21| H21]. {
   apply -> (rngl_le_sub_0 Hop Hto) in Hzs12.
   destruct (rngl_leb_dec 0 (rngl_sin θ1)) as [Hzs1| Hzs1]. {
     apply rngl_leb_le in Hzs1.
-    apply (rngl_mul_le_mono_nonneg_l Hop Hto (rngl_cos θ1)) in Hzs12. 2: {
+    apply (rngl_mul_le_mono_nonneg_l Hop Hor (rngl_cos θ1)) in Hzs12. 2: {
       now apply rngl_lt_le_incl in Hs1z.
     }
     rewrite rngl_mul_assoc in Hzs12.
@@ -224,7 +224,7 @@ destruct H21 as [H21| H21]. {
     rewrite <- rngl_sin_add in Hzs12.
     eapply (rngl_le_trans Hor); [ apply Hzs12 | ].
     rewrite <- (rngl_mul_1_r (rngl_sin θ1)) at 2.
-    apply (rngl_mul_le_mono_nonneg_l Hop Hto); [ easy | ].
+    apply (rngl_mul_le_mono_nonneg_l Hop Hor); [ easy | ].
     apply rngl_sin_bound.
   } {
     apply (rngl_leb_gt_iff Hto) in Hzs1.
@@ -239,7 +239,7 @@ destruct H21 as [H21| H21]. {
       }
       now apply (rngl_mul_pos_pos Hop Hiq Hto).
     }
-    apply (rngl_mul_le_mono_nonneg_r Hop Hto _ _ (rngl_sin θ2))
+    apply (rngl_mul_le_mono_nonneg_r Hop Hor _ _ (rngl_sin θ2))
       in Hzs12; [ | easy ].
     do 2 rewrite <- rngl_mul_assoc in Hzs12.
     rewrite fold_rngl_squ in Hzs12.
