@@ -214,7 +214,7 @@ destruct H21 as [H21| H21]. {
     rewrite H in Hzs12; clear H.
     rewrite (rngl_mul_sub_distr_r Hop) in Hzs12.
     rewrite rngl_mul_1_l in Hzs12.
-    apply (rngl_le_sub_le_add_r Hop Hto) in Hzs12.
+    apply (rngl_le_sub_le_add_r Hop Hor) in Hzs12.
     rewrite (rngl_mul_comm Hic) in Hzs12.
     progress unfold rngl_squ in Hzs12.
     do 2 rewrite <- rngl_mul_assoc in Hzs12.
@@ -248,7 +248,7 @@ destruct H21 as [H21| H21]. {
     rewrite H in Hzs12; clear H.
     rewrite (rngl_mul_sub_distr_l Hop) in Hzs12.
     rewrite rngl_mul_1_r in Hzs12.
-    apply (rngl_le_add_le_sub_r Hop Hto) in Hzs12.
+    apply (rngl_le_add_le_sub_r Hop Hor) in Hzs12.
     progress unfold rngl_squ in Hzs12.
     do 2 rewrite (rngl_mul_comm Hic _ (_ * _)) in Hzs12.
     do 2 rewrite <- rngl_mul_assoc in Hzs12.

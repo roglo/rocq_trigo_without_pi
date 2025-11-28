@@ -32,7 +32,7 @@ rewrite or_comm in H12.
 rewrite or_assoc in H12.
 destruct H12 as [H12| H12]. {
   cbn.
-  apply (rngl_le_sub_le_add_l Hop Hto).
+  apply (rngl_le_sub_le_add_l Hop Hor).
   apply (rngl_le_0_sub Hop Hor).
   rewrite <- (rngl_add_sub_assoc Hop).
   rewrite (rngl_sub_mul_r_diag_l Hop).
@@ -45,7 +45,7 @@ destruct H12 as [H12| H12]. {
 destruct (rngl_leb_dec 0 (rngl_cos θ1)) as [Hzc1| Hc1z]. {
   apply rngl_leb_le in Hzc1.
   cbn.
-  apply (rngl_le_sub_le_add_l Hop Hto).
+  apply (rngl_le_sub_le_add_l Hop Hor).
   apply (rngl_le_0_sub Hop Hor).
   rewrite <- (rngl_add_sub_assoc Hop).
   rewrite (rngl_sub_mul_r_diag_l Hop).
@@ -71,7 +71,7 @@ destruct (rngl_leb_dec 0 (rngl_cos θ2)) as [Hzc2| Hc2z]. {
   apply rngl_cos_cos_sin_sin_nonneg_sin_le_cos_le_iff; try easy.
   now apply rngl_sin_add_nonneg.
   cbn.
-  apply (rngl_le_sub_le_add_l Hop Hto).
+  apply (rngl_le_sub_le_add_l Hop Hor).
   apply (rngl_le_0_sub Hop Hor).
   rewrite <- (rngl_add_sub_assoc Hop).
   rewrite (rngl_sub_mul_r_diag_l Hop).

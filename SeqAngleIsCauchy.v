@@ -207,8 +207,8 @@ split. {
   apply (rngl_lt_div_r Hop Hiv Hto). {
     apply (rngl_0_lt_2 Hos Hc1 Hto).
   }
-  apply (rngl_lt_sub_lt_add_l Hop Hto).
-  now apply (rngl_lt_sub_lt_add_r Hop Hto).
+  apply (rngl_lt_sub_lt_add_l Hop Hor).
+  now apply (rngl_lt_sub_lt_add_r Hop Hor).
 } {
   intros Ha.
   apply (rngl_abs_lt_squ_lt Hop Hiq Hto) in Ha. 2: {
@@ -225,8 +225,8 @@ split. {
   apply (rngl_lt_div_r Hop Hiv Hto) in Ha. 2: {
     apply (rngl_0_lt_2 Hos Hc1 Hto).
   }
-  apply (rngl_lt_sub_lt_add_l Hop Hto) in Ha.
-  now apply (rngl_lt_sub_lt_add_r Hop Hto) in Ha.
+  apply (rngl_lt_sub_lt_add_l Hop Hor) in Ha.
+  now apply (rngl_lt_sub_lt_add_r Hop Hor) in Ha.
 }
 Qed.
 
@@ -513,8 +513,8 @@ rewrite (rngl_abs_sub_comm Hop Hto) in HN.
 rewrite (rngl_abs_nonneg_eq Hop Hor) in HN. 2: {
   apply (rngl_le_0_sub Hop Hor), rngl_cos_bound.
 }
-apply (rngl_lt_sub_lt_add_r Hop Hto) in HN.
-apply (rngl_lt_sub_lt_add_l Hop Hto) in HN.
+apply (rngl_lt_sub_lt_add_r Hop Hor) in HN.
+apply (rngl_lt_sub_lt_add_l Hop Hor) in HN.
 easy.
 Qed.
 
@@ -591,8 +591,8 @@ assert (Hsr : n ≤ 3 ∨ ∀ i, (seq_angle_to_div_nat θ n i ≤ π/₂)%A). {
   apply Nat.log2_le_pow2; cbn; flia Hn3.
 }
 assert (He1 : (1 - ε² / 2 < 1)%L). {
-  apply (rngl_lt_sub_lt_add_r Hop Hto).
-  apply (rngl_lt_sub_lt_add_l Hop Hto).
+  apply (rngl_lt_sub_lt_add_r Hop Hor).
+  apply (rngl_lt_sub_lt_add_l Hop Hor).
   rewrite (rngl_sub_diag Hos).
   apply (rngl_div_pos Hop Hiv Hto). 2: {
     apply (rngl_0_lt_2 Hos Hc1 Hto).

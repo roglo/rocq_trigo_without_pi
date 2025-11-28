@@ -728,12 +728,12 @@ specialize (rngl_0_lt_2 Hos Hc1 Hto) as Hz2.
 specialize (rngl_0_le_2 Hos Hto) as Hz2'.
 intros * Ha1.
 rewrite rngl_add_comm.
-apply (rngl_le_add_le_sub_l Hop Hto).
+apply (rngl_le_add_le_sub_l Hop Hor).
 apply (rngl_le_div_l Hop Hiv Hto); [ easy | ].
 rewrite (rngl_mul_sub_distr_r Hop).
 rewrite <- rngl_mul_assoc.
 rewrite <- rngl_4_eq_2_mul_2.
-apply (rngl_le_add_le_sub_l Hop Hto).
+apply (rngl_le_add_le_sub_l Hop Hor).
 rewrite (rngl_squ_sub Hop Hic).
 rewrite rngl_squ_1.
 rewrite rngl_mul_1_r.
@@ -741,9 +741,9 @@ rewrite rngl_mul_add_distr_r.
 rewrite (rngl_mul_sub_distr_r Hop).
 rewrite rngl_mul_1_l.
 rewrite <- (rngl_sub_sub_distr Hop).
-apply (rngl_le_add_le_sub_r Hop Hto).
+apply (rngl_le_add_le_sub_r Hop Hor).
 apply (rngl_sub_le_mono_l Hop Hor).
-apply (rngl_le_add_le_sub_l Hop Hto).
+apply (rngl_le_add_le_sub_l Hop Hor).
 rewrite rngl_add_mul_l_diag_l.
 rewrite (rngl_mul_comm Hic 2).
 rewrite <- rngl_mul_assoc.
@@ -796,9 +796,9 @@ destruct (rngl_leb_dec 1 (angle_eucl_dist θ 0)) as [H1d| H1d]. {
   apply rngl_1_add_cos_div_2_nonneg.
 }
 apply (rngl_leb_gt_iff Hto) in H1d.
-apply (rngl_le_sub_le_add_r Hop Hto).
+apply (rngl_le_sub_le_add_r Hop Hor).
 rewrite rngl_add_comm.
-apply (rngl_le_sub_le_add_r Hop Hto).
+apply (rngl_le_sub_le_add_r Hop Hor).
 rewrite <- (rngl_abs_nonneg_eq Hop Hor (_ - _)). 2: {
   apply (rngl_le_0_sub Hop Hor).
   now apply rngl_lt_le_incl in H1d.
@@ -811,7 +811,7 @@ apply (rngl_le_div_r Hop Hiv Hto _²); [ easy | ].
 rewrite rngl_cos_angle_eucl_dist_0_r.
 rewrite (rngl_add_sub_assoc Hop).
 remember (angle_eucl_dist θ 0) as a.
-apply (rngl_le_add_le_sub_l Hop Hto).
+apply (rngl_le_add_le_sub_l Hop Hor).
 apply (rngl_squ_div_2_add_1_sub_squ_mul_2_le_2 Hic Hop Hiv Hto).
 split; [ | easy ].
 subst a.
@@ -840,9 +840,9 @@ destruct (rngl_leb_dec 1 (angle_eucl_dist θ π)) as [H1s| H1s]. {
   apply rngl_1_sub_cos_div_2_nonneg.
 }
 apply (rngl_leb_gt_iff Hto) in H1s.
-apply (rngl_le_sub_le_add_r Hop Hto).
+apply (rngl_le_sub_le_add_r Hop Hor).
 rewrite rngl_add_comm.
-apply (rngl_le_sub_le_add_r Hop Hto).
+apply (rngl_le_sub_le_add_r Hop Hor).
 rewrite <- (rngl_abs_nonneg_eq Hop Hor (_ - _)). 2: {
   apply (rngl_le_0_sub Hop Hor).
   now apply rngl_lt_le_incl in H1s.
@@ -856,7 +856,7 @@ rewrite rngl_cos_angle_eucl_dist_straight_r.
 rewrite (rngl_sub_sub_distr Hop).
 rewrite <- (rngl_add_sub_swap Hop).
 remember (angle_eucl_dist θ π) as a.
-apply (rngl_le_add_le_sub_l Hop Hto).
+apply (rngl_le_add_le_sub_l Hop Hor).
 apply (rngl_squ_div_2_add_1_sub_squ_mul_2_le_2 Hic Hop Hiv Hto).
 split; [ | easy ].
 subst a.

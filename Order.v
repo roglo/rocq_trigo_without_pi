@@ -490,14 +490,14 @@ specialize (rngl_2_neq_0 Hos Hc1 Hto) as H20.
 assert (Hze2 : (0 ≤ 2)%L) by now apply rngl_lt_le_incl.
 assert (Hz1ac :  ∀ θ, (0 ≤ 1 + rngl_cos θ)%L). {
   intros.
-  apply (rngl_le_sub_le_add_l Hop Hto).
+  apply (rngl_le_sub_le_add_l Hop Hor).
   progress unfold rngl_sub.
   rewrite Hop, rngl_add_0_l.
   apply rngl_cos_bound.
 }
 assert (Hz1sc : ∀ θ, (0 ≤ 1 - rngl_cos θ)%L). {
   intros.
-  apply (rngl_le_add_le_sub_r Hop Hto).
+  apply (rngl_le_add_le_sub_r Hop Hor).
   rewrite rngl_add_0_l.
   apply rngl_cos_bound.
 }

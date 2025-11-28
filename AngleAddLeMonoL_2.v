@@ -1290,7 +1290,7 @@ destruct (rngl_leb_dec 0 (rngl_cos θ1)) as [Hzc1| Hc1z]. {
     cbn.
     rewrite (rngl_mul_opp_r Hop).
     rewrite (rngl_add_opp_r Hop).
-    apply (rngl_le_sub_le_add_l Hop Hto).
+    apply (rngl_le_sub_le_add_l Hop Hor).
     rewrite rngl_add_assoc.
     apply (rngl_le_0_sub Hop Hor).
     rewrite rngl_add_add_swap.

@@ -54,7 +54,7 @@ rewrite rngl_squ_sqrt. 2: {
     apply (rngl_0_lt_2 Hos Hc1 Hto).
   }
   rewrite (rngl_mul_0_l Hos).
-  apply (rngl_le_sub_le_add_l Hop Hto).
+  apply (rngl_le_sub_le_add_l Hop Hor).
   rewrite (rngl_sub_0_l Hop).
   apply rngl_cos_bound.
 }
@@ -63,7 +63,7 @@ rewrite rngl_squ_sqrt. 2: {
     apply (rngl_0_lt_2 Hos Hc1 Hto).
   }
   rewrite (rngl_mul_0_l Hos).
-  apply (rngl_le_add_le_sub_r Hop Hto).
+  apply (rngl_le_add_le_sub_r Hop Hor).
   rewrite rngl_add_0_l.
   apply rngl_cos_bound.
 }
@@ -127,12 +127,12 @@ assert (Hε : (ε² = 1)%L). {
 rewrite (rngl_squ_mul Hic).
 rewrite Hε, rngl_mul_1_l.
 assert (Hz1ac : (0 ≤ 1 + rngl_cos a)%L). {
-  apply (rngl_le_sub_le_add_l Hop Hto).
+  apply (rngl_le_sub_le_add_l Hop Hor).
   rewrite (rngl_sub_0_l Hop).
   apply rngl_cos_bound.
 }
 assert (Hz1sc : (0 ≤ 1 - rngl_cos a)%L). {
-  apply (rngl_le_add_le_sub_r Hop Hto).
+  apply (rngl_le_add_le_sub_r Hop Hor).
   rewrite rngl_add_0_l.
   apply rngl_cos_bound.
 }
@@ -883,7 +883,7 @@ split; intros Hs3. {
   progress unfold rngl_squ.
   rewrite <- (rngl_div_div Hos Hiv); [ | easy | easy ].
   rewrite (rngl_div_mul Hiv); [ | easy ].
-  apply (rngl_le_add_le_sub_l Hop Hto).
+  apply (rngl_le_add_le_sub_l Hop Hor).
   rewrite <- (rngl_add_0_r 1)%L at 1.
   rewrite (rngl_middle_sub_l Hop Hiv Hto).
   rewrite (rngl_sub_0_l Hop).
@@ -920,7 +920,7 @@ split; intros Hs3. {
   apply (rngl_le_div_l Hop Hiv Hto) in Hs3; [ | easy ].
   apply (rngl_leb_gt_iff Hto) in Hzs.
   apply (rngl_opp_neg_pos Hop Hor) in Hzs.
-  apply (rngl_le_sub_le_add_r Hop Hto) in Hs3.
+  apply (rngl_le_sub_le_add_r Hop Hor) in Hs3.
   apply (rngl_le_0_sub Hop Hor) in Hs3.
   remember (rngl_cos θ) as c.
   replace (c² * 2 + c - 1)%L with ((2 * c - 1) * (c + 1))%L in Hs3. 2: {
@@ -1302,8 +1302,8 @@ enough (H :
   apply Nat.succ_le_mono in Hn.
   specialize (HN n Hn).
   rewrite rngl_cos_div_pow_2_eq.
-  apply (rngl_lt_sub_lt_add_l Hop Hto).
-  apply (rngl_lt_sub_lt_add_r Hop Hto).
+  apply (rngl_lt_sub_lt_add_l Hop Hor).
+  apply (rngl_lt_sub_lt_add_r Hop Hor).
   easy.
 }
 enough (H :
@@ -1334,8 +1334,8 @@ enough (H :
   induction n; intros. {
     cbn in HN |-*.
     rewrite (rngl_div_1_r Hiq) in HN; [ | now left ].
-    apply (rngl_lt_sub_lt_add_l Hop Hto).
-    apply (rngl_lt_sub_lt_add_r Hop Hto).
+    apply (rngl_lt_sub_lt_add_l Hop Hor).
+    apply (rngl_lt_sub_lt_add_r Hop Hor).
     easy.
   }
   cbn.

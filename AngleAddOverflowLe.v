@@ -38,7 +38,7 @@ intros * Hzs1 Hzs2 Hzs3 Hzs12 Hzs13 H32 H12.
 destruct (rngl_leb_dec 0 (rngl_cos θ1)) as [Hzc1| Hc1z]. {
   apply rngl_leb_le in Hzc1.
   cbn.
-  apply (rngl_le_sub_le_add_r Hop Hto).
+  apply (rngl_le_sub_le_add_r Hop Hor).
   eapply (rngl_le_trans Hor). 2: {
     apply (rngl_le_add_r Hos Hor).
     now apply (rngl_mul_nonneg_nonneg Hos Hor).

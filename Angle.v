@@ -72,14 +72,14 @@ destruct_ac.
 intros * H12.
 assert (Hz1ac :  ∀ θ, (0 ≤ 1 + rngl_cos θ)%L). {
   intros.
-  apply (rngl_le_sub_le_add_l Hop Hto).
+  apply (rngl_le_sub_le_add_l Hop Hor).
   progress unfold rngl_sub.
   rewrite Hop, rngl_add_0_l.
   apply rngl_cos_bound.
 }
 assert (Hz1sc : ∀ θ, (0 ≤ 1 - rngl_cos θ)%L). {
   intros.
-  apply (rngl_le_add_le_sub_r Hop Hto).
+  apply (rngl_le_add_le_sub_r Hop Hor).
   rewrite rngl_add_0_l.
   apply rngl_cos_bound.
 }
@@ -111,7 +111,7 @@ rewrite rngl_mul_1_l.
 rewrite rngl_add_assoc.
 apply (rngl_add_le_mono_r Hos Hor).
 rewrite <- (rngl_sub_add_distr Hos).
-apply (rngl_le_sub_le_add_r Hop Hto).
+apply (rngl_le_sub_le_add_r Hop Hor).
 do 2 rewrite <- rngl_add_assoc.
 apply (rngl_le_add_r Hos Hor).
 rewrite rngl_add_assoc.
@@ -687,7 +687,7 @@ destruct (rngl_leb_dec 0 (rngl_cos θ2)) as [Hzc2| Hzc2]. {
 apply (rngl_leb_gt_iff Hto) in Hzc2.
 (* here, for sin θ3 to be non negative, then the negativity
    of θ2 must not be greater than the positivity of θ1 *)
-apply (rngl_le_sub_le_add_r Hop Hto).
+apply (rngl_le_sub_le_add_r Hop Hor).
 rewrite (rngl_sub_0_l Hop).
 apply (rngl_nlt_ge_iff Hto).
 intros Hcc.
@@ -779,12 +779,12 @@ intros * Hzs12.
 assert (Ha12 : ∀ θ1 θ2, (0 ≤ (1 + rngl_cos θ1) * (1 + rngl_cos θ2))%L). {
   intros.
   apply (rngl_mul_nonneg_nonneg Hos Hor). {
-    apply (rngl_le_sub_le_add_l Hop Hto).
+    apply (rngl_le_sub_le_add_l Hop Hor).
     progress unfold rngl_sub.
     rewrite Hop, rngl_add_0_l.
     apply rngl_cos_bound.
   } {
-    apply (rngl_le_sub_le_add_l Hop Hto).
+    apply (rngl_le_sub_le_add_l Hop Hor).
     progress unfold rngl_sub.
     rewrite Hop, rngl_add_0_l.
     apply rngl_cos_bound.
@@ -793,11 +793,11 @@ assert (Ha12 : ∀ θ1 θ2, (0 ≤ (1 + rngl_cos θ1) * (1 + rngl_cos θ2))%L). 
 assert (Hs12 : ∀ θ1 θ2, (0 ≤ (1 - rngl_cos θ1) * (1 - rngl_cos θ2))%L). {
   intros.
   apply (rngl_mul_nonneg_nonneg Hos Hor). {
-    apply (rngl_le_add_le_sub_l Hop Hto).
+    apply (rngl_le_add_le_sub_l Hop Hor).
     rewrite rngl_add_0_r.
     apply rngl_cos_bound.
   } {
-    apply (rngl_le_add_le_sub_l Hop Hto).
+    apply (rngl_le_add_le_sub_l Hop Hor).
     rewrite rngl_add_0_r.
     apply rngl_cos_bound.
   }
@@ -911,26 +911,26 @@ destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
 }
 assert (Hz1ac :  ∀ θ, (0 ≤ 1 + rngl_cos θ)%L). {
   intros.
-  apply (rngl_le_sub_le_add_l Hop Hto).
+  apply (rngl_le_sub_le_add_l Hop Hor).
   progress unfold rngl_sub.
   rewrite Hop, rngl_add_0_l.
   apply rngl_cos_bound.
 }
 assert (Hz1sc : ∀ θ, (0 ≤ 1 - rngl_cos θ)%L). {
   intros.
-  apply (rngl_le_add_le_sub_r Hop Hto).
+  apply (rngl_le_add_le_sub_r Hop Hor).
   rewrite rngl_add_0_l.
   apply rngl_cos_bound.
 }
 assert (Ha12 : ∀ θ1 θ2, (0 ≤ (1 + rngl_cos θ1) * (1 + rngl_cos θ2))%L). {
   intros.
   apply (rngl_mul_nonneg_nonneg Hos Hor). {
-    apply (rngl_le_sub_le_add_l Hop Hto).
+    apply (rngl_le_sub_le_add_l Hop Hor).
     progress unfold rngl_sub.
     rewrite Hop, rngl_add_0_l.
     apply rngl_cos_bound.
   } {
-    apply (rngl_le_sub_le_add_l Hop Hto).
+    apply (rngl_le_sub_le_add_l Hop Hor).
     progress unfold rngl_sub.
     rewrite Hop, rngl_add_0_l.
     apply rngl_cos_bound.
@@ -939,11 +939,11 @@ assert (Ha12 : ∀ θ1 θ2, (0 ≤ (1 + rngl_cos θ1) * (1 + rngl_cos θ2))%L). 
 assert (Hs12 : ∀ θ1 θ2, (0 ≤ (1 - rngl_cos θ1) * (1 - rngl_cos θ2))%L). {
   intros.
   apply (rngl_mul_nonneg_nonneg Hos Hor). {
-    apply (rngl_le_add_le_sub_l Hop Hto).
+    apply (rngl_le_add_le_sub_l Hop Hor).
     rewrite rngl_add_0_r.
     apply rngl_cos_bound.
   } {
-    apply (rngl_le_add_le_sub_l Hop Hto).
+    apply (rngl_le_add_le_sub_l Hop Hor).
     rewrite rngl_add_0_r.
     apply rngl_cos_bound.
   }
@@ -1373,7 +1373,7 @@ apply (rngl_add_move_r Hop) in H1.
 rewrite H1 in Hzs12; clear H1.
 rewrite (rngl_mul_sub_distr_r Hop) in Hzs12.
 rewrite rngl_mul_1_l in Hzs12.
-apply (rngl_le_sub_le_add_r Hop Hto) in Hzs12.
+apply (rngl_le_sub_le_add_r Hop Hor) in Hzs12.
 rewrite (rngl_mul_comm Hic) in Hzs12.
 progress unfold rngl_squ in Hzs12.
 do 2 rewrite <- rngl_mul_assoc in Hzs12.
@@ -1402,12 +1402,12 @@ destruct_ac.
 assert (Ha12 : ∀ θ1 θ2, (0 ≤ (1 + rngl_cos θ1) * (1 + rngl_cos θ2))%L). {
   intros.
   apply (rngl_mul_nonneg_nonneg Hos Hor). {
-    apply (rngl_le_sub_le_add_l Hop Hto).
+    apply (rngl_le_sub_le_add_l Hop Hor).
     progress unfold rngl_sub.
     rewrite Hop, rngl_add_0_l.
     apply rngl_cos_bound.
   } {
-    apply (rngl_le_sub_le_add_l Hop Hto).
+    apply (rngl_le_sub_le_add_l Hop Hor).
     progress unfold rngl_sub.
     rewrite Hop, rngl_add_0_l.
     apply rngl_cos_bound.
@@ -1416,11 +1416,11 @@ assert (Ha12 : ∀ θ1 θ2, (0 ≤ (1 + rngl_cos θ1) * (1 + rngl_cos θ2))%L). 
 assert (Hs12 : ∀ θ1 θ2, (0 ≤ (1 - rngl_cos θ1) * (1 - rngl_cos θ2))%L). {
   intros.
   apply (rngl_mul_nonneg_nonneg Hos Hor). {
-    apply (rngl_le_add_le_sub_l Hop Hto).
+    apply (rngl_le_add_le_sub_l Hop Hor).
     rewrite rngl_add_0_r.
     apply rngl_cos_bound.
   } {
-    apply (rngl_le_add_le_sub_l Hop Hto).
+    apply (rngl_le_add_le_sub_l Hop Hor).
     rewrite rngl_add_0_r.
     apply rngl_cos_bound.
   }
@@ -1525,14 +1525,14 @@ specialize (rngl_2_neq_0 Hos Hc1 Hto) as H20.
 assert (Hze2 : (0 ≤ 2)%L) by now apply rngl_lt_le_incl.
 assert (Hz1ac :  ∀ θ, (0 ≤ 1 + rngl_cos θ)%L). {
   intros.
-  apply (rngl_le_sub_le_add_l Hop Hto).
+  apply (rngl_le_sub_le_add_l Hop Hor).
   progress unfold rngl_sub.
   rewrite Hop, rngl_add_0_l.
   apply rngl_cos_bound.
 }
 assert (Hz1sc : ∀ θ, (0 ≤ 1 - rngl_cos θ)%L). {
   intros.
-  apply (rngl_le_add_le_sub_r Hop Hto).
+  apply (rngl_le_add_le_sub_r Hop Hor).
   rewrite rngl_add_0_l.
   apply rngl_cos_bound.
 }
@@ -1545,12 +1545,12 @@ assert (Hs2z : (√2 ≠ 0)%L). {
 assert (Ha12 : ∀ θ1 θ2, (0 ≤ (1 + rngl_cos θ1) * (1 + rngl_cos θ2))%L). {
   intros.
   apply (rngl_mul_nonneg_nonneg Hos Hor). {
-    apply (rngl_le_sub_le_add_l Hop Hto).
+    apply (rngl_le_sub_le_add_l Hop Hor).
     progress unfold rngl_sub.
     rewrite Hop, rngl_add_0_l.
     apply rngl_cos_bound.
   } {
-    apply (rngl_le_sub_le_add_l Hop Hto).
+    apply (rngl_le_sub_le_add_l Hop Hor).
     progress unfold rngl_sub.
     rewrite Hop, rngl_add_0_l.
     apply rngl_cos_bound.
@@ -1559,11 +1559,11 @@ assert (Ha12 : ∀ θ1 θ2, (0 ≤ (1 + rngl_cos θ1) * (1 + rngl_cos θ2))%L). 
 assert (Hs12 : ∀ θ1 θ2, (0 ≤ (1 - rngl_cos θ1) * (1 - rngl_cos θ2))%L). {
   intros.
   apply (rngl_mul_nonneg_nonneg Hos Hor). {
-    apply (rngl_le_add_le_sub_l Hop Hto).
+    apply (rngl_le_add_le_sub_l Hop Hor).
     rewrite rngl_add_0_r.
     apply rngl_cos_bound.
   } {
-    apply (rngl_le_add_le_sub_l Hop Hto).
+    apply (rngl_le_add_le_sub_l Hop Hor).
     rewrite rngl_add_0_r.
     apply rngl_cos_bound.
   }
@@ -1648,26 +1648,26 @@ destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
 }
 assert (Hz1ac :  ∀ θ, (0 ≤ 1 + rngl_cos θ)%L). {
   intros.
-  apply (rngl_le_sub_le_add_l Hop Hto).
+  apply (rngl_le_sub_le_add_l Hop Hor).
   progress unfold rngl_sub.
   rewrite Hop, rngl_add_0_l.
   apply rngl_cos_bound.
 }
 assert (Hz1sc : ∀ θ, (0 ≤ 1 - rngl_cos θ)%L). {
   intros.
-  apply (rngl_le_add_le_sub_r Hop Hto).
+  apply (rngl_le_add_le_sub_r Hop Hor).
   rewrite rngl_add_0_l.
   apply rngl_cos_bound.
 }
 assert (Ha12 : ∀ θ1 θ2, (0 ≤ (1 + rngl_cos θ1) * (1 + rngl_cos θ2))%L). {
   intros.
   apply (rngl_mul_nonneg_nonneg Hos Hor). {
-    apply (rngl_le_sub_le_add_l Hop Hto).
+    apply (rngl_le_sub_le_add_l Hop Hor).
     progress unfold rngl_sub.
     rewrite Hop, rngl_add_0_l.
     apply rngl_cos_bound.
   } {
-    apply (rngl_le_sub_le_add_l Hop Hto).
+    apply (rngl_le_sub_le_add_l Hop Hor).
     progress unfold rngl_sub.
     rewrite Hop, rngl_add_0_l.
     apply rngl_cos_bound.
@@ -1676,11 +1676,11 @@ assert (Ha12 : ∀ θ1 θ2, (0 ≤ (1 + rngl_cos θ1) * (1 + rngl_cos θ2))%L). 
 assert (Hs12 : ∀ θ1 θ2, (0 ≤ (1 - rngl_cos θ1) * (1 - rngl_cos θ2))%L). {
   intros.
   apply (rngl_mul_nonneg_nonneg Hos Hor). {
-    apply (rngl_le_add_le_sub_l Hop Hto).
+    apply (rngl_le_add_le_sub_l Hop Hor).
     rewrite rngl_add_0_r.
     apply rngl_cos_bound.
   } {
-    apply (rngl_le_add_le_sub_l Hop Hto).
+    apply (rngl_le_add_le_sub_l Hop Hor).
     rewrite rngl_add_0_r.
     apply rngl_cos_bound.
   }
@@ -1882,7 +1882,7 @@ rewrite (rngl_mul_opp_r Hop).
 rewrite (rngl_sub_opp_r Hop).
 rewrite (rngl_mul_comm Hic (rngl_cos θ2)).
 rewrite (rngl_mul_comm Hic (rngl_sin θ2)).
-apply (rngl_lt_sub_lt_add_l Hop Hto).
+apply (rngl_lt_sub_lt_add_l Hop Hor).
 rewrite (rngl_sub_mul_r_diag_l Hop).
 rewrite <- (rngl_abs_nonneg_eq Hop Hor). 2: {
   apply rngl_lt_le_incl in Hzs2.
@@ -1923,7 +1923,7 @@ rewrite H1; clear H1.
 rewrite (rngl_mul_sub_distr_r Hop).
 rewrite rngl_mul_1_l.
 rewrite (rngl_squ_mul Hic).
-apply (rngl_lt_add_lt_sub_l Hop Hto).
+apply (rngl_lt_add_lt_sub_l Hop Hor).
 rewrite <- rngl_mul_add_distr_l.
 rewrite (rngl_squ_sub Hop Hic).
 rewrite rngl_squ_1.
@@ -2033,7 +2033,7 @@ rewrite (rngl_mul_0_l Hos).
 rewrite (rngl_div_mul Hiv). 2: {
   apply (rngl_2_neq_0 Hos Hc1 Hto).
 }
-apply (rngl_le_sub_le_add_l Hop Hto).
+apply (rngl_le_sub_le_add_l Hop Hor).
 rewrite (rngl_sub_0_l Hop).
 now apply rngl_cos_bound.
 Qed.
@@ -2087,7 +2087,7 @@ intros * Hc1z Hzs2 Hzc1.
 cbn.
 rewrite (rngl_mul_opp_r Hop).
 rewrite (rngl_add_opp_r Hop).
-apply (rngl_lt_sub_lt_add_r Hop Hto).
+apply (rngl_lt_sub_lt_add_r Hop Hor).
 eapply (rngl_le_lt_trans Hor _ (rngl_sin θ1)). {
   apply (rngl_le_0_sub Hop Hor).
   rewrite (rngl_sub_mul_r_diag_l Hop).
@@ -2141,7 +2141,7 @@ apply (rngl_add_move_l Hop) in H1.
 rewrite H1 in Hzs12; clear H1.
 rewrite (rngl_mul_sub_distr_l Hop) in Hzs12.
 rewrite rngl_mul_1_r in Hzs12.
-apply (rngl_le_sub_le_add_l Hop Hto) in Hzs12.
+apply (rngl_le_sub_le_add_l Hop Hor) in Hzs12.
 eapply (rngl_le_trans Hor); [ apply Hzs12 | ].
 rewrite (rngl_mul_mul_swap Hic).
 progress unfold rngl_squ.
@@ -2162,7 +2162,7 @@ apply rngl_leb_le in Hx1.
 progress unfold cos2_sin2_prop.
 apply (rngl_eqb_eq Heo).
 rewrite rngl_squ_sqrt. 2: {
-  apply (rngl_le_add_le_sub_r Hop Hto).
+  apply (rngl_le_add_le_sub_r Hop Hor).
   now rewrite rngl_add_0_l.
 }
 rewrite rngl_add_comm.
