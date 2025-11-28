@@ -155,7 +155,7 @@ destruct zs2. 2: {
     apply (rngl_add_move_0_r Hop) in H.
     generalize Hc1z; intros H1.
     rewrite H in H1.
-    apply (rngl_opp_nonneg_nonpos Hop Hto) in H1.
+    apply (rngl_opp_nonneg_nonpos Hop Hor) in H1.
     apply (rngl_nlt_ge Hor) in H1.
     apply H1; clear H1.
     apply rngl_le_neq.
@@ -170,13 +170,13 @@ destruct zs2. 2: {
       rewrite angle_sub_0_l in H1.
       subst θ2.
       cbn in Hzs2.
-      apply (rngl_opp_pos_neg Hop Hto) in Hzs2.
+      apply (rngl_opp_pos_neg Hop Hor) in Hzs2.
       now apply (rngl_nlt_ge Hor) in Hzs2.
     }
     apply angle_add_move_l in H1.
     subst θ2.
     rewrite rngl_cos_sub_straight_l in Hc2z.
-    apply (rngl_opp_nonneg_nonpos Hop Hto) in Hc2z.
+    apply (rngl_opp_nonneg_nonpos Hop Hor) in Hc2z.
     apply (rngl_le_antisymm Hor) in Hc2z; [ | easy ].
     symmetry in Hc2z.
     apply eq_rngl_cos_0 in Hc2z.
@@ -352,7 +352,7 @@ destruct (rngl_leb_dec (rngl_cos θ2) 0)%L as [Hc2z| Hzc2]. 2: {
       apply angle_sub_move_l in H.
       subst θ3.
       rewrite rngl_sin_sub_straight_r in Hzs3.
-      apply (rngl_opp_pos_neg Hop Hto) in Hzs3.
+      apply (rngl_opp_pos_neg Hop Hor) in Hzs3.
       now apply (rngl_nle_gt Hor) in Hzs3.
     }
     apply (rngl_eqb_neq Heo) in Hs1s3z.
@@ -435,13 +435,13 @@ destruct (rngl_leb_dec 0 (rngl_cos θ1))%L as [Hzc1| Hc1z]. 2: {
     rewrite angle_sub_0_l in H.
     subst θ2.
     cbn in Hc2z.
-    apply (rngl_opp_nonneg_nonpos Hop Hto) in Hc2z.
+    apply (rngl_opp_nonneg_nonpos Hop Hor) in Hc2z.
     now apply (rngl_nlt_ge Hor) in Hc2z.
   }
   apply angle_add_move_l in H.
   subst θ2.
   rewrite rngl_cos_sub_straight_l in Hzs2.
-  apply (rngl_opp_nonneg_nonpos Hop Hto) in Hzs2.
+  apply (rngl_opp_nonneg_nonpos Hop Hor) in Hzs2.
   now apply (rngl_nlt_ge Hor) in Hzs2.
 }
 apply rngl_leb_le in Hzc1.

@@ -85,7 +85,7 @@ destruct zs1. {
       apply rngl_cos_eq in H.
       destruct H as [H| H]; [ easy | ].
       subst θ1.
-      apply (rngl_opp_nonneg_nonpos Hop Hto) in Hzs1.
+      apply (rngl_opp_nonneg_nonpos Hop Hor) in Hzs1.
       apply (rngl_le_antisymm Hor) in Hzs2; [ | easy ].
       apply eq_rngl_sin_0 in Hzs2.
       destruct Hzs2; subst θ2. {
@@ -552,7 +552,7 @@ destruct (rngl_ltb_dec x y) as [Hxy| Hxy]. {
       do 2 rewrite rngl_cos_add_straight_r.
       rewrite (rngl_add_opp_r Hop).
       rewrite <- (rngl_opp_add_distr Hop).
-      apply (rngl_opp_nonneg_nonpos Hop Hto).
+      apply (rngl_opp_nonneg_nonpos Hop Hor).
       rewrite Hθ3 in Hzs3.
       apply rngl_lt_le_incl.
       now apply rngl_add_cos_neg_when_sin_nonneg_neg.
@@ -576,7 +576,7 @@ destruct (rngl_ltb_dec x y) as [Hxy| Hxy]. {
       now apply rngl_lt_le_incl.
     }
     rewrite rngl_cos_add_straight_r.
-    apply (rngl_opp_nonneg_nonpos Hop Hto).
+    apply (rngl_opp_nonneg_nonpos Hop Hor).
     now apply rngl_lt_le_incl.
   }
 }

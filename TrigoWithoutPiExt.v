@@ -233,7 +233,7 @@ destruct (rngl_eqb_dec (rngl_cos θ2) 0) as [Hc2z| Hc2z]. {
   }
   rewrite angle_sub_opp_r in Hzs12.
   rewrite rngl_cos_add_right_r in Hzs12.
-  apply (rngl_opp_nonneg_nonpos Hop Hto) in Hzs12.
+  apply (rngl_opp_nonneg_nonpos Hop Hor) in Hzs12.
   now apply (rngl_nlt_ge Hor) in Hzs12.
 }
 apply (rngl_eqb_neq Heo) in Hc2z.
@@ -395,7 +395,7 @@ destruct (rngl_leb_dec (rngl_cos θ2) 0) as [Hc2z| Hzc2]. {
   subst θ2.
   clear Hc12 Hc2z.
   rewrite rngl_cos_sub_straight_l in Hzs2.
-  apply (rngl_opp_nonneg_nonpos Hop Hto) in Hzs2.
+  apply (rngl_opp_nonneg_nonpos Hop Hor) in Hzs2.
   apply (rngl_le_antisymm Hor) in Hzs2; [ | easy ].
   symmetry in Hzs2.
   apply eq_rngl_cos_0 in Hzs2.

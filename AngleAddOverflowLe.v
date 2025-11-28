@@ -85,13 +85,13 @@ destruct (rngl_leb_dec (rngl_cos θ2) 0) as [Hc2z| Hzc2]. {
     rewrite angle_sub_0_l in Hs12.
     subst θ2.
     cbn in Hc2z.
-    apply (rngl_opp_nonneg_nonpos Hop Hto) in Hc2z.
+    apply (rngl_opp_nonneg_nonpos Hop Hor) in Hc2z.
     now apply (rngl_nlt_ge Hor) in Hc2z.
   }
   apply angle_add_move_l in Hs12.
   subst θ2.
   rewrite rngl_cos_sub_straight_l in Hzs2.
-  apply (rngl_opp_nonneg_nonpos Hop Hto) in Hzs2.
+  apply (rngl_opp_nonneg_nonpos Hop Hor) in Hzs2.
   apply (rngl_le_antisymm Hor) in Hzs2; [ | easy ].
   symmetry in Hzs2.
   apply eq_rngl_cos_0 in Hzs2.
@@ -140,7 +140,7 @@ destruct (rngl_leb_dec (rngl_cos θ1) 0) as [Hc1z| Hzc1]. {
     subst θ1.
     rewrite rngl_sin_add_straight_l in Hzs12, Hzs13.
     rewrite rngl_cos_add_straight_l.
-    apply (rngl_opp_nonneg_nonpos Hop Hto) in Hzs13.
+    apply (rngl_opp_nonneg_nonpos Hop Hor) in Hzs13.
     apply (rngl_opp_neg_pos Hop Hto) in Hzs12.
     apply (rngl_le_antisymm Hor) in Hzs13; [ | easy ].
     symmetry in Hzs13.
@@ -202,7 +202,7 @@ destruct (rngl_eqb_dec (rngl_cos θ1) (-1)) as [Hc1o| Hc1o]. {
   apply eq_rngl_cos_opp_1 in Hc1o.
   subst θ1.
   rewrite rngl_sin_add_straight_l in Hzs13.
-  apply (rngl_opp_nonneg_nonpos Hop Hto) in Hzs13.
+  apply (rngl_opp_nonneg_nonpos Hop Hor) in Hzs13.
   apply (rngl_le_antisymm Hor) in Hzs13; [ | easy ].
   symmetry in Hzs13.
   apply eq_rngl_sin_0 in Hzs13.
@@ -287,7 +287,7 @@ destruct (rngl_leb_dec (rngl_cos θ3) 0) as [Hc3z| Hzc3]. {
   subst θ3.
   clear Hc3z.
   rewrite rngl_cos_sub_straight_l in Hzs3.
-  apply (rngl_opp_nonneg_nonpos Hop Hto) in Hzs3.
+  apply (rngl_opp_nonneg_nonpos Hop Hor) in Hzs3.
   apply (rngl_le_antisymm Hor) in Hzs3; [ | easy ].
   symmetry in Hzs3.
   apply eq_rngl_cos_0 in Hzs3.
@@ -358,11 +358,11 @@ split. 2: {
   apply rngl_cos_eq in H.
   destruct H; subst θ2. {
     rewrite rngl_sin_sub_anticomm in Hzs12.
-    apply (rngl_opp_pos_neg Hop Hto) in Hzs12.
+    apply (rngl_opp_pos_neg Hop Hor) in Hzs12.
     now apply (rngl_nle_gt Hor) in Hzs12.
   }
   cbn in Hzs2.
-  apply (rngl_opp_pos_neg Hop Hto) in Hzs2.
+  apply (rngl_opp_pos_neg Hop Hor) in Hzs2.
   apply rngl_lt_le_incl in Hzs2.
   now apply (rngl_nlt_ge Hor) in Hzs2.
 }

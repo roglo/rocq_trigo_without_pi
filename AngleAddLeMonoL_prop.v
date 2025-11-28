@@ -90,13 +90,13 @@ destruct (rngl_leb_dec 0 (rngl_cos θ1))%L as [Hzc1| Hc1z]. {
       rewrite angle_sub_0_l in H.
       subst θ2.
       cbn in Hzs2.
-      apply (rngl_opp_pos_neg Hop Hto) in Hzs2.
+      apply (rngl_opp_pos_neg Hop Hor) in Hzs2.
       now apply (rngl_nle_gt Hor) in Hzs2.
     }
     apply angle_add_move_l in H.
     subst θ2.
     rewrite rngl_cos_sub_straight_l in Hc2z.
-    apply (rngl_opp_pos_neg Hop Hto) in Hc2z.
+    apply (rngl_opp_pos_neg Hop Hor) in Hc2z.
     now apply (rngl_nle_gt Hor) in Hc2z.
   }
   exfalso.
@@ -104,7 +104,7 @@ destruct (rngl_leb_dec 0 (rngl_cos θ1))%L as [Hzc1| Hc1z]. {
   apply eq_rngl_cos_0 in H.
   destruct H; subst θ1. {
     rewrite rngl_cos_add_right_l in Hzs12.
-    apply (rngl_opp_nonneg_nonpos Hop Hto) in Hzs12.
+    apply (rngl_opp_nonneg_nonpos Hop Hor) in Hzs12.
     now apply (rngl_nlt_ge Hor) in Hzs12.
   }
   apply (rngl_nlt_ge Hor) in Hzc1.

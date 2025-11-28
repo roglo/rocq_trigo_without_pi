@@ -1162,7 +1162,7 @@ symmetry in Hzc2.
 destruct zc2. {
   apply rngl_leb_le in Hzc2.
   rewrite rngl_sin_sub_anticomm in Hs12.
-  apply (rngl_opp_nonneg_nonpos Hop Hto) in Hs12.
+  apply (rngl_opp_nonneg_nonpos Hop Hor) in Hs12.
   apply (rngl_nlt_ge Hor) in Hs12.
   apply Hs12; clear Hs12.
   apply rngl_le_neq.
@@ -1177,7 +1177,7 @@ destruct zc2. {
   apply angle_sub_move_r in H.
   subst θ2.
   rewrite rngl_sin_add_straight_l in Hs2.
-  apply (rngl_opp_nonneg_nonpos Hop Hto) in Hs2.
+  apply (rngl_opp_nonneg_nonpos Hop Hor) in Hs2.
   now apply (rngl_nle_gt Hor) in Hs1.
 }
 apply (rngl_leb_gt_iff Hto) in Hzc2.
@@ -1186,7 +1186,7 @@ symmetry in Hzc1.
 destruct zc1. {
   apply rngl_leb_le in Hzc1.
   rewrite rngl_sin_sub_anticomm in Hs12.
-  apply (rngl_opp_nonneg_nonpos Hop Hto) in Hs12.
+  apply (rngl_opp_nonneg_nonpos Hop Hor) in Hs12.
   apply (rngl_le_antisymm Hor) in H1; [ | easy ].
   apply eq_rngl_sin_0 in H1.
   destruct H1. {
@@ -1197,12 +1197,12 @@ destruct zc1. {
   apply angle_sub_move_r in H.
   subst θ2.
   rewrite rngl_sin_add_straight_l in Hs2.
-  apply (rngl_opp_nonneg_nonpos Hop Hto) in Hs2.
+  apply (rngl_opp_nonneg_nonpos Hop Hor) in Hs2.
   now apply (rngl_nle_gt Hor) in Hs1.
 }
 apply (rngl_leb_gt_iff Hto) in Hzc1.
 rewrite rngl_sin_sub_anticomm in Hs12.
-apply (rngl_opp_nonneg_nonpos Hop Hto) in Hs12.
+apply (rngl_opp_nonneg_nonpos Hop Hor) in Hs12.
 apply (rngl_nlt_ge Hor) in Hs12.
 apply Hs12; clear Hs12.
 apply rngl_le_neq.
@@ -1217,7 +1217,7 @@ destruct H as [H| H]. {
 apply angle_sub_move_r in H.
 subst θ2.
 rewrite rngl_sin_add_straight_l in Hs2.
-apply (rngl_opp_nonneg_nonpos Hop Hto) in Hs2.
+apply (rngl_opp_nonneg_nonpos Hop Hor) in Hs2.
 now apply (rngl_nle_gt Hor) in Hs1.
 Qed.
 
@@ -1299,7 +1299,7 @@ apply (rngl_le_0_add Hos Hto). {
 apply (rngl_mul_nonneg_nonneg Hos Hor). {
   now apply (rngl_le_0_sub Hop Hor).
 } {
-  apply (rngl_opp_nonneg_nonpos Hop Hto).
+  apply (rngl_opp_nonneg_nonpos Hop Hor).
   now apply rngl_lt_le_incl.
 }
 Qed.
@@ -1324,15 +1324,15 @@ rewrite <- rngl_cos_opp.
 rewrite <- (rngl_cos_opp θ2).
 apply rngl_add_cos_nonneg_when_sin_nonneg. {
   rewrite rngl_sin_opp.
-  now apply (rngl_opp_nonneg_nonpos Hop Hto).
+  now apply (rngl_opp_nonneg_nonpos Hop Hor).
 } {
   rewrite rngl_sin_opp.
-  now apply (rngl_opp_nonneg_nonpos Hop Hto).
+  now apply (rngl_opp_nonneg_nonpos Hop Hor).
 } {
   rewrite angle_add_opp_r.
   rewrite <- angle_opp_add_distr.
   rewrite rngl_sin_opp.
-  apply (rngl_opp_nonneg_nonpos Hop Hto).
+  apply (rngl_opp_nonneg_nonpos Hop Hor).
   now rewrite angle_add_comm.
 } {
   now rewrite rngl_cos_opp.

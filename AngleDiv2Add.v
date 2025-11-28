@@ -919,7 +919,7 @@ destruct zs12. {
         rewrite angle_sub_0_l in Hs12.
         subst θ2.
         cbn in Hzs2.
-        apply (rngl_opp_nonneg_nonpos Hop Hto) in Hzs2.
+        apply (rngl_opp_nonneg_nonpos Hop Hor) in Hzs2.
         now apply (rngl_nlt_ge Hor) in Hzs2.
       }
       rewrite Hs12.
