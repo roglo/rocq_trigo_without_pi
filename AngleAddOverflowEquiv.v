@@ -106,7 +106,7 @@ exfalso.
 apply (rngl_nlt_ge Hor) in Hzs12.
 apply Hzs12; clear Hzs12.
 cbn.
-apply (rngl_add_neg_nonpos Hop Hto). {
+apply (rngl_add_neg_nonpos Hop Hor). {
   apply (rngl_mul_pos_neg Hop Hiq Hto); [ | easy ].
   apply not_eq_sym in Hs1z.
   now apply rngl_le_neq.

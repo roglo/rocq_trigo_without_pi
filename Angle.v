@@ -1036,7 +1036,7 @@ destruct (rngl_ltb_dec x y) as [Hxy| Hxy]. {
   }
   apply (rngl_eqb_neq Heo) in H2z.
   rewrite rngl_add_comm.
-  apply (rngl_add_neg_nonpos Hop Hto). {
+  apply (rngl_add_neg_nonpos Hop Hor). {
     rewrite (rngl_mul_comm Hic).
     apply (rngl_mul_pos_neg Hop Hiq Hto); [ | easy ].
     apply rngl_le_neq.
