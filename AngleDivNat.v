@@ -519,13 +519,13 @@ rewrite angle_eucl_dist_move_0_r.
 rewrite (angle_eucl_dist_move_0_r θ1).
 do 2 rewrite rngl_cos_angle_eucl_dist_0_r.
 split; intros H1. {
-  apply (rngl_sub_le_mono_l Hop Hto) in H1.
+  apply (rngl_sub_le_mono_l Hop Hor) in H1.
   apply (rngl_div_le_mono_pos_r Hop Hiv Hto) in H1. 2: {
     apply (rngl_0_lt_2 Hos Hc1 Hto).
   }
   now apply (rngl_squ_le_abs_le Hop Hiq Hto) in H1.
 } {
-  apply (rngl_sub_le_mono_l Hop Hto).
+  apply (rngl_sub_le_mono_l Hop Hor).
   apply (rngl_div_le_mono_pos_r Hop Hiv Hto). {
     apply (rngl_0_lt_2 Hos Hc1 Hto).
   }

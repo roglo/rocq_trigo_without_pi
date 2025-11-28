@@ -54,7 +54,7 @@ rewrite H1, H2; clear H1 H2.
 rewrite (rngl_add_sub_assoc Hop).
 rewrite <- (rngl_add_sub_swap Hop).
 rewrite <- (rngl_sub_add_distr Hos).
-apply (rngl_sub_le_mono_l Hop Hto).
+apply (rngl_sub_le_mono_l Hop Hor).
 apply (rngl_le_0_sub Hop Hor).
 rewrite (rngl_mul_mul_swap Hic).
 rewrite (rngl_add_sub_swap Hop).

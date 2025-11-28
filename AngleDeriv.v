@@ -742,7 +742,7 @@ rewrite (rngl_mul_sub_distr_r Hop).
 rewrite rngl_mul_1_l.
 rewrite <- (rngl_sub_sub_distr Hop).
 apply (rngl_le_add_le_sub_r Hop Hto).
-apply (rngl_sub_le_mono_l Hop Hto).
+apply (rngl_sub_le_mono_l Hop Hor).
 apply (rngl_le_add_le_sub_l Hop Hto).
 rewrite rngl_add_mul_l_diag_l.
 rewrite (rngl_mul_comm Hic 2).

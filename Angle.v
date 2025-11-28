@@ -280,7 +280,7 @@ destruct zc1. {
   specialize (cos2_sin2_1 θ2) as Hcs2.
   apply (rngl_add_sub_eq_r Hos) in Hcs1, Hcs2.
   rewrite <- Hcs1, <- Hcs2 in Hc12.
-  now apply (rngl_sub_le_mono_l Hop Hto) in Hc12.
+  now apply (rngl_sub_le_mono_l Hop Hor) in Hc12.
 }
 apply (rngl_leb_gt_iff Hto) in Hzc1.
 remember (0 ≤? rngl_cos θ2)%L as zc2 eqn:Hzc2.
@@ -314,7 +314,7 @@ destruct zc2. {
   specialize (cos2_sin2_1 θ2) as Hcs2.
   apply (rngl_add_sub_eq_r Hos) in Hcs1, Hcs2.
   rewrite <- Hcs1, <- Hcs2 in Hc12.
-  now apply (rngl_sub_le_mono_l Hop Hto) in Hc12.
+  now apply (rngl_sub_le_mono_l Hop Hor) in Hc12.
 }
 Qed.
 
