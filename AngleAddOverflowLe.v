@@ -545,7 +545,7 @@ destruct (rngl_leb_dec 0 (rngl_cos θ1)) as [Hzc1| Hc1z]. {
   apply rngl_leb_le in H.
   rewrite H in H1; clear H.
   cbn.
-  apply (rngl_sub_le_compat Hop Hto).
+  apply (rngl_sub_le_compat Hop Hor).
   apply (rngl_mul_le_mono_nonneg_l Hop Hor); [ | easy ].
   now apply rngl_lt_le_incl.
   now apply (rngl_mul_le_mono_nonneg_l Hop Hor).
@@ -590,7 +590,7 @@ specialize rngl_cos_cos_sin_sin_nonneg_sin_le_cos_le_iff as H1.
 specialize (H1 θ3 θ2 Hc3z Hc2z Hzs3 Hzs2).
 specialize (proj1 H1 H32) as H23; clear H1.
 cbn.
-apply (rngl_sub_le_compat Hop Hto).
+apply (rngl_sub_le_compat Hop Hor).
 apply (rngl_mul_le_mono_nonneg_l Hop Hor); [ | easy ].
 now apply rngl_lt_le_incl.
 apply (rngl_mul_le_mono_nonneg_l Hop Hor); [ | easy ].

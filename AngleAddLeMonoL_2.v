@@ -31,7 +31,7 @@ Proof.
 destruct_ac.
 intros * Hzs1 Hzs2 Hzs3 Hzc1 Hzc2 Hzc3 H23 Hzc13.
 eapply (rngl_le_trans Hor); [ apply Hzc13 | cbn ].
-apply (rngl_sub_le_compat Hop Hto). {
+apply (rngl_sub_le_compat Hop Hor). {
   apply (rngl_mul_le_mono_nonneg_l Hop Hor); [ easy | ].
   generalize H23; intros H32.
   now apply rngl_cos_cos_sin_sin_nonneg_sin_le_cos_le_iff in H32.
@@ -342,7 +342,7 @@ destruct zs3. {
     destruct (rngl_leb_dec (rngl_cos θ1) 0) as [Hzc1| Hc1z]. {
       apply rngl_leb_le in Hzc1.
       cbn.
-      apply (rngl_sub_le_compat Hop Hto).
+      apply (rngl_sub_le_compat Hop Hor).
       now apply (rngl_mul_le_mono_nonpos_l Hop Hor).
       apply (rngl_mul_le_mono_nonpos_l Hop Hor); [ easy | ].
       apply rngl_cos_cos_sin_sin_nonneg_sin_le_cos_le_iff; try easy.
