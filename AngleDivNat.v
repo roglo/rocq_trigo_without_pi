@@ -198,7 +198,7 @@ apply (rngl_mul_le_compat_nonneg Hor). {
   }
   rewrite <- (rngl_add_opp_r Hop).
   apply (rngl_add_le_mono_l Hos Hor).
-  apply (rngl_opp_le_compat Hop Hto).
+  apply (rngl_opp_le_compat Hop Hor).
   now rewrite (rngl_opp_involutive Hop).
 } {
   split. {
@@ -393,7 +393,7 @@ destruct zs1. {
   rewrite Hzs1, Hzs2 in Ht21.
   apply rngl_leb_le in Ht21.
   apply rngl_leb_le.
-  now apply (rngl_opp_le_compat Hop Hto) in Ht21.
+  now apply (rngl_opp_le_compat Hop Hor) in Ht21.
 }
 Qed.
 

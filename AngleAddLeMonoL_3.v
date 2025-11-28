@@ -127,7 +127,7 @@ destruct zs2. 2: {
     progress unfold angle_ltb.
     rewrite rngl_sin_sub_right_r.
     generalize Hzs12; intros H.
-    apply (rngl_opp_le_compat Hop Hto) in H.
+    apply (rngl_opp_le_compat Hop Hor) in H.
     rewrite (rngl_opp_0 Hop) in H.
     apply rngl_leb_le in H.
     rewrite H; clear H.
@@ -210,7 +210,7 @@ destruct zs2. 2: {
     progress unfold angle_ltb.
     rewrite rngl_sin_sub_right_r.
     generalize Hzs12; intros H.
-    apply (rngl_opp_le_compat Hop Hto) in H.
+    apply (rngl_opp_le_compat Hop Hor) in H.
     rewrite (rngl_opp_0 Hop) in H.
     apply rngl_leb_le in H.
     rewrite H; clear H.
@@ -262,7 +262,7 @@ destruct zs2. 2: {
     apply rngl_leb_le in Hzc3.
     rewrite rngl_sin_sub_right_r.
     generalize Hzs3; intros H.
-    apply (rngl_opp_lt_compat Hop Hto) in H.
+    apply (rngl_opp_lt_compat Hop Hor) in H.
     rewrite (rngl_opp_0 Hop) in H.
     apply (rngl_nle_gt Hor) in H.
     apply rngl_leb_nle in H.
@@ -315,7 +315,7 @@ destruct (rngl_leb_dec (rngl_cos θ2) 0)%L as [Hc2z| Hzc2]. 2: {
   progress unfold angle_ltb.
   rewrite rngl_sin_sub_right_r.
   generalize Hzs13; intros H.
-  apply (rngl_opp_le_compat Hop Hto) in H.
+  apply (rngl_opp_le_compat Hop Hor) in H.
   rewrite (rngl_opp_0 Hop) in H.
   apply rngl_leb_le in H.
   rewrite H; clear H.
@@ -457,7 +457,7 @@ rewrite angle_add_sub_assoc.
 progress unfold angle_ltb.
 rewrite rngl_sin_sub_right_r.
 generalize Hzs13; intros H.
-apply (rngl_opp_le_compat Hop Hto) in H.
+apply (rngl_opp_le_compat Hop Hor) in H.
 rewrite (rngl_opp_0 Hop) in H.
 apply rngl_leb_le in H.
 rewrite H; clear H.

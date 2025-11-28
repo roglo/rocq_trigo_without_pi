@@ -224,7 +224,7 @@ destruct saz. {
   now rewrite rl_nth_root_mul.
 } {
   apply (rngl_leb_gt_iff Hto) in Hsaz.
-  apply (rngl_opp_lt_compat Hop Hto) in Hsaz.
+  apply (rngl_opp_lt_compat Hop Hor) in Hsaz.
   rewrite (rngl_opp_0 Hop) in Hsaz.
   apply rngl_lt_le_incl in Hsaz.
   rewrite <- (rngl_mul_opp_opp Hop sa).
@@ -289,7 +289,7 @@ destruct zs. {
 } {
   apply (rngl_leb_gt_iff Hto) in Hzs.
   rewrite (rngl_mul_opp_l Hop).
-  apply -> (rngl_opp_le_compat Hop Hto).
+  apply -> (rngl_opp_le_compat Hop Hor).
   rewrite rngl_mul_1_l.
   rewrite <- (rl_sqrt_1 Hop Hiq Hto) at 4.
   apply (rl_sqrt_le_rl_sqrt Hop Hiq Hto). {
@@ -493,7 +493,7 @@ apply rngl_leb_le in H12.
 apply rngl_leb_le.
 do 2 rewrite (rngl_mul_opp_l Hop).
 do 2 rewrite rngl_mul_1_l.
-apply -> (rngl_opp_le_compat Hop Hto).
+apply -> (rngl_opp_le_compat Hop Hor).
 rewrite <- (rngl_abs_nonneg_eq Hop Hor). 2: {
   now apply rl_sqrt_nonneg.
 }
@@ -866,7 +866,7 @@ split; intros Hs3. {
   rewrite (rngl_mul_opp_l Hop).
   rewrite rngl_mul_1_l.
   eapply (rngl_le_trans Hor); [ apply Hs3 | ].
-  apply -> (rngl_opp_le_compat Hop Hto).
+  apply -> (rngl_opp_le_compat Hop Hor).
   apply (rngl_le_squ_le Hop Hiq Hto). {
     apply rl_sqrt_nonneg.
     apply rngl_1_add_cos_div_2_nonneg.
@@ -907,8 +907,8 @@ split; intros Hs3. {
   subst θ; rename θ' into θ.
   rewrite rngl_cos_add_straight_r in Hs3 |-*.
   rewrite rngl_sin_add_straight_r in Hzs.
-  apply (rngl_opp_le_compat Hop Hto) in Hs3.
-  apply -> (rngl_opp_le_compat Hop Hto).
+  apply (rngl_opp_le_compat Hop Hor) in Hs3.
+  apply -> (rngl_opp_le_compat Hop Hor).
   rewrite (rngl_add_opp_r Hop) in Hs3.
   apply (rngl_le_le_squ Hop Hto) in Hs3. 2: {
     apply rl_sqrt_nonneg.

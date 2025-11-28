@@ -884,7 +884,7 @@ assert (H :
   apply -> (rngl_abs_le Hop Hto).
   split. {
     rewrite <- (rngl_opp_sub_distr Hop).
-    apply -> (rngl_opp_le_compat Hop Hto).
+    apply -> (rngl_opp_le_compat Hop Hor).
     cbn.
     rewrite angle_eucl_dist_symmetry.
     apply rngl_cos_diff_le_eucl_dist.
@@ -914,7 +914,7 @@ assert (H :
   apply -> (rngl_abs_le Hop Hto).
   split. {
     rewrite <- (rngl_opp_sub_distr Hop).
-    apply -> (rngl_opp_le_compat Hop Hto).
+    apply -> (rngl_opp_le_compat Hop Hor).
     cbn.
     rewrite angle_eucl_dist_symmetry.
     apply rngl_sin_diff_le_eucl_dist.

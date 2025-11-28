@@ -144,7 +144,7 @@ destruct (rngl_leb_dec (rngl_cos θ1) 0) as [Hc1z| Hzc1]. {
     apply (rngl_opp_neg_pos Hop Hto) in Hzs12.
     apply (rngl_le_antisymm Hor) in Hzs13; [ | easy ].
     symmetry in Hzs13.
-    apply -> (rngl_opp_le_compat Hop Hto).
+    apply -> (rngl_opp_le_compat Hop Hor).
     apply eq_rngl_sin_0 in Hzs13.
     destruct Hzs13; subst θ3; [ apply (rngl_le_refl Hor) | ].
     cbn in H32.

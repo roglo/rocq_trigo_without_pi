@@ -66,7 +66,7 @@ destruct (rngl_leb_dec 0 (rngl_cos θ2)) as [Hzc2| Hc2z]. {
   apply (rngl_opp_neg_pos Hop Hto) in Hc1z.
   rewrite rngl_sin_add_right_r in Hzs1, Hzs12.
   do 2 rewrite rngl_cos_add_right_r.
-  apply -> (rngl_opp_le_compat Hop Hto).
+  apply -> (rngl_opp_le_compat Hop Hor).
   apply rngl_lt_le_incl in Hc1z.
   apply rngl_cos_cos_sin_sin_nonneg_sin_le_cos_le_iff; try easy.
   now apply rngl_sin_add_nonneg.
@@ -305,7 +305,7 @@ destruct zs1. {
     }
     destruct s2z. {
       apply (rngl_ltb_lt Heo).
-      apply (rngl_opp_lt_compat Hop Hto).
+      apply (rngl_opp_lt_compat Hop Hor).
       do 2 rewrite (rngl_opp_involutive Hop).
       apply rngl_le_neq.
       split; [ apply rngl_cos_bound | ].

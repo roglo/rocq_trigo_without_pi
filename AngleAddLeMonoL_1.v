@@ -57,7 +57,7 @@ destruct zs13. {
   apply Haov13; clear Haov13.
   destruct (rngl_eqb_dec (rngl_sin θ1) (rngl_sin (- θ3))) as [Hs13| Hs13]. {
     apply (rngl_eqb_eq Heo) in Hs13.
-    apply (rngl_opp_lt_compat Hop Hto) in Hzs3.
+    apply (rngl_opp_lt_compat Hop Hor) in Hzs3.
     rewrite (rngl_opp_0 Hop) in Hzs3.
     rewrite rngl_sin_opp in Hs13.
     rewrite <- Hs13 in Hzs3.
@@ -363,7 +363,7 @@ apply rngl_lt_le_incl in H.
 apply rngl_leb_le in H.
 rewrite H; clear H.
 generalize Hzs13; intros H.
-apply (rngl_opp_lt_compat Hop Hto) in H.
+apply (rngl_opp_lt_compat Hop Hor) in H.
 rewrite (rngl_opp_0 Hop) in H.
 apply (rngl_nle_gt Hor) in H.
 apply rngl_leb_nle in H.
@@ -433,7 +433,7 @@ destruct (rngl_leb_dec 0 (rngl_cos θ1)) as [Hzs1| Hc1z]. {
     apply rngl_leb_nle in H.
     rewrite H; clear H.
     generalize Hs1z; intros H.
-    apply (rngl_opp_lt_compat Hop Hto) in H.
+    apply (rngl_opp_lt_compat Hop Hor) in H.
     rewrite (rngl_opp_0 Hop) in H.
     apply (rngl_nle_gt Hor) in H.
     apply rngl_leb_nle in H.
@@ -467,13 +467,13 @@ destruct (rngl_leb_dec 0 (rngl_cos θ1)) as [Hzs1| Hc1z]. {
   rewrite rngl_sin_sub_straight_r.
   rewrite rngl_sin_sub_right_r.
   generalize Hzs12; intros H.
-  apply (rngl_opp_lt_compat Hop Hto) in H.
+  apply (rngl_opp_lt_compat Hop Hor) in H.
   rewrite (rngl_opp_0 Hop) in H.
   apply (rngl_nle_gt Hor) in H.
   apply rngl_leb_nle in H.
   rewrite H; clear H.
   generalize Hs1z; intros H.
-  apply (rngl_opp_lt_compat Hop Hto) in H.
+  apply (rngl_opp_lt_compat Hop Hor) in H.
   rewrite (rngl_opp_0 Hop) in H.
   apply (rngl_nle_gt Hor) in H.
   apply rngl_leb_nle in H.
@@ -554,7 +554,7 @@ apply (rngl_nle_gt Hor) in H.
 apply rngl_leb_nle in H.
 rewrite H; clear H.
 generalize Hs1z; intros H.
-apply (rngl_opp_lt_compat Hop Hto) in H.
+apply (rngl_opp_lt_compat Hop Hor) in H.
 rewrite (rngl_opp_0 Hop) in H.
 apply (rngl_nle_gt Hor) in H.
 apply rngl_leb_nle in H.
@@ -562,7 +562,7 @@ rewrite H; clear H.
 do 2 rewrite rngl_cos_sub_straight_r.
 rewrite rngl_cos_sub_right_r.
 apply (rngl_ltb_lt Heo).
-apply -> (rngl_opp_lt_compat Hop Hto).
+apply -> (rngl_opp_lt_compat Hop Hor).
 change_angle_sub_l θ2 π/₂.
 progress sin_cos_add_sub_right_hyp T Hzs12.
 progress sin_cos_add_sub_right_hyp T H23.

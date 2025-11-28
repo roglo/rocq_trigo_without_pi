@@ -299,7 +299,7 @@ destruct zc2. {
   }
 } {
   apply (rngl_leb_gt_iff Hto) in Hzc2.
-  apply (rngl_opp_le_compat Hop Hto) in Hc12.
+  apply (rngl_opp_le_compat Hop Hor) in Hc12.
   rewrite <- (rngl_abs_nonpos_eq Hop Hto) in Hc12. 2: {
     now apply rngl_lt_le_incl.
   }
@@ -1622,7 +1622,7 @@ subst θ2; rename θ into θ2.
 move θ2 before θ1.
 rewrite rngl_sin_opp in Hzs2.
 rewrite <- (rngl_opp_0 Hop) in Hzs2.
-apply (rngl_opp_le_compat Hop Hto) in Hzs2.
+apply (rngl_opp_le_compat Hop Hor) in Hzs2.
 rewrite angle_add_opp_r.
 rewrite rngl_cos_opp.
 apply rngl_sin_nonneg_sin_nonneg_add_1_cos_add_add.
