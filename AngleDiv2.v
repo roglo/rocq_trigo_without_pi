@@ -1284,7 +1284,7 @@ enough (H :
   cbn.
   progress unfold rngl_dist.
   rewrite (rngl_abs_nonpos_eq Hop Hto). 2: {
-    apply (rngl_le_sub_0 Hop Hto).
+    apply (rngl_le_sub_0 Hop Hor).
     apply rngl_cos_bound.
   }
   rewrite (rngl_opp_sub_distr Hop).

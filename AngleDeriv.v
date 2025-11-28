@@ -1096,7 +1096,7 @@ rewrite (rngl_mul_div Hi1). 2: {
 }
 progress unfold rngl_dist.
 rewrite (rngl_abs_nonpos_eq Hop Hto). 2: {
-  apply (rngl_le_sub_0 Hop Hto).
+  apply (rngl_le_sub_0 Hop Hor).
   destruct is_left. {
     rewrite (rngl_mul_opp_l Hop).
     rewrite rngl_mul_1_l.

@@ -55,7 +55,7 @@ Ltac sin_cos_add_sub_right_hyp T H :=
   repeat rewrite -> (rngl_add_opp_l Hop') in H;
   repeat rewrite -> (rngl_add_opp_r Hop') in H;
   try
-    (remember rngl_cos as c; apply -> (rngl_le_sub_0 Hop' Hto') in H;
+    (remember rngl_cos as c; apply -> (rngl_le_sub_0 Hop' Hor') in H;
      subst c);
   try
     (remember rngl_cos as c; apply -> (rngl_le_0_sub Hop' Hor') in H;
@@ -151,7 +151,7 @@ Ltac sin_cos_add_sub_right_goal T :=
 (*
   try apply <- (rngl_lt_0_sub Hop' Hto');
 *)
-  try (remember rngl_cos as c; apply <- (rngl_le_sub_0 Hop' Hto'); subst c);
+  try (remember rngl_cos as c; apply <- (rngl_le_sub_0 Hop' Hor'); subst c);
   try (remember rngl_cos as c; apply <- (rngl_le_0_sub Hop' Hor'); subst c);
   clear Hop' Hto' Hos' Hor'.
 

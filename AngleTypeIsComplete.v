@@ -23,7 +23,7 @@ destruct_ac.
 intros.
 destruct (rngl_leb_dec (rngl_cos θ1) (rngl_cos θ2)) as [Hc12| Hc12]. {
   apply rngl_leb_le in Hc12.
-  apply (rngl_le_trans Hor _ 0); [ now apply (rngl_le_sub_0 Hop Hto) | ].
+  apply (rngl_le_trans Hor _ 0); [ now apply (rngl_le_sub_0 Hop Hor) | ].
   apply angle_eucl_dist_nonneg.
 }
 apply (rngl_leb_gt_iff Hto) in Hc12.
@@ -426,7 +426,7 @@ destruct (rngl_ltb_dec c lim) as [Hlc| Hlc]. {
   specialize (HN N (Nat.le_refl _)).
   cbn in HN.
   progress unfold rngl_dist in HN.
-  apply (rngl_le_sub_0 Hop Hto) in Hcl.
+  apply (rngl_le_sub_0 Hop Hor) in Hcl.
   rewrite (rngl_abs_nonpos_eq Hop Hto) in HN; [ | easy ].
   rewrite (rngl_opp_sub_distr Hop) in HN.
   now apply rngl_lt_irrefl in HN.

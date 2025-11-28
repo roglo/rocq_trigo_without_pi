@@ -201,7 +201,7 @@ destruct H21 as [H21| H21]. {
   apply rngl_leb_le.
   rewrite rngl_cos_sub_right_l.
   rewrite rngl_cos_add in Hzs12.
-  apply -> (rngl_le_sub_0 Hop Hto) in Hzs12.
+  apply -> (rngl_le_sub_0 Hop Hor) in Hzs12.
   destruct (rngl_leb_dec 0 (rngl_sin θ1)) as [Hzs1| Hzs1]. {
     apply rngl_leb_le in Hzs1.
     apply (rngl_mul_le_mono_nonneg_l Hop Hor (rngl_cos θ1)) in Hzs12. 2: {
@@ -306,7 +306,7 @@ destruct H21 as [H21| H21]. {
     apply (rngl_opp_nonpos_nonneg Hop Hto) in Hc1z, Hzs12.
     cbn.
     rewrite (rngl_add_opp_r Hop).
-    apply (rngl_le_sub_0 Hop Hto).
+    apply (rngl_le_sub_0 Hop Hor).
     apply rngl_lt_le_incl in Hs1z.
     now apply rngl_sin_sub_nonneg_sin_le_sin.
   }
@@ -317,7 +317,7 @@ destruct H21 as [H21| H21]. {
   progress sin_cos_add_sub_straight_hyp T Hzs12.
   progress sin_cos_add_sub_straight_goal T.
   rewrite (rngl_add_opp_l Hop).
-  apply (rngl_le_sub_0 Hop Hto).
+  apply (rngl_le_sub_0 Hop Hor).
   destruct (rngl_leb_dec (rngl_sin θ1) 0) as [Hzs1| Hzs1]. {
     apply rngl_leb_le in Hzs1.
     apply rngl_lt_le_incl in Hc2z.
@@ -551,7 +551,7 @@ exfalso; apply Hzs13; clear Hzs13.
 apply rngl_le_neq.
 split. {
   cbn.
-  apply (rngl_le_sub_0 Hop Hto).
+  apply (rngl_le_sub_0 Hop Hor).
   apply (rngl_le_trans Hor _ 0).
   apply (rngl_mul_nonneg_nonpos Hop Hto); [ easy | ].
   now apply rngl_lt_le_incl.

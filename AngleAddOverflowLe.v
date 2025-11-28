@@ -410,7 +410,7 @@ destruct (rngl_leb_dec (rngl_cos θ2) 0) as [Hc2z| Hzc2]. {
   progress sin_cos_add_sub_straight_hyp T Hzs13.
   progress sin_cos_add_sub_straight_hyp T Hc3z.
   progress sin_cos_add_sub_straight_hyp T H32.
-  apply -> (rngl_le_sub_0 Hop Hto) in H32.
+  apply -> (rngl_le_sub_0 Hop Hor) in H32.
   destruct (rngl_ltb_dec 0 (rngl_cos θ1)) as [Hzc1| Hc1z]. {
     apply (rngl_ltb_lt Heo) in Hzc1.
     apply (rngl_nlt_ge Hor) in Hzs13.
@@ -646,7 +646,7 @@ progress sin_cos_add_sub_straight_hyp T H12.
 progress sin_cos_add_sub_straight_hyp T Hzs12.
 rewrite rngl_add_comm in H12.
 rewrite (rngl_add_opp_r Hop) in H12.
-apply -> (rngl_le_sub_0 Hop Hto) in H12.
+apply -> (rngl_le_sub_0 Hop Hor) in H12.
 destruct (rngl_leb_dec (rngl_cos θ2) 0) as [Hc2z| Hzc2]. {
   apply rngl_leb_le in Hc2z.
   change_angle_add_r θ2 π.

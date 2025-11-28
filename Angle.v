@@ -743,7 +743,7 @@ assert (Hs21 : (rngl_sin θ2 < rngl_sin θ1)%L). {
   rewrite rngl_cos_sub_straight_l in Hcc, Hzc2.
   rewrite rngl_sin_sub_straight_l in Hzs2 |-*.
   rewrite (rngl_add_opp_r Hop) in Hcc.
-  apply -> (rngl_lt_sub_0 Hop Hto) in Hcc.
+  apply -> (rngl_lt_sub_0 Hop Hor) in Hcc.
   apply (rngl_opp_neg_pos Hop Hto) in Hzc2.
   apply rngl_lt_le_incl in Hzc2.
   now apply rngl_cos_cos_sin_sin_nonneg_sin_lt_cos_lt_iff.

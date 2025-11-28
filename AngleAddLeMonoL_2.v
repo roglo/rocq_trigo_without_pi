@@ -328,7 +328,7 @@ destruct zs3. {
         rewrite (rngl_add_opp_l Hop).
         rewrite (rngl_mul_comm Hic).
         apply (rngl_mul_pos_neg Hop Hiq Hto); [ easy | ].
-        apply (rngl_lt_sub_0 Hop Hto).
+        apply (rngl_lt_sub_0 Hop Hor).
         apply rngl_le_neq.
         split; [ | easy ].
         apply rngl_cos_cos_sin_sin_nonneg_sin_le_cos_le_iff; try easy.
@@ -1228,7 +1228,7 @@ progress sin_cos_add_sub_right_hyp T Hzs12.
 progress sin_cos_add_sub_right_hyp T Hc2z.
 progress sin_cos_add_sub_right_goal T.
 rewrite (rngl_add_opp_l Hop).
-apply (rngl_le_sub_0 Hop Hto).
+apply (rngl_le_sub_0 Hop Hor).
 destruct (rngl_leb_dec 0 (rngl_sin θ1)) as [Hzs1| Hs1z]. 2: {
   exfalso.
   apply (rngl_leb_gt_iff Hto) in Hs1z.
