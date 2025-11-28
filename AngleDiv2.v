@@ -550,7 +550,7 @@ apply -> (rngl_lt_div_r Hop Hiv Hto); [ | easy ].
 apply (rngl_le_lt_trans Hor _ (rngl_cos θ * 2))%L. 2: {
   rewrite rngl_mul_add_distr_l.
   rewrite rngl_mul_1_r.
-  apply (rngl_add_lt_le_mono Hos Hto); [ | now apply (rngl_le_refl Hor) ].
+  apply (rngl_add_lt_le_mono Hos Hor); [ | now apply (rngl_le_refl Hor) ].
   apply rngl_le_neq.
   split; [ apply rngl_cos_bound | ].
   intros H.
@@ -1350,7 +1350,7 @@ enough (H :
     rewrite rngl_mul_add_distr_l.
     rewrite rngl_mul_1_r.
     apply (rngl_lt_trans Hor _ ε); [ easy | ].
-    now apply (rngl_lt_add_l Hos Hto).
+    now apply (rngl_lt_add_l Hos Hor).
   }
   apply (rngl_lt_div_l Hop Hiv Hto). {
     apply (rngl_0_lt_2 Hos Hc1 Hto).

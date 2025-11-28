@@ -2095,7 +2095,7 @@ eapply (rngl_le_lt_trans Hor _ (rngl_sin θ1)). {
   apply (rngl_le_0_sub Hop Hor).
   apply rngl_cos_bound.
 }
-apply (rngl_lt_add_r Hos Hto).
+apply (rngl_lt_add_r Hos Hor).
 now apply (rngl_mul_pos_pos Hop Hiq Hto).
 Qed.
 
