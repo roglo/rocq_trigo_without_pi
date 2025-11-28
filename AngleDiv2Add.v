@@ -233,7 +233,7 @@ destruct (rngl_leb_dec (rngl_cos θ1) 0) as [Hc1z| Hzc1]. {
   rewrite (rngl_mul_opp_r Hop).
   rewrite (rngl_sub_opp_r Hop).
   rewrite rngl_add_assoc.
-  apply (rngl_add_nonneg_pos Hos Hto). {
+  apply (rngl_add_nonneg_pos Hos Hor). {
     rewrite rngl_add_mul_r_diag_l.
     apply (rngl_mul_nonneg_nonneg Hos Hor); [ easy | ].
     apply (rngl_le_sub_le_add_l Hop Hor).
@@ -251,7 +251,7 @@ destruct (rngl_leb_dec (rngl_cos θ1) 0) as [Hc1z| Hzc1]. {
     apply (rngl_nle_gt Hor) in Hzs3.
     exfalso.
     apply Hzs3; clear Hzs3; cbn.
-    apply (rngl_le_0_add Hos Hto). {
+    apply (rngl_le_0_add Hos Hor). {
       apply (rngl_mul_nonneg_nonneg Hos Hor); [ | easy ].
       now apply rngl_lt_le_incl.
     } {
@@ -501,7 +501,7 @@ destruct zs1. {
       apply (rngl_nle_gt Hor) in Hzs12.
       apply Hzs12; clear Hzs12; cbn.
       apply rngl_lt_le_incl in Hzs1, Hzs2.
-      apply (rngl_le_0_add Hos Hto).
+      apply (rngl_le_0_add Hos Hor).
       now apply (rngl_mul_nonneg_nonneg Hos Hor).
       now apply (rngl_mul_nonneg_nonneg Hos Hor).
     }
@@ -551,13 +551,13 @@ destruct zs1. {
   rename Hzs1 into Hzc1; rename Hc1z into Hzs1.
   move Hzs1 after Hzs2.
   move Hzc1 after Hzs2.
-  apply (rngl_le_opp_r Hop Hto) in Haov.
+  apply (rngl_le_opp_r Hop Hor) in Haov.
   apply (rngl_nlt_ge Hor) in Haov.
   apply Haov; clear Haov; cbn.
   rewrite <- rngl_add_assoc.
   rewrite rngl_add_comm.
   rewrite <- rngl_add_assoc.
-  apply (rngl_lt_0_add Hos Hto). {
+  apply (rngl_lt_0_add Hos Hor). {
     now apply (rngl_mul_pos_pos Hop Hiq Hto).
   }
   rewrite rngl_add_mul_r_diag_l.
@@ -1174,7 +1174,7 @@ destruct zs. {
   apply (rngl_div_nonneg Hop Hiv Hto). 2: {
     apply (rngl_0_lt_2 Hos Hc1 Hto).
   }
-  apply (rngl_le_opp_l Hop Hto).
+  apply (rngl_le_opp_l Hop Hor).
   apply rngl_cos_bound.
 } {
   apply (rngl_leb_gt_iff Hto) in Hzs.
@@ -1186,7 +1186,7 @@ destruct zs. {
     apply (rngl_div_nonneg Hop Hiv Hto). 2: {
       apply (rngl_0_lt_2 Hos Hc1 Hto).
     }
-    apply (rngl_le_opp_l Hop Hto).
+    apply (rngl_le_opp_l Hop Hor).
     apply rngl_cos_bound.
   } {
     apply (rngl_lt_div_l Hop Hiv Hto). {

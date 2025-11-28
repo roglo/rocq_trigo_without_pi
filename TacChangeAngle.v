@@ -65,9 +65,9 @@ Ltac sin_cos_add_sub_right_hyp T H :=
   try apply -> (rngl_opp_nonpos_nonneg Hop' Hor') in H;
   try apply -> (rngl_opp_neg_pos Hop' Hor') in H;
   try apply -> (rngl_opp_pos_neg Hop' Hor') in H;
-  try apply -> (rngl_le_opp_l Hop' Hto') in H;
-  try apply -> (rngl_le_opp_r Hop' Hto') in H;
-  try apply -> (rngl_lt_opp_l Hop' Hto') in H;
+  try apply -> (rngl_le_opp_l Hop' Hor') in H;
+  try apply -> (rngl_le_opp_r Hop' Hor') in H;
+  try apply -> (rngl_lt_opp_l Hop' Hor') in H;
   repeat rewrite (rngl_opp_involutive Hop') in H;
   clear Hop' Hos' Hto' Hor'.
 
@@ -97,10 +97,10 @@ Ltac sin_cos_add_sub_straight_hyp T H :=
   try apply -> (rngl_opp_nonneg_nonpos Hop' Hor') in H;
   try apply -> (rngl_opp_neg_pos Hop' Hor') in H;
   try apply -> (rngl_opp_pos_neg Hop' Hor') in H;
-  try apply -> (rngl_le_opp_r Hop' Hto') in H;
+  try apply -> (rngl_le_opp_r Hop' Hor') in H;
   try apply <- (rngl_opp_lt_compat Hop' Hor') in H;
   repeat rewrite (rngl_opp_involutive Hop') in H;
-  try apply -> (rngl_lt_opp_l Hop' Hto') in H;
+  try apply -> (rngl_lt_opp_l Hop' Hor') in H;
   try apply -> (rngl_opp_pos_neg Hop' Hor') in H;
   clear Hop' Hos' Hto' Hor'.
 
@@ -147,9 +147,9 @@ Ltac sin_cos_add_sub_right_goal T :=
   try apply <- (rngl_opp_nonneg_nonpos Hop' Hor');
   try apply <- (rngl_opp_neg_pos Hop' Hor');
   repeat rewrite -> (rngl_add_opp_r Hop');
-  try apply <- (rngl_le_opp_l Hop' Hto');
-  try apply <- (rngl_le_opp_r Hop' Hto');
-  try apply <- (rngl_lt_opp_l Hop' Hto');
+  try apply <- (rngl_le_opp_l Hop' Hor');
+  try apply <- (rngl_le_opp_r Hop' Hor');
+  try apply <- (rngl_lt_opp_l Hop' Hor');
 (*
   try apply <- (rngl_lt_0_sub Hop' Hto');
 *)
@@ -177,11 +177,11 @@ Ltac sin_cos_add_sub_straight_goal T :=
   try apply <- (rngl_opp_nonpos_nonneg Hop' Hor');
   try apply <- (rngl_opp_nonneg_nonpos Hop' Hor');
   try apply <- (rngl_opp_neg_pos Hop' Hor');
-  try apply <- (rngl_le_opp_l Hop' Hto');
+  try apply <- (rngl_le_opp_l Hop' Hor');
   repeat rewrite -> (rngl_add_opp_r Hop');
-  try apply <- (rngl_lt_opp_l Hop' Hto');
-  try apply <- (rngl_le_opp_r Hop' Hto');
-  try apply <- (rngl_lt_opp_r Hop' Hto');
+  try apply <- (rngl_lt_opp_l Hop' Hor');
+  try apply <- (rngl_le_opp_r Hop' Hor');
+  try apply <- (rngl_lt_opp_r Hop' Hor');
   try apply <- (rngl_le_0_sub Hop' Hor');
   clear Hop' Hto' Hor'.
 

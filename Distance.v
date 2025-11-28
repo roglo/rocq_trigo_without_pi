@@ -315,7 +315,7 @@ progress unfold rl_modl; cbn.
 rewrite (rngl_sub_0_l Hop).
 rewrite (rngl_squ_opp Hop).
 apply rngl_squ_sqrt.
-apply (rngl_le_0_add Hos Hto);
+apply (rngl_le_0_add Hos Hor);
 apply (rngl_squ_nonneg Hos Hto).
 Qed.
 
@@ -333,7 +333,7 @@ rewrite <- (rngl_opp_add_distr Hop).
 rewrite (rngl_squ_opp Hop).
 rewrite (rngl_add_comm 1).
 apply rngl_squ_sqrt.
-apply (rngl_le_0_add Hos Hto);
+apply (rngl_le_0_add Hos Hor);
 apply (rngl_squ_nonneg Hos Hto).
 Qed.
 

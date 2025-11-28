@@ -641,7 +641,7 @@ rewrite <- rl_sqrt_mul; cycle 1. {
   apply rngl_1_sub_cos_div_2_nonneg.
 } {
   apply (rngl_mul_nonneg_nonneg Hos Hor); [ easy | ].
-  apply (rngl_le_opp_l Hop Hto).
+  apply (rngl_le_opp_l Hop Hor).
   apply rngl_cos_bound.
 }
 rewrite rngl_mul_assoc.
@@ -756,16 +756,16 @@ apply (rngl_mul_le_compat_nonneg Hor). {
 }
 specialize (rngl_0_le_1 Hos Hto) as H01.
 split. {
-  apply (rngl_le_0_add Hos Hto); [ | easy ].
-  apply (rngl_le_0_add Hos Hto); [ | easy ].
-  apply (rngl_le_0_add Hos Hto); [ | easy ].
-  now apply (rngl_le_0_add Hos Hto).
+  apply (rngl_le_0_add Hos Hor); [ | easy ].
+  apply (rngl_le_0_add Hos Hor); [ | easy ].
+  apply (rngl_le_0_add Hos Hor); [ | easy ].
+  now apply (rngl_le_0_add Hos Hor).
 }
 rewrite rngl_mul_add_distr_r.
 rewrite rngl_mul_1_l.
 apply (rngl_add_le_mono_l Hos Hor).
 apply (rngl_le_add_l Hos Hor).
-now apply (rngl_le_0_add Hos Hto).
+now apply (rngl_le_0_add Hos Hor).
 Qed.
 
 Theorem rngl_1_sub_cos_div_2_le_angle_eucl_dist_0_r :
@@ -791,7 +791,7 @@ rewrite rngl_mul_1_l.
 destruct (rngl_leb_dec 1 (angle_eucl_dist θ 0)) as [H1d| H1d]. {
   apply rngl_leb_le in H1d.
   eapply (rngl_le_trans Hor); [ | apply H1d ].
-  apply (rngl_le_sub_l Hop Hto).
+  apply (rngl_le_sub_l Hop Hor).
   apply rl_sqrt_nonneg.
   apply rngl_1_add_cos_div_2_nonneg.
 }
@@ -835,7 +835,7 @@ cbn.
 destruct (rngl_leb_dec 1 (angle_eucl_dist θ π)) as [H1s| H1s]. {
   apply rngl_leb_le in H1s.
   eapply (rngl_le_trans Hor); [ | apply H1s ].
-  apply (rngl_le_sub_l Hop Hto).
+  apply (rngl_le_sub_l Hop Hor).
   apply rl_sqrt_nonneg.
   apply rngl_1_sub_cos_div_2_nonneg.
 }
@@ -1100,9 +1100,9 @@ rewrite (rngl_abs_nonpos_eq Hop Hto). 2: {
   destruct is_left. {
     rewrite (rngl_mul_opp_l Hop).
     rewrite rngl_mul_1_l.
-    apply (rngl_le_opp_l Hop Hto).
+    apply (rngl_le_opp_l Hop Hor).
     rewrite rngl_add_comm.
-    apply (rngl_le_opp_l Hop Hto).
+    apply (rngl_le_opp_l Hop Hor).
     apply rngl_cos_bound.
   }
   do 2 rewrite (rngl_mul_opp_l Hop).

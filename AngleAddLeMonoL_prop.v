@@ -76,8 +76,8 @@ destruct (rngl_leb_dec 0 (rngl_cos θ1))%L as [Hzc1| Hc1z]. {
     do 2 rewrite rngl_cos_sub_right_r.
     destruct (0 ≤? rngl_cos _)%L; [ easy | ].
     apply (rngl_ltb_lt Heo).
-    apply (rngl_lt_opp_l Hop Hto).
-    apply (rngl_lt_0_add Hos Hto); [ | easy ].
+    apply (rngl_lt_opp_l Hop Hor).
+    apply (rngl_lt_0_add Hos Hor); [ | easy ].
     apply rngl_le_neq.
     split. {
       apply rngl_lt_le_incl in Hzs2, Hc2z.
@@ -281,7 +281,7 @@ destruct H21 as [H21| H21]. {
   rewrite (rngl_opp_involutive Hop).
   rewrite rngl_mul_1_r.
   apply (rngl_leb_gt_iff Hto) in Hs1z, Hzs2.
-  apply (rngl_le_opp_r Hop Hto).
+  apply (rngl_le_opp_r Hop Hor).
   destruct (rngl_leb_dec 0 (rngl_cos θ2)) as [Hzc2| Hc2z]. {
     apply rngl_leb_le in Hzc2.
     change_angle_add_r θ2 π/₂.
