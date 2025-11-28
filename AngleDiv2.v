@@ -480,7 +480,7 @@ destruct zs1. {
   rewrite (rngl_mul_opp_l Hop).
   rewrite rngl_mul_1_l.
   apply (rngl_le_trans Hor _ 0). {
-    apply (rngl_opp_nonpos_nonneg Hop Hto).
+    apply (rngl_opp_nonpos_nonneg Hop Hor).
     now apply rl_sqrt_nonneg.
   } {
     now apply rl_sqrt_nonneg.
@@ -919,7 +919,7 @@ split; intros Hs3. {
   }
   apply (rngl_le_div_l Hop Hiv Hto) in Hs3; [ | easy ].
   apply (rngl_leb_gt_iff Hto) in Hzs.
-  apply (rngl_opp_neg_pos Hop Hto) in Hzs.
+  apply (rngl_opp_neg_pos Hop Hor) in Hzs.
   apply (rngl_le_sub_le_add_r Hop Hto) in Hs3.
   apply (rngl_le_0_sub Hop Hor) in Hs3.
   remember (rngl_cos θ) as c.

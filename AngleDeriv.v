@@ -502,7 +502,7 @@ symmetry in Hzstt.
 destruct zstt; [ apply rngl_leb_le, rngl_cos_bound | exfalso ].
 apply (rngl_leb_gt_iff Hto) in Hzstt.
 rewrite rngl_sin_sub_anticomm in Hzstt.
-apply (rngl_opp_neg_pos Hop Hto) in Hzstt.
+apply (rngl_opp_neg_pos Hop Hor) in Hzstt.
 remember (0 ≤? rngl_sin θ₀)%L as zstz eqn:Hzstz.
 remember (0 ≤? rngl_sin θ)%L as zst eqn:Hzst.
 symmetry in Hzstz, Hzst.

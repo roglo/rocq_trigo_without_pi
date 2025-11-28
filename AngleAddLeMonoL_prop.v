@@ -139,7 +139,7 @@ destruct (rngl_ltb_dec (rngl_sin θ1) 0)%L as [Hs1z| Hzs1]. 2: {
   rewrite rngl_cos_add_right_r.
   rewrite rngl_cos_sub_right_r.
   apply (rngl_ltb_lt Heo).
-  apply (rngl_lt_le_trans Hor _ 0); [ now apply (rngl_opp_neg_pos Hop Hto) | ].
+  apply (rngl_lt_le_trans Hor _ 0); [ now apply (rngl_opp_neg_pos Hop Hor) | ].
   apply rngl_lt_le_incl in Hc1z, Hzs2, Hc2z.
   now apply rngl_sin_add_nonneg.
 }
@@ -303,7 +303,7 @@ destruct H21 as [H21| H21]. {
     progress sin_cos_opp_hyp T Hc1z.
     rewrite angle_add_opp_l in Hzs12.
     rewrite rngl_sin_sub_anticomm in Hzs12.
-    apply (rngl_opp_nonpos_nonneg Hop Hto) in Hc1z, Hzs12.
+    apply (rngl_opp_nonpos_nonneg Hop Hor) in Hc1z, Hzs12.
     cbn.
     rewrite (rngl_add_opp_r Hop).
     apply (rngl_le_sub_0 Hop Hor).

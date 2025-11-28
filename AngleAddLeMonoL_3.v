@@ -497,7 +497,7 @@ destruct H. {
   apply Hzs13; clear Hzs13.
   rewrite rngl_sin_sub_anticomm.
   rewrite <- H.
-  apply (rngl_opp_neg_pos Hop Hto).
+  apply (rngl_opp_neg_pos Hop Hor).
   apply rngl_le_neq.
   split; [ easy | ].
   intros H1; symmetry in H1.

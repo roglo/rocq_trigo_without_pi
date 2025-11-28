@@ -388,7 +388,7 @@ destruct zs1. {
   progress unfold angle_leb.
   apply rngl_leb_le in H1, H2.
   rewrite H1, H2.
-  apply (rngl_opp_neg_pos Hop Hto) in Hzs1, Hzs2.
+  apply (rngl_opp_neg_pos Hop Hor) in Hzs1, Hzs2.
   apply (rngl_leb_gt_iff Hto) in Hzs1, Hzs2.
   rewrite Hzs1, Hzs2 in Ht21.
   apply rngl_leb_le in Ht21.

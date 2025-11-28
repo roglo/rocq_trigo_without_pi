@@ -127,7 +127,7 @@ destruct zs1. {
   apply rngl_cos_eq in H.
   destruct H; subst θ1; [ easy | ].
   cbn in Hzs1.
-  apply (rngl_opp_neg_pos Hop Hto) in Hzs1.
+  apply (rngl_opp_neg_pos Hop Hor) in Hzs1.
   now apply rngl_lt_le_incl, (rngl_nlt_ge Hor) in Hzs1.
 }
 Qed.
@@ -561,10 +561,10 @@ destruct (rngl_ltb_dec x y) as [Hxy| Hxy]. {
     (* case rngl_cos θ1 ≤ 0 *)
     apply rngl_add_cos_nonneg_when_sin_nonpos; try easy. {
       rewrite rngl_sin_add_straight_r.
-      now apply (rngl_opp_nonpos_nonneg Hop Hto).
+      now apply (rngl_opp_nonpos_nonneg Hop Hor).
     } {
       rewrite rngl_sin_add_straight_r.
-      now apply (rngl_opp_nonpos_nonneg Hop Hto).
+      now apply (rngl_opp_nonpos_nonneg Hop Hor).
     } {
       rewrite angle_add_assoc.
       rewrite (angle_add_comm θ1).

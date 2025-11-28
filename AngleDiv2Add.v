@@ -177,7 +177,7 @@ subst θ1; rename θ into θ1.
 move θ1 after θ2.
 rewrite rngl_sin_add_straight_r in Hzs1.
 rewrite rngl_cos_add_straight_r in Haov.
-apply (rngl_opp_neg_pos Hop Hto) in Hzs1.
+apply (rngl_opp_neg_pos Hop Hor) in Hzs1.
 rewrite rngl_cos_add_straight_r.
 rewrite (rngl_sub_opp_r Hop).
 rewrite (rngl_add_opp_r Hop).
@@ -189,7 +189,7 @@ subst θ2; rename θ into θ2.
 move θ2 before θ1.
 move Hzs3 after Hzs3.
 rewrite rngl_sin_add_straight_r in Hzs2.
-apply (rngl_opp_neg_pos Hop Hto) in Hzs2.
+apply (rngl_opp_neg_pos Hop Hor) in Hzs2.
 rewrite (rngl_cos_add_straight_r θ2).
 rewrite (rngl_sub_opp_r Hop).
 rewrite (rngl_add_opp_r Hop).
@@ -271,7 +271,7 @@ destruct (rngl_leb_dec (rngl_cos θ1) 0) as [Hc1z| Hzc1]. {
     rewrite <- angle_sub_sub_distr in Hzs3 |-*.
     rewrite rngl_sin_sub_straight_l in Hzs2, Hzs3.
     rewrite rngl_cos_sub_straight_l in Hc2z, Hc12z |-*.
-    apply (rngl_opp_neg_pos Hop Hto) in Hc2z.
+    apply (rngl_opp_neg_pos Hop Hor) in Hc2z.
     rewrite (rngl_add_opp_r Hop) in Hc12z |-*.
     apply (rngl_lt_sub_lt_add_l Hop Hto) in Hc12z.
     apply (rngl_lt_sub_lt_add_l Hop Hto).
@@ -372,7 +372,7 @@ destruct zs1. {
   rewrite rngl_sin_add_straight_r in Hzs2.
   rewrite angle_add_assoc in Hzs12.
   rewrite rngl_sin_add_straight_r in Hzs12.
-  apply (rngl_opp_neg_pos Hop Hto) in Hzs2, Hzs12.
+  apply (rngl_opp_neg_pos Hop Hor) in Hzs2, Hzs12.
   rewrite angle_add_assoc.
   do 2 rewrite rngl_cos_add_straight_r.
   do 2 rewrite (rngl_sub_opp_r Hop).
@@ -419,7 +419,7 @@ destruct zs1. {
   rewrite angle_add_add_swap in Haov, Haov' |-*.
   do 2 rewrite rngl_cos_add_straight_r in Haov.
   rewrite rngl_sin_add_straight_r in Hzs1, Haov.
-  apply (rngl_opp_neg_pos Hop Hto) in Hzs1.
+  apply (rngl_opp_neg_pos Hop Hor) in Hzs1.
   do 2 rewrite rngl_cos_add_straight_r.
   do 2 rewrite (rngl_sub_opp_r Hop).
   rewrite (rngl_add_opp_r Hop).
@@ -427,7 +427,7 @@ destruct zs1. {
   symmetry in Hzs12.
   destruct zs12; [ easy | ].
   apply (rngl_leb_gt_iff Hto) in Hzs12.
-  apply (rngl_opp_neg_pos Hop Hto) in Hzs12.
+  apply (rngl_opp_neg_pos Hop Hor) in Hzs12.
   move Hzs12 at bottom.
   apply (rngl_ltb_ge_iff Hto) in Haov.
   apply (rngl_opp_le_compat Hop Hor) in Haov.
@@ -475,12 +475,12 @@ destruct zs1. {
       rewrite (rngl_mul_0_l Hos) in Haov.
       rewrite (rngl_sub_0_l Hop) in Haov.
       rewrite rngl_mul_1_l in Haov.
-      apply (rngl_opp_nonpos_nonneg Hop Hto) in Haov.
+      apply (rngl_opp_nonpos_nonneg Hop Hor) in Haov.
       now apply (rngl_nlt_ge Hor) in Haov.
     } {
       apply (rngl_nle_gt Hor) in Hzs1.
       exfalso; apply Hzs1; clear Hzs1.
-      apply (rngl_opp_nonpos_nonneg Hop Hto).
+      apply (rngl_opp_nonpos_nonneg Hop Hor).
       apply (rngl_0_le_1 Hos Hto).
     }
   }
@@ -491,7 +491,7 @@ destruct zs1. {
   rewrite angle_add_assoc in Haov, Hzs12.
   rewrite rngl_cos_add_straight_r in Haov.
   rewrite rngl_sin_add_straight_r in Hzs12, Hzs2.
-  apply (rngl_opp_neg_pos Hop Hto) in Hzs12, Hzs2.
+  apply (rngl_opp_neg_pos Hop Hor) in Hzs12, Hzs2.
   rewrite (rngl_opp_involutive Hop) in Hzs12.
   move Hzs2 before Hzs1.
   destruct (rngl_leb_dec 0 (rngl_cos θ1))%L as [Hzc1| Hc1z]. {
@@ -517,7 +517,7 @@ destruct zs1. {
     rewrite rngl_sin_sub_straight_l in Hzs12, Hzs2.
     rewrite rngl_cos_sub_straight_l in Haov, Hc2z.
     rewrite (rngl_opp_involutive Hop) in Haov.
-    apply (rngl_opp_neg_pos Hop Hto) in Hc2z.
+    apply (rngl_opp_neg_pos Hop Hor) in Hc2z.
     move Hzs2 before Hzs1.
     move Hzc1 before Hzs2.
     move Hc2z before Hzc1.
@@ -546,7 +546,7 @@ destruct zs1. {
   rewrite rngl_sin_add_right_r in Hzs1, Hzs12.
   rewrite rngl_cos_add_right_r in Hc1z.
   do 2 rewrite rngl_cos_add_right_r in Haov.
-  apply (rngl_opp_neg_pos Hop Hto) in Hc1z.
+  apply (rngl_opp_neg_pos Hop Hor) in Hc1z.
   rewrite (rngl_opp_involutive Hop) in Haov.
   rename Hzs1 into Hzc1; rename Hc1z into Hzs1.
   move Hzs1 after Hzs2.

@@ -282,7 +282,7 @@ destruct zs3. {
       progress sin_cos_add_sub_straight_hyp T Hzs1.
       progress sin_cos_add_sub_straight_goal T.
       rewrite rngl_sin_sub_anticomm in Hzs13, Hzs12.
-      apply (rngl_opp_neg_pos Hop Hto) in Hzs13, Hzs12.
+      apply (rngl_opp_neg_pos Hop Hor) in Hzs13, Hzs12.
       do 2 rewrite (rngl_cos_sub_comm θ1).
       destruct (rngl_eqb_dec (rngl_sin θ2) (rngl_sin θ3)) as [Hes23| Hes23]. {
         apply (rngl_eqb_eq Heo) in Hes23.
@@ -443,7 +443,7 @@ destruct zs3. {
     progress sin_cos_add_sub_straight_goal T.
     rewrite <- (rngl_opp_add_distr Hop).
     rewrite rngl_add_comm.
-    apply (rngl_opp_nonpos_nonneg Hop Hto).
+    apply (rngl_opp_nonpos_nonneg Hop Hor).
     change_angle_sub_l θ3 π/₂.
     progress sin_cos_add_sub_right_hyp T Hzs3.
     progress sin_cos_add_sub_right_hyp T Hc3z.
@@ -506,7 +506,7 @@ destruct zs3. {
     clear Hc3z Hc32 Hzs3.
     rewrite rngl_sin_add_right_r.
     rewrite rngl_cos_add_right_r in Hs13z.
-    apply (rngl_opp_neg_pos Hop Hto) in Hs13z.
+    apply (rngl_opp_neg_pos Hop Hor) in Hs13z.
     destruct (rngl_leb_dec 0 (rngl_cos θ1)) as [Hzc1| Hc1z]. {
       apply rngl_leb_le in Hzc1.
       apply rngl_lt_le_incl in Hzs2, Hc2z, Hs13z, Hs12z.
@@ -816,7 +816,7 @@ destruct zs13. {
       now apply rngl_lt_irrefl in Hzs3.
     }
     rewrite rngl_sin_add_straight_l in Hzs13.
-    apply (rngl_opp_nonpos_nonneg Hop Hto) in Hzs13.
+    apply (rngl_opp_nonpos_nonneg Hop Hor) in Hzs13.
     now apply (rngl_nlt_ge Hor) in Hzs13.
   }
   apply (rngl_leb_gt_iff Hto) in Hzs1.
@@ -888,9 +888,9 @@ destruct zs13. {
   apply Haov13; clear Haov13.
   apply angle_add_le_mono_l_lemma_11; try easy.
   rewrite rngl_sin_sub_straight_r.
-  now apply (rngl_opp_neg_pos Hop Hto).
+  now apply (rngl_opp_neg_pos Hop Hor).
   rewrite rngl_cos_sub_straight_r.
-  now apply (rngl_opp_neg_pos Hop Hto).
+  now apply (rngl_opp_neg_pos Hop Hor).
   rewrite angle_add_sub_assoc.
   rewrite angle_add_add_swap.
   rewrite angle_add_sub_swap.
@@ -1268,7 +1268,7 @@ destruct (rngl_leb_dec 0 (rngl_cos θ1)) as [Hzc1| Hc1z]. {
   progress sin_cos_add_sub_right_hyp T Hzs1.
   progress sin_cos_add_sub_right_goal T.
   rewrite rngl_sin_sub_anticomm in Hc12z.
-  apply (rngl_opp_nonpos_nonneg Hop Hto) in Hc12z.
+  apply (rngl_opp_nonpos_nonneg Hop Hor) in Hc12z.
   apply (rngl_nlt_ge_iff Hto).
   intros Hc12s13.
   rename Hzs13 into Hzc13.

@@ -141,7 +141,7 @@ destruct (rngl_leb_dec (rngl_cos θ1) 0) as [Hc1z| Hzc1]. {
     rewrite rngl_sin_add_straight_l in Hzs12, Hzs13.
     rewrite rngl_cos_add_straight_l.
     apply (rngl_opp_nonneg_nonpos Hop Hor) in Hzs13.
-    apply (rngl_opp_neg_pos Hop Hto) in Hzs12.
+    apply (rngl_opp_neg_pos Hop Hor) in Hzs12.
     apply (rngl_le_antisymm Hor) in Hzs13; [ | easy ].
     symmetry in Hzs13.
     apply -> (rngl_opp_le_compat Hop Hor).
@@ -171,7 +171,7 @@ destruct (rngl_leb_dec (rngl_cos θ3) 0) as [Hc3z| Hzc3]. {
   apply (rngl_add_nonpos_nonpos Hos Hor).
   apply (rngl_mul_nonneg_nonpos Hop Hto); [ | easy ].
   now apply rngl_lt_le_incl.
-  apply (rngl_opp_nonpos_nonneg Hop Hto).
+  apply (rngl_opp_nonpos_nonneg Hop Hor).
   now apply (rngl_mul_nonneg_nonneg Hos Hor).
 }
 apply (rngl_leb_gt_iff Hto) in Hzc3.
@@ -211,7 +211,7 @@ destruct (rngl_eqb_dec (rngl_cos θ1) (-1)) as [Hc1o| Hc1o]. {
     apply (rngl_le_refl Hor).
   }
   rewrite rngl_sin_add_straight_l in Hzs12.
-  apply (rngl_opp_neg_pos Hop Hto) in Hzs12.
+  apply (rngl_opp_neg_pos Hop Hor) in Hzs12.
   apply rngl_lt_le_incl in Hzs12.
   now apply (rngl_nlt_ge Hor) in Hzs12.
 }

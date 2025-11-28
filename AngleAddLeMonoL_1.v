@@ -218,7 +218,7 @@ destruct zs13. {
     progress sin_cos_add_sub_right_goal T.
     move Hzs1 before Hc2z.
     rewrite <- (rngl_opp_add_distr Hop).
-    apply (rngl_opp_neg_pos Hop Hto).
+    apply (rngl_opp_neg_pos Hop Hor).
     rewrite rngl_add_comm.
     destruct (rngl_eqb_dec (rngl_sin θ1) 0) as [Hs1z| Hs1z]. {
       apply (rngl_eqb_eq Heo) in Hs1z.

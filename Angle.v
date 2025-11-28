@@ -617,7 +617,7 @@ split. {
   apply rngl_sin_eq in H.
   destruct H; subst θ2; [ now apply rngl_lt_irrefl in Hcc | ].
   rewrite rngl_cos_sub_straight_l in Hcc, Hzc2.
-  apply (rngl_opp_nonpos_nonneg Hop Hto) in Hzc2.
+  apply (rngl_opp_nonpos_nonneg Hop Hor) in Hzc2.
   apply (rngl_le_antisymm Hor) in Hzc2; [ | easy ].
   rewrite Hzc2 in Hcc.
   rewrite (rngl_opp_0 Hop) in Hcc.
@@ -717,7 +717,7 @@ destruct (rngl_eqb_dec (rngl_sin θ2) 0) as [H2z| H2z]. {
     cbn in Hzc1.
     apply (rngl_nlt_ge Hor) in Hzc1.
     apply Hzc1; clear Hzc1.
-    apply (rngl_opp_neg_pos Hop Hto).
+    apply (rngl_opp_neg_pos Hop Hor).
     apply (rngl_0_lt_1 Hos Hc1 Hto).
   }
   apply (rngl_mul_pos_neg Hop Hiq Hto); [ | easy ].
@@ -744,7 +744,7 @@ assert (Hs21 : (rngl_sin θ2 < rngl_sin θ1)%L). {
   rewrite rngl_sin_sub_straight_l in Hzs2 |-*.
   rewrite (rngl_add_opp_r Hop) in Hcc.
   apply -> (rngl_lt_sub_0 Hop Hor) in Hcc.
-  apply (rngl_opp_neg_pos Hop Hto) in Hzc2.
+  apply (rngl_opp_neg_pos Hop Hor) in Hzc2.
   apply rngl_lt_le_incl in Hzc2.
   now apply rngl_cos_cos_sin_sin_nonneg_sin_lt_cos_lt_iff.
 }
@@ -1273,7 +1273,7 @@ assert (Hs21 : (rngl_sin θ1 ≤ rngl_sin θ2)%L). {
   rewrite rngl_sin_sub_straight_l in Hzs2 |-*.
   rewrite (rngl_add_opp_r Hop) in Hcc.
   apply -> (rngl_le_0_sub Hop Hor) in Hcc.
-  apply (rngl_opp_neg_pos Hop Hto) in Hzc2.
+  apply (rngl_opp_neg_pos Hop Hor) in Hzc2.
   move Hzc2 before Hzc1.
   apply rngl_lt_le_incl in Hzc2.
   now apply rngl_cos_cos_sin_sin_nonneg_sin_le_cos_le_iff.

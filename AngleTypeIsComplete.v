@@ -518,7 +518,7 @@ assert (Hts : s = rngl_sin θ ∨ s = (- rngl_sin θ)%L). {
     rewrite (rngl_opp_involutive Hop) in H.
     subst s; rename s' into s.
     rewrite (rngl_squ_opp Hop) in Hcs1.
-    apply (rngl_opp_neg_pos Hop Hto) in Hzs.
+    apply (rngl_opp_neg_pos Hop Hor) in Hzs.
     f_equal.
     rewrite <- (rngl_abs_sqrt Hop Hor). 2: {
       apply (rngl_le_0_sub Hop Hor).

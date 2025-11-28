@@ -69,7 +69,7 @@ symmetry in Hθ3.
 apply angle_add_move_l in Hθ3.
 subst θ2.
 rewrite rngl_sin_sub_anticomm.
-apply (rngl_opp_nonpos_nonneg Hop Hto).
+apply (rngl_opp_nonpos_nonneg Hop Hor).
 apply rngl_sin_sub_nonneg; [ easy | easy | ].
 now apply rngl_lt_le_incl.
 Qed.
@@ -225,7 +225,7 @@ destruct (rngl_eqb_dec (rngl_cos θ2) 0) as [Hc2z| Hc2z]. {
   rewrite Hc2z.
   rewrite (rngl_mul_0_l Hos).
   rewrite (rngl_sub_0_l Hop).
-  apply (rngl_opp_neg_pos Hop Hto).
+  apply (rngl_opp_neg_pos Hop Hor).
   apply (rngl_mul_pos_pos Hop Hiq Hto); [ | easy ].
   apply eq_rngl_cos_0 in Hc2z.
   destruct Hc2z; subst θ2. {
@@ -466,7 +466,7 @@ destruct (rngl_ltb_dec 0 (rngl_cos θ2)) as [Hzc2| Hzc2]. {
     rewrite (rngl_mul_opp_l Hop).
     rewrite (rngl_add_opp_r Hop).
     rewrite <- (rngl_opp_add_distr Hop).
-    apply (rngl_opp_neg_pos Hop Hto).
+    apply (rngl_opp_neg_pos Hop Hor).
     rewrite (rngl_mul_comm Hic).
     apply (rngl_lt_0_add Hos Hto).
     now apply (rngl_mul_pos_pos Hop Hiq Hto).
