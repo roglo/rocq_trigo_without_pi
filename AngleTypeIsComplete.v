@@ -46,7 +46,7 @@ do 2 rewrite rngl_mul_assoc.
 rewrite <- (rngl_add_sub_swap Hop).
 rewrite (rngl_sub_sub_swap Hop).
 rewrite (rngl_mul_mul_swap Hic).
-apply (rngl_sub_le_mono_r Hop Hto).
+apply (rngl_sub_le_mono_r Hop Hor).
 specialize (cos2_sin2_1 θ1) as H1.
 specialize (cos2_sin2_1 θ2) as H2.
 apply (rngl_add_move_r Hop) in H1, H2.
