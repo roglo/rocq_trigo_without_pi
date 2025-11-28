@@ -327,7 +327,7 @@ destruct zs3. {
         rewrite <- rngl_mul_add_distr_r.
         rewrite (rngl_add_opp_l Hop).
         rewrite (rngl_mul_comm Hic).
-        apply (rngl_mul_pos_neg Hop Hiq Hto); [ easy | ].
+        apply (rngl_mul_pos_neg Hop Hiq Hor); [ easy | ].
         apply (rngl_lt_sub_0 Hop Hor).
         apply rngl_le_neq.
         split; [ | easy ].
@@ -689,7 +689,7 @@ destruct zs13. {
       apply (rngl_add_nonneg_pos Hos Hor).
       apply (rngl_mul_nonneg_nonneg Hos Hor); [ easy | ].
       now apply rngl_lt_le_incl.
-      apply (rngl_mul_pos_pos Hop Hiq Hto); [ easy | ].
+      apply (rngl_mul_pos_pos Hop Hiq Hor); [ easy | ].
       apply (rngl_lt_0_sub Hop Hor).
       apply rngl_le_neq.
       split; [ | easy ].
@@ -859,7 +859,7 @@ destruct zs13. {
     rewrite <- (rngl_add_sub_assoc Hop).
     rewrite (rngl_sub_mul_r_diag_l Hop).
     apply (rngl_lt_0_add Hos Hor).
-    now apply (rngl_mul_pos_pos Hop Hiq Hto).
+    now apply (rngl_mul_pos_pos Hop Hiq Hor).
     apply (rngl_mul_nonneg_nonneg Hos Hor); [ easy | ].
     apply (rngl_le_0_sub Hop Hor).
     apply rngl_sin_bound.
@@ -1017,7 +1017,7 @@ destruct (rngl_leb_dec 0 (rngl_cos θ3)) as [Hzc3| Hc3z]. {
         rewrite (rngl_sub_mul_r_diag_l Hop).
         apply rngl_lt_le_incl in Hzc1.
         apply (rngl_lt_0_add Hos Hor).
-        now apply (rngl_mul_pos_pos Hop Hiq Hto).
+        now apply (rngl_mul_pos_pos Hop Hiq Hor).
         apply (rngl_mul_nonneg_nonneg Hos Hor); [ easy | ].
         apply (rngl_le_0_sub Hop Hor).
         apply rngl_sin_bound.
@@ -1090,7 +1090,7 @@ destruct (rngl_leb_dec 0 (rngl_cos θ3)) as [Hzc3| Hc3z]. {
     rewrite <- (rngl_add_sub_assoc Hop).
     rewrite (rngl_sub_mul_r_diag_l Hop).
     apply (rngl_lt_0_add Hos Hor).
-    now apply (rngl_mul_pos_pos Hop Hiq Hto).
+    now apply (rngl_mul_pos_pos Hop Hiq Hor).
     apply (rngl_mul_nonneg_nonneg Hos Hor); [ easy | ].
     apply (rngl_le_0_sub Hop Hor).
     apply rngl_sin_bound.

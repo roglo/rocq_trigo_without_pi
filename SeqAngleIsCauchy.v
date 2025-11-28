@@ -597,7 +597,7 @@ assert (He1 : (1 - ε² / 2 < 1)%L). {
   apply (rngl_div_pos Hop Hiv Hto). 2: {
     apply (rngl_0_lt_2 Hos Hc1 Hto).
   }
-  now apply (rngl_mul_pos_pos Hop Hiq Hto).
+  now apply (rngl_mul_pos_pos Hop Hiq Hor).
 }
 enough (H :
   ∃ N, ∀ p q,

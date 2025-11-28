@@ -332,7 +332,7 @@ assert (H : (0 < √(ε² / 2))%L). {
   apply (rngl_0_lt_2 Hos Hc1 Hto).
   rewrite (rngl_mul_0_l Hos).
   progress unfold rngl_squ.
-  now apply (rngl_mul_pos_pos Hop Hiq Hto).
+  now apply (rngl_mul_pos_pos Hop Hiq Hor).
 }
 specialize (Hc _ H).
 specialize (Hs _ H).

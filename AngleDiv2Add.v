@@ -240,7 +240,7 @@ destruct (rngl_leb_dec (rngl_cos θ1) 0) as [Hc1z| Hzc1]. {
     rewrite (rngl_sub_0_l Hop).
     apply rngl_cos_bound.
   }
-  now apply (rngl_mul_pos_pos Hop Hiq Hto).
+  now apply (rngl_mul_pos_pos Hop Hiq Hor).
 } {
   apply (rngl_leb_gt_iff Hto) in Hzc1.
   move Hzc1 before Hzs2.
@@ -558,7 +558,7 @@ destruct zs1. {
   rewrite rngl_add_comm.
   rewrite <- rngl_add_assoc.
   apply (rngl_lt_0_add Hos Hor). {
-    now apply (rngl_mul_pos_pos Hop Hiq Hto).
+    now apply (rngl_mul_pos_pos Hop Hiq Hor).
   }
   rewrite rngl_add_mul_r_diag_l.
   apply (rngl_mul_nonneg_nonneg Hos Hor).

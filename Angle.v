@@ -720,7 +720,7 @@ destruct (rngl_eqb_dec (rngl_sin θ2) 0) as [H2z| H2z]. {
     apply (rngl_opp_neg_pos Hop Hor).
     apply (rngl_0_lt_1 Hos Hc1 Hto).
   }
-  apply (rngl_mul_pos_neg Hop Hiq Hto); [ | easy ].
+  apply (rngl_mul_pos_neg Hop Hiq Hor); [ | easy ].
   apply rngl_le_neq.
   split; [ easy | ].
   apply (rngl_eqb_neq Heo) in H1z.
@@ -763,7 +763,7 @@ rewrite (rngl_mul_opp_l Hop).
 rewrite (rngl_add_opp_r Hop).
 rewrite <- (rngl_mul_sub_distr_l Hop).
 rewrite (rngl_mul_comm Hic).
-apply (rngl_mul_pos_neg Hop Hiq Hto); [ | easy ].
+apply (rngl_mul_pos_neg Hop Hiq Hor); [ | easy ].
 now apply (rngl_lt_0_sub Hop Hor).
 Qed.
 
@@ -1029,7 +1029,7 @@ destruct (rngl_ltb_dec x y) as [Hxy| Hxy]. {
       apply (rngl_0_le_1 Hos Hto).
     }
     apply (rngl_eqb_neq Heo) in H1z.
-    apply (rngl_mul_pos_neg Hop Hiq Hto); [ | easy ].
+    apply (rngl_mul_pos_neg Hop Hiq Hor); [ | easy ].
     apply rngl_le_neq.
     split; [ easy | ].
     now apply not_eq_sym.
@@ -1038,7 +1038,7 @@ destruct (rngl_ltb_dec x y) as [Hxy| Hxy]. {
   rewrite rngl_add_comm.
   apply (rngl_add_neg_nonpos Hop Hor). {
     rewrite (rngl_mul_comm Hic).
-    apply (rngl_mul_pos_neg Hop Hiq Hto); [ | easy ].
+    apply (rngl_mul_pos_neg Hop Hiq Hor); [ | easy ].
     apply rngl_le_neq.
     split; [ easy | ].
     now apply not_eq_sym.
@@ -1899,7 +1899,7 @@ destruct (rngl_ltb_dec (rngl_cos θ1) 0) as [Hc1z| Hzc1]. {
   apply (rngl_eqb_neq Heo) in Hc21.
   apply (rngl_lt_le_trans Hor _ 0). {
     rewrite (rngl_mul_comm Hic).
-    apply (rngl_mul_pos_neg Hop Hiq Hto); [ | easy ].
+    apply (rngl_mul_pos_neg Hop Hiq Hor); [ | easy ].
     apply (rngl_lt_0_sub Hop Hor).
     apply rngl_le_neq.
     split; [ apply rngl_cos_bound | easy ].
@@ -2096,7 +2096,7 @@ eapply (rngl_le_lt_trans Hor _ (rngl_sin θ1)). {
   apply rngl_cos_bound.
 }
 apply (rngl_lt_add_r Hos Hor).
-now apply (rngl_mul_pos_pos Hop Hiq Hto).
+now apply (rngl_mul_pos_pos Hop Hiq Hor).
 Qed.
 
 Theorem quadrant_1_sin_sub_nonneg_cos_le :

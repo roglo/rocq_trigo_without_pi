@@ -234,7 +234,7 @@ destruct zs2. 2: {
     apply (rngl_add_nonneg_pos Hos Hor).
     apply (rngl_mul_nonneg_nonneg Hos Hor); [ easy | ].
     now apply rngl_lt_le_incl.
-    apply (rngl_mul_pos_pos Hop Hiq Hto); [ easy | ].
+    apply (rngl_mul_pos_pos Hop Hiq Hor); [ easy | ].
     apply (rngl_lt_0_sub Hop Hor).
     apply rngl_le_neq.
     split; [ apply rngl_sin_bound | ].
@@ -384,7 +384,7 @@ destruct (rngl_leb_dec (rngl_cos θ2) 0)%L as [Hc2z| Hzc2]. 2: {
   rewrite (rngl_add_sub_swap Hop).
   rewrite (rngl_sub_mul_r_diag_r Hop).
   apply (rngl_lt_0_add Hos Hor).
-  apply (rngl_mul_pos_pos Hop Hiq Hto); [ | easy ].
+  apply (rngl_mul_pos_pos Hop Hiq Hor); [ | easy ].
   apply (rngl_lt_0_sub Hop Hor).
   apply rngl_le_neq.
   split; [ | easy ].
