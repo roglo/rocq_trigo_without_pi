@@ -111,7 +111,7 @@ apply (rngl_add_neg_nonpos Hop Hor). {
   apply not_eq_sym in Hs1z.
   now apply rngl_le_neq.
 } {
-  apply (rngl_mul_nonpos_nonneg Hop Hto); [ | easy ].
+  apply (rngl_mul_nonpos_nonneg Hop Hor); [ | easy ].
   now apply rngl_lt_le_incl.
 }
 Qed.

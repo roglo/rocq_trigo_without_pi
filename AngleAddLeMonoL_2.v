@@ -301,7 +301,7 @@ destruct zs3. {
         rewrite rngl_add_add_swap.
         rewrite (rngl_add_sub Hos).
         rewrite <- rngl_mul_add_distr_r.
-        apply (rngl_mul_nonpos_nonneg Hop Hto); [ | ].
+        apply (rngl_mul_nonpos_nonneg Hop Hor); [ | ].
         apply rngl_lt_le_incl in Hzc2.
         now apply (rngl_add_nonpos_nonpos Hos Hor).
         now apply rngl_lt_le_incl.
@@ -343,8 +343,8 @@ destruct zs3. {
       apply rngl_leb_le in Hzc1.
       cbn.
       apply (rngl_sub_le_compat Hop Hto).
-      now apply (rngl_mul_le_mono_nonpos_l Hop Hto).
-      apply (rngl_mul_le_mono_nonpos_l Hop Hto); [ easy | ].
+      now apply (rngl_mul_le_mono_nonpos_l Hop Hor).
+      apply (rngl_mul_le_mono_nonpos_l Hop Hor); [ easy | ].
       apply rngl_cos_cos_sin_sin_nonneg_sin_le_cos_le_iff; try easy.
       now apply rngl_lt_le_incl.
       now apply rngl_lt_le_incl.

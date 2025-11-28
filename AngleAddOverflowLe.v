@@ -169,7 +169,7 @@ destruct (rngl_leb_dec (rngl_cos θ3) 0) as [Hc3z| Hzc3]. {
   progress unfold rngl_sub.
   rewrite Hop.
   apply (rngl_add_nonpos_nonpos Hos Hor).
-  apply (rngl_mul_nonneg_nonpos Hop Hto); [ | easy ].
+  apply (rngl_mul_nonneg_nonpos Hop Hor); [ | easy ].
   now apply rngl_lt_le_incl.
   apply (rngl_opp_nonpos_nonneg Hop Hor).
   now apply (rngl_mul_nonneg_nonneg Hos Hor).

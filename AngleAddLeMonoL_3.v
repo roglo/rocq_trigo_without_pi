@@ -404,13 +404,13 @@ destruct (rngl_leb_dec 0 (rngl_cos θ1))%L as [Hzc1| Hc1z]. 2: {
     apply rngl_leb_le in Hs1z.
     apply (rngl_add_nonpos_nonpos Hos Hor); cbn.
     apply (rngl_add_nonpos_nonpos Hos Hor); cbn.
-    apply (rngl_mul_nonpos_nonneg Hop Hto); [ easy | ].
+    apply (rngl_mul_nonpos_nonneg Hop Hor); [ easy | ].
     now apply rngl_lt_le_incl.
-    apply (rngl_mul_nonpos_nonneg Hop Hto); [ | easy ].
+    apply (rngl_mul_nonpos_nonneg Hop Hor); [ | easy ].
     now apply rngl_lt_le_incl.
     apply (rngl_add_nonpos_nonpos Hos Hor); cbn.
-    now apply (rngl_mul_nonpos_nonneg Hop Hto).
-    apply (rngl_mul_nonpos_nonneg Hop Hto); [ | easy ].
+    now apply (rngl_mul_nonpos_nonneg Hop Hor).
+    apply (rngl_mul_nonpos_nonneg Hop Hor); [ | easy ].
     now apply rngl_lt_le_incl.
   }
   exfalso.

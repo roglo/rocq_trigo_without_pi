@@ -292,7 +292,7 @@ destruct zc2. {
   rewrite (rngl_add_opp_l Hop).
   apply (rngl_le_0_sub Hop Hor).
   apply (rngl_le_trans Hor _ 0)%L. {
-    apply (rngl_mul_nonpos_nonneg Hop Hto); [ | easy ].
+    apply (rngl_mul_nonpos_nonneg Hop Hor); [ | easy ].
     now apply rngl_lt_le_incl.
   } {
     now apply (rngl_mul_nonneg_nonneg Hos Hor).
@@ -1043,7 +1043,7 @@ destruct (rngl_ltb_dec x y) as [Hxy| Hxy]. {
     split; [ easy | ].
     now apply not_eq_sym.
   }
-  apply (rngl_mul_nonneg_nonpos Hop Hto); [ easy | ].
+  apply (rngl_mul_nonneg_nonpos Hop Hor); [ easy | ].
   now apply rngl_lt_le_incl.
 }
 apply (rngl_ltb_ge_iff Hto) in Hxy.
@@ -1125,7 +1125,7 @@ destruct zc1. {
   apply (rngl_le_0_sub Hop Hor).
   rewrite (rngl_mul_comm Hic).
   apply rngl_lt_le_incl in Hzc2.
-  now apply (rngl_mul_le_compat_nonpos_nonneg Hop Hto).
+  now apply (rngl_mul_le_compat_nonpos_nonneg Hop Hor).
 }
 Qed.
 
