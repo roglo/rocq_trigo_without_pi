@@ -327,7 +327,7 @@ destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
 intros * Hc Hs.
 intros ε Hε.
 assert (H : (0 < √(ε² / 2))%L). {
-  apply (rl_sqrt_pos Hos Hto).
+  apply (rl_sqrt_pos Hos Hor).
   apply (rngl_lt_div_r Hop Hiv Hto).
   apply (rngl_0_lt_2 Hos Hc1 Hto).
   rewrite (rngl_mul_0_l Hos).

@@ -790,7 +790,7 @@ apply (rngl_leb_gt_iff Hto).
 apply (rngl_div_pos Hop Hiv Hto). 2: {
   apply (rngl_0_lt_2 Hos Hc1 Hto).
 }
-apply (rl_sqrt_pos Hos Hto).
+apply (rl_sqrt_pos Hos Hor).
 apply (rngl_lt_le_trans Hor _ 2). {
   apply (rngl_0_lt_2 Hos Hc1 Hto).
 }
