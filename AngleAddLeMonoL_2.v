@@ -186,7 +186,7 @@ destruct zs3. {
       rewrite rngl_sin_add_right_r in Hc2z.
       apply (rngl_nlt_ge Hor) in Hc2z.
       apply Hc2z; clear Hc2z; cbn.
-      apply (rngl_opp_1_lt_0 Hop Hto Hc1).
+      apply (rngl_opp_1_lt_0 Hop Hc1 Hto).
     }
     move Hzc2 after Hzs3.
     apply (rngl_nle_gt Hor) in Hzs12.
@@ -501,7 +501,7 @@ destruct zs3. {
       exfalso.
       apply (rngl_nlt_ge Hor) in Hc3z.
       apply Hc3z; cbn.
-      apply (rngl_opp_1_lt_0 Hop Hto Hc1).
+      apply (rngl_opp_1_lt_0 Hop Hc1 Hto).
     }
     clear Hc3z Hc32 Hzs3.
     rewrite rngl_sin_add_right_r.

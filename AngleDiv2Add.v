@@ -1168,7 +1168,7 @@ symmetry in Hzs.
 destruct zs. {
   rewrite rngl_mul_1_l.
   apply (rngl_lt_le_trans Hor _ 0). {
-    apply (rngl_opp_1_lt_0 Hop Hto Hc1).
+    apply (rngl_opp_1_lt_0 Hop Hc1 Hto).
   }
   apply rl_sqrt_nonneg.
   apply (rngl_div_nonneg Hop Hiv Hto). 2: {

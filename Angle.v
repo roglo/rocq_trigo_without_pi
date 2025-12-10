@@ -583,7 +583,7 @@ split. {
       destruct H; subst θ1; [ apply rngl_sin_bound | ].
       exfalso.
       apply (rngl_nlt_ge Hor) in Hzs1.
-      apply Hzs1, (rngl_opp_1_lt_0 Hop Hto Hc1).
+      apply Hzs1, (rngl_opp_1_lt_0 Hop Hc1 Hto).
     }
     apply (rngl_leb_gt_iff Hto) in H.
     move H before Hzc1; clear Hzc1; rename H into Hzc1.
@@ -600,7 +600,7 @@ split. {
         exfalso.
         apply (rngl_nlt_ge Hor) in Hzs1.
         apply Hzs1; clear Hzs1; cbn.
-        apply (rngl_opp_1_lt_0 Hop Hto Hc1).
+        apply (rngl_opp_1_lt_0 Hop Hc1 Hto).
       }
       apply rngl_sin_bound.
     }
@@ -634,7 +634,7 @@ split. {
       destruct Hcc; subst θ2; [ apply (rngl_le_refl Hor) | ].
       exfalso.
       apply (rngl_nlt_ge Hor) in Hzs2.
-      apply Hzs2, (rngl_opp_1_lt_0 Hop Hto Hc1).
+      apply Hzs2, (rngl_opp_1_lt_0 Hop Hc1 Hto).
     }
     apply rngl_sin_bound.
   }
@@ -649,7 +649,7 @@ split. {
     }
     exfalso.
     apply (rngl_nlt_ge Hor) in Hzs2.
-    apply Hzs2, (rngl_opp_1_lt_0 Hop Hto Hc1).
+    apply Hzs2, (rngl_opp_1_lt_0 Hop Hc1 Hto).
   }
   apply (rngl_leb_gt_iff Hto) in H.
   move H before Hzc2; clear Hzc2; rename H into Hzc2.
@@ -2122,7 +2122,7 @@ destruct (rngl_eqb_dec (rngl_sin θ2) 0) as [Hs2z| Hs2z]. {
   exfalso.
   apply (rngl_nlt_ge Hor) in Hzc2.
   apply Hzc2; clear Hzc2; cbn.
-  apply (rngl_opp_1_lt_0 Hop Hto Hc1).
+  apply (rngl_opp_1_lt_0 Hop Hc1 Hto).
 }
 apply (rngl_eqb_neq Heo) in Hs2z.
 cbn in Hzs12.

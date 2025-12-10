@@ -109,7 +109,7 @@ destruct (rngl_leb_dec 0 (rngl_cos θ1))%L as [Hzc1| Hc1z]. {
   }
   apply (rngl_nlt_ge Hor) in Hzc1.
   apply Hzc1.
-  apply (rngl_opp_1_lt_0 Hop Hto Hc1).
+  apply (rngl_opp_1_lt_0 Hop Hc1 Hto).
 }
 apply (rngl_leb_gt_iff Hto) in Hc1z.
 destruct (rngl_ltb_dec (rngl_sin θ1) 0)%L as [Hs1z| Hzs1]. 2: {

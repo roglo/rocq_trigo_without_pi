@@ -189,7 +189,7 @@ destruct zs2. 2: {
     }
     apply (rngl_nlt_ge Hor) in Hc1z.
     apply Hc1z; cbn.
-    apply (rngl_opp_1_lt_0 Hop Hto Hc1).
+    apply (rngl_opp_1_lt_0 Hop Hc1 Hto).
   }
   apply (rngl_leb_gt_iff Hto) in Hzc2.
   change_angle_add_r θ2 π/₂.

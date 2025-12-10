@@ -402,7 +402,7 @@ destruct (rngl_leb_dec (rngl_cos θ2) 0) as [Hc2z| Hzc2]. {
   destruct Hzs2; subst θ1; [ easy | ].
   apply (rngl_nlt_ge Hor) in Hc1z.
   apply Hc1z; clear Hc1z.
-  apply (rngl_opp_1_lt_0 Hop Hto Hc1).
+  apply (rngl_opp_1_lt_0 Hop Hc1 Hto).
 }
 apply (rngl_leb_gt_iff Hto) in Hzc2.
 move Hzc2 before Hzs1.
@@ -561,7 +561,7 @@ destruct (rngl_ltb_dec 0 (rngl_cos θ2)) as [Hzc2| Hzc2]. {
     exfalso.
     apply (rngl_nlt_ge Hor) in Hzc1.
     apply Hzc1; cbn.
-    apply (rngl_opp_1_lt_0 Hop Hto Hc1).
+    apply (rngl_opp_1_lt_0 Hop Hc1 Hto).
   }
   apply (rngl_eqb_neq Heo) in Hc1z.
   apply rngl_sin_sub_lt_sin_l; [ easy | easy | ].
@@ -586,7 +586,7 @@ destruct (rngl_eqb_dec (rngl_sin θ1) 0) as [Hs1z| Hs1z]. {
   exfalso.
   apply (rngl_nlt_ge Hor) in Hzs1.
   apply Hzs1; cbn.
-  apply (rngl_opp_1_lt_0 Hop Hto Hc1).
+  apply (rngl_opp_1_lt_0 Hop Hc1 Hto).
 }
 apply (rngl_eqb_neq Heo) in Hs1z.
 apply (rngl_lt_0_add Hos Hor). {
