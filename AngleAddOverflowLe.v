@@ -100,7 +100,7 @@ destruct (rngl_leb_dec (rngl_cos θ2) 0) as [Hc2z| Hzc2]. {
     rewrite angle_right_add_right in H12.
     apply (rngl_nlt_ge Hor) in H12.
     apply H12; cbn.
-    apply (rngl_opp_1_lt_1 Hop Hto Hc1).
+    apply (rngl_opp_1_lt_1 Hop Hc1 Hto).
   }
   apply (rngl_nle_gt Hor) in Hc1z.
   apply Hc1z; cbn.

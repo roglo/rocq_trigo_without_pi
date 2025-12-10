@@ -1172,7 +1172,7 @@ intros Hc1.
 intros H.
 apply eq_angle_eq in H.
 injection H; clear H; intros H.
-specialize (rngl_opp_1_lt_1 Hop Hto Hc1) as H1.
+specialize (rngl_opp_1_lt_1 Hop Hc1 Hto) as H1.
 rewrite H in H1.
 now apply rngl_lt_irrefl in H1.
 Qed.

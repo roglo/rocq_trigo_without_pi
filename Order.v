@@ -214,7 +214,7 @@ progress unfold angle_ltb.
 cbn.
 rewrite (rngl_leb_refl Hor).
 apply (rngl_ltb_lt Heo).
-apply (rngl_opp_1_lt_1 Hop Hto Hc1).
+apply (rngl_opp_1_lt_1 Hop Hc1 Hto).
 Qed.
 
 Theorem angle_straight_nonneg : (0 ≤ π)%A.

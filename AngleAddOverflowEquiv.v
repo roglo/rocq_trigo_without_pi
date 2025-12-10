@@ -280,14 +280,14 @@ destruct zs1. {
           } {
             symmetry.
             apply (rngl_leb_gt_iff Hto).
-            apply (rngl_opp_1_lt_1 Hop Hto Hc1).
+            apply (rngl_opp_1_lt_1 Hop Hc1 Hto).
           }
         }
         cbn.
         rewrite (rngl_opp_involutive Hop).
         transitivity true. {
           apply (rngl_ltb_lt Heo).
-          apply (rngl_opp_1_lt_1 Hop Hto Hc1).
+          apply (rngl_opp_1_lt_1 Hop Hc1 Hto).
         } {
           symmetry.
           apply rngl_leb_le.
