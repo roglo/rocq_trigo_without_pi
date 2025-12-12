@@ -398,7 +398,10 @@ rewrite angle_sub_0_r.
 rewrite <- angle_mul_nat_div_2. 2: {
   cbn.
   rewrite angle_add_0_r.
-  rewrite Bool.orb_false_r.
+  apply Nat.eq_add_0.
+  rewrite angle_add_overflow_0_r.
+  split; [ easy | ].
+  apply Nat_eq_b2n_0.
   apply angle_add_not_overflow_lt_straight_le_straight; [ | easy ].
   now apply angle_lt_iff.
 }

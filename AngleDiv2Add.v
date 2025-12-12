@@ -1316,9 +1316,10 @@ rewrite <- angle_mul_1_l in Heqx.
 subst x.
 apply angle_mul_le_mono_r; [ | now apply -> Nat.succ_le_mono ].
 cbn.
-apply Bool.orb_false_iff.
-split; [ | easy ].
+apply Nat.eq_add_0.
+split; [ now rewrite angle_add_overflow_0_r | ].
 rewrite angle_add_0_r.
+apply Nat_eq_b2n_0.
 apply angle_add_overflow_div_2_div_2.
 Qed.
 
@@ -1353,7 +1354,7 @@ Qed.
 
 Theorem angle_div_2_pow_mul :
   ∀ n m θ,
-  angle_mul_nat_overflow m θ = false
+  angle_mul_nat_overflow m θ = 0
   →  ((m * θ) /₂^n)%A = (m * (θ /₂^n))%A.
 Proof.
 intros * Haov.
@@ -1364,15 +1365,15 @@ destruct m. {
   rewrite angle_add_0_r.
   symmetry; apply angle_add_0_r.
 }
-apply Bool.orb_false_iff in Haov.
-rewrite angle_div_2_pow_add; [ | easy ].
+apply Nat.eq_add_0 in Haov.
+rewrite angle_div_2_pow_add; [ | now apply Nat_eq_b2n_0 ].
 f_equal.
 now apply IHm.
 Qed.
 
 Theorem angle_mul_nat_div_2 :
   ∀ n θ,
-  angle_mul_nat_overflow n θ = false
+  angle_mul_nat_overflow n θ = 0
   → (n * (θ /₂) = (n * θ) /₂)%A.
 Proof.
 destruct_ac.
@@ -1388,8 +1389,8 @@ Qed.
 
 Theorem angle_mul_nat_overflow_mul_2_div_2 :
   ∀ n θ,
-  angle_mul_nat_overflow n θ = false
-  → angle_mul_nat_overflow (2 * n) (θ /₂) = false.
+  angle_mul_nat_overflow n θ = 0
+  → angle_mul_nat_overflow (2 * n) (θ /₂) = 0.
 Proof.
 destruct_ac.
 intros * Hn.
@@ -1427,7 +1428,7 @@ now rewrite angle_div_2_mul_2.
 Qed.
 
 Theorem angle_mul_nat_overflow_pow_div :
-  ∀ n θ, angle_mul_nat_overflow (2 ^ n) (θ /₂^n) = false.
+  ∀ n θ, angle_mul_nat_overflow (2 ^ n) (θ /₂^n) = 0.
 Proof.
 destruct_ac.
 destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
@@ -1438,13 +1439,13 @@ destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
 assert (H2z : (2 ≠ 0)%L) by apply (rngl_2_neq_0 Hos Hc1 Hto).
 intros.
 revert θ.
-induction n; intros; [ easy | cbn ].
+induction n; intros; cbn; [ now rewrite angle_add_overflow_0_r | ].
 destruct n. {
   cbn.
-  apply Bool.orb_false_iff.
-  split; [ | easy ].
+  apply Nat.eq_add_0.
+  split; [ now rewrite angle_add_overflow_0_r | ].
   rewrite angle_add_0_r.
-  apply angle_add_overflow_div_2_div_2.
+  now rewrite angle_add_overflow_div_2_div_2.
 }
 cbn.
 do 2 rewrite Nat.add_0_r.

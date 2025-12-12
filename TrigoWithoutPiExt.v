@@ -612,31 +612,19 @@ Context {ac : angle_ctx T}.
 
 Fixpoint angle_mul_nat_overflow n θ :=
   match n with
-  | 0 | 1 => false
-  | S n' =>
-      (angle_add_overflow θ (n' * θ) ||
-       angle_mul_nat_overflow n' θ)%bool
+  | 0 => 0
+  | S m => angle_mul_nat_overflow m θ + Nat.b2n (angle_add_overflow θ (m * θ))
   end.
 
 Theorem angle_mul_nat_overflow_succ_l_false :
   ∀ θ n,
-  angle_mul_nat_overflow (S n) θ = false
-  ↔ angle_mul_nat_overflow n θ = false ∧
+  angle_mul_nat_overflow (S n) θ = 0
+  ↔ angle_mul_nat_overflow n θ = 0 ∧
     angle_add_overflow θ (n * θ) = false.
 Proof.
-intros.
-split; intros Hn. {
-  destruct n. {
-    split; [ easy | cbn ].
-    apply angle_add_overflow_0_r.
-  }
-  remember (S n) as sn; cbn in Hn; subst sn.
-  now apply Bool.orb_false_iff in Hn.
-} {
-  destruct n; [ easy | ].
-  remember (S n) as sn; cbn; subst sn.
-  now apply Bool.orb_false_iff.
-}
+intros; cbn.
+destruct (angle_mul_nat_overflow _ _); [ | easy ].
+now destruct (angle_add_overflow _ _).
 Qed.
 
 Theorem angle_mul_1_l : ∀ θ, (1 * θ)%A = θ.
@@ -741,17 +729,15 @@ now rewrite rngl_add_0_l.
 Qed.
 
 Theorem angle_mul_nat_overflow_0_l :
-  ∀ θ, angle_mul_nat_overflow 0 θ = false.
+  ∀ θ, angle_mul_nat_overflow 0 θ = 0.
 Proof. easy. Qed.
 
 Theorem angle_mul_nat_overflow_0_r :
-  ∀ n, angle_mul_nat_overflow n 0 = false.
+  ∀ n, angle_mul_nat_overflow n 0 = 0.
 Proof.
 intros.
 induction n; [ easy | cbn ].
-destruct n; [ easy | ].
-rewrite angle_add_overflow_0_l.
-now apply Bool.orb_false_iff.
+now rewrite IHn, angle_mul_0_r, angle_add_overflow_0_r.
 Qed.
 
 Theorem angle_add_not_overflow_move_add :
@@ -818,47 +804,27 @@ Qed.
 
 Theorem angle_mul_nat_overflow_succ_l_true :
   ∀ θ n,
-  angle_mul_nat_overflow (S n) θ = true
-  ↔ angle_mul_nat_overflow n θ = true ∨
+  angle_mul_nat_overflow (S n) θ ≠ 0
+  ↔ angle_mul_nat_overflow n θ ≠ 0 ∨
     angle_add_overflow θ (n * θ) = true.
 Proof.
-intros.
-split; intros Hn. {
-  apply Bool.not_false_iff_true in Hn.
-  remember (angle_mul_nat_overflow n θ) as x eqn:Hx.
-  symmetry in Hx.
-  destruct x; [ now left | right ].
-  apply Bool.not_false_iff_true.
-  intros Hy.
-  apply Hn.
-  now apply angle_mul_nat_overflow_succ_l_false.
-} {
-  apply Bool.not_false_iff_true.
-  intros Hx.
-  apply angle_mul_nat_overflow_succ_l_false in Hx.
-  destruct Hx as (Hx, Hy).
-  rewrite Hx in Hn.
-  rewrite Hy in Hn.
-  now destruct Hn.
+intros; cbn.
+destruct (angle_mul_nat_overflow _ _). {
+  destruct (angle_add_overflow _ _); cbn.
+  split; [ now intros; right | easy ].
+  split; [ easy | now intros H; destruct H ].
 }
+destruct (angle_add_overflow _ _). {
+  now split; [ intros; right | intros H; destruct H ].
+}
+now split; [ intros; left | ].
 Qed.
 
 Theorem angle_mul_nat_overflow_succ_l :
   ∀ θ n,
   angle_mul_nat_overflow (S n) θ =
-    (angle_mul_nat_overflow n θ || angle_add_overflow θ (n * θ))%bool.
-Proof.
-intros.
-remember (_ || _)%bool as b eqn:Hb.
-symmetry in Hb.
-destruct b. {
-  apply Bool.orb_true_iff in Hb.
-  now apply angle_mul_nat_overflow_succ_l_true.
-} {
-  apply Bool.orb_false_iff in Hb.
-  now apply angle_mul_nat_overflow_succ_l_false.
-}
-Qed.
+  angle_mul_nat_overflow n θ + Nat.b2n (angle_add_overflow θ (n * θ)).
+Proof. easy. Qed.
 
 Fixpoint rngl_cos_div_pow_2 θ n :=
   match n with
@@ -1223,6 +1189,20 @@ split; intros Htr. {
 } {
   now destruct zst; [ left | right ]; apply (rngl_ltb_lt Heo).
 }
+Qed.
+
+Theorem Nat_eq_b2n_0 : ∀ b, Nat.b2n b = 0 ↔ b = false.
+Proof.
+intros.
+split; intros H; [ | now subst ].
+now destruct b.
+Qed.
+
+Theorem Nat_neq_add_0 : ∀ n m, n + m ≠ 0 → n ≠ 0 ∨ m ≠ 0.
+Proof.
+intros * Hnm.
+destruct (Nat.eq_dec n 0) as [Hnz| Hnz]; [ right | now left ].
+now intros H; subst.
 Qed.
 
 End a.

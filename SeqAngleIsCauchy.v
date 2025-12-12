@@ -36,7 +36,7 @@ Definition seq_angle_to_div_nat θ (n i : nat) := (2 ^ i / n * (θ /₂^i))%A.
 Theorem angle_le_pow2_log2 :
   ∀ n θ1 θ2,
   n ≠ 0
-  → angle_mul_nat_overflow n θ1 = false
+  → angle_mul_nat_overflow n θ1 = 0
   → (n * θ1 ≤ θ2
   → θ1 ≤ θ2 /₂^Nat.log2 n)%A.
 Proof.
@@ -57,13 +57,12 @@ Theorem seq_angle_to_div_nat_not_overflow :
   ∀ θ n i,
   n ≠ 0
   → 2 ^ i / n ≤ 2 ^ i
-  → angle_mul_nat_overflow n (seq_angle_to_div_nat θ n i) = false.
+  → angle_mul_nat_overflow n (seq_angle_to_div_nat θ n i) = 0.
 Proof.
 intros * Hnz Hin.
-apply Bool.not_true_iff_false.
+apply Nat.eq_dne.
 intros H.
 apply angle_mul_nat_overflow_true_assoc in H.
-apply Bool.not_false_iff_true in H.
 apply H; clear H.
 apply (angle_mul_nat_not_overflow_le_l _ (2 ^ i)). 2: {
   apply angle_mul_nat_overflow_pow_div.
@@ -88,10 +87,9 @@ rewrite <- angle_mul_nat_div_2. 2: {
 }
 rewrite <- angle_div_2_pow_succ_r_1.
 apply angle_le_pow2_log2; [ easy | | ]. {
-  apply Bool.not_true_iff_false.
+  apply Nat.eq_dne.
   intros H.
   apply angle_mul_nat_overflow_true_assoc in H.
-  apply Bool.not_false_iff_true in H.
   apply H; clear H.
   apply (angle_mul_nat_not_overflow_le_l _ (2 ^ i)). {
     now apply Nat.Div0.mul_div_le.
@@ -122,7 +120,11 @@ rewrite angle_div_2_pow_succ_r_1 in H1.
 do 2 rewrite angle_div_2_mul_2 in H1.
 apply H1.
 rewrite <- (Nat.mul_1_r 2).
-now apply angle_mul_nat_overflow_mul_2_div_2.
+rewrite Nat.mul_1_r; cbn.
+rewrite angle_add_overflow_0_r.
+rewrite angle_add_0_r.
+apply Nat_eq_b2n_0.
+apply angle_add_overflow_div_2_div_2.
 Qed.
 
 Theorem seq_angle_to_div_nat_le_straight_div_pow2_log2_pred :
@@ -398,18 +400,19 @@ Qed.
 Theorem angle_mul_nat_overflow_div_pow2 :
   ∀ n i θ,
   n ≤ 2 ^ i
-  → angle_mul_nat_overflow n (θ /₂^i) = false.
+  → angle_mul_nat_overflow n (θ /₂^i) = 0.
 Proof.
 intros * Hni.
 revert i θ Hni.
 induction n; intros; [ easy | ].
 rewrite angle_mul_nat_overflow_succ_l.
-apply Bool.orb_false_iff.
+apply Nat.eq_add_0.
 split. {
   apply IHn.
   apply (Nat.le_trans _ (S n)); [ | easy ].
   apply Nat.le_succ_diag_r.
 }
+apply Nat_eq_b2n_0.
 now apply angle_add_overflow_mul_div_pow2.
 Qed.
 
