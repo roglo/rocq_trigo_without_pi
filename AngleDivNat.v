@@ -778,11 +778,38 @@ intros Hcz Har Hco * Hnz.
 specialize (seq_angle_to_div_nat_is_Cauchy Har n θ) as H1.
 specialize (rngl_is_complete_angle_is_complete Hco) as H2.
 specialize (H2 _ H1).
+clear H1.
 destruct H2 as (θ', Ht).
 exists θ'.
 specialize (angle_div_nat_prop Hcz Har Hco _ _ _ Ht) as H2.
 split; [ now destruct H2 | ].
 destruct H2 as [(H2, H3)| H2]; [ now subst n θ' | ].
+rewrite <- H2 in Ht.
+Print is_limit_when_seq_tends_to_inf.
+Theorem glop {A} :
+  ∀ (da : A → A → T) (P : A → Prop) u L,
+  (∀ i, P (u i))
+  → is_limit_when_seq_tends_to_inf da u L
+  → P L.
+Proof.
+(* est-ce qu'il faut que ça soit continu, peut-être, euh ? *)
+intros * Hp Hlim.
+progress unfold is_limit_when_seq_tends_to_inf in Hlim.
+...
+eapply (glop angle_eucl_dist) with (L := θ'); [ | apply Ht ].
+intros i.
+...
+Search is_limit_when_seq_tends_to_inf.
+progress unfold seq_angle_to_div_nat in Ht.
+Print is_limit_when_seq_tends_to_inf.
+...
+Check is_limit_when_seq_tends_to_inf_eq_compat.
+rewrite is_limit_when_seq_tends_to_inf_eq_compat in Ht.
+...
+...
+progress unfold is_limit_when_seq_tends_to_inf in Ht.
+remember (∀ ε, _ → ∃ N, ∀ i, _) as x; subst x.
+Search (_ → angle_mul_nat_div_2π _ _ = _).
 ...
 Qed.
 *)
