@@ -1354,7 +1354,7 @@ Qed.
 
 Theorem angle_div_2_pow_mul :
   ∀ n m θ,
-  angle_mul_nat_overflow m θ = 0
+  angle_mul_nat_div_2π m θ = 0
   →  ((m * θ) /₂^n)%A = (m * (θ /₂^n))%A.
 Proof.
 intros * Haov.
@@ -1373,7 +1373,7 @@ Qed.
 
 Theorem angle_mul_nat_div_2 :
   ∀ n θ,
-  angle_mul_nat_overflow n θ = 0
+  angle_mul_nat_div_2π n θ = 0
   → (n * (θ /₂) = (n * θ) /₂)%A.
 Proof.
 destruct_ac.
@@ -1381,30 +1381,30 @@ intros * Haov.
 induction n; cbn. {
   symmetry; apply angle_0_div_2.
 }
-apply angle_mul_nat_overflow_succ_l_false in Haov.
+apply angle_mul_nat_div_2π_succ_l_false in Haov.
 rewrite IHn; [ | easy ].
 symmetry.
 now apply angle_div_2_add_not_overflow.
 Qed.
 
-Theorem angle_mul_nat_overflow_mul_2_div_2 :
+Theorem angle_mul_nat_div_2π_mul_2_div_2 :
   ∀ n θ,
-  angle_mul_nat_overflow n θ = 0
-  → angle_mul_nat_overflow (2 * n) (θ /₂) = 0.
+  angle_mul_nat_div_2π n θ = 0
+  → angle_mul_nat_div_2π (2 * n) (θ /₂) = 0.
 Proof.
 destruct_ac.
 intros * Hn.
 revert θ Hn.
 induction n; intros; [ easy | ].
-apply angle_mul_nat_overflow_succ_l_false in Hn.
+apply angle_mul_nat_div_2π_succ_l_false in Hn.
 destruct Hn as (Hmn, Han).
-cbn - [ angle_mul_nat_overflow ].
+cbn - [ angle_mul_nat_div_2π ].
 rewrite Nat.add_0_r.
 rewrite Nat.add_succ_r.
 rewrite <- Nat_mul_2_l.
-apply <- angle_mul_nat_overflow_succ_l_false.
+apply <- angle_mul_nat_div_2π_succ_l_false.
 split. {
-  apply <- angle_mul_nat_overflow_succ_l_false.
+  apply <- angle_mul_nat_div_2π_succ_l_false.
   split; [ now apply IHn | ].
   rewrite Nat.mul_comm.
   rewrite <- angle_mul_nat_assoc.
@@ -1427,14 +1427,14 @@ rewrite <- angle_mul_nat_assoc.
 now rewrite angle_div_2_mul_2.
 Qed.
 
-Theorem angle_mul_nat_overflow_pow_div :
-  ∀ n θ, angle_mul_nat_overflow (2 ^ n) (θ /₂^n) = 0.
+Theorem angle_mul_nat_div_2π_pow_div :
+  ∀ n θ, angle_mul_nat_div_2π (2 ^ n) (θ /₂^n) = 0.
 Proof.
 destruct_ac.
 destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
   intros.
   rewrite (rngl_characteristic_1_angle_0 Hc1 (angle_div_2_pow _ _)).
-  apply angle_mul_nat_overflow_0_r.
+  apply angle_mul_nat_div_2π_0_r.
 }
 assert (H2z : (2 ≠ 0)%L) by apply (rngl_2_neq_0 Hos Hc1 Hto).
 intros.
@@ -1453,7 +1453,7 @@ rewrite Nat.add_assoc.
 cbn in IHn.
 rewrite Nat.add_0_r in IHn.
 specialize (IHn θ) as H1.
-apply angle_mul_nat_overflow_mul_2_div_2 in H1.
+apply angle_mul_nat_div_2π_mul_2_div_2 in H1.
 cbn in H1.
 rewrite Nat.add_0_r in H1.
 now rewrite Nat.add_assoc in H1.

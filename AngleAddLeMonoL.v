@@ -49,14 +49,14 @@ Theorem angle_mul_le_mono_l :
   ∀ θ1 θ2,
   (θ1 ≤ θ2)%A
   → ∀ n,
-  angle_mul_nat_overflow n θ2 = 0
+  angle_mul_nat_div_2π n θ2 = 0
   → (n * θ1 ≤ n * θ2)%A.
 Proof.
 destruct_ac.
 intros * H12 * Hn2.
 revert θ1 θ2 H12 Hn2.
 induction n; intros; [ apply angle_le_refl | cbn ].
-apply angle_mul_nat_overflow_succ_l_false in Hn2.
+apply angle_mul_nat_div_2π_succ_l_false in Hn2.
 destruct Hn2 as (Hn2, H2n2).
 generalize Hn2; intros Hn12.
 apply (IHn θ1) in Hn12; [ | easy ].
@@ -74,7 +74,7 @@ apply (angle_le_trans _ (θ1 + n * θ2))%A. {
 Qed.
 
 Theorem angle_mul_le_mono_r :
-  ∀ a b θ, angle_mul_nat_overflow b θ = 0 → a ≤ b → (a * θ ≤ b * θ)%A.
+  ∀ a b θ, angle_mul_nat_div_2π b θ = 0 → a ≤ b → (a * θ ≤ b * θ)%A.
 Proof.
 intros * Hb Hab.
 revert a Hab.
@@ -85,7 +85,7 @@ induction b; intros. {
 destruct a; [ apply angle_nonneg | cbn ].
 move a after b.
 apply Nat.succ_le_mono in Hab.
-apply (angle_mul_nat_overflow_succ_l_false θ b) in Hb.
+apply (angle_mul_nat_div_2π_succ_l_false θ b) in Hb.
 destruct Hb as (H1, H2).
 specialize (IHb H1 _ Hab).
 now apply angle_add_le_mono_l.
@@ -94,8 +94,8 @@ Qed.
 Theorem angle_mul_nat_not_overflow_le_l :
   ∀ m n,
   m ≤ n
-  → ∀ θ, angle_mul_nat_overflow n θ = 0
-  → angle_mul_nat_overflow m θ = 0.
+  → ∀ θ, angle_mul_nat_div_2π n θ = 0
+  → angle_mul_nat_div_2π m θ = 0.
 Proof.
 destruct_ac.
 intros * Hmn * Hn.
@@ -103,19 +103,19 @@ revert θ m Hmn Hn.
 induction n; intros. {
   now apply Nat.le_0_r in Hmn; subst m.
 }
-apply angle_mul_nat_overflow_succ_l_false in Hn.
+apply angle_mul_nat_div_2π_succ_l_false in Hn.
 destruct m; [ easy | ].
 apply Nat.succ_le_mono in Hmn.
-apply angle_mul_nat_overflow_succ_l_false.
+apply angle_mul_nat_div_2π_succ_l_false.
 split; [ now apply IHn | ].
 apply (angle_add_overflow_le _ (n * θ)); [ | easy ].
 now apply angle_mul_le_mono_r.
 Qed.
 
-Theorem angle_mul_nat_overflow_le_l :
+Theorem angle_mul_nat_div_2π_le_l :
   ∀ n θ,
-  angle_mul_nat_overflow n θ ≠ 0
-  → ∀ m, n ≤ m → angle_mul_nat_overflow m θ ≠ 0.
+  angle_mul_nat_div_2π n θ ≠ 0
+  → ∀ m, n ≤ m → angle_mul_nat_div_2π m θ ≠ 0.
 Proof.
 destruct_ac.
 intros * Hn * Hnm.
@@ -123,9 +123,9 @@ intros H.
 now apply (angle_mul_nat_not_overflow_le_l n) in H.
 Qed.
 
-Theorem angle_mul_nat_overflow_distr_add_overflow :
+Theorem angle_mul_nat_div_2π_distr_add_overflow :
   ∀ m n θ,
-  angle_mul_nat_overflow (m + n) θ = 0
+  angle_mul_nat_div_2π (m + n) θ = 0
   → angle_add_overflow (m * θ) (n * θ) = false.
 Proof.
 destruct_ac.
@@ -133,7 +133,7 @@ intros * Hmov.
 revert n Hmov.
 induction m; intros; [ apply angle_add_overflow_0_l | ].
 rewrite Nat.add_succ_l in Hmov.
-rewrite angle_mul_nat_overflow_succ_l in Hmov.
+cbn in Hmov.
 apply Nat.eq_add_0 in Hmov.
 destruct Hmov as (Hmov, Hov).
 specialize (IHm _ Hmov) as Hov'.
@@ -148,10 +148,10 @@ apply angle_add_not_overflow_move_add. 2: {
 now rewrite angle_add_overflow_comm.
 Qed.
 
-Theorem angle_mul_nat_overflow_true_assoc :
+Theorem angle_mul_nat_div_2π_true_assoc :
   ∀ m n θ,
-  angle_mul_nat_overflow m (n * θ) ≠ 0
-  → angle_mul_nat_overflow (m * n) θ ≠ 0.
+  angle_mul_nat_div_2π m (n * θ) ≠ 0
+  → angle_mul_nat_div_2π (m * n) θ ≠ 0.
 Proof.
 intros * Hmn.
 revert n θ Hmn.
@@ -159,7 +159,7 @@ induction m; intros; [ easy | cbn ].
 cbn in Hmn.
 apply Nat_neq_add_0 in Hmn.
 destruct Hmn as [Hmn| Hmn]. {
-  apply (angle_mul_nat_overflow_le_l (m * n)); [ now apply IHm | ].
+  apply (angle_mul_nat_div_2π_le_l (m * n)); [ now apply IHm | ].
   apply Nat.le_add_l.
 }
 destruct n. {
@@ -168,23 +168,23 @@ destruct n. {
 }
 intros H1; apply Hmn; clear Hmn.
 rewrite angle_mul_nat_assoc.
-apply angle_mul_nat_overflow_distr_add_overflow in H1.
+apply angle_mul_nat_div_2π_distr_add_overflow in H1.
 now rewrite H1.
 Qed.
 
-Theorem angle_mul_nat_overflow_le_r :
+Theorem angle_mul_nat_div_2π_le_r :
   ∀ θ1 θ2,
   (θ1 ≤ θ2)%A
   → ∀ n,
-  angle_mul_nat_overflow n θ2 = 0
-  → angle_mul_nat_overflow n θ1 = 0.
+  angle_mul_nat_div_2π n θ2 = 0
+  → angle_mul_nat_div_2π n θ1 = 0.
 Proof.
 destruct_ac.
 intros * H12 * H2.
 revert θ1 θ2 H12 H2.
 induction n; intros; [ easy | ].
 generalize H2; intros H.
-apply angle_mul_nat_overflow_succ_l_false in H.
+apply angle_mul_nat_div_2π_succ_l_false in H.
 destruct H as (Hn2, H2n2).
 cbn.
 destruct n; [ now cbn; rewrite angle_add_overflow_0_r | ].

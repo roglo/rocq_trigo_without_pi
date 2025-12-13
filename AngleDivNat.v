@@ -713,7 +713,7 @@ enough (H : angle_lim (λ i, (n * (θ /₂^i))%A) 0). {
         apply Nat.mod_upper_bound.
         apply Hnz.
       }
-      apply angle_mul_nat_overflow_div_pow2.
+      apply angle_mul_nat_div_2π_div_pow2.
       eapply Nat.le_trans; [ | apply Hnm ].
       apply (Nat.le_trans _ (2 * n)). {
         flia Hnz Hn1.
@@ -738,7 +738,7 @@ enough (H : angle_lim (λ i, (n * (θ /₂^i))%A) 0). {
     apply Nat.lt_le_incl.
     now apply Nat.mod_upper_bound.
   }
-  apply angle_mul_nat_overflow_div_pow2.
+  apply angle_mul_nat_div_2π_div_pow2.
   eapply Nat.le_trans; [ | apply Hnm ].
   apply (Nat.le_trans _ (2 * n)). {
     flia Hnz Hn1.

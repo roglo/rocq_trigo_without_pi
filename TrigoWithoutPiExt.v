@@ -610,20 +610,20 @@ Context {rp : ring_like_prop T}.
 Context {rl : real_like_prop T}.
 Context {ac : angle_ctx T}.
 
-Fixpoint angle_mul_nat_overflow n θ :=
+Fixpoint angle_mul_nat_div_2π n θ :=
   match n with
   | 0 => 0
-  | S m => angle_mul_nat_overflow m θ + Nat.b2n (angle_add_overflow θ (m * θ))
+  | S m => angle_mul_nat_div_2π m θ + Nat.b2n (angle_add_overflow θ (m * θ))
   end.
 
-Theorem angle_mul_nat_overflow_succ_l_false :
+Theorem angle_mul_nat_div_2π_succ_l_false :
   ∀ θ n,
-  angle_mul_nat_overflow (S n) θ = 0
-  ↔ angle_mul_nat_overflow n θ = 0 ∧
+  angle_mul_nat_div_2π (S n) θ = 0
+  ↔ angle_mul_nat_div_2π n θ = 0 ∧
     angle_add_overflow θ (n * θ) = false.
 Proof.
 intros; cbn.
-destruct (angle_mul_nat_overflow _ _); [ | easy ].
+destruct (angle_mul_nat_div_2π _ _); [ | easy ].
 now destruct (angle_add_overflow _ _).
 Qed.
 
@@ -728,12 +728,12 @@ rewrite (rngl_sub_0_r Hos).
 now rewrite rngl_add_0_l.
 Qed.
 
-Theorem angle_mul_nat_overflow_0_l :
-  ∀ θ, angle_mul_nat_overflow 0 θ = 0.
+Theorem angle_mul_nat_div_2π_0_l :
+  ∀ θ, angle_mul_nat_div_2π 0 θ = 0.
 Proof. easy. Qed.
 
-Theorem angle_mul_nat_overflow_0_r :
-  ∀ n, angle_mul_nat_overflow n 0 = 0.
+Theorem angle_mul_nat_div_2π_0_r :
+  ∀ n, angle_mul_nat_div_2π n 0 = 0.
 Proof.
 intros.
 induction n; [ easy | cbn ].
@@ -802,14 +802,14 @@ intros; cbn.
 now rewrite angle_add_0_r.
 Qed.
 
-Theorem angle_mul_nat_overflow_succ_l_true :
+Theorem angle_mul_nat_div_2π_succ_l_true :
   ∀ θ n,
-  angle_mul_nat_overflow (S n) θ ≠ 0
-  ↔ angle_mul_nat_overflow n θ ≠ 0 ∨
+  angle_mul_nat_div_2π (S n) θ ≠ 0
+  ↔ angle_mul_nat_div_2π n θ ≠ 0 ∨
     angle_add_overflow θ (n * θ) = true.
 Proof.
 intros; cbn.
-destruct (angle_mul_nat_overflow _ _). {
+destruct (angle_mul_nat_div_2π _ _). {
   destruct (angle_add_overflow _ _); cbn.
   split; [ now intros; right | easy ].
   split; [ easy | now intros H; destruct H ].
@@ -820,11 +820,13 @@ destruct (angle_add_overflow _ _). {
 now split; [ intros; left | ].
 Qed.
 
-Theorem angle_mul_nat_overflow_succ_l :
+(*
+Theorem angle_mul_nat_div_2π_succ_l :
   ∀ θ n,
-  angle_mul_nat_overflow (S n) θ =
-  angle_mul_nat_overflow n θ + Nat.b2n (angle_add_overflow θ (n * θ)).
+  angle_mul_nat_div_2π (S n) θ =
+  angle_mul_nat_div_2π n θ + Nat.b2n (angle_add_overflow θ (n * θ)).
 Proof. easy. Qed.
+*)
 
 Fixpoint rngl_cos_div_pow_2 θ n :=
   match n with
