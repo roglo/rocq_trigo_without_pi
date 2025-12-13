@@ -784,101 +784,11 @@ now destruct H2.
 Qed.
 
 (*
-
-Require Import AngleAddOverflowEquiv.
-
-Definition angle_add_overflow1 θ1 θ2 :=
-  if (θ1 =? 0)%A then false
-  else if (θ2 =? 0)%A then false
-  else if (0 <? rngl_sin θ1)%L then
-    if (0 <? rngl_sin θ2)%L then false
-    else (rngl_cos θ1 ≤? rngl_cos θ2)%L
-  else
-    if (0 <? rngl_sin θ2)%L then (rngl_cos θ2 ≤? rngl_cos θ1)%L
-    else true.
-
-Require Import Angle.
-Require Import RingLike.RealLike.
-
-Theorem angle_add_overflow_equiv1 :
-  ∀ θ1 θ2, angle_add_overflow1 θ1 θ2 = angle_add_overflow θ1 θ2.
+Theorem angle_mul_div_nat : ∀ n θ, angle_div_nat (n * θ) n θ.
 Proof.
-destruct_ac.
 intros.
-progress unfold angle_add_overflow.
-progress unfold angle_add_overflow1.
-remember (θ1 =? 0)%A as t1z eqn:Ht1z.
-remember (θ2 =? 0)%A as t2z eqn:Ht2z.
-symmetry in Ht1z, Ht2z.
-destruct t1z; [ easy | cbn ].
-apply angle_eqb_neq in Ht1z.
-destruct t2z. {
-  apply angle_eqb_eq in Ht2z; subst θ2.
-  symmetry.
-  apply angle_leb_gt.
-  apply angle_lt_iff.
-  split; [ apply angle_nonneg | ].
-  intros H; apply Ht1z; clear Ht1z.
-  symmetry in H.
-  apply (f_equal angle_opp) in H.
-  rewrite angle_opp_involutive in H.
-  now rewrite angle_opp_0 in H.
-}
-apply angle_eqb_neq in Ht2z.
-progress unfold angle_leb.
-cbn.
-rewrite (rngl_leb_opp_r Hop Hto).
-rewrite (rngl_opp_0 Hop).
-remember (0 <? rngl_sin θ1)%L as zs1 eqn:Hzs1.
-remember (rngl_sin θ1 ≤? 0)%L as s1z eqn:Hs1z.
-symmetry in Hzs1, Hs1z.
-remember (0 <? rngl_sin θ2)%L as zs2 eqn:Hzs2.
-remember (0 ≤? rngl_sin θ2)%L as zse2 eqn:Hzse2.
-symmetry in Hzs2, Hzse2.
-destruct zs1. {
-  apply (rngl_ltb_lt Heo) in Hzs1.
-  destruct s1z. {
-    apply rngl_leb_le in Hs1z.
-    now apply (rngl_nlt_ge Hor) in Hs1z.
-  }
-  clear Hs1z.
-  destruct zs2. {
-    apply (rngl_ltb_lt Heo) in Hzs2.
-    destruct zse2; [ easy | ].
-    apply (rngl_leb_gt_iff Hto) in Hzse2.
-    now apply (rngl_lt_asymm Hor) in Hzs2.
-  }
-  apply (rngl_ltb_ge_iff Hto) in Hzs2.
-  destruct zse2; [ | easy ].
-  apply rngl_leb_le in Hzse2.
-  apply (rngl_le_antisymm Hor) in Hzse2; [ clear Hzs2 | easy ].
-  apply eq_rngl_sin_0 in Hzse2.
-  destruct Hzse2; [ easy | subst; cbn ].
-  apply (rngl_leb_gt_iff Hto).
-  apply rngl_le_neq.
-  split; [ apply rngl_cos_bound | ].
-  intros H; symmetry in H.
-  apply eq_rngl_cos_opp_1 in H; subst.
-  now apply rngl_lt_irrefl in Hzs1.
-}
-apply rngl_ltb_nlt in Hzs1.
-destruct s1z; [ | now apply (rngl_leb_gt_iff Hto) in Hs1z ].
-apply rngl_leb_le in Hs1z.
-destruct zs2. {
-  destruct zse2; [ easy | ].
-  apply (rngl_ltb_lt Heo) in Hzs2.
-  apply (rngl_leb_gt_iff Hto) in Hzse2.
-  now apply (rngl_lt_asymm Hor) in Hzs2.
-}
-symmetry.
-destruct zse2; [ | easy ].
-apply (rngl_ltb_ge_iff Hto) in Hzs2.
-apply rngl_leb_le in Hzse2.
-apply (rngl_le_antisymm Hor) in Hzse2; [ | easy ].
-apply eq_rngl_sin_0 in Hzse2.
-destruct Hzse2; [ easy | subst; cbn ].
-apply rngl_leb_le, rngl_cos_bound.
-Qed.
+progress unfold angle_div_nat.
+...
 *)
 
 End a.
