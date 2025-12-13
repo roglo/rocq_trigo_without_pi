@@ -797,6 +797,18 @@ intros Hch Har Hco * Hnz Hmn.
 intros ε Hε.
 progress unfold seq_angle_to_div_nat.
 remember (∃ N : nat, ∀ i : nat, _) as P; subst P.
+(**)
+enough (H :
+  ∃ N, ∀ i, N ≤ i →
+  (angle_eucl_dist (2 ^ i / n * n * (θ /₂^i)) θ < ε)%L). {
+  destruct H as (N, H).
+  exists N.
+  intros i Hi.
+  specialize (H i Hi).
+  rewrite angle_div_2_pow_mul; [ | easy ].
+  now rewrite angle_mul_nat_assoc.
+}
+...
 induction n; [ easy | clear Hnz ].
 destruct (Nat.eq_dec n 0) as [Hnz| Hnz]. {
   subst n.
@@ -814,6 +826,7 @@ destruct Hmn as (H1, H2).
 apply Nat_eq_b2n_0 in H2.
 specialize (IHn H1).
 destruct IHn as (N, H3).
+remember (∃ M : nat, ∀ i : nat, _) as P; subst P.
 ...
 *)
 
