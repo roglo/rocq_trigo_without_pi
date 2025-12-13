@@ -784,10 +784,36 @@ now destruct H2.
 Qed.
 
 (*
-Theorem angle_mul_div_nat : ∀ n θ, angle_div_nat (n * θ) n θ.
+Theorem angle_mul_div_nat :
+  rngl_characteristic T = 0 →
+  rngl_is_archimedean T = true →
+  is_complete T rngl_dist →
+  ∀ θ n,
+  n ≠ 0
+  → angle_mul_nat_div_2π n θ = 0
+  → angle_div_nat (n * θ) n θ.
 Proof.
-intros.
-progress unfold angle_div_nat.
+intros Hch Har Hco * Hnz Hmn.
+intros ε Hε.
+progress unfold seq_angle_to_div_nat.
+remember (∃ N : nat, ∀ i : nat, _) as P; subst P.
+induction n; [ easy | clear Hnz ].
+destruct (Nat.eq_dec n 0) as [Hnz| Hnz]. {
+  subst n.
+  exists 0.
+  intros i _.
+  rewrite Nat.div_1_r.
+  rewrite angle_mul_1_l.
+  rewrite angle_div_2_pow_mul_2_pow.
+  now rewrite angle_eucl_dist_diag.
+}
+specialize (IHn Hnz).
+cbn in Hmn.
+apply Nat.eq_add_0 in Hmn.
+destruct Hmn as (H1, H2).
+apply Nat_eq_b2n_0 in H2.
+specialize (IHn H1).
+destruct IHn as (N, H3).
 ...
 *)
 
