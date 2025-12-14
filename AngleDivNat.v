@@ -795,6 +795,14 @@ Proof.
 (* est-ce qu'il faut que ça soit continu, peut-être, euh ? *)
 intros * Hp Hlim.
 progress unfold is_limit_when_seq_tends_to_inf in Hlim.
+Print seq_angle_to_div_nat.
+Theorem glop :
+  ∀ θ n i, (seq_angle_to_div_nat θ n i ≤ θ)%A.
+Search (seq_angle_to_div_nat _ _ _ ≤ _)%A.
+seq_angle_to_div_nat_le_straight_div_pow2_log2_pred:
+  ∀ {T : Type} {ro : ring_like_op T} {rp : ring_like_prop T} {rl : real_like_prop T} 
+    {ac : angle_ctx T} (n i : nat) (θ : angle T),
+    n ≠ 1 → (seq_angle_to_div_nat θ n i ≤ π /₂^(Nat.log2 n - 1))%A
 ...
 eapply (glop angle_eucl_dist) with (L := θ'); [ | apply Ht ].
 intros i.
