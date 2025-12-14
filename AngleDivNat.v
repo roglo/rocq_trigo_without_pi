@@ -841,7 +841,7 @@ specialize (angle_div_nat_prop Hcz Har Hco _ _ _ Ht) as H2.
 now destruct H2.
 Qed.
 
-(* to be completed *)
+(* to be completed
 Theorem angle_mul_div_nat :
   rngl_characteristic T = 0 →
   rngl_is_archimedean T = true →
