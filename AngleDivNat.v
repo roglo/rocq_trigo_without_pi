@@ -864,6 +864,15 @@ eapply (angle_lim_eq_compat 0 0). {
   rewrite <- angle_mul_nat_assoc.
   easy.
 }
+Search angle_lim.
+Theorem glop :
+  ∀ f a θ θ',
+  angle_lim f θ
+  → θ' = (a * θ)%A
+  → angle_lim (λ i, (a * f i)%A) θ'.
+Admitted.
+eapply glop.
+(* bof... *)
 ...
   clear Hnz.
   revert i.
