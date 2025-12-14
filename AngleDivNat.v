@@ -852,23 +852,19 @@ Theorem angle_mul_div_nat :
   → angle_div_nat (n * θ) n θ.
 Proof.
 intros Hch Har Hco * Hnz Hmn.
-...
 progress unfold angle_div_nat.
-eapply (angle_lim_eq_compat (Nat.log2 (S n)) 0). 2: {
-  replace n with (S (n - 1)) in Hmn by flia Hnz.
-  cbn in Hmn.
-  apply Nat.
-progress unfold angle_mul_nat_div
-apply Hmn.
+progress unfold seq_angle_to_div_nat.
 eapply (angle_lim_eq_compat 0 0). {
   intros i.
-  progress unfold seq_angle_to_div_nat.
   rewrite Nat.add_0_r.
   symmetry.
   rewrite angle_div_2_pow_mul; [ | easy ].
   rewrite angle_mul_nat_assoc.
   rewrite Nat.mul_comm.
-  rewrite <- angle_div_2_pow_mul; [ easy | ].
+  rewrite <- angle_mul_nat_assoc.
+  easy.
+}
+...
   clear Hnz.
   revert i.
   induction n; intros; [ easy | ].
@@ -877,6 +873,10 @@ eapply (angle_lim_eq_compat 0 0). {
   apply Nat.eq_add_0 in Hmn.
   destruct Hmn as (H1, H2).
   specialize (IHn H1).
+...
+  rewrite Nat.pow_add_r.
+Search (2 ^ Nat.log2 _).
+...
 Search angle_mul_nat_div_2π.
 ...
 }
