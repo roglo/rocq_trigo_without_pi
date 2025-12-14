@@ -841,6 +841,13 @@ specialize (angle_div_nat_prop Hcz Har Hco _ _ _ Ht) as H2.
 now destruct H2.
 Qed.
 
+Theorem fold_angle_div_nat :
+  ∀ n θ θ',
+  is_limit_when_seq_tends_to_inf angle_eucl_dist
+    (seq_angle_to_div_nat n θ) θ' =
+  angle_div_nat n θ θ'.
+Proof. easy. Qed.
+
 (* to be completed
 Theorem angle_mul_div_nat :
   rngl_characteristic T = 0 →
@@ -863,16 +870,26 @@ specialize (angle_div_nat_prop Hch Har Hco) as H2.
 specialize (H2 (n * θ)%A n θ').
 specialize (H2 Ht).
 destruct H2 as [H2| H2]; [ easy | ].
+rewrite fold_angle_div_nat in Ht |-*.
 assert (θ = θ'). {
 Theorem angle_mul_nat_cancel_l :
-  ∀ n θ1 θ2, n ≠ 0 → (n * θ1 = n * θ2)%A → θ1 = θ2.
+  ∀ n θ1 θ2,
+  n ≠ 0
+  → angle_mul_nat_div_2π n θ1 = 0
+  → angle_mul_nat_div_2π n θ2 = 0
+  → (n * θ1 = n * θ2)%A
+  → θ1 = θ2.
 Proof.
-intros * Hnz Hnn.
+intros * Hnz Hn1 Hn2 Hnn.
+... ...
+apply (angle_mul_nat_cancel_l n); [ easy | easy | | easy ].
+...
 rewrite <- angle_opp_involutive in Hnn.
 apply angle_add_move_0_r in Hnn.
 rewrite angle_add_opp_r in Hnn.
 rewrite <- angle_mul_sub_distr_l in Hnn.
-Search (_ * _ = 0)%A.
+...
+Search (angle_mul_nat_div_2π _ (_ + _)).
 (*
 contre exemple :
   2 x π = 0
