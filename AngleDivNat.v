@@ -851,6 +851,96 @@ Theorem angle_mul_div_nat :
   → angle_mul_nat_div_2π n θ = 0
   → angle_div_nat (n * θ) n θ.
 Proof.
+destruct_ac.
+intros Hch Har Hco * Hnz Hmn.
+specialize (seq_angle_to_div_nat_is_Cauchy Har n (n * θ)) as H1.
+specialize (rngl_is_complete_angle_is_complete Hco) as H2.
+specialize (H2 _ H1).
+destruct H2 as (θ', Ht).
+progress unfold angle_div_nat.
+progress unfold angle_lim.
+specialize (angle_div_nat_prop Hch Har Hco) as H2.
+specialize (H2 (n * θ)%A n θ').
+specialize (H2 Ht).
+destruct H2 as [H2| H2]; [ easy | ].
+...
+assert (θ = θ'). {
+Search (_ * _ = _ * _)%L.
+Theorem angle_mul_nat_cancel_l :
+  ∀ n θ1 θ2, n ≠ 0 → (n * θ1 = n * θ2)%A → θ1 = θ2.
+Proof.
+intros * Hnz Hnn.
+induction n; intros; [ easy | clear Hnz ].
+destruct (Nat.eq_dec n 0) as [Hnz| Hnz]. {
+  now subst n; do 2 rewrite angle_mul_1_l in Hnn.
+}
+apply (IHn Hnz).
+cbn in Hnn.
+apply angle_add_move_l in Hnn.
+rewrite angle_add_sub_swap in Hnn.
+...
+symmetry in Hnn.
+apply angle_add_move_r in Hnn.
+symmetry in Hnn.
+rewrite <- angle_mul_sub_distr_l in Hnn.
+...
+Require Import AngleAddLeMonoL_1.
+Require Import AngleAddLeMonoL_2.
+Require Import AngleAddLeMonoL_3.
+Require Import AngleAddLeMonoL_prop.
+Require Import AngleAddLeMonoL.
+Require Import AngleAddOverflowEquiv.
+Require Import AngleAddOverflowLe.
+Require Import AngleDef.
+Require Import AngleDiv2Add.
+Require Import AngleDiv2.
+Require Import AngleTypeIsComplete.
+Require Import Angle.
+Require Import Distance.
+Require Import Order.
+Require Import SeqAngleIsCauchy.
+Require Import TacChangeAngle.
+Require Import TrigoWithoutPiExt.
+Search (_ + _)%A.
+angle_add_move_l:
+  ∀ {T : Type} {ro : ring_like_op T} {rp : ring_like_prop T} 
+    {ac : angle_ctx T} (θ1 θ2 θ3 : angle T),
+    (θ1 + θ2)%A = θ3 ↔ θ2 = (θ3 - θ1)%A
+Search (rngl_sin (_ * _)).
+...
+  now apply (angle_mul_nat_cancel_l n _ _ Hnz).
+...
+  clear Hmn H1 Ht.
+  revert θ θ' H2.
+  induction n; intros; [ easy | clear Hnz ].
+  destruct (Nat.eq_dec n 0) as [Hnz| Hnz]. {
+    now subst n; do 2 rewrite angle_mul_1_l in H2.
+  }
+  apply IHn; [ easy | ].
+..
+Search (_ ≤ _)%A.
+angle_mul_le_mono_r:
+  ∀ {T : Type} {ro : ring_like_op T} {rp : ring_like_prop T} 
+    {ac : angle_ctx T} (a b : nat) (θ : angle T),
+    angle_mul_nat_div_2π b θ = 0 → a ≤ b → (a * θ ≤ b * θ)%A
+angle_mul_le_mono_l:
+  ∀ {T : Type} {ro : ring_like_op T} {rp : ring_like_prop T} 
+    {ac : angle_ctx T} (θ1 θ2 : angle T),
+    (θ1 ≤ θ2)%A
+    → ∀ n : nat, angle_mul_nat_div_2π n θ2 = 0 → (n * θ1 ≤ n * θ2)%A
+...
+Search (_ + _ ≤ _ + _)%A.
+angle_add_le_mono_l:
+  ∀ {T : Type} {ro : ring_like_op T} {rp : ring_like_prop T} 
+    {ac : angle_ctx T} (θ1 θ2 θ3 : angle T),
+    angle_add_overflow θ1 θ3 = false → (θ2 ≤ θ3)%A → (θ1 + θ2 ≤ θ1 + θ3)%A
+...
+apply angle_mul_nat_cancel_l in H2.
+...
+exists θ'.
+specialize (angle_div_nat_prop Hcz Har Hco _ _ _ Ht) as H2.
+now destruct H2.
+...
 intros Hch Har Hco * Hnz Hmn.
 progress unfold angle_div_nat.
 progress unfold seq_angle_to_div_nat.
@@ -864,6 +954,13 @@ eapply (angle_lim_eq_compat 0 0). {
   rewrite <- angle_mul_nat_assoc.
   easy.
 }
+specialize (exists_angle_div_nat Hch Har Hco) as H1.
+specialize (H1 θ n Hnz).
+destruct H1 as (θ', Ht).
+rewrite <- Ht.
+apply angle_lim_mul.
+...
+Inspect 5.
 Search angle_lim.
 Theorem glop :
   ∀ f a θ θ',
