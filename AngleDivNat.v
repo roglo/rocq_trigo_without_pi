@@ -841,7 +841,7 @@ specialize (angle_div_nat_prop Hcz Har Hco _ _ _ Ht) as H2.
 now destruct H2.
 Qed.
 
-(*
+(* to be completed *)
 Theorem angle_mul_div_nat :
   rngl_characteristic T = 0 →
   rngl_is_archimedean T = true →
@@ -851,6 +851,37 @@ Theorem angle_mul_div_nat :
   → angle_mul_nat_div_2π n θ = 0
   → angle_div_nat (n * θ) n θ.
 Proof.
+intros Hch Har Hco * Hnz Hmn.
+...
+progress unfold angle_div_nat.
+eapply (angle_lim_eq_compat (Nat.log2 (S n)) 0). 2: {
+  replace n with (S (n - 1)) in Hmn by flia Hnz.
+  cbn in Hmn.
+  apply Nat.
+progress unfold angle_mul_nat_div
+apply Hmn.
+eapply (angle_lim_eq_compat 0 0). {
+  intros i.
+  progress unfold seq_angle_to_div_nat.
+  rewrite Nat.add_0_r.
+  symmetry.
+  rewrite angle_div_2_pow_mul; [ | easy ].
+  rewrite angle_mul_nat_assoc.
+  rewrite Nat.mul_comm.
+  rewrite <- angle_div_2_pow_mul; [ easy | ].
+  clear Hnz.
+  revert i.
+  induction n; intros; [ easy | ].
+  apply (angle_mul_nat_not_overflow_le_l _ (S n)); [ | easy ].
+  cbn in Hmn.
+  apply Nat.eq_add_0 in Hmn.
+  destruct Hmn as (H1, H2).
+  specialize (IHn H1).
+Search angle_mul_nat_div_2π.
+...
+}
+Search angle_lim.
+...
 intros Hch Har Hco * Hnz Hmn.
 intros ε Hε.
 progress unfold seq_angle_to_div_nat.
