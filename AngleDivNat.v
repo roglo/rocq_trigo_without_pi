@@ -863,12 +863,21 @@ specialize (angle_div_nat_prop Hch Har Hco) as H2.
 specialize (H2 (n * θ)%A n θ').
 specialize (H2 Ht).
 destruct H2 as [H2| H2]; [ easy | ].
-...
 assert (θ = θ'). {
-Search (_ * _ = _ * _)%L.
 Theorem angle_mul_nat_cancel_l :
   ∀ n θ1 θ2, n ≠ 0 → (n * θ1 = n * θ2)%A → θ1 = θ2.
 Proof.
+intros * Hnz Hnn.
+rewrite <- angle_opp_involutive in Hnn.
+apply angle_add_move_0_r in Hnn.
+rewrite angle_add_opp_r in Hnn.
+rewrite <- angle_mul_sub_distr_l in Hnn.
+Search (_ * _ = 0)%A.
+(*
+contre exemple :
+  2 x π = 0
+*)
+...
 intros * Hnz Hnn.
 induction n; intros; [ easy | clear Hnz ].
 destruct (Nat.eq_dec n 0) as [Hnz| Hnz]. {
@@ -878,12 +887,17 @@ apply (IHn Hnz).
 cbn in Hnn.
 apply angle_add_move_l in Hnn.
 rewrite angle_add_sub_swap in Hnn.
-...
 symmetry in Hnn.
 apply angle_add_move_r in Hnn.
-symmetry in Hnn.
 rewrite <- angle_mul_sub_distr_l in Hnn.
+rewrite <- angle_opp_sub_distr in Hnn.
+symmetry in Hnn.
+apply angle_add_move_0_r in Hnn.
+rewrite <- (angle_mul_1_l (θ1 - θ2)) in Hnn at 2.
+rewrite <- angle_mul_add_distr_r in Hnn.
+rewrite Nat.add_1_r in Hnn.
 ...
+Search (_ * _ = 0)%A.
 Require Import AngleAddLeMonoL_1.
 Require Import AngleAddLeMonoL_2.
 Require Import AngleAddLeMonoL_3.
@@ -901,6 +915,7 @@ Require Import Order.
 Require Import SeqAngleIsCauchy.
 Require Import TacChangeAngle.
 Require Import TrigoWithoutPiExt.
+Search (_ * _ = 0)%A.
 Search (_ + _)%A.
 angle_add_move_l:
   ∀ {T : Type} {ro : ring_like_op T} {rp : ring_like_prop T} 
