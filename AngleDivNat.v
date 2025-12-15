@@ -870,9 +870,9 @@ specialize (angle_div_nat_prop Hch Har Hco) as H2.
 specialize (H2 (n * θ)%A n θ').
 specialize (H2 Ht).
 destruct H2 as [H2| H2]; [ easy | ].
-(*
+(**)
 rewrite fold_angle_div_nat in Ht |-*.
-*)
+(*
 intros ε Hε.
 specialize (Ht ε Hε).
 destruct Ht as (N, Ht).
@@ -881,37 +881,26 @@ specialize (Ht m Hm).
 progress unfold seq_angle_to_div_nat in Ht.
 progress unfold seq_angle_to_div_nat.
 (* ttt... non, ça a pas trop l'air de le faire... *)
-...
+*)
 assert (θ = θ'). {
-Theorem angle_mul_nat_cancel_l :
+Theorem angle_mul_nat_cancel_l_le :
   ∀ n θ1 θ2,
   n ≠ 0
   → angle_mul_nat_div_2π n θ1 = 0
   → angle_mul_nat_div_2π n θ2 = 0
   → (n * θ1 = n * θ2)%A
+  → (θ1 ≤ θ2)%A
   → θ1 = θ2.
 Proof.
-intros * Hnz Hn1 Hn2 Hnn.
-revert θ1 θ2 Hn1 Hn2 Hnn.
-induction n; intros; [ easy | clear Hnz ].
-destruct n; [ now do 2 rewrite angle_mul_1_l in Hnn | ].
-specialize (IHn (Nat.neq_succ_0 _)).
-destruct n. {
-  apply (f_equal angle_div_2) in Hnn.
-  (* lemma *)
-  rewrite <- (Nat.pow_1_r 2) in Hnn, Hn1, Hn2.
-  do 2 rewrite <- angle_div_pow2_1 in Hnn.
-  rewrite angle_div_2_pow_mul in Hnn; [ | easy ].
-  rewrite angle_div_2_pow_mul in Hnn; [ | easy ].
-  cbn in Hnn.
-  do 2 rewrite angle_add_0_r in Hnn.
-  now do 2 rewrite angle_add_div_2_diag in Hnn.
-}
-destruct n. {
-(* bon, c'est pas sûr que ça fasse avancer le truc *)
+intros * Hnz Hn1 Hn2 Hnn H12.
+symmetry in Hnn.
+apply angle_sub_move_0_r in Hnn.
+rewrite <- angle_mul_sub_distr_l in Hnn.
+apply angle_sub_move_0_r.
+Search (_ = _ + _)%A.
 ...
-intros * Hnz Hn1 Hn2 Hnn.
-revert θ1 θ2 Hn1 Hn2 Hnn.
+intros * Hnz Hn1 Hn2 Hnn H12.
+revert θ1 θ2 Hn1 Hn2 Hnn H12.
 induction n; intros; [ easy | clear Hnz ].
 destruct (Nat.eq_dec n 0) as [Hnz| Hnz]. {
   now subst n; do 2 rewrite angle_mul_1_l in Hnn.
@@ -923,15 +912,7 @@ destruct Hn1 as (Ha1, Ho1).
 destruct Hn2 as (Ha2, Ho2).
 move Ha2 before Ha1.
 apply Nat_eq_b2n_0 in Ho1, Ho2.
-...
-apply IHn; [ easy | easy | ].
-cbn in Hnn.
-...
-destruct (angle_le_dec θ1 θ2) as [H12| H12]. {
-  apply angle_le_antisymm. {
-    now apply angle_mul_le_mono_l.
-  }
-...
+apply IHn; [ easy | easy | | easy ].
 cbn in Hnn.
 apply angle_add_move_l in Hnn.
 rewrite angle_add_sub_swap in Hnn.
