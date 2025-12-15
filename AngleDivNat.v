@@ -870,7 +870,18 @@ specialize (angle_div_nat_prop Hch Har Hco) as H2.
 specialize (H2 (n * θ)%A n θ').
 specialize (H2 Ht).
 destruct H2 as [H2| H2]; [ easy | ].
+(*
 rewrite fold_angle_div_nat in Ht |-*.
+*)
+intros ε Hε.
+specialize (Ht ε Hε).
+destruct Ht as (N, Ht).
+exists N; intros m Hm.
+specialize (Ht m Hm).
+progress unfold seq_angle_to_div_nat in Ht.
+progress unfold seq_angle_to_div_nat.
+(* ttt... non, ça a pas trop l'air de le faire... *)
+...
 assert (θ = θ'). {
 Theorem angle_mul_nat_cancel_l :
   ∀ n θ1 θ2,
@@ -920,14 +931,6 @@ destruct (angle_le_dec θ1 θ2) as [H12| H12]. {
   apply angle_le_antisymm. {
     now apply angle_mul_le_mono_l.
   }
-...
-Search (angle_mul_nat_div_2π _ _ = 0 → _).
-angle_mul_le_mono_l:
-  ∀ {T : Type} {ro : ring_like_op T} {rp : ring_like_prop T} {ac : angle_ctx T} (θ1 θ2 : angle T),
-    (θ1 ≤ θ2)%A → ∀ n : nat, angle_mul_nat_div_2π n θ2 = 0 → (n * θ1 ≤ n * θ2)%A
-angle_mul_le_mono_r:
-  ∀ {T : Type} {ro : ring_like_op T} {rp : ring_like_prop T} {ac : angle_ctx T} 
-    (a b : nat) (θ : angle T), angle_mul_nat_div_2π b θ = 0 → a ≤ b → (a * θ ≤ b * θ)%A
 ...
 cbn in Hnn.
 apply angle_add_move_l in Hnn.
@@ -1010,23 +1013,6 @@ Search (rngl_sin (_ * _)).
   }
   apply IHn; [ easy | ].
 ..
-Search (_ ≤ _)%A.
-angle_mul_le_mono_r:
-  ∀ {T : Type} {ro : ring_like_op T} {rp : ring_like_prop T} 
-    {ac : angle_ctx T} (a b : nat) (θ : angle T),
-    angle_mul_nat_div_2π b θ = 0 → a ≤ b → (a * θ ≤ b * θ)%A
-angle_mul_le_mono_l:
-  ∀ {T : Type} {ro : ring_like_op T} {rp : ring_like_prop T} 
-    {ac : angle_ctx T} (θ1 θ2 : angle T),
-    (θ1 ≤ θ2)%A
-    → ∀ n : nat, angle_mul_nat_div_2π n θ2 = 0 → (n * θ1 ≤ n * θ2)%A
-...
-Search (_ + _ ≤ _ + _)%A.
-angle_add_le_mono_l:
-  ∀ {T : Type} {ro : ring_like_op T} {rp : ring_like_prop T} 
-    {ac : angle_ctx T} (θ1 θ2 θ3 : angle T),
-    angle_add_overflow θ1 θ3 = false → (θ2 ≤ θ3)%A → (θ1 + θ2 ≤ θ1 + θ3)%A
-...
 apply angle_mul_nat_cancel_l in H2.
 ...
 exists θ'.
