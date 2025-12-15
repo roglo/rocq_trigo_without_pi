@@ -881,6 +881,26 @@ Theorem angle_mul_nat_cancel_l :
   → θ1 = θ2.
 Proof.
 intros * Hnz Hn1 Hn2 Hnn.
+induction n; [ easy | clear Hnz ].
+destruct (Nat.eq_dec n 0) as [Hnz| Hnz]. {
+  now subst n; do 2 rewrite angle_mul_1_l in Hnn.
+}
+cbn in Hn1, Hn2.
+apply Nat.eq_add_0 in Hn1, Hn2.
+apply (IHn Hnz); [ easy | easy | ].
+...
+cbn in Hnn.
+apply angle_add_move_l in Hnn.
+rewrite angle_add_sub_swap in Hnn.
+symmetry in Hnn.
+apply angle_add_move_r in Hnn.
+rewrite <- angle_mul_sub_distr_l in Hnn.
+rewrite <- angle_opp_sub_distr in Hnn.
+symmetry in Hnn.
+apply angle_add_move_0_r in Hnn.
+rewrite <- (angle_mul_1_l (θ1 - θ2)) in Hnn at 2.
+rewrite <- angle_mul_add_distr_r in Hnn.
+rewrite Nat.add_1_r in Hnn.
 ... ...
 apply (angle_mul_nat_cancel_l n); [ easy | easy | | easy ].
 ...
