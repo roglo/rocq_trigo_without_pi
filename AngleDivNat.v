@@ -849,7 +849,7 @@ Theorem fold_angle_div_nat :
   angle_div_nat n θ θ'.
 Proof. easy. Qed.
 
-(* to be completed *)
+(* to be completed
 Theorem angle_mul_div_nat :
   rngl_characteristic T = 0 →
   rngl_is_archimedean T = true →
