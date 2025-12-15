@@ -881,13 +881,34 @@ Theorem angle_mul_nat_cancel_l :
   → θ1 = θ2.
 Proof.
 intros * Hnz Hn1 Hn2 Hnn.
-induction n; [ easy | clear Hnz ].
+revert θ1 θ2 Hn1 Hn2 Hnn.
+induction n; intros; [ easy | clear Hnz ].
 destruct (Nat.eq_dec n 0) as [Hnz| Hnz]. {
   now subst n; do 2 rewrite angle_mul_1_l in Hnn.
 }
+specialize (IHn Hnz).
 cbn in Hn1, Hn2.
 apply Nat.eq_add_0 in Hn1, Hn2.
-apply (IHn Hnz); [ easy | easy | ].
+destruct Hn1 as (Ha1, Ho1).
+destruct Hn2 as (Ha2, Ho2).
+move Ha2 before Ha1.
+apply Nat_eq_b2n_0 in Ho1, Ho2.
+...
+apply IHn; [ easy | easy | ].
+cbn in Hnn.
+...
+destruct (angle_le_dec θ1 θ2) as [H12| H12]. {
+  apply angle_le_antisymm. {
+    now apply angle_mul_le_mono_l.
+  }
+...
+Search (angle_mul_nat_div_2π _ _ = 0 → _).
+angle_mul_le_mono_l:
+  ∀ {T : Type} {ro : ring_like_op T} {rp : ring_like_prop T} {ac : angle_ctx T} (θ1 θ2 : angle T),
+    (θ1 ≤ θ2)%A → ∀ n : nat, angle_mul_nat_div_2π n θ2 = 0 → (n * θ1 ≤ n * θ2)%A
+angle_mul_le_mono_r:
+  ∀ {T : Type} {ro : ring_like_op T} {rp : ring_like_prop T} {ac : angle_ctx T} 
+    (a b : nat) (θ : angle T), angle_mul_nat_div_2π b θ = 0 → a ≤ b → (a * θ ≤ b * θ)%A
 ...
 cbn in Hnn.
 apply angle_add_move_l in Hnn.
