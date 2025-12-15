@@ -15,6 +15,7 @@ Require Import AngleTypeIsComplete.
 Require Import Distance.
 Require Import SeqAngleIsCauchy.
 Require Import TacChangeAngle.
+Require Import AngleAddOverflowEquiv.
 
 Section a.
 
@@ -848,7 +849,7 @@ Theorem fold_angle_div_nat :
   angle_div_nat n θ θ'.
 Proof. easy. Qed.
 
-(* to be completed
+(* to be completed *)
 Theorem angle_mul_div_nat :
   rngl_characteristic T = 0 →
   rngl_is_archimedean T = true →
@@ -896,8 +897,27 @@ intros * Hnz Hn1 Hn2 Hnn H12.
 symmetry in Hnn.
 apply angle_sub_move_0_r in Hnn.
 rewrite <- angle_mul_sub_distr_l in Hnn.
+symmetry.
 apply angle_sub_move_0_r.
-Search (_ = _ + _)%A.
+remember (θ2 - θ1)%A as θ eqn:Hθ.
+symmetry in Hθ.
+apply angle_sub_move_r in Hθ.
+subst θ2.
+rename θ into Δθ; rename θ1 into θ; move Δθ before θ.
+rewrite angle_add_comm in Hn2, H12.
+apply angle_nlt_ge in H12.
+apply Bool.not_true_iff_false in H12.
+replace (θ + Δθ <? θ)%A with (angle_add_overflow2 θ Δθ) in H12 by easy.
+rewrite angle_add_overflow_equiv2 in H12.
+move H12 before Hn2.
+induction n; intros; [ easy | clear Hnz ].
+destruct (Nat.eq_dec n 0) as [Hnz| Hnz]. {
+  now subst n; rewrite angle_mul_1_l in Hnn.
+}
+apply (IHn Hnz).
+now apply Nat.eq_add_0 in Hn1.
+now apply Nat.eq_add_0 in Hn2.
+clear IHn.
 ...
 intros * Hnz Hn1 Hn2 Hnn H12.
 revert θ1 θ2 Hn1 Hn2 Hnn H12.
