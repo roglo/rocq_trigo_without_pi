@@ -883,6 +883,25 @@ Proof.
 intros * Hnz Hn1 Hn2 Hnn.
 revert θ1 θ2 Hn1 Hn2 Hnn.
 induction n; intros; [ easy | clear Hnz ].
+destruct n; [ now do 2 rewrite angle_mul_1_l in Hnn | ].
+specialize (IHn (Nat.neq_succ_0 _)).
+destruct n. {
+  apply (f_equal angle_div_2) in Hnn.
+  (* lemma *)
+  rewrite <- (Nat.pow_1_r 2) in Hnn, Hn1, Hn2.
+  do 2 rewrite <- angle_div_pow2_1 in Hnn.
+  rewrite angle_div_2_pow_mul in Hnn; [ | easy ].
+  rewrite angle_div_2_pow_mul in Hnn; [ | easy ].
+  cbn in Hnn.
+  do 2 rewrite angle_add_0_r in Hnn.
+  now do 2 rewrite angle_add_div_2_diag in Hnn.
+}
+destruct n. {
+(* bon, c'est pas sûr que ça fasse avancer le truc *)
+...
+intros * Hnz Hn1 Hn2 Hnn.
+revert θ1 θ2 Hn1 Hn2 Hnn.
+induction n; intros; [ easy | clear Hnz ].
 destruct (Nat.eq_dec n 0) as [Hnz| Hnz]. {
   now subst n; do 2 rewrite angle_mul_1_l in Hnn.
 }
