@@ -850,40 +850,6 @@ Theorem fold_angle_div_nat :
 Proof. easy. Qed.
 
 (* to be completed
-Theorem angle_mul_div_nat :
-  rngl_characteristic T = 0 →
-  rngl_is_archimedean T = true →
-  is_complete T rngl_dist →
-  ∀ θ n,
-  n ≠ 0
-  → angle_mul_nat_div_2π n θ = 0
-  → angle_div_nat (n * θ) n θ.
-Proof.
-destruct_ac.
-intros Hch Har Hco * Hnz Hmn.
-specialize (seq_angle_to_div_nat_is_Cauchy Har n (n * θ)) as H1.
-specialize (rngl_is_complete_angle_is_complete Hco) as H2.
-specialize (H2 _ H1).
-destruct H2 as (θ', Ht).
-progress unfold angle_div_nat.
-progress unfold angle_lim.
-specialize (angle_div_nat_prop Hch Har Hco) as H2.
-specialize (H2 (n * θ)%A n θ').
-specialize (H2 Ht).
-destruct H2 as [H2| H2]; [ easy | ].
-(**)
-rewrite fold_angle_div_nat in Ht |-*.
-(*
-intros ε Hε.
-specialize (Ht ε Hε).
-destruct Ht as (N, Ht).
-exists N; intros m Hm.
-specialize (Ht m Hm).
-progress unfold seq_angle_to_div_nat in Ht.
-progress unfold seq_angle_to_div_nat.
-(* ttt... non, ça a pas trop l'air de le faire... *)
-*)
-assert (θ = θ'). {
 Theorem glop :
   ∀ n θ,
   n ≠ 0
@@ -933,7 +899,44 @@ destruct (Nat.eq_dec n 0) as [Hnz| Hnz]. {
   }
 }
 specialize (IHn Hnz Hn H2).
+destruct n; [ easy | clear Hnz ].
+destruct n. {
 ...
+
+Theorem angle_mul_div_nat :
+  rngl_characteristic T = 0 →
+  rngl_is_archimedean T = true →
+  is_complete T rngl_dist →
+  ∀ θ n,
+  n ≠ 0
+  → angle_mul_nat_div_2π n θ = 0
+  → angle_div_nat (n * θ) n θ.
+Proof.
+destruct_ac.
+intros Hch Har Hco * Hnz Hmn.
+specialize (seq_angle_to_div_nat_is_Cauchy Har n (n * θ)) as H1.
+specialize (rngl_is_complete_angle_is_complete Hco) as H2.
+specialize (H2 _ H1).
+destruct H2 as (θ', Ht).
+progress unfold angle_div_nat.
+progress unfold angle_lim.
+specialize (angle_div_nat_prop Hch Har Hco) as H2.
+specialize (H2 (n * θ)%A n θ').
+specialize (H2 Ht).
+destruct H2 as [H2| H2]; [ easy | ].
+(**)
+rewrite fold_angle_div_nat in Ht |-*.
+(*
+intros ε Hε.
+specialize (Ht ε Hε).
+destruct Ht as (N, Ht).
+exists N; intros m Hm.
+specialize (Ht m Hm).
+progress unfold seq_angle_to_div_nat in Ht.
+progress unfold seq_angle_to_div_nat.
+(* ttt... non, ça a pas trop l'air de le faire... *)
+*)
+assert (θ = θ'). {
 Theorem angle_mul_nat_cancel_l_le :
   ∀ n θ1 θ2,
   n ≠ 0
