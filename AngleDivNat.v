@@ -865,15 +865,14 @@ rewrite Ht in H1.
 now apply angle_lt_irrefl in H1.
 Qed.
 
-Theorem angle_eq_mul_nat_0_r :
+Theorem angle_mul_nat_integral :
   ∀ n θ,
   angle_mul_nat_div_2π n θ = 0
   → (n * θ = 0)%A
-  → n ≠ 0
-  → θ = 0%A.
+  → n = 0 ∨ θ = 0%A.
 Proof.
-intros * Hn Ht Hnz.
-destruct n; [ easy | clear Hnz ].
+intros * Hn Ht.
+destruct n; [ now left | right ].
 cbn in Hn.
 apply Nat.eq_add_0 in Hn.
 destruct Hn as (Hn, H1).
@@ -953,22 +952,22 @@ Qed.
 Theorem angle_eq_mul_nat_cancel_l :
   ∀ n θ1 θ2,
   (θ1 ≤ θ2)%A
-  → angle_mul_nat_div_2π n θ1 = 0
   → angle_mul_nat_div_2π n θ2 = 0
   → (n * θ1 = n * θ2)%A
   → n ≠ 0
   → θ1 = θ2.
 Proof.
 destruct_ac.
-intros * H12 Hn1 Hn2 Ht Hnz.
+intros * H12 Hn2 Ht Hnz.
 symmetry.
 apply angle_sub_move_0_r.
-apply (angle_eq_mul_nat_0_r n); [ | | easy ]. 2: {
-  rewrite angle_mul_sub_distr_l, Ht.
-  apply angle_sub_diag.
+enough (H : n = 0 ∨ (θ2 - θ1 = 0)%A) by now destruct H.
+apply angle_mul_nat_integral. {
+  apply (angle_mul_nat_div_2π_le_r _ θ2); [ | easy ].
+  now apply (angle_le_le_sub_l Hop Hto).
 }
-apply (angle_mul_nat_div_2π_le_r _ θ2); [ | easy ].
-now apply (angle_le_le_sub_l Hop Hto).
+rewrite angle_mul_sub_distr_l, Ht.
+apply angle_sub_diag.
 Qed.
 
 (* to be completed
@@ -1032,7 +1031,7 @@ apply Bool.not_true_iff_false in H12.
 replace (θ + Δθ <? θ)%A with (angle_add_overflow2 θ Δθ) in H12 by easy.
 rewrite angle_add_overflow_equiv2 in H12.
 move H12 before Hn2.
-apply angle_eq_mul_nat_0_r in Hnn; [ easy | | easy ].
+apply angle_mul_nat_integral in Hnn; [ now destruct Hnn | ].
 clear Hnz H12 Hnn.
 induction n; [ easy | cbn ].
 cbn in Hn1, Hn2.
