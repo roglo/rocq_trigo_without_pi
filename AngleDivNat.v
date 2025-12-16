@@ -856,7 +856,6 @@ Theorem angle_eq_mul_nat_0_r :
   → n ≠ 0
   → θ = 0%A.
 Proof.
-destruct_ac.
 intros * Hn Ht Hnz.
 destruct n; [ easy | clear Hnz ].
 cbn in Hn.
@@ -871,6 +870,96 @@ rewrite angle_add_comm in Ht.
 apply angle_add_move_0_r in Ht.
 rewrite Ht in H1.
 now apply angle_lt_irrefl in H1.
+Qed.
+
+Theorem angle_le_le_sub_l :
+  rngl_has_opp T = true →
+  rngl_is_totally_ordered T = true →
+  ∀ θ1 θ2, (θ1 ≤ θ2)%A → (θ2 - θ1 ≤ θ2)%A.
+Proof.
+intros Hop Hto.
+specialize (rngl_is_totally_ordered_is_ordered Hto) as Hor.
+intros * H12.
+progress unfold angle_leb in H12.
+progress unfold angle_leb.
+remember (0 ≤? rngl_sin θ1)%L as s1 eqn:Hs1.
+remember (0 ≤? rngl_sin θ2)%L as s2 eqn:Hs2.
+remember (0 ≤? rngl_sin (θ2 - θ1))%L as s12 eqn:Hs12.
+symmetry in Hs1, Hs2, Hs12.
+destruct s12. {
+  apply rngl_leb_le in Hs12.
+  destruct s2; [ | easy ].
+  apply rngl_leb_le in Hs2.
+  apply rngl_leb_le.
+  destruct s1; [ | easy ].
+  apply rngl_leb_le in Hs1.
+  apply rngl_leb_le in H12.
+  rewrite rngl_cos_sub_comm.
+  now apply rngl_cos_le_cos_sub.
+}
+destruct s2. {
+  exfalso.
+  apply rngl_leb_nle in Hs12.
+  apply Hs12; clear Hs12.
+  destruct s1; [ | easy ].
+  apply rngl_leb_le in Hs1, Hs2, H12.
+  now apply rngl_sin_sub_nonneg.
+}
+apply (rngl_leb_gt_iff Hto) in Hs2, Hs12.
+apply rngl_leb_le.
+destruct s1. {
+  clear H12.
+  apply rngl_leb_le in Hs1.
+  change_angle_add_r θ2 π.
+  progress sin_cos_add_sub_straight_hyp T Hs2.
+  progress sin_cos_add_sub_straight_hyp T Hs12.
+  progress sin_cos_add_sub_straight_goal T.
+  rewrite rngl_cos_sub_comm.
+  apply rngl_cos_le_cos_sub; [ now apply rngl_lt_le_incl | easy | ].
+  apply rngl_sin_sub_nonneg_iff; [ easy | easy | ].
+  now apply rngl_lt_le_incl.
+}
+apply rngl_leb_le in H12.
+apply (rngl_leb_gt_iff Hto) in Hs1.
+change_angle_add_r θ1 π.
+progress sin_cos_add_sub_straight_hyp T Hs1.
+progress sin_cos_add_sub_straight_hyp T H12.
+progress sin_cos_add_sub_straight_hyp T Hs12.
+rewrite angle_sub_sub_distr.
+progress sin_cos_add_sub_straight_goal T.
+change_angle_add_r θ2 π.
+progress sin_cos_add_sub_straight_hyp T Hs2.
+progress sin_cos_add_sub_straight_hyp T H12.
+progress sin_cos_add_sub_straight_hyp T Hs12.
+progress sin_cos_add_sub_straight_goal T.
+rewrite (rngl_add_opp_l Hop) in H12.
+apply -> (rngl_le_sub_0 Hop Hor) in H12.
+apply (rngl_nle_gt Hor) in Hs12.
+exfalso; apply Hs12.
+apply rngl_sin_sub_nonneg; [ | | easy ].
+now apply rngl_lt_le_incl.
+now apply rngl_lt_le_incl.
+Qed.
+
+Theorem angle_eq_mul_nat_cancel_l :
+  ∀ n θ1 θ2,
+  (θ1 ≤ θ2)%A
+  → angle_mul_nat_div_2π n θ1 = 0
+  → angle_mul_nat_div_2π n θ2 = 0
+  → (n * θ1 = n * θ2)%A
+  → n ≠ 0
+  → θ1 = θ2.
+Proof.
+destruct_ac.
+intros * H12 Hn1 Hn2 Ht Hnz.
+symmetry.
+apply angle_sub_move_0_r.
+apply (angle_eq_mul_nat_0_r n); [ | | easy ]. 2: {
+  rewrite angle_mul_sub_distr_l, Ht.
+  apply angle_sub_diag.
+}
+apply (angle_mul_nat_div_2π_le_r _ θ2); [ | easy ].
+now apply (angle_le_le_sub_l Hop Hto).
 Qed.
 
 (* to be completed
@@ -934,9 +1023,27 @@ apply Bool.not_true_iff_false in H12.
 replace (θ + Δθ <? θ)%A with (angle_add_overflow2 θ Δθ) in H12 by easy.
 rewrite angle_add_overflow_equiv2 in H12.
 move H12 before Hn2.
+apply angle_eq_mul_nat_0_r in Hnn; [ easy | | easy ].
+clear Hnz H12 Hnn.
+induction n; [ easy | cbn ].
+cbn in Hn1, Hn2.
+apply Nat.eq_add_0 in Hn1, Hn2.
+destruct Hn1 as (H1, H2).
+destruct Hn2 as (H3, H4).
+specialize (IHn H1 H3).
+rewrite IHn; cbn.
+apply Nat_eq_b2n_0 in H2, H4.
+apply Nat_eq_b2n_0.
+rewrite angle_mul_add_distr_l in H4.
+Search (angle_add_overflow _ (_ + _)).
+...
+rewrite angle_add_overflow_comm in H2 |-*.
+eapply AngleAddOverflowLe.angle_add_overflow_le; [ | ].
+...
+intros * Hnz Hn1 Hn2 Hnn H12.
 induction n; intros; [ easy | clear Hnz ].
 destruct (Nat.eq_dec n 0) as [Hnz| Hnz]. {
-  now subst n; rewrite angle_mul_1_l in Hnn.
+  now subst n; do 2 rewrite angle_mul_1_l in Hnn.
 }
 apply (IHn Hnz).
 now apply Nat.eq_add_0 in Hn1.
