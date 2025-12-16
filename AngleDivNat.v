@@ -1025,6 +1025,11 @@ progress unfold seq_angle_to_div_nat.
 *)
 assert (θ = θ'). {
   apply (angle_eq_mul_nat_cancel_l n); [ easy | | easy | easy ].
+  destruct (angle_le_dec θ' θ) as [Htt| Htt]. {
+    now apply (angle_mul_nat_div_2π_le_r _ θ).
+  }
+  apply angle_nle_gt in Htt.
+Search (_ < _ * _)%A.
 ...
 Theorem angle_mul_nat_div_2π_add_r :
   ∀ n θ1 θ2,
