@@ -884,6 +884,56 @@ progress unfold seq_angle_to_div_nat.
 (* ttt... non, ça a pas trop l'air de le faire... *)
 *)
 assert (θ = θ'). {
+Theorem glop :
+  ∀ n θ,
+  n ≠ 0
+  → angle_mul_nat_div_2π n θ = 0
+  → (n * θ = 0)%A
+  → θ = 0%A.
+Proof.
+destruct_ac.
+intros * Hnz Hn Hnt.
+induction n; [ easy | clear Hnz ].
+destruct (Nat.eq_dec n 0) as [Hnz| Hnz]. {
+  now subst n; rewrite angle_mul_1_l in Hnt.
+}
+cbn in Hn.
+apply Nat.eq_add_0 in Hn.
+destruct Hn as (Hn, H1).
+apply Nat_eq_b2n_0 in H1.
+apply (IHn Hnz Hn); clear IHn.
+move Hnz after Hn.
+induction n; [ easy | clear Hnz ].
+cbn in Hn.
+apply Nat.eq_add_0 in Hn.
+destruct Hn as (Hn, H2).
+apply Nat_eq_b2n_0 in H2.
+destruct (Nat.eq_dec n 0) as [Hnz| Hnz]. {
+  subst n.
+  rewrite angle_mul_1_l in H1 |-*.
+  clear H2.
+  apply angle_add_overflow_if in H1.
+  destruct H1 as [H1| H1]; [ easy | ].
+  progress unfold angle_ltb in H1.
+  cbn in Hnt, H1.
+  rewrite angle_add_0_r in Hnt.
+  apply angle_add_move_0_r in Hnt.
+  apply eq_angle_eq in Hnt.
+  cbn in Hnt.
+  injection Hnt; clear Hnt; intros H2.
+  rewrite <- H2 in H1.
+  remember (0 ≤? rngl_sin θ)%L as zt eqn:Hzt.
+  symmetry in Hzt.
+  destruct zt. {
+    apply (rngl_ltb_lt Heo) in H1.
+    now apply rngl_lt_irrefl in H1.
+  } {
+    apply (rngl_ltb_lt Heo) in H1.
+    now apply rngl_lt_irrefl in H1.
+  }
+}
+specialize (IHn Hnz Hn H2).
+...
 Theorem angle_mul_nat_cancel_l_le :
   ∀ n θ1 θ2,
   n ≠ 0
