@@ -1023,6 +1023,15 @@ progress unfold seq_angle_to_div_nat in Ht.
 progress unfold seq_angle_to_div_nat.
 (* ttt... non, ça a pas trop l'air de le faire... *)
 *)
+destruct (angle_le_dec θ' θ) as [Htt| Htt]. {
+  apply angle_eq_mul_nat_cancel_l_le in H2; [ | easy | easy | easy ].
+  now subst θ'.
+}
+apply angle_nle_gt in Htt.
+Search (_ * _ = _ * _)%A.
+(* n=2 θ=π/2 θ'=3π/2 *)
+(**)
+...
 assert (θ = θ'). {
   apply (angle_eq_mul_nat_cancel_l n); [ easy | | easy | easy ].
   destruct (angle_le_dec θ' θ) as [Htt| Htt]. {
