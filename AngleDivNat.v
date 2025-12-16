@@ -849,6 +849,22 @@ Theorem fold_angle_div_nat :
   angle_div_nat n θ θ'.
 Proof. easy. Qed.
 
+Theorem angle_eq_mul_succ_nat_0_r :
+  ∀ n θ,
+  angle_add_overflow θ (n * θ) = false
+  → (S n * θ)%A = 0%A
+  → θ = 0%A.
+Proof.
+intros * Hov Ht.
+apply angle_add_overflow_if in Hov.
+destruct Hov as [H1| H1]; [ easy | ].
+cbn in Ht.
+rewrite angle_add_comm in Ht.
+apply angle_add_move_0_r in Ht.
+rewrite Ht in H1.
+now apply angle_lt_irrefl in H1.
+Qed.
+
 Theorem angle_eq_mul_nat_0_r :
   ∀ n θ,
   angle_mul_nat_div_2π n θ = 0
@@ -861,15 +877,8 @@ destruct n; [ easy | clear Hnz ].
 cbn in Hn.
 apply Nat.eq_add_0 in Hn.
 destruct Hn as (Hn, H1).
-clear Hn.
 apply Nat_eq_b2n_0 in H1.
-apply angle_add_overflow_if in H1.
-destruct H1 as [H1| H1]; [ easy | ].
-cbn in Ht.
-rewrite angle_add_comm in Ht.
-apply angle_add_move_0_r in Ht.
-rewrite Ht in H1.
-now apply angle_lt_irrefl in H1.
+now apply (angle_eq_mul_succ_nat_0_r n).
 Qed.
 
 Theorem angle_le_le_sub_l :
