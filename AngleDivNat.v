@@ -1001,10 +1001,10 @@ Theorem angle_mul_div_nat :
 Proof.
 destruct_ac.
 intros Hch Har Hco * Hnz Hmn.
-specialize (seq_angle_to_div_nat_is_Cauchy Har n (n * θ)) as H1.
-specialize (rngl_is_complete_angle_is_complete Hco) as H2.
-specialize (H2 _ H1).
-destruct H2 as (θ', Ht).
+specialize (rngl_is_complete_angle_is_complete Hco) as H1.
+specialize (seq_angle_to_div_nat_is_Cauchy Har n (n * θ)) as H.
+specialize (H1 _ H); clear H.
+destruct H1 as (θ', Ht).
 progress unfold angle_div_nat.
 progress unfold angle_lim.
 specialize (angle_div_nat_prop Hch Har Hco) as H2.
@@ -1030,6 +1030,8 @@ destruct (angle_le_dec θ' θ) as [Htt| Htt]. {
 apply angle_nle_gt in Htt.
 Search (_ * _ = _ * _)%A.
 (* n=2 θ=π/2 θ'=3π/2 *)
+(* ah non, ce contre-exemple ne fonctionne pas avec Ht *)
+(* chercher d'autres contre exemples, peut-être *)
 (**)
 ...
 assert (θ = θ'). {
