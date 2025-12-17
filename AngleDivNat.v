@@ -16,6 +16,7 @@ Require Import Distance.
 Require Import SeqAngleIsCauchy.
 Require Import TacChangeAngle.
 Require Import AngleAddOverflowEquiv.
+Require Import AngleAddOverflowLe.
 
 Section a.
 
@@ -1226,6 +1227,93 @@ Theorem glop :
   angle_div_nat (n * θ) n θ
   → angle_mul_nat_div_2π n θ = 0.
 Proof.
+intros Hop Hto.
+specialize (rngl_is_totally_ordered_is_ordered Hto) as Hor.
+specialize (rngl_has_eq_dec_or_is_ordered_r Hor) as Heo.
+intros * Htt.
+Print angle_mul_nat_div_2π.
+Theorem angle_mul_nat_div_2π_iff :
+  ∀ n θ k,
+  angle_mul_nat_div_2π n θ = k
+  ↔ (∀ i, i < n → angle_mul_nat_div_2π i θ ≤ k) ∧
+    (if Nat.eq_dec n 0 then k = 0
+     else if Nat.eq_dec k 0 then
+       ∀ i, i < n → angle_add_overflow (i * θ) θ = false
+     else
+       ∃ i, i < n ∧ angle_mul_nat_div_2π i θ = k - 1 ∧
+       angle_add_overflow (i * θ) θ = true ∧
+       ∀ j, i < j < n → angle_add_overflow (j * θ) θ = false).
+Proof.
+intros.
+revert k.
+induction n; intros; [ easy | ].
+split; intros H1. {
+  cbn in H1.
+  split. {
+    intros i Hi.
+    remember (angle_add_overflow θ (n * θ)) as ov eqn:Hov.
+    symmetry in Hov.
+    destruct ov. {
+      cbn in H1.
+      apply Nat.add_sub_eq_r in H1.
+      symmetry in H1.
+      generalize H1; intros H2.
+      apply IHn in H2.
+      destruct H2 as (H2, H3).
+      destruct (Nat.eq_dec n 0) as [Hnz| Hnz]. {
+        subst n.
+        now apply Nat.lt_1_r in Hi; subst i.
+      }
+      destruct (Nat.eq_dec (k - 1) 0) as [Hkz| Hkz]. {
+        destruct k. {
+          clear Hkz; cbn in H1, H2.
+Theorem angle_mul_nat_div_2π_le :
+  ∀ n θ k, k ≤ n → angle_mul_nat_div_2π k θ ≤ angle_mul_nat_div_2π n θ.
+Proof.
+intros * Hkn.
+revert k Hkn.
+induction n; intros; cbn. {
+  now apply Nat.le_0_r in Hkn; subst k.
+}
+destruct k; [ easy | cbn ].
+apply Nat.succ_le_mono in Hkn.
+apply Nat.add_le_mono; [ now apply IHn | ].
+remember (angle_add_overflow θ (k * θ)) as ovk eqn:Hk.
+remember (angle_add_overflow θ (n * θ)) as ovn eqn:Hn.
+symmetry in Hk, Hn.
+destruct ovk; [ cbn | easy ].
+destruct ovn; [ easy | cbn ].
+exfalso.
+apply Bool.not_false_iff_true in Hk.
+apply Hk; clear Hk.
+apply (angle_add_overflow_le _ (n * θ)); [ | easy ].
+apply angle_mul_le_mono_r; [ | easy ].
+clear k IHn Hkn.
+(* lemma *)
+apply angle_add_not_overflow_iff in Hn.
+...
+induction n; [ easy | cbn ].
+apply Nat.eq_add_0.
+split. {
+  apply IHn.
+  apply (angle_add_overflow_le _ (S n * θ)); [ | easy ].
+  cbn.
+  rewrite angle_add_comm.
+  rewrite <- angle_add_0_r at 1.
+Search (_ ≤ _ + _)%A.
+  apply angle_add_le_mono_l.
+...
+  apply angle_le_add_r.
+... ...
+          specialize (angle_mul_nat_div_2π_le n θ i) as H4.
+          rewrite H1 in H4.
+          apply H4.
+          now apply Nat.succ_le_mono in Hi.
+        }
+
+... ...
+apply angle_mul_nat_div_2π_iff.
+...
 intros Hop Hto.
 specialize (rngl_is_totally_ordered_is_ordered Hto) as Hor.
 specialize (rngl_has_eq_dec_or_is_ordered_r Hor) as Heo.
