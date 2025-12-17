@@ -602,6 +602,14 @@ split; intros H12. {
 Qed.
 
 (* to be completed
+Theorem glop :
+  ∀ θ n θ',
+  angle_div_nat θ n θ'
+  → angle_mul_nat_div_2π n θ' = 0.
+Proof.
+intros * Htt.
+...
+
 Theorem angle_div_nat_prop :
   rngl_characteristic T = 0 →
   rngl_is_archimedean T = true →
