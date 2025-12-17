@@ -601,15 +601,7 @@ split; intros H12. {
 }
 Qed.
 
-(* to be completed
-Theorem glop :
-  ∀ θ n θ',
-  angle_div_nat θ n θ'
-  → angle_mul_nat_div_2π n θ' = 0.
-Proof.
-intros * Htt.
-...
-
+(* to be completed later
 Theorem angle_div_nat_prop :
   rngl_characteristic T = 0 →
   rngl_is_archimedean T = true →
@@ -952,7 +944,7 @@ Theorem fold_angle_div_nat :
   angle_div_nat n θ θ'.
 Proof. easy. Qed.
 
-(* to be completed
+(* to be completed later
 Theorem angle_div_nat_integral :
   ∀ n θ θ',
   angle_div_nat θ n θ'
@@ -1202,6 +1194,35 @@ destruct (angle_le_dec θ1 θ2) as [H12| H12]. {
 Qed.
 
 (* to be completed
+Theorem glop :
+  ∀ n θ,
+  angle_div_nat (n * θ) n θ
+  → angle_mul_nat_div_2π n θ = 0.
+Proof.
+intros * Htt.
+induction n; [ easy | ].
+Search (angle_div_nat _ _ _ → angle_div_nat _ _ _).
+...
+
+Theorem glop' :
+  rngl_characteristic T = 0 →
+  rngl_is_archimedean T = true →
+  is_complete T rngl_dist →
+  ∀ θ n θ',
+  angle_div_nat θ n θ'
+  → angle_mul_nat_div_2π n θ' = 0.
+Proof.
+intros Hch Har Hco * Htt.
+generalize Htt; intros H.
+apply (angle_div_nat_prop Hch Har Hco) in H.
+destruct H as [(Hn, Ht)| Hntt]; [ now subst | ].
+subst θ; rename θ' into θ.
+... ...
+now apply glop.
+...
+*)
+
+(* to be completed later
 Theorem angle_mul_div_nat :
   rngl_characteristic T = 0 →
   rngl_is_archimedean T = true →
