@@ -1193,15 +1193,74 @@ destruct (angle_le_dec θ1 θ2) as [H12| H12]. {
 }
 Qed.
 
+Theorem angle_add_not_overflow_iff :
+  ∀ θ1 θ2,
+  angle_add_overflow θ1 θ2 = false
+  ↔ (θ1 = 0)%A ∨ (θ2 < - θ1)%A.
+Proof.
+intros.
+progress unfold angle_add_overflow.
+split; intros Htt. {
+  apply Bool.andb_false_iff in Htt.
+  destruct Htt as [Ht| Htt]; [ left | right ]. {
+    apply Bool.negb_false_iff in Ht.
+    now apply angle_eqb_eq in Ht.
+  } {
+    now apply angle_leb_gt in Htt.
+  }
+} {
+  apply Bool.andb_false_iff.
+  destruct Htt as [Ht| Htt]; [ left | right ]. {
+    now subst θ1; rewrite angle_eqb_refl.
+  } {
+    now apply angle_leb_gt.
+  }
+}
+Qed.
+
 (* to be completed
 Theorem glop :
+  rngl_has_opp T = true →
+  rngl_is_totally_ordered T = true →
   ∀ n θ,
   angle_div_nat (n * θ) n θ
   → angle_mul_nat_div_2π n θ = 0.
 Proof.
+intros Hop Hto.
+specialize (rngl_is_totally_ordered_is_ordered Hto) as Hor.
+specialize (rngl_has_eq_dec_or_is_ordered_r Hor) as Heo.
 intros * Htt.
 induction n; [ easy | ].
-Search (angle_div_nat _ _ _ → angle_div_nat _ _ _).
+cbn.
+rewrite IHn. {
+  apply Nat_eq_b2n_0.
+  apply angle_add_not_overflow_iff.
+  destruct (angle_eq_dec θ 0) as [Htz| Htz]; [ now left | right ].
+  progress unfold angle_ltb; cbn.
+  rewrite (rngl_leb_0_opp Hop Hto).
+  remember (0 ≤? rngl_sin (n * θ))%L as zsn eqn:Hzsn.
+  remember (rngl_sin θ ≤? 0)%L as sz eqn:Hsz.
+  symmetry in Hzsn, Hsz.
+  destruct zsn. {
+    destruct sz; [ | easy ].
+    apply rngl_leb_le in Hzsn, Hsz.
+    apply (rngl_ltb_lt Heo).
+    change_angle_add_r θ π.
+    progress sin_cos_add_sub_straight_hyp T Hsz.
+    progress sin_cos_add_sub_straight_goal T.
+    rewrite angle_mul_sub_distr_l in Hzsn |-*.
+    destruct (Nat.Even_Odd_dec n) as [Hn| Hn]. {
+      apply Nat.Even_EvenT in Hn.
+      destruct Hn as (m, Hn).
+      subst n; rename m into n; move n after θ.
+      rewrite Nat.mul_comm in Hzsn at 2.
+      rewrite Nat.mul_comm at 2.
+      rewrite <- (angle_mul_nat_assoc _ _ π) in Hzsn |-*.
+      rewrite angle_mul_2_l in Hzsn |-*.
+      rewrite angle_straight_add_straight in Hzsn |-*.
+      rewrite angle_mul_0_r in Hzsn |-*.
+      rewrite angle_sub_0_r in Hzsn |-*.
+(* oh putain, chais pas du tout si je vais y arriver *)
 ...
 
 Theorem glop' :
