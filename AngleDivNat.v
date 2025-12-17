@@ -642,7 +642,7 @@ rename Hdn into Hlim.
 specialize (angle_lim_mul n _ _ Hlim) as H1.
 enough (H2 : angle_lim (λ i, (n * seq_angle_to_div_nat θ n i)%A) θ). {
   specialize (limit_unique Hop Hiv Hto angle_eucl_dist_is_dist) as H3.
-  apply (H3 _ (n * θ')%A) in H2; [ | easy ].
+  apply (H3 _ (n * θ')%A) in H2; [ clear H3 | easy ].
   split; [ easy | ].
 ...
 }
@@ -945,6 +945,17 @@ Theorem fold_angle_div_nat :
 Proof. easy. Qed.
 
 (* to be completed
+Theorem angle_div_nat_integral :
+  ∀ n θ θ',
+  angle_div_nat θ n θ'
+  → n = 0 ∨angle_mul_nat_div_2π n θ' = 0.
+Proof.
+intros * Htt.
+destruct (Nat.eq_dec n 0) as [Hnz| Hnz]; [ now left | right ].
+progress unfold angle_div_nat in Htt.
+Search angle_div_nat.
+...
+
 Theorem exists_angle_div_nat :
   rngl_characteristic T = 0 →
   rngl_is_archimedean T = true →
@@ -965,6 +976,12 @@ exists θ'.
 specialize (angle_div_nat_prop Hcz Har Hco _ _ _ Ht) as H2.
 split; [ now destruct H2 | ].
 destruct H2 as [(H2, H3)| H2]; [ now subst n θ' | ].
+(**)
+clear H2.
+... ...
+apply angle_div_nat_integral in Ht.
+now destruct Ht.
+...
 rewrite <- H2 in Ht.
 clear θ H2.
 rename θ' into θ.
