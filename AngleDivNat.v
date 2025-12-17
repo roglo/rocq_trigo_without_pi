@@ -601,6 +601,178 @@ split; intros H12. {
 }
 Qed.
 
+(* to be completed
+Theorem angle_div_nat_prop :
+  rngl_characteristic T = 0 →
+  rngl_is_archimedean T = true →
+  is_complete T rngl_dist →
+  ∀ θ n θ',
+  angle_div_nat θ n θ'
+  → (n = 0 ∧ θ' = 0%A) ∨ (n * θ')%A = θ ∧ angle_mul_nat_div_2π n θ' = 0.
+Proof.
+destruct_ac.
+intros Hcz Har Hco.
+intros * Hdn.
+destruct (Nat.eq_dec n 0) as [Hnz| Hnz]. {
+  left; split; [ easy | subst n ].
+  progress unfold angle_div_nat in Hdn.
+  progress unfold seq_angle_to_div_nat in Hdn.
+  cbn in Hdn.
+  now apply angle_lim_const in Hdn.
+}
+right.
+destruct (Nat.eq_dec n 1) as [Hn1| Hn1]. {
+  subst n; rewrite angle_mul_1_l.
+  progress unfold angle_div_nat in Hdn.
+  progress unfold seq_angle_to_div_nat in Hdn.
+  eapply (angle_lim_eq_compat 0 0) in Hdn. 2: {
+    intros i.
+    rewrite Nat.add_0_r.
+    rewrite Nat.div_1_r.
+    rewrite angle_div_2_pow_mul_2_pow.
+    easy.
+  }
+  apply angle_lim_const in Hdn; subst θ'.
+  split; [ easy | cbn ].
+  apply Nat_eq_b2n_0.
+  apply angle_add_overflow_0_r.
+}
+progress unfold angle_div_nat in Hdn.
+rename Hdn into Hlim.
+specialize (angle_lim_mul n _ _ Hlim) as H1.
+enough (H2 : angle_lim (λ i, (n * seq_angle_to_div_nat θ n i)%A) θ). {
+  specialize (limit_unique Hop Hiv Hto angle_eucl_dist_is_dist) as H3.
+  apply (H3 _ (n * θ')%A) in H2; [ | easy ].
+  split; [ easy | ].
+...
+}
+clear θ' Hlim H1.
+destruct (angle_eq_dec θ 0) as [Htz| Htz]. {
+  subst θ.
+  eapply (angle_lim_eq_compat 0 0). {
+    intros i.
+    rewrite Nat.add_0_r; symmetry.
+    progress unfold seq_angle_to_div_nat.
+    rewrite angle_0_div_2_pow.
+    do 2 rewrite angle_mul_0_r.
+    easy.
+  }
+  intros ε Hε.
+  exists 0.
+  intros m _.
+  cbn.
+  now rewrite angle_eucl_dist_diag.
+}
+destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
+  specialize (rngl_characteristic_1 Hos Hc1) as H2.
+  intros ε Hε.
+  rewrite (H2 ε) in Hε.
+  now apply rngl_lt_irrefl in Hε.
+}
+move Hc1 before Hcz.
+move Hii before Hco.
+eapply (angle_lim_eq_compat 0 0). {
+  intros i.
+  rewrite Nat.add_0_r; symmetry.
+  progress unfold seq_angle_to_div_nat.
+  rewrite angle_mul_nat_assoc.
+  specialize (Nat.div_mod (2 ^ i) n Hnz) as H1.
+  symmetry in H1.
+  apply Nat.add_sub_eq_r in H1.
+  rewrite <- H1.
+  rewrite angle_mul_sub_distr_r; [ | now apply Nat.Div0.mod_le ].
+  rewrite angle_div_2_pow_mul_2_pow.
+  easy.
+}
+apply angle_lim_move_0_r.
+eapply (angle_lim_eq_compat 0 0). {
+  intros i.
+  rewrite Nat.add_0_r; symmetry.
+  rewrite angle_sub_sub_swap.
+  rewrite angle_sub_diag.
+  rewrite angle_sub_0_l.
+  easy.
+}
+rewrite <- angle_opp_0.
+apply angle_lim_opp.
+enough (H : angle_lim (λ i, (n * (θ /₂^i))%A) 0). {
+  intros ε Hε.
+  specialize (H ε Hε).
+  destruct H as (N, HN).
+  exists (Nat.max N (Nat.log2_up (2 * n))).
+  intros m Hm.
+  specialize (HN m).
+  assert (H : N ≤ m). {
+    eapply Nat.le_trans; [ | apply Hm ].
+    apply Nat.le_max_l.
+  }
+  specialize (HN H); clear H.
+  eapply (rngl_le_lt_trans Hor); [ | apply HN ].
+  assert (Hnm : Nat.log2_up (2 * n) ≤ m). {
+    eapply Nat.le_trans; [ | apply Hm ].
+    apply Nat.le_max_r.
+  }
+  apply (Nat.pow_le_mono_r 2) in Hnm; [ | easy ].
+  apply angle_le_angle_eucl_dist_le. {
+    eapply angle_le_trans. {
+      apply angle_mul_le_mono_r. 2: {
+        apply Nat.lt_le_incl.
+        apply Nat.mod_upper_bound.
+        apply Hnz.
+      }
+      apply angle_mul_nat_div_2π_div_pow2.
+      eapply Nat.le_trans; [ | apply Hnm ].
+      apply (Nat.le_trans _ (2 * n)). {
+        flia Hnz Hn1.
+      }
+      apply Nat.log2_log2_up_spec.
+      apply Nat.neq_0_lt_0.
+      flia Hnz Hn1.
+    }
+    apply angle_mul_div_pow2_le_straight.
+    eapply Nat.le_trans; [ | apply Hnm ].
+    apply Nat.log2_log2_up_spec.
+    apply Nat.neq_0_lt_0.
+    flia Hnz Hn1.
+  } {
+    apply angle_mul_div_pow2_le_straight.
+    eapply Nat.le_trans; [ | apply Hnm ].
+    apply Nat.log2_log2_up_spec.
+    apply Nat.neq_0_lt_0.
+    flia Hnz Hn1.
+  }
+  apply angle_mul_le_mono_r. 2: {
+    apply Nat.lt_le_incl.
+    now apply Nat.mod_upper_bound.
+  }
+  apply angle_mul_nat_div_2π_div_pow2.
+  eapply Nat.le_trans; [ | apply Hnm ].
+  apply (Nat.le_trans _ (2 * n)). {
+    flia Hnz Hn1.
+  }
+  apply Nat.log2_log2_up_spec.
+  apply Nat.neq_0_lt_0.
+  flia Hnz Hn1.
+}
+rewrite <- (angle_mul_0_r n).
+apply angle_lim_mul.
+(* lemma : angle_lim (angle_div_2_pow θ) 0 *)
+intros ε Hε.
+enough (H : ∃ N, ∀ m, N ≤ m → (1 - ε² / 2 < rngl_cos (θ /₂^m))%L). {
+  destruct H as (N, HN).
+  exists N.
+  intros m Hm.
+  specialize (HN m Hm).
+  apply rngl_cos_lt_angle_eucl_dist_lt. {
+    now apply rngl_lt_le_incl in Hε.
+  }
+  now rewrite angle_sub_0_l.
+}
+now apply (exists_nat_such_that_rngl_cos_close_to_1 Har).
+Qed.
+...
+*)
+
 Theorem angle_div_nat_prop :
   rngl_characteristic T = 0 →
   rngl_is_archimedean T = true →
@@ -765,6 +937,13 @@ enough (H : ∃ N, ∀ m, N ≤ m → (1 - ε² / 2 < rngl_cos (θ /₂^m))%L). 
 now apply (exists_nat_such_that_rngl_cos_close_to_1 Har).
 Qed.
 
+Theorem fold_angle_div_nat :
+  ∀ n θ θ',
+  is_limit_when_seq_tends_to_inf angle_eucl_dist
+    (seq_angle_to_div_nat n θ) θ' =
+  angle_div_nat n θ θ'.
+Proof. easy. Qed.
+
 (* to be completed
 Theorem exists_angle_div_nat :
   rngl_characteristic T = 0 →
@@ -781,11 +960,25 @@ specialize (rngl_is_complete_angle_is_complete Hco) as H2.
 specialize (H2 _ H1).
 clear H1.
 destruct H2 as (θ', Ht).
+rewrite fold_angle_div_nat in Ht.
 exists θ'.
 specialize (angle_div_nat_prop Hcz Har Hco _ _ _ Ht) as H2.
 split; [ now destruct H2 | ].
 destruct H2 as [(H2, H3)| H2]; [ now subst n θ' | ].
 rewrite <- H2 in Ht.
+clear θ H2.
+rename θ' into θ.
+Theorem glop :
+  ∀ n θ θ',
+  angle_div_nat θ n θ'
+  → angle_mul_nat_div_2π n θ' = 0.
+Proof.
+intros * Htt.
+Search angle_div_nat.
+progress unfold angle_div_nat in Htt.
+... ...
+now apply glop in Ht.
+...
 Print is_limit_when_seq_tends_to_inf.
 Theorem glop {A} :
   ∀ (da : A → A → T) (P : A → Prop) u L,
@@ -796,6 +989,7 @@ Proof.
 (* est-ce qu'il faut que ça soit continu, peut-être, euh ? *)
 intros * Hp Hlim.
 progress unfold is_limit_when_seq_tends_to_inf in Hlim.
+...
 Print seq_angle_to_div_nat.
 Theorem glop :
   ∀ θ n i, (seq_angle_to_div_nat θ n i ≤ θ)%A.
@@ -841,13 +1035,6 @@ exists θ'.
 specialize (angle_div_nat_prop Hcz Har Hco _ _ _ Ht) as H2.
 now destruct H2.
 Qed.
-
-Theorem fold_angle_div_nat :
-  ∀ n θ θ',
-  is_limit_when_seq_tends_to_inf angle_eucl_dist
-    (seq_angle_to_div_nat n θ) θ' =
-  angle_div_nat n θ θ'.
-Proof. easy. Qed.
 
 Theorem angle_eq_mul_succ_nat_0_r :
   ∀ n θ,
