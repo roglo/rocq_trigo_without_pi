@@ -1595,6 +1595,33 @@ destruct (angle_le_dec θ' θ) as [Htt| Htt]. {
   now subst θ'.
 }
 apply angle_nle_gt in Htt.
+progress unfold angle_div_nat in Ht.
+progress unfold angle_div_nat.
+apply angle_lim_move_0_r in Ht.
+apply angle_lim_move_0_r.
+apply angle_lim_opp in Ht.
+rewrite angle_opp_0 in Ht.
+progress unfold seq_angle_to_div_nat.
+eapply (angle_lim_eq_compat 0 0). {
+  intros i.
+  rewrite Nat.add_0_r.
+  symmetry.
+  rewrite angle_div_2_pow_mul; [ | easy ].
+  rewrite angle_mul_nat_assoc.
+  rewrite Nat.mul_comm.
+  rewrite <- (angle_div_2_pow_mul_2_pow i θ) at 2.
+  rewrite <- angle_opp_sub_distr.
+  rewrite <- angle_mul_sub_distr_r; [ | apply Nat.Div0.mul_div_le ].
+  rewrite <- Nat.Div0.mod_eq.
+  reflexivity.
+}
+rewrite <- angle_opp_0.
+apply angle_lim_opp.
+...
+Search angle_mul_nat_div_2π.
+angle_mul_nat_integral:
+  ∀ (n : nat) (θ : angle T),
+    angle_mul_nat_div_2π n θ = 0 → (n * θ)%A = 0%A → n = 0 ∨ θ = 0%A
 ...
 Search (_ * _ = _ * _)%A.
 (* n=2 θ=π/2 θ'=3π/2 *)
