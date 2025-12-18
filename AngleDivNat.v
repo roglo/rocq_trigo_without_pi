@@ -1577,7 +1577,6 @@ apply angle_le_angle_eucl_dist_le; [ | | apply Hgf ]. {
 apply Hgf.
 Qed.
 
-(* to be completed
 Theorem angle_mul_div_nat :
   rngl_characteristic T = 0 →
   rngl_is_archimedean T = true →
@@ -1611,18 +1610,7 @@ specialize (angle_div_nat_prop Hch Har Hco) as H2.
 specialize (H2 (n * θ)%A n θ').
 specialize (H2 Ht).
 destruct H2 as [H2| H2]; [ easy | ].
-(**)
 rewrite fold_angle_div_nat in Ht |-*.
-(*
-intros ε Hε.
-specialize (Ht ε Hε).
-destruct Ht as (N, Ht).
-exists N; intros m Hm.
-specialize (Ht m Hm).
-progress unfold seq_angle_to_div_nat in Ht.
-progress unfold seq_angle_to_div_nat.
-(* ttt... non, ça a pas trop l'air de le faire... *)
-*)
 destruct (angle_le_dec θ' θ) as [Htt| Htt]. {
   apply angle_eq_mul_nat_cancel_l_le in H2; [ | easy | easy | easy ].
   now subst θ'.
@@ -1694,292 +1682,18 @@ apply angle_lim_le_compat with (f := λ i, (n * (θ /₂^(i + k)))%A). {
   now apply Nat.pow_nonzero.
 }
 intros ε Hε.
-exists n.
+(**)
+specialize (exists_nat_such_that_rngl_cos_close_to_1 Har) as H1.
+specialize (H1 (n * θ)%A ε Hε).
+destruct H1 as (N, HN).
+exists N.
 intros m Hm.
-Search (angle_eucl_dist _ _ < _)%L.
-...
-}
-...
-Search angle_mul_nat_div_2π.
-angle_mul_nat_integral:
-  ∀ (n : nat) (θ : angle T),
-    angle_mul_nat_div_2π n θ = 0 → (n * θ)%A = 0%A → n = 0 ∨ θ = 0%A
-...
-Search (_ * _ = _ * _)%A.
-(* n=2 θ=π/2 θ'=3π/2 *)
-(* ah non, ce contre-exemple ne fonctionne pas avec Ht *)
-(* chercher d'autres contre exemples, peut-être *)
-(**)
-...
-assert (θ = θ'). {
-  apply (angle_eq_mul_nat_cancel_l n); [ easy | | easy | easy ].
-  destruct (angle_le_dec θ' θ) as [Htt| Htt]. {
-    now apply (angle_mul_nat_div_2π_le_r _ θ).
-  }
-  apply angle_nle_gt in Htt.
-Search (_ < _ * _)%A.
-...
-Theorem angle_mul_nat_div_2π_add_r :
-  ∀ n θ1 θ2,
-  angle_add_overflow θ1 θ2 = false
-  → angle_mul_nat_div_2π n (θ1 + θ2) = 0
-  → angle_mul_nat_div_2π n θ2 = 0.
-Proof.
-intros * Hov H12.
-apply angle_add_overflow_if in Hov.
-destruct Hov as [Hov| Hov]. {
-  now rewrite Hov, angle_add_0_l in H12.
-}
-induction n; [ easy | ].
-cbn.
-rewrite IHn; [ | now apply Nat.eq_add_0 in H12 ].
-apply Nat_eq_b2n_0.
-...
- (IHn H1), Nat.add_0_l.
-apply Nat.eq_add_0 in H12.
-destruct H12 as (H1, H2).
-rewrite (IHn H1), Nat.add_0_l.
-apply Nat_eq_b2n_0.
-apply angle_mul_nat_div_2π_succ_l_false.
-...
-intros * Hov H12.
-induction n; [ easy | cbn ].
-cbn in H12.
-apply Nat.eq_add_0 in H12.
-destruct H12 as (H1, H2).
-apply Nat_eq_b2n_0 in H2.
-apply angle_eq_mul_succ_nat_0_r in H2. 2: {
-...
-intros * Hov H12.
-induction n; [ easy | cbn ].
-cbn in H12.
-apply Nat.eq_add_0 in H12.
-apply Nat.eq_add_0.
-destruct H12 as (H1, H2).
-split; [ now apply IHn | ].
-apply Nat_eq_b2n_0 in H2.
-apply Nat_eq_b2n_0.
-rewrite <- angle_mul_1_l at 1.
-apply angle_mul_nat_div_2π_distr_add_overflow.
-cbn.
-rewrite IHn. {
-  apply Nat_eq_b2n_0.
-... ...
-  now apply angle_mul_nat_div_2π_add_r in H3.
-...
-  apply angle_eq_mul_succ_nat_0_r in H4. 2: {
-    rewrite angle_mul_add_distr_l.
-    rewrite Hnn, angle_add_0_r.
-    apply angle_mul_nat_integral in Hnn. 2: {
-      cbn.
-      rewrite H2.
-
-...
-specialize (IHn H1 H3).
-rewrite IHn; cbn.
-rewrite angle_mul_add_distr_l in H4.
-...
-apply angle_eq_mul_succ_nat_0_r in H2. 2: {
-Search (_ * _ = 0)%A.
-...
-Search (angle_add_overflow _ (_ + _)).
-...
-rewrite angle_add_overflow_comm in H2 |-*.
-eapply AngleAddOverflowLe.angle_add_overflow_le; [ | ].
-...
-intros * Hnz Hn1 Hn2 Hnn H12.
-induction n; intros; [ easy | clear Hnz ].
-destruct (Nat.eq_dec n 0) as [Hnz| Hnz]. {
-  now subst n; do 2 rewrite angle_mul_1_l in Hnn.
-}
-apply (IHn Hnz).
-now apply Nat.eq_add_0 in Hn1.
-now apply Nat.eq_add_0 in Hn2.
-clear IHn.
-...
-intros * Hnz Hn1 Hn2 Hnn H12.
-revert θ1 θ2 Hn1 Hn2 Hnn H12.
-induction n; intros; [ easy | clear Hnz ].
-destruct (Nat.eq_dec n 0) as [Hnz| Hnz]. {
-  now subst n; do 2 rewrite angle_mul_1_l in Hnn.
-}
-specialize (IHn Hnz).
-cbn in Hn1, Hn2.
-apply Nat.eq_add_0 in Hn1, Hn2.
-destruct Hn1 as (Ha1, Ho1).
-destruct Hn2 as (Ha2, Ho2).
-move Ha2 before Ha1.
-apply Nat_eq_b2n_0 in Ho1, Ho2.
-apply IHn; [ easy | easy | | easy ].
-cbn in Hnn.
-apply angle_add_move_l in Hnn.
-rewrite angle_add_sub_swap in Hnn.
-symmetry in Hnn.
-apply angle_add_move_r in Hnn.
-rewrite <- angle_mul_sub_distr_l in Hnn.
-rewrite <- angle_opp_sub_distr in Hnn.
-symmetry in Hnn.
-apply angle_add_move_0_r in Hnn.
-rewrite <- (angle_mul_1_l (θ1 - θ2)) in Hnn at 2.
-rewrite <- angle_mul_add_distr_r in Hnn.
-rewrite Nat.add_1_r in Hnn.
-... ...
-apply (angle_mul_nat_cancel_l n); [ easy | easy | | easy ].
-...
-rewrite <- angle_opp_involutive in Hnn.
-apply angle_add_move_0_r in Hnn.
-rewrite angle_add_opp_r in Hnn.
-rewrite <- angle_mul_sub_distr_l in Hnn.
-...
-Search (angle_mul_nat_div_2π _ (_ + _)).
-(*
-contre exemple :
-  2 x π = 0
-*)
-...
-intros * Hnz Hnn.
-induction n; intros; [ easy | clear Hnz ].
-destruct (Nat.eq_dec n 0) as [Hnz| Hnz]. {
-  now subst n; do 2 rewrite angle_mul_1_l in Hnn.
-}
-apply (IHn Hnz).
-cbn in Hnn.
-apply angle_add_move_l in Hnn.
-rewrite angle_add_sub_swap in Hnn.
-symmetry in Hnn.
-apply angle_add_move_r in Hnn.
-rewrite <- angle_mul_sub_distr_l in Hnn.
-rewrite <- angle_opp_sub_distr in Hnn.
-symmetry in Hnn.
-apply angle_add_move_0_r in Hnn.
-rewrite <- (angle_mul_1_l (θ1 - θ2)) in Hnn at 2.
-rewrite <- angle_mul_add_distr_r in Hnn.
-rewrite Nat.add_1_r in Hnn.
-...
-Search (_ * _ = 0)%A.
-Require Import AngleAddLeMonoL_1.
-Require Import AngleAddLeMonoL_2.
-Require Import AngleAddLeMonoL_3.
-Require Import AngleAddLeMonoL_prop.
-Require Import AngleAddLeMonoL.
-Require Import AngleAddOverflowEquiv.
-Require Import AngleAddOverflowLe.
-Require Import AngleDef.
-Require Import AngleDiv2Add.
-Require Import AngleDiv2.
-Require Import AngleTypeIsComplete.
-Require Import Angle.
-Require Import Distance.
-Require Import Order.
-Require Import SeqAngleIsCauchy.
-Require Import TacChangeAngle.
-Require Import TrigoWithoutPiExt.
-Search (_ * _ = 0)%A.
-Search (_ + _)%A.
-angle_add_move_l:
-  ∀ {T : Type} {ro : ring_like_op T} {rp : ring_like_prop T} 
-    {ac : angle_ctx T} (θ1 θ2 θ3 : angle T),
-    (θ1 + θ2)%A = θ3 ↔ θ2 = (θ3 - θ1)%A
-Search (rngl_sin (_ * _)).
-...
-  now apply (angle_mul_nat_cancel_l n _ _ Hnz).
-...
-  clear Hmn H1 Ht.
-  revert θ θ' H2.
-  induction n; intros; [ easy | clear Hnz ].
-  destruct (Nat.eq_dec n 0) as [Hnz| Hnz]. {
-    now subst n; do 2 rewrite angle_mul_1_l in H2.
-  }
-  apply IHn; [ easy | ].
-..
-apply angle_mul_nat_cancel_l in H2.
-...
-exists θ'.
-specialize (angle_div_nat_prop Hcz Har Hco _ _ _ Ht) as H2.
-now destruct H2.
-...
-intros Hch Har Hco * Hnz Hmn.
-progress unfold angle_div_nat.
-progress unfold seq_angle_to_div_nat.
-eapply (angle_lim_eq_compat 0 0). {
-  intros i.
-  rewrite Nat.add_0_r.
-  symmetry.
-  rewrite angle_div_2_pow_mul; [ | easy ].
-  rewrite angle_mul_nat_assoc.
-  rewrite Nat.mul_comm.
-  rewrite <- angle_mul_nat_assoc.
-  easy.
-}
-specialize (exists_angle_div_nat Hch Har Hco) as H1.
-specialize (H1 θ n Hnz).
-destruct H1 as (θ', Ht).
-rewrite <- Ht.
-apply angle_lim_mul.
-...
-Inspect 5.
-Search angle_lim.
-Theorem glop :
-  ∀ f a θ θ',
-  angle_lim f θ
-  → θ' = (a * θ)%A
-  → angle_lim (λ i, (a * f i)%A) θ'.
-Admitted.
-eapply glop.
-(* bof... *)
-...
-  clear Hnz.
-  revert i.
-  induction n; intros; [ easy | ].
-  apply (angle_mul_nat_not_overflow_le_l _ (S n)); [ | easy ].
-  cbn in Hmn.
-  apply Nat.eq_add_0 in Hmn.
-  destruct Hmn as (H1, H2).
-  specialize (IHn H1).
-...
-  rewrite Nat.pow_add_r.
-Search (2 ^ Nat.log2 _).
-...
-Search angle_mul_nat_div_2π.
-...
-}
-Search angle_lim.
-...
-intros Hch Har Hco * Hnz Hmn.
-intros ε Hε.
-progress unfold seq_angle_to_div_nat.
-remember (∃ N : nat, ∀ i : nat, _) as P; subst P.
-(**)
-enough (H :
-  ∃ N, ∀ i, N ≤ i →
-  (angle_eucl_dist (2 ^ i / n * n * (θ /₂^i)) θ < ε)%L). {
-  destruct H as (N, H).
-  exists N.
-  intros i Hi.
-  specialize (H i Hi).
-  rewrite angle_div_2_pow_mul; [ | easy ].
-  now rewrite angle_mul_nat_assoc.
-}
-...
-induction n; [ easy | clear Hnz ].
-destruct (Nat.eq_dec n 0) as [Hnz| Hnz]. {
-  subst n.
-  exists 0.
-  intros i _.
-  rewrite Nat.div_1_r.
-  rewrite angle_mul_1_l.
-  rewrite angle_div_2_pow_mul_2_pow.
-  now rewrite angle_eucl_dist_diag.
-}
-specialize (IHn Hnz).
-cbn in Hmn.
-apply Nat.eq_add_0 in Hmn.
-destruct Hmn as (H1, H2).
-apply Nat_eq_b2n_0 in H2.
-specialize (IHn H1).
-destruct IHn as (N, H3).
-remember (∃ M : nat, ∀ i : nat, _) as P; subst P.
-...
-*)
+rewrite angle_eucl_dist_symmetry.
+apply rngl_cos_lt_angle_eucl_dist_lt; [ now apply rngl_lt_le_incl | ].
+rewrite angle_sub_0_r.
+rewrite <- angle_div_2_pow_mul; [ | easy ].
+apply HN.
+flia Hm.
+Qed.
 
 End a.
