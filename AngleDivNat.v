@@ -1617,6 +1617,37 @@ eapply (angle_lim_eq_compat 0 0). {
 }
 rewrite <- angle_opp_0.
 apply angle_lim_opp.
+Theorem glop :
+  ∀ f g,
+  (∀ i, (g i ≤ f i)%A)
+  → angle_lim f 0
+  → angle_lim g 0.
+Proof.
+destruct_ac.
+intros * Hgf Hf.
+intros ε Hε.
+specialize (Hf ε Hε).
+destruct Hf as (N, Hf).
+exists N.
+intros n Hn.
+specialize (Hf n Hn).
+eapply (rngl_le_lt_trans Hor); [ | apply Hf ].
+apply angle_le_angle_eucl_dist_le; [ | | apply Hgf ].
+(* fait chier, merde *)
+...
+apply glop with (f := λ i, (n * (θ /₂^i))%A). {
+  intros i.
+  apply (angle_le_trans _ (n * (θ /₂^ i))). {
+Search (_ * _ ≤ _ * _)%A.
+    apply angle_mul_le_mono_r. 2: {
+      apply Nat.lt_le_incl.
+      now apply Nat.mod_upper_bound.
+    }
+    apply angle_mul_nat_div_2π_div_pow2.
+...
+  }
+  apply angle_le_refl.
+}
 ...
 Search angle_mul_nat_div_2π.
 angle_mul_nat_integral:
