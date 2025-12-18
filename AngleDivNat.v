@@ -1395,6 +1395,7 @@ specialize (rngl_is_totally_ordered_is_ordered Hto) as Hor.
 specialize (rngl_has_eq_dec_or_is_ordered_r Hor) as Heo.
 intros * Htt.
 apply angle_mul_nat_div_2π_iff.
+cbn.
 split. {
   intros i Hi.
   apply Nat.le_0_r.
@@ -1403,7 +1404,8 @@ split. {
   cbn.
   rewrite (IHi n); [ | easy | flia Hi ].
   apply Nat_eq_b2n_0.
-(* mon cul, oui *)
+  apply angle_add_not_overflow_iff.
+  destruct (angle_eq_dec θ 0) as [Htz| Htz]; [ now left | right ].
 ...
 Theorem angle_mul_nat_div_2π_le :
   ∀ n θ k, k ≤ n → angle_mul_nat_div_2π k θ ≤ angle_mul_nat_div_2π n θ.
