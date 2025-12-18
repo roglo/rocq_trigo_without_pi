@@ -1200,6 +1200,13 @@ split; intros H; [ | now subst ].
 now destruct b.
 Qed.
 
+Theorem Nat_eq_b2n_1 : ∀ b, Nat.b2n b = 1 ↔ b = true.
+Proof.
+intros.
+split; intros H; [ | now subst ].
+now destruct b.
+Qed.
+
 Theorem Nat_neq_add_0 : ∀ n m, n + m ≠ 0 → n ≠ 0 ∨ m ≠ 0.
 Proof.
 intros * Hnm.
