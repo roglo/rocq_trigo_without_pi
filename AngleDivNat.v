@@ -1247,6 +1247,7 @@ Proof.
 intros.
 revert k.
 induction n; intros; [ easy | ].
+cbn - [ angle_mul_nat_div_2π ].
 split; intros H1. {
   split. {
     intros i Hi.
@@ -1329,19 +1330,56 @@ split; intros H1. {
   destruct H3 as (i & Hin & Haa & Hov & H3).
   remember (angle_add_overflow θ (n * θ)) as ov eqn:Hovn.
   symmetry in Hovn.
-  destruct ov. 2: {
-    rewrite Nat.add_0_r in H1.
-    exists i.
-    split; [ flia Hin | ].
-    split; [ now rewrite Haa; f_equal | ].
+  destruct ov. {
+    cbn in H1.
+    exists n.
     split; [ easy | ].
-    intros j Hj.
-    destruct (Nat.eq_dec j n) as [Hjn| Hjn]. {
-      now subst j; rewrite angle_add_overflow_comm.
-    }
-    apply H3.
-    flia Hj Hjn.
+    split; [ now rewrite <- H1, Nat.add_sub | ].
+    split; [ now rewrite angle_add_overflow_comm | ].
+    intros j Hj; flia Hj.
   }
+  rewrite Nat.add_0_r in H1.
+  exists i.
+  split; [ flia Hin | ].
+  split; [ now rewrite Haa; f_equal | ].
+  split; [ easy | ].
+  intros j Hj.
+  destruct (Nat.eq_dec j n) as [Hjn| Hjn]. {
+    now subst j; rewrite angle_add_overflow_comm.
+  }
+  apply H3.
+  flia Hj Hjn.
+}
+destruct H1 as (H1, H2).
+cbn.
+remember (angle_add_overflow θ (n * θ)) as ov eqn:Hovn.
+symmetry in Hovn.
+destruct ov. {
+  cbn.
+  destruct (Nat.eq_dec k 0) as [Hkz| Hkz]. {
+    now rewrite angle_add_overflow_comm, H2 in Hovn.
+  }
+  destruct H2 as (i & Hin & H2 & H3 & H4).
+  destruct (Nat.eq_dec i n) as [Hien| Hien]. {
+    subst i.
+    clear H4 Hin.
+    rewrite H2.
+    now apply Nat.sub_add, Nat.neq_0_lt_0.
+  }
+  rewrite angle_add_overflow_comm, H4 in Hovn; [ easy | ].
+  flia Hin Hien.
+}
+rewrite Nat.add_0_r.
+destruct (Nat.eq_dec k 0) as [Hkz| Hkz]. {
+  subst k.
+  specialize (H1 _ (Nat.lt_succ_diag_r _)).
+  now apply Nat.le_0_r in H1.
+}
+destruct H2 as (i & Hin & H2 & H3 & H4).
+destruct (Nat.eq_dec i n) as [Hien| Hien]. {
+  subst i.
+  now rewrite angle_add_overflow_comm, H3 in Hovn.
+}
 ...
 Theorem angle_mul_nat_div_2π_le :
   ∀ n θ k, k ≤ n → angle_mul_nat_div_2π k θ ≤ angle_mul_nat_div_2π n θ.
