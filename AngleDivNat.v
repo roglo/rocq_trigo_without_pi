@@ -1292,6 +1292,38 @@ clear k IHn Hkn.
 (* lemma *)
 apply angle_add_not_overflow_iff in Hn.
 destruct Hn as [Hn| Hn]; [ subst; apply angle_mul_nat_div_2π_0_r | ].
+(*
+  Hn : (n * θ < - θ)%A
+  ============================
+  angle_mul_nat_div_2π n θ = 0
+*)
+induction n; [ easy | ].
+assert (H : (n * θ < - θ)%A). {
+  eapply angle_le_lt_trans; [ | apply Hn ].
+...
+angle_mul_nat_div_2π b θ = 0 est une condition suffisante, mais
+elle n'est pas nécessaire. Il faudrait affiner :
+
+angle_mul_le_mono_r
+     : ∀ (a b : nat) (θ : angle T), angle_mul_nat_div_2π b θ = 0 → a ≤ b → (a * θ ≤ b * θ)%A
+...
+  apply angle_mul_le_mono_r; [ | flia ].
+...
+cbn in Hn.
+destruct n; [ now cbn; rewrite angle_add_overflow_0_r | ].
+cbn in Hn |-*.
+apply Nat.eq_add_0.
+split. {
+  apply Nat.eq_add_0.
+  split. {
+    destruct n; [ easy | ].
+    cbn in Hn |-*.
+    apply Nat.eq_add_0.
+    split. {
+      destruct n; [ easy | ].
+      cbn in Hn |-*.
+      apply Nat.eq_add_0.
+      split. {
 ...
 induction n; [ easy | cbn ].
 apply Nat.eq_add_0.
