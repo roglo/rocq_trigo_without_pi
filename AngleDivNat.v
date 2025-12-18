@@ -1248,9 +1248,9 @@ intros.
 revert k.
 induction n; intros; [ easy | ].
 split; intros H1. {
-  cbn in H1.
   split. {
     intros i Hi.
+    cbn in H1.
     remember (angle_add_overflow θ (n * θ)) as ov eqn:Hov.
     symmetry in Hov.
     destruct ov. {
@@ -1259,17 +1259,52 @@ split; intros H1. {
       symmetry in H1.
       generalize H1; intros H2.
       apply IHn in H2.
-      destruct H2 as (H2, H3).
-      destruct (Nat.eq_dec n 0) as [Hnz| Hnz]. {
-        subst n.
-        now apply Nat.lt_1_r in Hi; subst i.
+      destruct H2 as (H2, _).
+      destruct (Nat.eq_dec i n) as [Hin| Hin]. {
+        subst i; rewrite H1; flia.
       }
-      destruct (Nat.eq_dec (k - 1) 0) as [Hkz| Hkz]. {
-        destruct k. {
-          clear Hkz; cbn in H1, H2.
+      apply (Nat.le_trans _ (k - 1)); [ | flia ].
+      apply H2.
+      flia Hi Hin.
+    }
+    rewrite Nat.add_0_r in H1.
+    generalize H1; intros H2.
+    apply IHn in H2.
+    destruct H2 as (H2, H3).
+    destruct (Nat.eq_dec i n) as [Hin| Hin]. {
+      subst i; rewrite H1; flia.
+    }
+    apply H2.
+    flia Hi Hin.
+  }
+  cbn.
+  destruct (Nat.eq_dec k 0) as [Hkz| Hkz]. {
+    subst k.
+    intros i Hi.
+    cbn in Hkz.
+    apply Nat.eq_add_0 in Hkz.
+    destruct Hkz as (H1, H2).
+    apply Nat_eq_b2n_0 in H2.
+    generalize H1; intros H3.
+    apply IHn in H3.
+    cbn in H3.
+    destruct H3 as (H3, H4).
+    destruct (Nat.eq_dec n 0) as [Hnz| Hnz]. {
+      subst n.
+      apply Nat.lt_1_r in Hi; subst i; cbn.
+      apply angle_add_overflow_0_l.
+    }
+    destruct (Nat.eq_dec i n) as [Hin| Hin]. {
+      now subst i; rewrite angle_add_overflow_comm.
+    }
+    apply H4.
+    flia Hi Hin.
+  }
+...
 Theorem angle_mul_nat_div_2π_le :
   ∀ n θ k, k ≤ n → angle_mul_nat_div_2π k θ ≤ angle_mul_nat_div_2π n θ.
 Proof.
+(* euh, je crois que c'est faux *)
 intros * Hkn.
 revert k Hkn.
 induction n; intros; cbn. {
@@ -1288,17 +1323,22 @@ apply Bool.not_false_iff_true in Hk.
 apply Hk; clear Hk.
 apply (angle_add_overflow_le _ (n * θ)); [ | easy ].
 apply angle_mul_le_mono_r; [ | easy ].
+(*
 clear k IHn Hkn.
+*)
 (* lemma *)
 apply angle_add_not_overflow_iff in Hn.
 destruct Hn as [Hn| Hn]; [ subst; apply angle_mul_nat_div_2π_0_r | ].
+...
 (*
   Hn : (n * θ < - θ)%A
   ============================
   angle_mul_nat_div_2π n θ = 0
 *)
+...
 induction n; [ easy | ].
 assert (H : (n * θ < - θ)%A). {
+...
   eapply angle_le_lt_trans; [ | apply Hn ].
   apply angle_mul_le_mono_r; [ | flia ].
 assert (angle_mul_nat_div_2π (S n) θ = angle_mul_nat_div_2π n θ). {
