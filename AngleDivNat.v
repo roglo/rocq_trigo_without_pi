@@ -1556,6 +1556,27 @@ now apply glop.
 ...
 *)
 
+Theorem angle_lim_le_compat :
+  ∀ f g,
+  (∀ i, (g i ≤ f i ≤ π)%A)
+  → angle_lim f 0
+  → angle_lim g 0.
+Proof.
+destruct_ac.
+intros * Hgf Hf.
+intros ε Hε.
+specialize (Hf ε Hε).
+destruct Hf as (N, Hf).
+exists N.
+intros n Hn.
+specialize (Hf n Hn).
+eapply (rngl_le_lt_trans Hor); [ | apply Hf ].
+apply angle_le_angle_eucl_dist_le; [ | | apply Hgf ]. {
+  apply (angle_le_trans _ (f n)); apply Hgf.
+}
+apply Hgf.
+Qed.
+
 (* to be completed
 Theorem angle_mul_div_nat :
   rngl_characteristic T = 0 →
@@ -1571,6 +1592,18 @@ intros Hch Har Hco * Hnz Hmn.
 specialize (rngl_is_complete_angle_is_complete Hco) as H1.
 specialize (seq_angle_to_div_nat_is_Cauchy Har n (n * θ)) as H.
 specialize (H1 _ H); clear H.
+destruct (Nat.eq_dec n 1) as [Hn1| Hn1]. {
+  subst n.
+  rewrite angle_mul_1_l.
+  intros ε Hε.
+  progress unfold seq_angle_to_div_nat.
+  exists 0.
+  intros n _.
+  rewrite Nat.div_1_r.
+  rewrite angle_div_2_pow_mul_2_pow.
+  now rewrite angle_eucl_dist_diag.
+}
+move Hn1 before Hnz.
 destruct H1 as (θ', Ht).
 progress unfold angle_div_nat.
 progress unfold angle_lim.
@@ -1617,36 +1650,36 @@ eapply (angle_lim_eq_compat 0 0). {
 }
 rewrite <- angle_opp_0.
 apply angle_lim_opp.
-Theorem glop :
-  ∀ f g,
-  (∀ i, (g i ≤ f i)%A)
-  → angle_lim f 0
-  → angle_lim g 0.
-Proof.
-destruct_ac.
-intros * Hgf Hf.
-intros ε Hε.
-specialize (Hf ε Hε).
-destruct Hf as (N, Hf).
-exists N.
-intros n Hn.
-specialize (Hf n Hn).
-eapply (rngl_le_lt_trans Hor); [ | apply Hf ].
-apply angle_le_angle_eucl_dist_le; [ | | apply Hgf ].
-(* fait chier, merde *)
-...
-apply glop with (f := λ i, (n * (θ /₂^i))%A). {
+remember (Nat.log2_up n) as k eqn:Hk.
+eapply (angle_lim_eq_compat 0 k). {
+  intros.
+  rewrite Nat.add_0_r; symmetry.
+  easy.
+}
+apply angle_lim_le_compat with (f := λ i, (n * (θ /₂^(i + k)))%A). {
   intros i.
-  apply (angle_le_trans _ (n * (θ /₂^ i))). {
-Search (_ * _ ≤ _ * _)%A.
-    apply angle_mul_le_mono_r. 2: {
-      apply Nat.lt_le_incl.
-      now apply Nat.mod_upper_bound.
+  split. {
+    apply (angle_le_trans _ (n * (θ /₂^ (i + k)))). {
+      apply angle_mul_le_mono_r. 2: {
+        apply Nat.lt_le_incl.
+        now apply Nat.mod_upper_bound.
+      }
+      apply angle_mul_nat_div_2π_div_pow2.
+      rewrite Nat.pow_add_r.
+      subst k.
+      apply (Nat.le_trans _ (2 ^ Nat.log2_up n)). {
+        apply Nat.log2_up_spec.
+        flia Hnz Hn1.
+      }
+      apply Nat.le_mul_l.
+      now apply Nat.pow_nonzero.
     }
-    apply angle_mul_nat_div_2π_div_pow2.
-...
+    apply angle_le_refl.
   }
-  apply angle_le_refl.
+  subst k.
+  rewrite angle_div_2_pow_add_r.
+Search (_ /₂^Nat.log2_up _)%A.
+...
 }
 ...
 Search angle_mul_nat_div_2π.
