@@ -1219,19 +1219,6 @@ split; intros Htt. {
 }
 Qed.
 
-(* to be completed
-Theorem glop :
-  rngl_has_opp T = true →
-  rngl_is_totally_ordered T = true →
-  ∀ n θ,
-  angle_div_nat (n * θ) n θ
-  → angle_mul_nat_div_2π n θ = 0.
-Proof.
-intros Hop Hto.
-specialize (rngl_is_totally_ordered_is_ordered Hto) as Hor.
-specialize (rngl_has_eq_dec_or_is_ordered_r Hor) as Heo.
-intros * Htt.
-Print angle_mul_nat_div_2π.
 Theorem angle_mul_nat_div_2π_iff :
   ∀ n θ k,
   angle_mul_nat_div_2π n θ = k
@@ -1374,6 +1361,49 @@ destruct (Nat.eq_dec i n) as [Hien| Hien]. {
   subst i.
   now rewrite H3 in Hovn.
 }
+apply IHn.
+split. {
+  intros j Hj.
+  apply H1; flia Hj.
+}
+destruct (Nat.eq_dec n 0) as [Hnz| Hnz]. {
+  subst n.
+  now apply Nat.lt_1_r in Hin.
+}
+destruct (Nat.eq_dec k 0) as [Hkez| Hkez]; [ easy | ].
+clear Hkez.
+exists i.
+split; [ flia Hin Hien | ].
+split; [ easy | ].
+split; [ easy | ].
+intros j Hj.
+apply H4.
+split; [ easy | ].
+flia Hj.
+Qed.
+
+(* to be completed
+Theorem glop :
+  rngl_has_opp T = true →
+  rngl_is_totally_ordered T = true →
+  ∀ n θ,
+  angle_div_nat (n * θ) n θ
+  → angle_mul_nat_div_2π n θ = 0.
+Proof.
+intros Hop Hto.
+specialize (rngl_is_totally_ordered_is_ordered Hto) as Hor.
+specialize (rngl_has_eq_dec_or_is_ordered_r Hor) as Heo.
+intros * Htt.
+apply angle_mul_nat_div_2π_iff.
+split. {
+  intros i Hi.
+  apply Nat.le_0_r.
+  revert n Htt Hi.
+  induction i; intros; [ easy | ].
+  cbn.
+  rewrite (IHi n); [ | easy | flia Hi ].
+  apply Nat_eq_b2n_0.
+(* mon cul, oui *)
 ...
 Theorem angle_mul_nat_div_2π_le :
   ∀ n θ k, k ≤ n → angle_mul_nat_div_2π k θ ≤ angle_mul_nat_div_2π n θ.
