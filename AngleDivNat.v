@@ -1300,6 +1300,14 @@ destruct Hn as [Hn| Hn]; [ subst; apply angle_mul_nat_div_2π_0_r | ].
 induction n; [ easy | ].
 assert (H : (n * θ < - θ)%A). {
   eapply angle_le_lt_trans; [ | apply Hn ].
+  apply angle_mul_le_mono_r; [ | flia ].
+assert (angle_mul_nat_div_2π (S n) θ = angle_mul_nat_div_2π n θ). {
+  cbn.
+  replace (angle_add_overflow _ _) with false.
+  apply Nat.add_0_r.
+  symmetry.
+  apply angle_add_not_overflow_iff.
+  (* crotte de bique *)
 ...
 angle_mul_nat_div_2π b θ = 0 est une condition suffisante, mais
 elle n'est pas nécessaire. Il faudrait affiner :
