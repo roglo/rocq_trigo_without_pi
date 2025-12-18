@@ -1238,11 +1238,11 @@ Theorem angle_mul_nat_div_2π_iff :
   ↔ (∀ i, i < n → angle_mul_nat_div_2π i θ ≤ k) ∧
     (if Nat.eq_dec n 0 then k = 0
      else if Nat.eq_dec k 0 then
-       ∀ i, i < n → angle_add_overflow (i * θ) θ = false
+       ∀ i, i < n → angle_add_overflow θ (i * θ) = false
      else
        ∃ i, i < n ∧ angle_mul_nat_div_2π i θ = k - 1 ∧
-       angle_add_overflow (i * θ) θ = true ∧
-       ∀ j, i < j < n → angle_add_overflow (j * θ) θ = false).
+       angle_add_overflow θ (i * θ) = true ∧
+       ∀ j, i < j < n → angle_add_overflow θ (j * θ) = false).
 Proof.
 intros.
 revert k.
@@ -1293,11 +1293,9 @@ split; intros H1. {
     destruct (Nat.eq_dec n 0) as [Hnz| Hnz]. {
       subst n.
       apply Nat.lt_1_r in Hi; subst i; cbn.
-      apply angle_add_overflow_0_l.
+      apply angle_add_overflow_0_r.
     }
-    destruct (Nat.eq_dec i n) as [Hin| Hin]. {
-      now subst i; rewrite angle_add_overflow_comm.
-    }
+    destruct (Nat.eq_dec i n) as [Hin| Hin]; [ now subst i | ].
     apply H4.
     flia Hi Hin.
   }
@@ -1322,7 +1320,7 @@ split; intros H1. {
       exists n.
       split; [ easy | ].
       split; [ easy | ].
-      split; [ now rewrite angle_add_overflow_comm | ].
+      split; [ easy | ].
       intros j Hj; flia Hj.
     }
     now destruct (angle_add_overflow θ (n * θ)).
@@ -1335,7 +1333,7 @@ split; intros H1. {
     exists n.
     split; [ easy | ].
     split; [ now rewrite <- H1, Nat.add_sub | ].
-    split; [ now rewrite angle_add_overflow_comm | ].
+    split; [ easy | ].
     intros j Hj; flia Hj.
   }
   rewrite Nat.add_0_r in H1.
@@ -1344,9 +1342,7 @@ split; intros H1. {
   split; [ now rewrite Haa; f_equal | ].
   split; [ easy | ].
   intros j Hj.
-  destruct (Nat.eq_dec j n) as [Hjn| Hjn]. {
-    now subst j; rewrite angle_add_overflow_comm.
-  }
+  destruct (Nat.eq_dec j n) as [Hjn| Hjn]; [ now subst j | ].
   apply H3.
   flia Hj Hjn.
 }
@@ -1356,9 +1352,7 @@ remember (angle_add_overflow θ (n * θ)) as ov eqn:Hovn.
 symmetry in Hovn.
 destruct ov. {
   cbn.
-  destruct (Nat.eq_dec k 0) as [Hkz| Hkz]. {
-    now rewrite angle_add_overflow_comm, H2 in Hovn.
-  }
+  destruct (Nat.eq_dec k 0) as [Hkz| Hkz]; [ now rewrite H2 in Hovn | ].
   destruct H2 as (i & Hin & H2 & H3 & H4).
   destruct (Nat.eq_dec i n) as [Hien| Hien]. {
     subst i.
@@ -1366,7 +1360,7 @@ destruct ov. {
     rewrite H2.
     now apply Nat.sub_add, Nat.neq_0_lt_0.
   }
-  rewrite angle_add_overflow_comm, H4 in Hovn; [ easy | ].
+  rewrite H4 in Hovn; [ easy | ].
   flia Hin Hien.
 }
 rewrite Nat.add_0_r.
@@ -1378,7 +1372,7 @@ destruct (Nat.eq_dec k 0) as [Hkz| Hkz]. {
 destruct H2 as (i & Hin & H2 & H3 & H4).
 destruct (Nat.eq_dec i n) as [Hien| Hien]. {
   subst i.
-  now rewrite angle_add_overflow_comm, H3 in Hovn.
+  now rewrite H3 in Hovn.
 }
 ...
 Theorem angle_mul_nat_div_2π_le :
