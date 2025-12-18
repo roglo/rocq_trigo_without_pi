@@ -1291,6 +1291,7 @@ apply angle_mul_le_mono_r; [ | easy ].
 clear k IHn Hkn.
 (* lemma *)
 apply angle_add_not_overflow_iff in Hn.
+destruct Hn as [Hn| Hn]; [ subst; apply angle_mul_nat_div_2π_0_r | ].
 ...
 induction n; [ easy | cbn ].
 apply Nat.eq_add_0.
