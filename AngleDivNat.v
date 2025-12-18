@@ -1650,7 +1650,7 @@ eapply (angle_lim_eq_compat 0 0). {
 }
 rewrite <- angle_opp_0.
 apply angle_lim_opp.
-remember (Nat.log2_up n) as k eqn:Hk.
+remember (Nat.log2_up n + 1) as k eqn:Hk.
 eapply (angle_lim_eq_compat 0 k). {
   intros.
   rewrite Nat.add_0_r; symmetry.
@@ -1667,6 +1667,11 @@ apply angle_lim_le_compat with (f := λ i, (n * (θ /₂^(i + k)))%A). {
       apply angle_mul_nat_div_2π_div_pow2.
       rewrite Nat.pow_add_r.
       subst k.
+      rewrite Nat.pow_add_r.
+      cbn.
+      rewrite Nat.mul_assoc, Nat.mul_shuffle0.
+      rewrite <- (Nat.pow_1_r 2) at 2.
+      rewrite <- Nat.pow_add_r.
       apply (Nat.le_trans _ (2 ^ Nat.log2_up n)). {
         apply Nat.log2_up_spec.
         flia Hnz Hn1.
@@ -1677,8 +1682,21 @@ apply angle_lim_le_compat with (f := λ i, (n * (θ /₂^(i + k)))%A). {
     apply angle_le_refl.
   }
   subst k.
-  rewrite angle_div_2_pow_add_r.
-Search (_ /₂^Nat.log2_up _)%A.
+  apply angle_mul_div_pow2_le_straight.
+  rewrite Nat.add_assoc, Nat.add_comm.
+  rewrite Nat.pow_add_r.
+  apply Nat.mul_le_mono_l.
+  rewrite Nat.pow_add_r.
+  apply (Nat.le_trans _ (2 ^ Nat.log2_up n)). {
+    apply Nat.log2_up_spec; flia Hnz Hn1.
+  }
+  apply Nat.le_mul_l.
+  now apply Nat.pow_nonzero.
+}
+intros ε Hε.
+exists n.
+intros m Hm.
+Search (angle_eucl_dist _ _ < _)%L.
 ...
 }
 ...
