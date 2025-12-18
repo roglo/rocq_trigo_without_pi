@@ -1382,7 +1382,7 @@ split; [ easy | ].
 flia Hj.
 Qed.
 
-(* to be completed
+(* to be completed later
 Theorem glop :
   rngl_has_opp T = true →
   rngl_is_totally_ordered T = true →
@@ -1556,7 +1556,7 @@ now apply glop.
 ...
 *)
 
-(* to be completed later
+(* to be completed
 Theorem angle_mul_div_nat :
   rngl_characteristic T = 0 →
   rngl_is_archimedean T = true →
@@ -1595,6 +1595,7 @@ destruct (angle_le_dec θ' θ) as [Htt| Htt]. {
   now subst θ'.
 }
 apply angle_nle_gt in Htt.
+...
 Search (_ * _ = _ * _)%A.
 (* n=2 θ=π/2 θ'=3π/2 *)
 (* ah non, ce contre-exemple ne fonctionne pas avec Ht *)
