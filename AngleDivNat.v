@@ -962,6 +962,15 @@ split; intros Htt. {
 Qed.
 
 (* to be completed
+Theorem glop :
+  ∀ n i j θ,
+  angle_div_nat (n * θ) n θ
+  → j < i < n
+  → angle_add_overflow θ (j * θ) = false.
+Proof.
+intros * Hdn Hji.
+...
+
 Theorem angle_div_nat_prop' :
   rngl_characteristic T = 0 →
   rngl_is_archimedean T = true →
@@ -977,62 +986,31 @@ destruct H1 as [H1| H1]; [ now left | right ].
 split; [ easy | ].
 subst θ; rename θ' into θ.
 (* lemma *)
-(*
-  Hdn : angle_div_nat (n * θ) n θ
-  ============================
-  angle_mul_nat_div_2π n θ = 0
-*)
 apply angle_mul_nat_div_2π_iff; cbn.
 split. {
   intros i Hin.
   apply Nat.le_0_r.
   (* lemma *)
-(*
-  Hdn : angle_div_nat (n * θ) n θ
-  Hin : i < n
-  ============================
-  angle_mul_nat_div_2π i θ = 0
-*)
   apply angle_mul_nat_div_2π_iff.
   cbn.
   split. {
     intros j Hji.
     apply Nat.le_0_r.
-(*
-  Hdn : angle_div_nat (n * θ) n θ
-  Hin : j < i < n
-  ============================
-  angle_mul_nat_div_2π j θ = 0
-*)
-   revert i Hji Hin.
-   induction j; intros; [ easy | cbn ].
-   destruct i; [ easy | ].
-   apply Nat.succ_lt_mono in Hji.
-   rewrite (IHj _ Hji); [ cbn | flia Hin ].
-   apply Nat_eq_b2n_0.
-   apply angle_add_not_overflow_iff.
-... ...
+    revert i Hji Hin.
+    induction j; intros; [ easy | cbn ].
+    destruct i; [ easy | ].
+    apply Nat.succ_lt_mono in Hji.
+    rewrite (IHj _ Hji); [ cbn | flia Hin ].
+    apply Nat_eq_b2n_0.
+    apply (glop n i); [ easy | ].
+    flia Hji Hin.
   }
   destruct (Nat.eq_dec i 0) as [Hiz| Hiz]; [ easy | ].
   intros j Hji; clear Hiz.
-(* pareil : *)
-(*
-  Hdn : angle_div_nat (n * θ) n θ
-  Hin : j < i < n
-  ============================
-  angle_add_overflow θ (j * θ) = false
-*)
-... ...
-} {
-  destruct (Nat.eq_dec n 0) as [Hnz| Hnz]; [ easy | ].
-  intros i Hi.
-  (* lemma *)
-(*
-  Hdn : angle_div_nat (n * θ) n θ
-  Hi : i < n
-  ============================
-  angle_add_overflow θ (i * θ) = false
-*)
+  now apply (glop n i).
+}
+destruct (Nat.eq_dec n 0) as [Hnz| Hnz]; [ easy | ].
+intros i Hin.
 ...
 Qed.
 ...
