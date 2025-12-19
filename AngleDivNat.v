@@ -602,7 +602,14 @@ split; intros H12. {
 }
 Qed.
 
-(* to be completed later
+Theorem fold_angle_div_nat :
+  ∀ n θ θ',
+  is_limit_when_seq_tends_to_inf angle_eucl_dist
+    (seq_angle_to_div_nat n θ) θ' =
+  angle_div_nat n θ θ'.
+Proof. easy. Qed.
+
+(* to be completed
 Theorem angle_div_nat_prop :
   rngl_characteristic T = 0 →
   rngl_is_archimedean T = true →
@@ -640,14 +647,18 @@ destruct (Nat.eq_dec n 1) as [Hn1| Hn1]. {
 }
 progress unfold angle_div_nat in Hdn.
 rename Hdn into Hlim.
-specialize (angle_lim_mul n _ _ Hlim) as H1.
 enough (H2 : angle_lim (λ i, (n * seq_angle_to_div_nat θ n i)%A) θ). {
   specialize (limit_unique Hop Hiv Hto angle_eucl_dist_is_dist) as H3.
-  apply (H3 _ (n * θ')%A) in H2; [ clear H3 | easy ].
+  specialize (angle_lim_mul n _ _ Hlim) as H.
+  apply (H3 _ (n * θ')%A) in H2; [ clear H3 | apply H ].
+  clear H.
   split; [ easy | ].
+  progress unfold angle_lim in Hlim.
+  rewrite fold_angle_div_nat in Hlim.
+  subst θ; rename θ' into θ.
 ...
 }
-clear θ' Hlim H1.
+clear θ' Hlim.
 destruct (angle_eq_dec θ 0) as [Htz| Htz]. {
   subst θ.
   eapply (angle_lim_eq_compat 0 0). {
@@ -937,13 +948,6 @@ enough (H : ∃ N, ∀ m, N ≤ m → (1 - ε² / 2 < rngl_cos (θ /₂^m))%L). 
 }
 now apply (exists_nat_such_that_rngl_cos_close_to_1 Har).
 Qed.
-
-Theorem fold_angle_div_nat :
-  ∀ n θ θ',
-  is_limit_when_seq_tends_to_inf angle_eucl_dist
-    (seq_angle_to_div_nat n θ) θ' =
-  angle_div_nat n θ θ'.
-Proof. easy. Qed.
 
 (* to be completed later
 Theorem angle_div_nat_integral :
@@ -1682,7 +1686,6 @@ apply angle_lim_le_compat with (f := λ i, (n * (θ /₂^(i + k)))%A). {
   now apply Nat.pow_nonzero.
 }
 intros ε Hε.
-(**)
 specialize (exists_nat_such_that_rngl_cos_close_to_1 Har) as H1.
 specialize (H1 (n * θ)%A ε Hε).
 destruct H1 as (N, HN).
