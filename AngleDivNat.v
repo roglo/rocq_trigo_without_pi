@@ -936,6 +936,31 @@ enough (H : ∃ N, ∀ m, N ≤ m → (1 - ε² / 2 < rngl_cos (θ /₂^m))%L). 
 now apply (exists_nat_such_that_rngl_cos_close_to_1 Har).
 Qed.
 
+Theorem angle_add_not_overflow_iff :
+  ∀ θ1 θ2,
+  angle_add_overflow θ1 θ2 = false
+  ↔ (θ1 = 0)%A ∨ (θ2 < - θ1)%A.
+Proof.
+intros.
+progress unfold angle_add_overflow.
+split; intros Htt. {
+  apply Bool.andb_false_iff in Htt.
+  destruct Htt as [Ht| Htt]; [ left | right ]. {
+    apply Bool.negb_false_iff in Ht.
+    now apply angle_eqb_eq in Ht.
+  } {
+    now apply angle_leb_gt in Htt.
+  }
+} {
+  apply Bool.andb_false_iff.
+  destruct Htt as [Ht| Htt]; [ left | right ]. {
+    now subst θ1; rewrite angle_eqb_refl.
+  } {
+    now apply angle_leb_gt.
+  }
+}
+Qed.
+
 (* to be completed
 Theorem angle_div_nat_prop' :
   rngl_characteristic T = 0 →
@@ -979,6 +1004,13 @@ split. {
   ============================
   angle_mul_nat_div_2π j θ = 0
 *)
+   revert i Hji Hin.
+   induction j; intros; [ easy | cbn ].
+   destruct i; [ easy | ].
+   apply Nat.succ_lt_mono in Hji.
+   rewrite (IHj _ Hji); [ cbn | flia Hin ].
+   apply Nat_eq_b2n_0.
+   apply angle_add_not_overflow_iff.
 ... ...
   }
   destruct (Nat.eq_dec i 0) as [Hiz| Hiz]; [ easy | ].
@@ -1252,31 +1284,6 @@ destruct (angle_le_dec θ1 θ2) as [H12| H12]. {
   apply angle_nle_gt, angle_lt_le_incl in H12.
   symmetry.
   now apply (angle_eq_mul_nat_cancel_l_le n).
-}
-Qed.
-
-Theorem angle_add_not_overflow_iff :
-  ∀ θ1 θ2,
-  angle_add_overflow θ1 θ2 = false
-  ↔ (θ1 = 0)%A ∨ (θ2 < - θ1)%A.
-Proof.
-intros.
-progress unfold angle_add_overflow.
-split; intros Htt. {
-  apply Bool.andb_false_iff in Htt.
-  destruct Htt as [Ht| Htt]; [ left | right ]. {
-    apply Bool.negb_false_iff in Ht.
-    now apply angle_eqb_eq in Ht.
-  } {
-    now apply angle_leb_gt in Htt.
-  }
-} {
-  apply Bool.andb_false_iff.
-  destruct Htt as [Ht| Htt]; [ left | right ]. {
-    now subst θ1; rewrite angle_eqb_refl.
-  } {
-    now apply angle_leb_gt.
-  }
 }
 Qed.
 
