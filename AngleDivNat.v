@@ -969,6 +969,26 @@ Theorem angle_div_nat_add_not_overflow :
   → angle_add_overflow θ (i * θ) = false.
 Proof.
 intros * Hin Hdn.
+apply angle_add_not_overflow_iff.
+destruct (angle_eq_dec θ 0) as [Htz| Htz]; [ now left | right ].
+progress unfold angle_div_nat in Hdn.
+progress unfold angle_lim in Hdn.
+progress unfold is_limit_when_seq_tends_to_inf in Hdn.
+remember (∀ ε, _ → ∃ N, ∀ j, _) as x eqn:Hx; subst x.
+Print seq_angle_to_div_nat.
+Print angle_eucl_dist.
+progress unfold angle_eucl_dist in Hdn.
+Search (rngl_cos (seq_angle_to_div_nat _ _ _)).
+progress unfold seq_angle_to_div_nat in Hdn.
+Search (rngl_cos (_ * _)).
+Search (rngl_cos _ - rngl_cos _)%L.
+Search (rngl_cos _ + rngl_cos _ = _)%L.
+...
+progress unfold rl_modl in Hdn.
+...
+Theorem glop :
+  ∀ n i θ,
+  angle_eucl_dist (seq_angle_to_div_nat θ n i) θ =
 ...
 
 Theorem angle_div_nat_prop' :
