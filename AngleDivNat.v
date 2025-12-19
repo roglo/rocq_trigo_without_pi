@@ -963,12 +963,12 @@ Qed.
 
 (* to be completed
 Theorem angle_div_nat_add_not_overflow :
-  ∀ n i j θ,
-  j ≤ i < n
+  ∀ n i θ,
+  i < n
   → angle_div_nat (n * θ) n θ
-  → angle_add_overflow θ (j * θ) = false.
+  → angle_add_overflow θ (i * θ) = false.
 Proof.
-intros * Hdn Hji.
+intros * Hdn.
 ...
 
 Theorem angle_div_nat_prop' :
@@ -1003,18 +1003,17 @@ split. {
     rewrite (IHj _ Hji); [ cbn | flia Hin ].
     apply Nat_eq_b2n_0.
 ... ...
-    apply (angle_div_nat_add_not_overflow n i); [ | easy ].
+    apply (angle_div_nat_add_not_overflow n); [ | easy ].
     flia Hji Hin.
   }
   destruct (Nat.eq_dec i 0) as [Hiz| Hiz]; [ easy | ].
   intros j Hji; clear Hiz.
-  apply (angle_div_nat_add_not_overflow n i); [ | easy ].
-  split; [ | easy ].
-  now apply Nat.lt_le_incl.
+  apply (angle_div_nat_add_not_overflow n); [ | easy ].
+  now apply (Nat.lt_trans _ i).
 }
 destruct (Nat.eq_dec n 0) as [Hnz| Hnz]; [ easy | ].
 intros i Hin.
-now apply (angle_div_nat_add_not_overflow n i).
+now apply (angle_div_nat_add_not_overflow n).
 Qed.
 ...
 *)
