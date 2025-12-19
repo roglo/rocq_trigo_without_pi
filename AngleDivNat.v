@@ -962,12 +962,28 @@ split; intros Htt. {
 Qed.
 
 (* to be completed
+Theorem glop :
+  rngl_characteristic T = 0 →
+  rngl_is_archimedean T = true →
+  is_complete T rngl_dist →
+  ∀ n i θ θ',
+  i < n
+  → angle_div_nat θ n θ'
+  → angle_add_overflow θ' (i * θ') = false.
+Proof.
+intros Hch Har Hco * Hin Hdn.
+...
+
 Theorem angle_div_nat_add_not_overflow :
   ∀ n i θ,
   i < n
   → angle_div_nat (n * θ) n θ
   → angle_add_overflow θ (i * θ) = false.
 Proof.
+intros * Hin Hdn.
+... ...
+now apply (glop n _ (n * θ)).
+...
 intros * Hin Hdn.
 apply angle_add_not_overflow_iff.
 destruct (angle_eq_dec θ 0) as [Htz| Htz]; [ now left | right ].
