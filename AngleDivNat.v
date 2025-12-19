@@ -968,7 +968,7 @@ Theorem angle_div_nat_add_not_overflow :
   → angle_div_nat (n * θ) n θ
   → angle_add_overflow θ (i * θ) = false.
 Proof.
-intros * Hdn.
+intros * Hin Hdn.
 ...
 
 Theorem angle_div_nat_prop' :
