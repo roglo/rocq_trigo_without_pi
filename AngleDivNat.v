@@ -972,6 +972,43 @@ Theorem glop :
   → angle_add_overflow θ' (i * θ') = false.
 Proof.
 intros Hch Har Hco * Hin Hdn.
+progress unfold angle_div_nat in Hdn.
+progress unfold angle_lim in Hdn.
+progress unfold is_limit_when_seq_tends_to_inf in Hdn.
+remember (∀ ε, _ → ∃ N, ∀ j, _) as x eqn:Hx; subst x.
+assert
+  (H :
+   ∀ ε : T, (0 < ε)%L →
+   ∃ N : nat, ∀ j : nat, N ≤ j →
+   (1 - ε² / 2 < rngl_cos (θ' - seq_angle_to_div_nat θ n j))%L). {
+  intros ε Hε.
+  specialize (Hdn ε Hε).
+  destruct Hdn as (N, HN).
+  exists N.
+  intros j Hj.
+  generalize Hε; intros Hε'; apply rngl_lt_le_incl in Hε'.
+  specialize (HN j Hj).
+  now apply rngl_cos_lt_angle_eucl_dist_lt in HN.
+}
+clear Hdn; rename H into Hdn.
+Search (_ - _² / 2)%L.
+...
+eapply (is_limit_when_seq_tends_to_inf_eq_compat _ _ 0 0) in Hdn. 2: {
+  intros j; rewrite Nat.add_0_r.
+
+progress unfold is_limit_when_seq_tends_to_inf in Hdn.
+eapply (angle_lim_eq_compat 0 0) in Hdn. 2: {
+  intros j; rewrite Nat.add_0_r.
+  progress unfold seq_angle_to_div_nat in Hdn.
+  progress unfold angle_lim in Hdn.
+Search angle_div_nat_eq_compat.
+progress unfold is_limit_when_seq_tends_to_inf in Hdn.
+remember (∀ ε, _ → ∃ N, ∀ j, _) as x eqn:Hx; subst x.
+...
+rngl_cos_lt_angle_eucl_dist_lt:
+  ∀ {T : Type} {ro : ring_like_op T} {rp : ring_like_prop T} {rl : real_like_prop T} 
+    {ac : angle_ctx T} (a : T) (θ1 θ2 : angle T),
+    (0 ≤ a)%L → (1 - a² / 2 < rngl_cos (θ2 - θ1))%L ↔ (angle_eucl_dist θ1 θ2 < a)%L
 ...
 
 Theorem angle_div_nat_add_not_overflow :
