@@ -991,7 +991,13 @@ assert
   now apply rngl_cos_lt_angle_eucl_dist_lt in HN.
 }
 clear Hdn; rename H into Hdn.
+rewrite <- angle_add_overflow_equiv2.
+progress unfold angle_add_overflow2.
+apply Bool.not_true_iff_false.
+apply angle_nlt_ge.
+...
 Search (_ - _² / 2)%L.
+About exists_nat_such_that_rngl_cos_close_to_1.
 ...
 eapply (is_limit_when_seq_tends_to_inf_eq_compat _ _ 0 0) in Hdn. 2: {
   intros j; rewrite Nat.add_0_r.
