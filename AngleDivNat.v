@@ -972,6 +972,24 @@ Theorem glop :
   → angle_add_overflow θ' (i * θ') = false.
 Proof.
 intros Hch Har Hco * Hin Hdn.
+rewrite <- angle_add_overflow_equiv2.
+progress unfold angle_add_overflow2.
+apply Bool.not_true_iff_false.
+apply angle_nlt_ge.
+rewrite <- (angle_mul_1_l θ') at 2.
+rewrite <- angle_mul_add_distr_r.
+rewrite Nat.add_1_l.
+remember (S i) as j.
+assert (0 < j ≤ n) by flia Hin Heqj.
+clear i Hin Heqj; rename j into i; rename H into Hin.
+move i before n; move Hin after Hdn.
+enough
+  (H :
+   ∀ j θ'',
+   θ'' = seq_angle_to_div_nat θ n j
+   → (θ'' ≤ i * θ'')%A). {
+...
+intros Hch Har Hco * Hin Hdn.
 progress unfold angle_div_nat in Hdn.
 progress unfold angle_lim in Hdn.
 progress unfold is_limit_when_seq_tends_to_inf in Hdn.
