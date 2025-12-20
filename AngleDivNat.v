@@ -995,6 +995,28 @@ rewrite <- angle_add_overflow_equiv2.
 progress unfold angle_add_overflow2.
 apply Bool.not_true_iff_false.
 apply angle_nlt_ge.
+rewrite <- (angle_mul_1_l θ') at 2.
+rewrite <- angle_mul_add_distr_r.
+rewrite Nat.add_1_l.
+remember (S i) as j.
+assert (0 < j ≤ n) by flia Hin Heqj.
+clear i Hin Heqj; rename j into i; rename H into Hin.
+move i before n; move Hin after Hdn.
+progress unfold angle_leb.
+remember (0 ≤? rngl_sin θ')%L as zs eqn:Hzs.
+remember (0 ≤? rngl_sin (i * θ'))%L as zsi eqn:Hzsi.
+symmetry in Hzs, Hzsi.
+destruct zs. {
+  destruct zsi; [ | easy ].
+  apply rngl_leb_le in Hzs, Hzsi.
+  apply rngl_leb_le.
+  apply rngl_sin_sub_nonneg_iff; [ | easy | ].
+  apply rngl_le_neq.
+  split; [ easy | ].
+  symmetry; intros H.
+  apply eq_rngl_sin_0 in H.
+  destruct H as [H| H]. {
+Search (_ * _ = 0)%A.
 ...
 Search (_ - _² / 2)%L.
 About exists_nat_such_that_rngl_cos_close_to_1.
