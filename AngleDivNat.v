@@ -961,7 +961,7 @@ split; intros Htt. {
 }
 Qed.
 
-(* to be completed
+(* to be completed later
 Theorem glop :
   rngl_characteristic T = 0 →
   rngl_is_archimedean T = true →
@@ -1698,5 +1698,35 @@ rewrite <- angle_div_2_pow_mul; [ | easy ].
 apply HN.
 flia Hm.
 Qed.
+
+(* to be completed
+Theorem glop :
+  rngl_characteristic T = 0 →
+  rngl_is_archimedean T = true →
+  is_complete T rngl_dist →
+  ∀ n θ,
+  n ≠ 0
+  → ∃ θ' π_n,
+  angle_div_nat (n * θ) n θ' ∧
+  angle_div_nat π n π_n ∧
+  θ' = (θ + 2 * angle_mul_nat_div_2π n θ * π_n)%A.
+Proof.
+intros Hch Har Hco * Hnz.
+specialize (rngl_is_complete_angle_is_complete Hco) as H1.
+specialize (seq_angle_to_div_nat_is_Cauchy Har n (n * θ)) as H.
+specialize (H1 _ H); clear H.
+destruct H1 as (θ', Ht).
+rewrite fold_angle_div_nat in Ht.
+specialize (rngl_is_complete_angle_is_complete Hco) as H2.
+specialize (seq_angle_to_div_nat_is_Cauchy Har n π) as H.
+specialize (H2 _ H); clear H.
+destruct H2 as (π_n, Hp).
+rewrite fold_angle_div_nat in Hp.
+move θ' before θ; move π_n before θ'.
+exists θ', π_n.
+split; [ easy | ].
+split; [ easy | ].
+...
+*)
 
 End a.
