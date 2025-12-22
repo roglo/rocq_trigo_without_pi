@@ -1,10 +1,11 @@
 Set Nested Proofs Allowed.
 Require Import Stdlib.Arith.Arith.
-Require Import RingLike.Utf8.
 
+Require Import RingLike.Utf8.
 Require Import RingLike.Core.
 Require Import RingLike.RealLike.
 Require Import RingLike.Misc.
+
 
 Require Import AngleDef Angle TrigoWithoutPiExt.
 Require Import Order.
@@ -1223,6 +1224,28 @@ rewrite is_limit_when_seq_tends_to_inf_eq_compat in Ht.
 progress unfold is_limit_when_seq_tends_to_inf in Ht.
 remember (∀ ε, _ → ∃ N, ∀ i, _) as x; subst x.
 Search (_ → angle_mul_nat_div_2π _ _ = _).
+...
+Qed.
+*)
+
+(* to be completed
+(* perhaps not provable... looks like the axiom of choice *)
+Theorem glop {A B} :
+  ∀ P : A → B → Prop,
+  (∀ a, ∃! b, P a b)
+  → ∃ f, ∀ a b, P a b → b = f a.
+Proof.
+intros * Hp.
+enough (∃ f, ∀ a, P a (f a)). {
+  destruct H as (f, Hf).
+  exists f; intros * Hpab.
+  specialize (Hp a).
+  specialize (Hf a).
+  apply unique_existence in Hp.
+  destruct Hp as ((c & Hc) & Hp).
+  specialize (Hp _ _ Hf Hpab).
+  congruence.
+}
 ...
 Qed.
 *)
