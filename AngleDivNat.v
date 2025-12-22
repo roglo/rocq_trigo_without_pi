@@ -6,7 +6,6 @@ Require Import RingLike.Core.
 Require Import RingLike.RealLike.
 Require Import RingLike.Misc.
 
-
 Require Import AngleDef Angle TrigoWithoutPiExt.
 Require Import Order.
 Require Import AngleDiv2.
@@ -1701,7 +1700,6 @@ flia Hm.
 Qed.
 
 (* to be completed
-(* perhaps not provable... looks like the axiom of choice *)
 Theorem glop {A B} :
   ∀ P : A → B → Prop,
   (∀ a, ∃! b, P a b)
@@ -1718,6 +1716,8 @@ enough (∃ f, ∀ a, P a (f a)). {
   specialize (Hp _ _ Hf Hpab).
   congruence.
 }
+Require Import Coq.Logic.ClassicalUniqueChoice.
+apply unique_choice.
 ...
 Qed.
 *)
