@@ -1726,6 +1726,13 @@ move θ' before θ; move π_n before θ'.
 exists θ', π_n.
 split; [ easy | ].
 split; [ easy | ].
+generalize Hp; intros H.
+apply (angle_div_nat_prop Hch Har Hco) in H.
+destruct H as [(H1, H2)| Hp1]; [ easy | ].
+generalize Ht; intros H.
+apply (angle_div_nat_prop Hch Har Hco) in H.
+destruct H as [(H1, H2)| Ht1]; [ easy | ].
+Search (_ * _ = _ * _)%A.
 ...
 *)
 
