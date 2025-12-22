@@ -1730,9 +1730,9 @@ Theorem glop :
   ∀ n θ,
   n ≠ 0
   → ∃ θ' π_n,
-  angle_div_nat (n * θ) n θ' ∧
-  angle_div_nat π n π_n ∧
-  θ' = (θ - 2 * angle_mul_nat_div_2π n θ * π_n)%A.
+    angle_div_nat (n * θ) n θ' ∧
+    angle_div_nat π n π_n ∧
+    θ' = (θ - 2 * angle_mul_nat_div_2π n θ * π_n)%A.
 Proof.
 intros Hch Har Hco * Hnz.
 specialize (rngl_is_complete_angle_is_complete Hco) as H1.
