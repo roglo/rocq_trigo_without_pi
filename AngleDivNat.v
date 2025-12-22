@@ -1228,28 +1228,6 @@ Search (_ → angle_mul_nat_div_2π _ _ = _).
 Qed.
 *)
 
-(* to be completed
-(* perhaps not provable... looks like the axiom of choice *)
-Theorem glop {A B} :
-  ∀ P : A → B → Prop,
-  (∀ a, ∃! b, P a b)
-  → ∃ f, ∀ a b, P a b → b = f a.
-Proof.
-intros * Hp.
-enough (∃ f, ∀ a, P a (f a)). {
-  destruct H as (f, Hf).
-  exists f; intros * Hpab.
-  specialize (Hp a).
-  specialize (Hf a).
-  apply unique_existence in Hp.
-  destruct Hp as ((c & Hc) & Hp).
-  specialize (Hp _ _ Hf Hpab).
-  congruence.
-}
-...
-Qed.
-*)
-
 Theorem exists_angle_div_nat :
   rngl_characteristic T = 0 →
   rngl_is_archimedean T = true →
@@ -1723,6 +1701,28 @@ flia Hm.
 Qed.
 
 (* to be completed
+(* perhaps not provable... looks like the axiom of choice *)
+Theorem glop {A B} :
+  ∀ P : A → B → Prop,
+  (∀ a, ∃! b, P a b)
+  → ∃ f, ∀ a b, P a b → b = f a.
+Proof.
+intros * Hp.
+enough (∃ f, ∀ a, P a (f a)). {
+  destruct H as (f, Hf).
+  exists f; intros * Hpab.
+  specialize (Hp a).
+  specialize (Hf a).
+  apply unique_existence in Hp.
+  destruct Hp as ((c & Hc) & Hp).
+  specialize (Hp _ _ Hf Hpab).
+  congruence.
+}
+...
+Qed.
+*)
+
+(* to be completed
 Theorem glop :
   rngl_characteristic T = 0 →
   rngl_is_archimedean T = true →
@@ -1732,7 +1732,7 @@ Theorem glop :
   → ∃ θ' π_n,
   angle_div_nat (n * θ) n θ' ∧
   angle_div_nat π n π_n ∧
-  θ' = (θ + 2 * angle_mul_nat_div_2π n θ * π_n)%A.
+  θ' = (θ - 2 * angle_mul_nat_div_2π n θ * π_n)%A.
 Proof.
 intros Hch Har Hco * Hnz.
 specialize (rngl_is_complete_angle_is_complete Hco) as H1.
