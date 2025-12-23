@@ -1729,7 +1729,8 @@ Theorem angle_div
   (Hch : rngl_characteristic T = 0)
   (Har : rngl_is_archimedean T = true)
   (Hco : is_complete T rngl_dist) :
-  ∀ (θ : angle T) (n : nat), False.
+  ∀ (θ : angle T) (n : nat), angle T.
+destruct_ac.
 assert (H : ∀ θn, ∃! y, angle_div_nat (fst θn) (snd θn) y). {
   intros (θ, n); cbn.
   specialize (rngl_is_complete_angle_is_complete Hco) as H1.
@@ -1741,21 +1742,15 @@ assert (H : ∀ θn, ∃! y, angle_div_nat (fst θn) (snd θn) y). {
   progress unfold unique.
   split; [ easy | ].
   intros θ'' Ht.
-  specialize (angle_div_nat_prop Hch Har Hco _ _ _ H1) as H2.
-  specialize (angle_div_nat_prop Hch Har Hco _ _ _ Ht) as H3.
-  destruct H2 as [(H2, H4)| H2]. {
-    destruct H3 as [(H3, H5)| H3]; [ congruence | ].
-Print angle_div_nat.
-Print angle_lim.
-Print seq_angle_to_div_nat.
-About seq_angle_to_div_nat.
-...
-Search angle_div_nat.
-Locate "∃!".
-  remember (angle_div_nat θ n
+  specialize (limit_unique Hop Hiv Hto angle_eucl_dist_is_dist) as H2.
+  apply (H2 _ _ _ H1 Ht).
+}
+About unique_choice.
+Search (∀ _ _ _, (∀ _, ∃! _, _) → _).
+Search (∀ _ _ _, (∀ _, { _ &  _}) → _).
 specialize (unique_choice _ _ _ H) as H1.
-destruct H1 as (f, H1).
-spe
+...
+apply (λ θ n, f (θ, n)).
 ...
 specialize (rngl_is_complete_angle_is_complete Hco) as H1.
 Check unique_choice.
