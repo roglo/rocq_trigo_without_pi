@@ -31,7 +31,8 @@ Context {rp : ring_like_prop T}.
 Context {rl : real_like_prop T}.
 Context {ac : angle_ctx T}.
 
-Definition seq_angle_to_div_nat θ (n i : nat) := (2 ^ i / n * (θ /₂^i))%A.
+Definition seq_angle_to_div_nat θ (n i : nat) :=
+  if Nat.eq_dec n 0 then 0%A else (2 ^ i / n * (θ /₂^i))%A.
 
 Theorem angle_le_pow2_log2 :
   ∀ n θ1 θ2,
@@ -55,13 +56,14 @@ Qed.
 
 Theorem seq_angle_to_div_nat_not_overflow :
   ∀ θ n i,
-  n ≠ 0
-  → 2 ^ i / n ≤ 2 ^ i
+  2 ^ i / n ≤ 2 ^ i
   → angle_mul_nat_div_2π n (seq_angle_to_div_nat θ n i) = 0.
 Proof.
-intros * Hnz Hin.
+intros * Hin.
 apply Nat.eq_dne.
 intros H.
+progress unfold seq_angle_to_div_nat in H.
+destruct (Nat.eq_dec n 0) as [Hnz| Hnz]; [ now subst n | ].
 apply angle_mul_nat_div_2π_true_assoc in H.
 apply H; clear H.
 apply (angle_mul_nat_not_overflow_le_l _ (2 ^ i)). 2: {
@@ -71,12 +73,15 @@ now apply Nat.Div0.mul_div_le.
 Qed.
 
 Theorem seq_angle_to_div_nat_div_2_le_straight_div_pow2_log2 :
-  ∀ n i θ,
-  n ≠ 0
-  → (seq_angle_to_div_nat θ n i /₂ ≤ π /₂^Nat.log2 n)%A.
+  ∀ n i θ, (seq_angle_to_div_nat θ n i /₂ ≤ π /₂^Nat.log2 n)%A.
 Proof.
-intros * Hnz.
+intros.
 progress unfold seq_angle_to_div_nat.
+destruct (Nat.eq_dec n 0) as [Hnz| Hnz]. {
+  subst n; cbn.
+  rewrite angle_0_div_2.
+  apply angle_nonneg.
+}
 assert (Hin : 2 ^ i / n ≤ 2 ^ i). {
   apply Nat.Div0.div_le_upper_bound.
   now apply Nat.le_mul_l.
@@ -103,7 +108,9 @@ rewrite angle_mul_nat_div_2. 2: {
   apply angle_mul_nat_div_2π_pow_div.
 }
 rewrite angle_mul_nat_div_2; [ apply angle_div_2_le_straight | ].
-now apply seq_angle_to_div_nat_not_overflow.
+specialize (seq_angle_to_div_nat_not_overflow θ n i Hin) as H1.
+progress unfold seq_angle_to_div_nat in H1.
+now destruct (Nat.eq_dec n 0).
 Qed.
 
 Theorem angle_le_pow2_pred :
@@ -138,7 +145,7 @@ destruct (Nat.eq_dec n 0) as [Hnz| Hnz]. {
   apply angle_nonneg.
 }
 specialize seq_angle_to_div_nat_div_2_le_straight_div_pow2_log2 as H1.
-specialize (H1 n i θ Hnz).
+specialize (H1 n i θ).
 apply angle_le_pow2_pred; [ | easy ].
 intros H.
 apply Nat.log2_null in H.
@@ -301,13 +308,13 @@ Theorem seq_angle_to_div_nat_sub :
     (2 ^ p mod n * 2 ^ (q - p) / n * (θ /₂^q))%A.
 Proof.
 intros * Hpq.
+progress unfold seq_angle_to_div_nat.
 specialize (Nat.div_mod (2 ^ p) n) as Hx.
 destruct (Nat.eq_dec n 0) as [Hnz| Hnz]. {
   subst n; cbn.
   apply angle_sub_0_r.
 }
 specialize (Hx Hnz).
-progress unfold seq_angle_to_div_nat.
 replace q with (p + (q - p)) by flia Hpq.
 rewrite Nat.pow_add_r.
 remember (2 ^ p mod n) as c eqn:Hc.

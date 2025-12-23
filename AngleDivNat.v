@@ -819,6 +819,7 @@ destruct (angle_eq_dec θ 0) as [Htz| Htz]. {
     rewrite Nat.add_0_r; symmetry.
     progress unfold seq_angle_to_div_nat.
     rewrite angle_0_div_2_pow.
+    destruct (Nat.eq_dec n 0) as [H| H]; [ easy | ].
     do 2 rewrite angle_mul_0_r.
     easy.
   }
@@ -826,6 +827,7 @@ destruct (angle_eq_dec θ 0) as [Htz| Htz]. {
   exists 0.
   intros m _.
   cbn.
+  rewrite angle_mul_0_r.
   now rewrite angle_eucl_dist_diag.
 }
 destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
@@ -836,10 +838,11 @@ destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
 }
 move Hc1 before Hcz.
 move Hii before Hco.
+progress unfold seq_angle_to_div_nat.
+destruct (Nat.eq_dec n 0) as [H| H]; [ easy | clear H ].
 eapply (angle_lim_eq_compat 0 0). {
   intros i.
   rewrite Nat.add_0_r; symmetry.
-  progress unfold seq_angle_to_div_nat.
   rewrite angle_mul_nat_assoc.
   specialize (Nat.div_mod (2 ^ i) n Hnz) as H1.
   symmetry in H1.
@@ -1606,7 +1609,6 @@ destruct (Nat.eq_dec n 1) as [Hn1| Hn1]. {
   rewrite angle_div_2_pow_mul_2_pow.
   now rewrite angle_eucl_dist_diag.
 }
-move Hn1 before Hnz.
 destruct H1 as (θ', Ht).
 progress unfold angle_div_nat.
 progress unfold angle_lim.
@@ -1627,6 +1629,7 @@ apply angle_lim_move_0_r.
 apply angle_lim_opp in Ht.
 rewrite angle_opp_0 in Ht.
 progress unfold seq_angle_to_div_nat.
+destruct (Nat.eq_dec n 0) as [H| H]; [ easy | clear H ].
 eapply (angle_lim_eq_compat 0 0). {
   intros i.
   rewrite Nat.add_0_r.
@@ -1720,6 +1723,50 @@ Require Import Coq.Logic.ClassicalUniqueChoice.
 apply unique_choice.
 ...
 Qed.
+*)
+
+(*
+Require Import Stdlib.Logic.ClassicalUniqueChoice.
+Theorem angle_div
+  (Hch : rngl_characteristic T = 0)
+  (Har : rngl_is_archimedean T = true)
+  (Hco : is_complete T rngl_dist) :
+  ∀ (θ : angle T) (n : nat), False.
+assert (H : ∀ θn, ∃! y, angle_div_nat (fst θn) (snd θn) y). {
+  intros (θ, n); cbn.
+  specialize (rngl_is_complete_angle_is_complete Hco) as H1.
+  specialize (seq_angle_to_div_nat_is_Cauchy Har n θ) as H.
+  specialize (H1 _ H); clear H.
+  destruct H1 as (θ', H1).
+  rewrite fold_angle_div_nat in H1.
+  exists θ'.
+  progress unfold unique.
+  split; [ easy | ].
+  intros θ'' Ht.
+  specialize (angle_div_nat_prop Hch Har Hco _ _ _ H1) as H2.
+  specialize (angle_div_nat_prop Hch Har Hco _ _ _ Ht) as H3.
+  destruct H2 as [(H2, H4)| H2]. {
+    destruct H3 as [(H3, H5)| H3]; [ congruence | ].
+Print angle_div_nat.
+Print angle_lim.
+Print seq_angle_to_div_nat.
+About seq_angle_to_div_nat.
+...
+Search angle_div_nat.
+Locate "∃!".
+  remember (angle_div_nat θ n
+specialize (unique_choice _ _ _ H) as H1.
+destruct H1 as (f, H1).
+spe
+...
+specialize (rngl_is_complete_angle_is_complete Hco) as H1.
+Check unique_choice.
+specialize (seq_angle_to_div_nat_is_Cauchy Har n θ) as H.
+specialize (H1 _ H); clear H.
+rewrite fold_angle_div_nat in H1.
+destruct H1 as (θ', H).
+specialize (angle_div_nat_prop Hch Har Hco θ n) as H.
+...
 *)
 
 (* to be completed
