@@ -819,7 +819,6 @@ destruct (angle_eq_dec θ 0) as [Htz| Htz]. {
     rewrite Nat.add_0_r; symmetry.
     progress unfold seq_angle_to_div_nat.
     rewrite angle_0_div_2_pow.
-    destruct (Nat.eq_dec n 0) as [H| H]; [ easy | ].
     do 2 rewrite angle_mul_0_r.
     easy.
   }
@@ -827,7 +826,6 @@ destruct (angle_eq_dec θ 0) as [Htz| Htz]. {
   exists 0.
   intros m _.
   cbn.
-  rewrite angle_mul_0_r.
   now rewrite angle_eucl_dist_diag.
 }
 destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {

@@ -31,8 +31,7 @@ Context {rp : ring_like_prop T}.
 Context {rl : real_like_prop T}.
 Context {ac : angle_ctx T}.
 
-Definition seq_angle_to_div_nat θ (n i : nat) :=
-  if Nat.eq_dec n 0 then 0%A else (2 ^ i / n * (θ /₂^i))%A.
+Definition seq_angle_to_div_nat θ (n i : nat) := (2 ^ i / n * (θ /₂^i))%A.
 
 Theorem angle_le_pow2_log2 :
   ∀ n θ1 θ2,
