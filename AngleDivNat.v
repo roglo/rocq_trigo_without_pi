@@ -1700,27 +1700,37 @@ apply HN.
 flia Hm.
 Qed.
 
-(* to be completed
-Theorem glop {A B} :
-  ∀ P : A → B → Prop,
+(*
+Axiom unique_choiceT : ∀ {A B} (P : A → B → Prop),
   (∀ a, ∃! b, P a b)
-  → ∃ f, ∀ a b, P a b → b = f a.
+  → ∃ₜ f, ∀ a b, P a b → b = f a.
+
+Definition angle_div
+  (Hch : rngl_characteristic T = 0)
+  (Har : rngl_is_archimedean T = true)
+  (Hco : is_complete T rngl_dist) :
+  ∀ (θ : angle T) (n : nat), angle T.
 Proof.
-intros * Hp.
-enough (∃ f, ∀ a, P a (f a)). {
-  destruct H as (f, Hf).
-  exists f; intros * Hpab.
-  specialize (Hp a).
-  specialize (Hf a).
-  apply unique_existence in Hp.
-  destruct Hp as ((c & Hc) & Hp).
-  specialize (Hp _ _ Hf Hpab).
-  congruence.
+destruct_ac.
+assert (H : ∀ θn, ∃! y, angle_div_nat (fst θn) (snd θn) y). {
+  intros (θ, n); cbn.
+  specialize (rngl_is_complete_angle_is_complete Hco) as H1.
+  specialize (seq_angle_to_div_nat_is_Cauchy Har n θ) as H.
+  specialize (H1 _ H); clear H.
+  destruct H1 as (θ', H1).
+  rewrite fold_angle_div_nat in H1.
+  exists θ'.
+  progress unfold unique.
+  split; [ easy | ].
+  intros θ'' Ht.
+  specialize (limit_unique Hop Hiv Hto angle_eucl_dist_is_dist) as H2.
+  apply (H2 _ _ _ H1 Ht).
 }
-Require Import Coq.Logic.ClassicalUniqueChoice.
-apply unique_choice.
-...
+specialize (unique_choiceT _ H) as H1.
+destruct H1 as (f, H1).
+apply (λ θ n, f (θ, n)).
 Qed.
+Check angle_div.
 *)
 
 (*
