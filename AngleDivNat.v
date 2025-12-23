@@ -1619,6 +1619,26 @@ apply angle_sub_move_0_r.
 rewrite <- angle_mul_sub_distr_l in Hnn.
 rewrite angle_sub_sub_swap.
 apply angle_sub_move_0_r.
+Search (_ * _ = 0)%A.
+Theorem glop :
+  ∀ n θ θ' π_n,
+  angle_div_nat π n π_n
+  → (n * (θ - θ') = 0
+  → ∃ m, θ = θ' + m * (2 * π_n))%A.
+Proof.
+intros * Hpn Hntt.
+generalize Hntt; intros H.
+apply eq_angle_eq in H.
+injection H; clear H; intros Hs Hc; move Hc after Hs.
+enough
+  (∃ m,
+   rngl_cos θ = rngl_cos (θ' + m * (2 * π_n)) ∧
+   rngl_sin θ = rngl_sin (θ' + m * (2 * π_n))). {
+  destruct H as (m & Hcm & Hsm).
+  exists m.
+  apply eq_angle_eq.
+  congruence.
+}
 ...
 
 Theorem glop :
