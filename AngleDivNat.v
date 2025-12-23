@@ -1387,180 +1387,6 @@ destruct (angle_le_dec θ1 θ2) as [H12| H12]. {
 }
 Qed.
 
-(* to be completed later
-Theorem glop :
-  rngl_has_opp T = true →
-  rngl_is_totally_ordered T = true →
-  ∀ n θ,
-  angle_div_nat (n * θ) n θ
-  → angle_mul_nat_div_2π n θ = 0.
-Proof.
-intros Hop Hto.
-specialize (rngl_is_totally_ordered_is_ordered Hto) as Hor.
-specialize (rngl_has_eq_dec_or_is_ordered_r Hor) as Heo.
-intros * Htt.
-apply angle_mul_nat_div_2π_iff.
-cbn.
-split. {
-  intros i Hi.
-  apply Nat.le_0_r.
-  revert n Htt Hi.
-  induction i; intros; [ easy | ].
-  cbn.
-  rewrite (IHi n); [ | easy | flia Hi ].
-  apply Nat_eq_b2n_0.
-  apply angle_add_not_overflow_iff.
-  destruct (angle_eq_dec θ 0) as [Htz| Htz]; [ now left | right ].
-...
-Theorem angle_mul_nat_div_2π_le :
-  ∀ n θ k, k ≤ n → angle_mul_nat_div_2π k θ ≤ angle_mul_nat_div_2π n θ.
-Proof.
-(* euh, je crois que c'est faux *)
-intros * Hkn.
-revert k Hkn.
-induction n; intros; cbn. {
-  now apply Nat.le_0_r in Hkn; subst k.
-}
-destruct k; [ easy | cbn ].
-apply Nat.succ_le_mono in Hkn.
-apply Nat.add_le_mono; [ now apply IHn | ].
-remember (angle_add_overflow θ (k * θ)) as ovk eqn:Hk.
-remember (angle_add_overflow θ (n * θ)) as ovn eqn:Hn.
-symmetry in Hk, Hn.
-destruct ovk; [ cbn | easy ].
-destruct ovn; [ easy | cbn ].
-exfalso.
-apply Bool.not_false_iff_true in Hk.
-apply Hk; clear Hk.
-apply (angle_add_overflow_le _ (n * θ)); [ | easy ].
-apply angle_mul_le_mono_r; [ | easy ].
-(*
-clear k IHn Hkn.
-*)
-(* lemma *)
-apply angle_add_not_overflow_iff in Hn.
-destruct Hn as [Hn| Hn]; [ subst; apply angle_mul_nat_div_2π_0_r | ].
-...
-(*
-  Hn : (n * θ < - θ)%A
-  ============================
-  angle_mul_nat_div_2π n θ = 0
-*)
-...
-induction n; [ easy | ].
-assert (H : (n * θ < - θ)%A). {
-...
-  eapply angle_le_lt_trans; [ | apply Hn ].
-  apply angle_mul_le_mono_r; [ | flia ].
-assert (angle_mul_nat_div_2π (S n) θ = angle_mul_nat_div_2π n θ). {
-  cbn.
-  replace (angle_add_overflow _ _) with false.
-  apply Nat.add_0_r.
-  symmetry.
-  apply angle_add_not_overflow_iff.
-  (* crotte de bique *)
-...
-angle_mul_nat_div_2π b θ = 0 est une condition suffisante, mais
-elle n'est pas nécessaire. Il faudrait affiner :
-
-angle_mul_le_mono_r
-     : ∀ (a b : nat) (θ : angle T), angle_mul_nat_div_2π b θ = 0 → a ≤ b → (a * θ ≤ b * θ)%A
-...
-  apply angle_mul_le_mono_r; [ | flia ].
-...
-cbn in Hn.
-destruct n; [ now cbn; rewrite angle_add_overflow_0_r | ].
-cbn in Hn |-*.
-apply Nat.eq_add_0.
-split. {
-  apply Nat.eq_add_0.
-  split. {
-    destruct n; [ easy | ].
-    cbn in Hn |-*.
-    apply Nat.eq_add_0.
-    split. {
-      destruct n; [ easy | ].
-      cbn in Hn |-*.
-      apply Nat.eq_add_0.
-      split. {
-...
-induction n; [ easy | cbn ].
-apply Nat.eq_add_0.
-split. {
-  apply IHn.
-  apply (angle_add_overflow_le _ (S n * θ)); [ | easy ].
-  cbn.
-  rewrite angle_add_comm.
-  rewrite <- angle_add_0_r at 1.
-Search (_ ≤ _ + _)%A.
-  apply angle_add_le_mono_l.
-...
-  apply angle_le_add_r.
-... ...
-          specialize (angle_mul_nat_div_2π_le n θ i) as H4.
-          rewrite H1 in H4.
-          apply H4.
-          now apply Nat.succ_le_mono in Hi.
-        }
-
-... ...
-apply angle_mul_nat_div_2π_iff.
-...
-intros Hop Hto.
-specialize (rngl_is_totally_ordered_is_ordered Hto) as Hor.
-specialize (rngl_has_eq_dec_or_is_ordered_r Hor) as Heo.
-intros * Htt.
-induction n; [ easy | ].
-cbn.
-rewrite IHn. {
-  apply Nat_eq_b2n_0.
-  apply angle_add_not_overflow_iff.
-  destruct (angle_eq_dec θ 0) as [Htz| Htz]; [ now left | right ].
-  progress unfold angle_ltb; cbn.
-  rewrite (rngl_leb_0_opp Hop Hto).
-  remember (0 ≤? rngl_sin (n * θ))%L as zsn eqn:Hzsn.
-  remember (rngl_sin θ ≤? 0)%L as sz eqn:Hsz.
-  symmetry in Hzsn, Hsz.
-  destruct zsn. {
-    destruct sz; [ | easy ].
-    apply rngl_leb_le in Hzsn, Hsz.
-    apply (rngl_ltb_lt Heo).
-    change_angle_add_r θ π.
-    progress sin_cos_add_sub_straight_hyp T Hsz.
-    progress sin_cos_add_sub_straight_goal T.
-    rewrite angle_mul_sub_distr_l in Hzsn |-*.
-    destruct (Nat.Even_Odd_dec n) as [Hn| Hn]. {
-      apply Nat.Even_EvenT in Hn.
-      destruct Hn as (m, Hn).
-      subst n; rename m into n; move n after θ.
-      rewrite Nat.mul_comm in Hzsn at 2.
-      rewrite Nat.mul_comm at 2.
-      rewrite <- (angle_mul_nat_assoc _ _ π) in Hzsn |-*.
-      rewrite angle_mul_2_l in Hzsn |-*.
-      rewrite angle_straight_add_straight in Hzsn |-*.
-      rewrite angle_mul_0_r in Hzsn |-*.
-      rewrite angle_sub_0_r in Hzsn |-*.
-(* oh putain, chais pas du tout si je vais y arriver *)
-...
-
-Theorem glop' :
-  rngl_characteristic T = 0 →
-  rngl_is_archimedean T = true →
-  is_complete T rngl_dist →
-  ∀ θ n θ',
-  angle_div_nat θ n θ'
-  → angle_mul_nat_div_2π n θ' = 0.
-Proof.
-intros Hch Har Hco * Htt.
-generalize Htt; intros H.
-apply (angle_div_nat_prop Hch Har Hco) in H.
-destruct H as [(Hn, Ht)| Hntt]; [ now subst | ].
-subst θ; rename θ' into θ.
-... ...
-now apply glop.
-...
-*)
-
 Theorem angle_lim_le_compat :
   ∀ f g,
   (∀ i, (g i ≤ f i ≤ π)%A)
@@ -1777,6 +1603,28 @@ Theorem glop :
   rngl_characteristic T = 0 →
   rngl_is_archimedean T = true →
   is_complete T rngl_dist →
+  ∀ n θ θ' π_n,
+  n ≠ 0
+  → angle_div_nat (n * θ) n θ'
+  → angle_div_nat π n π_n
+  → θ' = (θ - angle_mul_nat_div_2π n θ * (2 * π_n))%A.
+Proof.
+intros Hch Har Hco * Hnz Hnt Hnp.
+generalize Hnt; intros H.
+apply (angle_div_nat_prop Hch Har Hco) in H.
+destruct H as [(H1, H2)| Hnn]; [ easy | ].
+symmetry in Hnn |-*.
+apply angle_sub_move_0_r in Hnn.
+apply angle_sub_move_0_r.
+rewrite <- angle_mul_sub_distr_l in Hnn.
+rewrite angle_sub_sub_swap.
+apply angle_sub_move_0_r.
+...
+
+Theorem glop :
+  rngl_characteristic T = 0 →
+  rngl_is_archimedean T = true →
+  is_complete T rngl_dist →
   ∀ n θ,
   n ≠ 0
   → ∃ θ' π_n,
@@ -1806,6 +1654,180 @@ generalize Ht; intros H.
 apply (angle_div_nat_prop Hch Har Hco) in H.
 destruct H as [(H1, H2)| Ht1]; [ easy | ].
 Search (_ * _ = _ * _)%A.
+...
+*)
+
+(* to be completed later
+Theorem glop :
+  rngl_has_opp T = true →
+  rngl_is_totally_ordered T = true →
+  ∀ n θ,
+  angle_div_nat (n * θ) n θ
+  → angle_mul_nat_div_2π n θ = 0.
+Proof.
+intros Hop Hto.
+specialize (rngl_is_totally_ordered_is_ordered Hto) as Hor.
+specialize (rngl_has_eq_dec_or_is_ordered_r Hor) as Heo.
+intros * Htt.
+apply angle_mul_nat_div_2π_iff.
+cbn.
+split. {
+  intros i Hi.
+  apply Nat.le_0_r.
+  revert n Htt Hi.
+  induction i; intros; [ easy | ].
+  cbn.
+  rewrite (IHi n); [ | easy | flia Hi ].
+  apply Nat_eq_b2n_0.
+  apply angle_add_not_overflow_iff.
+  destruct (angle_eq_dec θ 0) as [Htz| Htz]; [ now left | right ].
+...
+Theorem angle_mul_nat_div_2π_le :
+  ∀ n θ k, k ≤ n → angle_mul_nat_div_2π k θ ≤ angle_mul_nat_div_2π n θ.
+Proof.
+(* euh, je crois que c'est faux *)
+intros * Hkn.
+revert k Hkn.
+induction n; intros; cbn. {
+  now apply Nat.le_0_r in Hkn; subst k.
+}
+destruct k; [ easy | cbn ].
+apply Nat.succ_le_mono in Hkn.
+apply Nat.add_le_mono; [ now apply IHn | ].
+remember (angle_add_overflow θ (k * θ)) as ovk eqn:Hk.
+remember (angle_add_overflow θ (n * θ)) as ovn eqn:Hn.
+symmetry in Hk, Hn.
+destruct ovk; [ cbn | easy ].
+destruct ovn; [ easy | cbn ].
+exfalso.
+apply Bool.not_false_iff_true in Hk.
+apply Hk; clear Hk.
+apply (angle_add_overflow_le _ (n * θ)); [ | easy ].
+apply angle_mul_le_mono_r; [ | easy ].
+(*
+clear k IHn Hkn.
+*)
+(* lemma *)
+apply angle_add_not_overflow_iff in Hn.
+destruct Hn as [Hn| Hn]; [ subst; apply angle_mul_nat_div_2π_0_r | ].
+...
+(*
+  Hn : (n * θ < - θ)%A
+  ============================
+  angle_mul_nat_div_2π n θ = 0
+*)
+...
+induction n; [ easy | ].
+assert (H : (n * θ < - θ)%A). {
+...
+  eapply angle_le_lt_trans; [ | apply Hn ].
+  apply angle_mul_le_mono_r; [ | flia ].
+assert (angle_mul_nat_div_2π (S n) θ = angle_mul_nat_div_2π n θ). {
+  cbn.
+  replace (angle_add_overflow _ _) with false.
+  apply Nat.add_0_r.
+  symmetry.
+  apply angle_add_not_overflow_iff.
+  (* crotte de bique *)
+...
+angle_mul_nat_div_2π b θ = 0 est une condition suffisante, mais
+elle n'est pas nécessaire. Il faudrait affiner :
+
+angle_mul_le_mono_r
+     : ∀ (a b : nat) (θ : angle T), angle_mul_nat_div_2π b θ = 0 → a ≤ b → (a * θ ≤ b * θ)%A
+...
+  apply angle_mul_le_mono_r; [ | flia ].
+...
+cbn in Hn.
+destruct n; [ now cbn; rewrite angle_add_overflow_0_r | ].
+cbn in Hn |-*.
+apply Nat.eq_add_0.
+split. {
+  apply Nat.eq_add_0.
+  split. {
+    destruct n; [ easy | ].
+    cbn in Hn |-*.
+    apply Nat.eq_add_0.
+    split. {
+      destruct n; [ easy | ].
+      cbn in Hn |-*.
+      apply Nat.eq_add_0.
+      split. {
+...
+induction n; [ easy | cbn ].
+apply Nat.eq_add_0.
+split. {
+  apply IHn.
+  apply (angle_add_overflow_le _ (S n * θ)); [ | easy ].
+  cbn.
+  rewrite angle_add_comm.
+  rewrite <- angle_add_0_r at 1.
+Search (_ ≤ _ + _)%A.
+  apply angle_add_le_mono_l.
+...
+  apply angle_le_add_r.
+... ...
+          specialize (angle_mul_nat_div_2π_le n θ i) as H4.
+          rewrite H1 in H4.
+          apply H4.
+          now apply Nat.succ_le_mono in Hi.
+        }
+
+... ...
+apply angle_mul_nat_div_2π_iff.
+...
+intros Hop Hto.
+specialize (rngl_is_totally_ordered_is_ordered Hto) as Hor.
+specialize (rngl_has_eq_dec_or_is_ordered_r Hor) as Heo.
+intros * Htt.
+induction n; [ easy | ].
+cbn.
+rewrite IHn. {
+  apply Nat_eq_b2n_0.
+  apply angle_add_not_overflow_iff.
+  destruct (angle_eq_dec θ 0) as [Htz| Htz]; [ now left | right ].
+  progress unfold angle_ltb; cbn.
+  rewrite (rngl_leb_0_opp Hop Hto).
+  remember (0 ≤? rngl_sin (n * θ))%L as zsn eqn:Hzsn.
+  remember (rngl_sin θ ≤? 0)%L as sz eqn:Hsz.
+  symmetry in Hzsn, Hsz.
+  destruct zsn. {
+    destruct sz; [ | easy ].
+    apply rngl_leb_le in Hzsn, Hsz.
+    apply (rngl_ltb_lt Heo).
+    change_angle_add_r θ π.
+    progress sin_cos_add_sub_straight_hyp T Hsz.
+    progress sin_cos_add_sub_straight_goal T.
+    rewrite angle_mul_sub_distr_l in Hzsn |-*.
+    destruct (Nat.Even_Odd_dec n) as [Hn| Hn]. {
+      apply Nat.Even_EvenT in Hn.
+      destruct Hn as (m, Hn).
+      subst n; rename m into n; move n after θ.
+      rewrite Nat.mul_comm in Hzsn at 2.
+      rewrite Nat.mul_comm at 2.
+      rewrite <- (angle_mul_nat_assoc _ _ π) in Hzsn |-*.
+      rewrite angle_mul_2_l in Hzsn |-*.
+      rewrite angle_straight_add_straight in Hzsn |-*.
+      rewrite angle_mul_0_r in Hzsn |-*.
+      rewrite angle_sub_0_r in Hzsn |-*.
+(* oh putain, chais pas du tout si je vais y arriver *)
+...
+
+Theorem glop' :
+  rngl_characteristic T = 0 →
+  rngl_is_archimedean T = true →
+  is_complete T rngl_dist →
+  ∀ θ n θ',
+  angle_div_nat θ n θ'
+  → angle_mul_nat_div_2π n θ' = 0.
+Proof.
+intros Hch Har Hco * Htt.
+generalize Htt; intros H.
+apply (angle_div_nat_prop Hch Har Hco) in H.
+destruct H as [(Hn, Ht)| Hntt]; [ now subst | ].
+subst θ; rename θ' into θ.
+... ...
+now apply glop.
 ...
 *)
 
