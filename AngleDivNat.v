@@ -1621,6 +1621,34 @@ rewrite angle_sub_sub_swap.
 apply angle_sub_move_0_r.
 Search (_ * _ = 0)%A.
 Theorem glop :
+  rngl_characteristic T = 0 →
+  rngl_is_archimedean T = true →
+  is_complete T rngl_dist →
+  ∀ n θ π_n,
+  n ≠ 0
+  → angle_div_nat π n π_n
+  → (n * θ = 0)%A
+  → ∃ m, (θ = m * (2 * π_n))%A.
+Proof.
+intros Hch Har Hco * Hnz Hpn Hnt.
+...
+induction n; [ easy | clear Hnz ].
+generalize Hpn; intros H.
+apply (angle_div_nat_prop Hch Har Hco) in H.
+destruct H as [(H, _)| H]; [ easy | ].
+destruct (Nat.eq_dec n 0) as [Hnz| Hnz]. {
+  subst n.
+  rewrite angle_mul_1_l in H, Hnt; subst θ.
+  now exists 0.
+}
+specialize (IHn Hnz).
+
+    subst π_n.
+    progress unfold angle_div_nat in Hpn.
+    progress unfold seq_angle_to_div_nat in Hpn.
+    cbn in Hpn.
+...
+Theorem glop :
   ∀ n θ θ' π_n,
   angle_div_nat π n π_n
   → (n * (θ - θ') = 0
