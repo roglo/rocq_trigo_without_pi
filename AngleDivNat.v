@@ -1145,15 +1145,18 @@ Theorem angle_div_nat_integral :
   is_complete T rngl_dist →
   ∀ n θ θ',
   angle_div_nat θ n θ'
-  → n = 0 ∨ angle_mul_nat_div_2π n θ' = 0.
+  → angle_mul_nat_div_2π n θ' = 0.
 Proof.
 intros Hch Har Hco * Htt.
 generalize Htt; intros H.
 apply (angle_div_nat_prop Hch Har Hco) in H.
-destruct H as [H| H]; [ now left | ].
-destruct (Nat.eq_dec n 0) as [Hnz| Hnz]; [ now left | right ].
-subst θ; rename θ' into θ.
-(* tiens, c'est bizarre, ça *)
+destruct H as [(H1, H2)| H]; [ now subst n | ].
+destruct (Nat.eq_dec n 0) as [Hnz| Hnz]; [ now subst n | ].
+subst θ; rename θ' into θ; move Hnz after Htt.
+(* tiens, c'est bizarre, ça !
+   mais bon c'est vrai que si nθ/n redonne θ, c'est qu'il y a ça.
+   si on prend θ=3π/2 et n=2, la limite de nθ/n, c'est pas 3π/2 mais
+   π/2 donc on n'a pas angle_div_nat (n * θ) n θ dans ce cas-là *)
 ...
 
 Theorem exists_angle_div_nat :
