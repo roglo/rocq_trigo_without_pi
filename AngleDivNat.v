@@ -1138,16 +1138,22 @@ Qed.
 ...
 *)
 
-(* to be completed later
+(* to be completed
 Theorem angle_div_nat_integral :
+  rngl_characteristic T = 0 →
+  rngl_is_archimedean T = true →
+  is_complete T rngl_dist →
   ∀ n θ θ',
   angle_div_nat θ n θ'
-  → n = 0 ∨angle_mul_nat_div_2π n θ' = 0.
+  → n = 0 ∨ angle_mul_nat_div_2π n θ' = 0.
 Proof.
-intros * Htt.
+intros Hch Har Hco * Htt.
+generalize Htt; intros H.
+apply (angle_div_nat_prop Hch Har Hco) in H.
+destruct H as [H| H]; [ now left | ].
 destruct (Nat.eq_dec n 0) as [Hnz| Hnz]; [ now left | right ].
-progress unfold angle_div_nat in Htt.
-Search angle_div_nat.
+subst θ; rename θ' into θ.
+(* tiens, c'est bizarre, ça *)
 ...
 
 Theorem exists_angle_div_nat :
