@@ -1819,7 +1819,18 @@ destruct n. {
     apply angle_add_not_overflow_lt_straight_le_straight; [ easy | ].
     now apply angle_lt_le_incl.
   }
-Search (angle_div_nat _ _ _ → _).
+  progress unfold angle_div_nat in Htt.
+  apply angle_lim_move_0_r in Htt.
+  eapply (angle_lim_eq_compat 1 0) in Htt. 2: {
+    intros i.
+    rewrite Nat.add_0_r.
+    progress unfold seq_angle_to_div_nat.
+    rewrite Nat.pow_add_r.
+    rewrite Nat.pow_1_r.
+    rewrite Nat.div_mul; [ | easy ].
+    reflexivity.
+  }
+  (* putain la vache *)
 ...
 
 Theorem exists_angle_div_nat :

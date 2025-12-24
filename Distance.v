@@ -407,16 +407,23 @@ intros.
 apply (dist_nonneg Hop Hiv Hto angle_taxi_dist_is_dist).
 Qed.
 
-Theorem angle_lim_const :
-  ∀ θ1 θ2, angle_lim (λ _, θ1) θ2 → θ2 = θ1.
+Theorem angle_lim_const : ∀ θ1 θ2, angle_lim (λ _, θ1) θ2 ↔ θ2 = θ1.
 Proof.
 destruct_ac.
 destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
   intros.
   specialize (rngl_characteristic_1_angle_0 Hc1) as H1.
-  rewrite (H1 θ1); apply H1.
+  rewrite (H1 θ1).
+  split; intros H; [ apply H1 | ].
+  subst θ2.
+  intros ε Hε.
+  now exists 0; intros n _; rewrite angle_eucl_dist_diag.
 }
-intros * H1.
+intros.
+split; intros H1. 2: {
+  subst θ2; intros ε Hε.
+  now exists 0; intros n _; rewrite angle_eucl_dist_diag.
+}
 progress unfold angle_lim in H1.
 progress unfold is_limit_when_seq_tends_to_inf in H1.
 apply angle_eucl_dist_separation.
