@@ -1828,9 +1828,16 @@ destruct n. {
     rewrite Nat.pow_add_r.
     rewrite Nat.pow_1_r.
     rewrite Nat.div_mul; [ | easy ].
+    rewrite Nat.add_comm.
+    rewrite angle_div_2_pow_add_r.
+    rewrite angle_div_pow2_1.
+    rewrite angle_div_2_pow_mul_2_pow.
     reflexivity.
   }
-  (* putain la vache *)
+  apply angle_lim_const in Htt.
+  symmetry in Htt.
+  apply -> angle_sub_move_0_r in Htt.
+  rewrite angle_div_2_add in Htt.
 ...
 
 Theorem exists_angle_div_nat :
