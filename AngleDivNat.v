@@ -1838,6 +1838,16 @@ destruct n. {
   symmetry in Htt.
   apply -> angle_sub_move_0_r in Htt.
   rewrite angle_div_2_add in Htt.
+  remember (angle_add_overflow θ θ) as ov eqn:Hov.
+  symmetry in Hov.
+  destruct ov. 2: {
+    apply angle_add_not_overflow_iff in Hov.
+    destruct Hov as [H1| H1]. {
+      subst θ.
+      apply angle_straight_pos.
+      now rewrite Hch.
+    }
+Search (_ < π)%A.
 ...
 
 Theorem exists_angle_div_nat :
