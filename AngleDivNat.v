@@ -1815,52 +1815,73 @@ destruct n. {
   rewrite angle_add_overflow_0_r; cbn.
   apply Nat_eq_b2n_0.
   cbn in Htt.
-  enough (H : (θ ≤ π)%A). {
-    apply angle_le_iff in H.
-    destruct H as [H| H]. {
-      apply angle_add_not_overflow_lt_straight_le_straight; [ easy | ].
-      now apply angle_lt_le_incl.
-    }
-    exfalso.
-    subst θ.
-    rewrite angle_straight_add_straight in Htt.
-    (* lemma *)
+  assert (H : (θ ≤ π)%A). {
     progress unfold angle_div_nat in Htt.
-    progress unfold seq_angle_to_div_nat in Htt.
-    eapply (angle_lim_eq_compat 0 0) in Htt. 2: {
+    apply angle_lim_move_0_r in Htt.
+    eapply (angle_lim_eq_compat 1 0) in Htt. 2: {
       intros i.
       rewrite Nat.add_0_r.
-      rewrite angle_0_div_2_pow.
-      now rewrite angle_mul_0_r.
+      progress unfold seq_angle_to_div_nat.
+      rewrite Nat.pow_add_r.
+      rewrite Nat.pow_1_r.
+      rewrite Nat.div_mul; [ | easy ].
+      rewrite Nat.add_comm.
+      rewrite angle_div_2_pow_add_r.
+      rewrite angle_div_pow2_1.
+      rewrite angle_div_2_pow_mul_2_pow.
+      rewrite <- angle_mul_2_l.
+      reflexivity.
     }
     apply angle_lim_const in Htt.
-    revert Htt.
-    apply angle_straight_neq_0.
-    now rewrite Hch.
+    symmetry in Htt.
+    apply -> angle_sub_move_0_r in Htt.
+    rewrite <- Htt.
+    apply angle_div_2_le_straight.
   }
+  apply angle_le_iff in H.
+  destruct H as [H| H]. {
+    apply angle_add_not_overflow_lt_straight_le_straight; [ easy | ].
+    now apply angle_lt_le_incl.
+  }
+  exfalso.
+  subst θ.
+  rewrite angle_straight_add_straight in Htt.
+  (* lemma *)
   progress unfold angle_div_nat in Htt.
+  progress unfold seq_angle_to_div_nat in Htt.
+  eapply (angle_lim_eq_compat 0 0) in Htt. 2: {
+    intros i.
+    rewrite Nat.add_0_r.
+    rewrite angle_0_div_2_pow.
+    now rewrite angle_mul_0_r.
+  }
+  apply angle_lim_const in Htt.
+  revert Htt.
+  apply angle_straight_neq_0.
+  now rewrite Hch.
+}
+destruct n. {
+(**)
   apply angle_lim_move_0_r in Htt.
-  eapply (angle_lim_eq_compat 1 0) in Htt. 2: {
+  eapply (angle_lim_eq_compat 0 0) in Htt. 2: {
     intros i.
     rewrite Nat.add_0_r.
     progress unfold seq_angle_to_div_nat.
-    rewrite Nat.pow_add_r.
-    rewrite Nat.pow_1_r.
-    rewrite Nat.div_mul; [ | easy ].
-    rewrite Nat.add_comm.
-    rewrite angle_div_2_pow_add_r.
-    rewrite angle_div_pow2_1.
-    rewrite angle_div_2_pow_mul_2_pow.
-    rewrite <- angle_mul_2_l.
-    reflexivity.
+...
+    rewrite angle_0_div_2_pow.
+    now rewrite angle_mul_0_r.
   }
-  apply angle_lim_const in Htt.
-  symmetry in Htt.
-  apply -> angle_sub_move_0_r in Htt.
-  rewrite <- Htt.
-  apply angle_div_2_le_straight.
-}
-destruct n. {
+...
+  cbn in Htt |-*.
+  rewrite angle_add_0_r in Htt |-*.
+  rewrite angle_add_overflow_0_r; cbn.
+  apply Nat.eq_add_0.
+  split; apply Nat_eq_b2n_0. {
+    progress unfold angle_div_nat in Htt.
+...
+    progress unfold seq_angle_to_div_nat in Htt.
+    progress unfold angle_lim in Htt.
+    progress unfold is_limit_when_seq_tends_to_inf in Htt.
 ...
 
 Theorem exists_angle_div_nat :
