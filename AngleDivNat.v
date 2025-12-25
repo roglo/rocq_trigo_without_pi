@@ -1881,9 +1881,27 @@ destruct n. {
 destruct n. {
 (**)
   apply angle_lim_move_0_r in Htt.
+  apply angle_lim_opp in Htt.
+  rewrite angle_opp_0 in Htt.
+  eapply (angle_lim_eq_compat 0 0) in Htt. 2: {
+    intros i.
+    rewrite Nat.add_0_r.
+    rewrite angle_opp_sub_distr.
+    easy.
+  }
+  apply (angle_lim_0_le Hor) with (g := λ i, (θ - 2 ^ i / 2 ^ Nat.log2_up 3 * (3 * θ) /₂^i)%A) in Htt. 2: {
+    intros i.
+Search (_ - _ ≤ _ )%A.
+(* pfff... chais pas *)
+...
   eapply (angle_lim_0_le Hor) in Htt. 2: {
     intros i.
     progress unfold seq_angle_to_div_nat.
+    specialize (Nat.div_mod (2 ^ i) 3 (Nat.neq_succ_0 _)) as H1.
+Search (_ ≤ 2 ^ Nat.log2_up _).
+...
+2 ^ i / 2 ^ Nat.log2_up n ≤ 2 ^ i / n
+
 Search seq_angle_to_div_nat.
 ...
   eapply (angle_lim_eq_compat 0 0) in Htt. 2: {
