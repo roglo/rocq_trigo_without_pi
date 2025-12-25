@@ -1815,8 +1815,28 @@ destruct n. {
   rewrite angle_add_overflow_0_r; cbn.
   apply Nat_eq_b2n_0.
   cbn in Htt.
-  enough (H : (θ < π)%A). {
-    apply angle_add_not_overflow_lt_straight_le_straight; [ easy | ].
+  enough (H : (θ ≤ π)%A). {
+    apply angle_le_iff in H.
+    destruct H as [H| H]. {
+      apply angle_add_not_overflow_lt_straight_le_straight; [ easy | ].
+      now apply angle_lt_le_incl.
+    }
+    exfalso.
+    subst θ.
+    rewrite angle_straight_add_straight in Htt.
+    (* lemma *)
+    progress unfold angle_div_nat in Htt.
+    progress unfold seq_angle_to_div_nat in Htt.
+    eapply (angle_lim_eq_compat 0 0) in Htt. 2: {
+      intros i.
+      rewrite Nat.add_0_r.
+Search (0 /₂ _)%A.
+...
+angle_lt_iff:
+  ∀ {T : Type} {ro : ring_like_op T} {rp : ring_like_prop T},
+    angle_ctx T → ∀ θ1 θ2 : angle T, (θ1 < θ2)%A ↔ (θ1 ≤ θ2)%A ∧ θ1 ≠ θ2
+    apply angle_le_neq in H.
+    apply angle_add_not_overflow_lt_straight_le_straight; [ | ].
     now apply angle_lt_le_incl.
   }
   progress unfold angle_div_nat in Htt.
@@ -1848,6 +1868,26 @@ destruct n. {
     apply angle_add_overflow_ge_straight_ge_straight; [ | easy | easy ].
     now rewrite Hch.
   }
+...
+  apply angle_nle_gt.
+  intros H1.
+  apply Bool.not_false_iff_true in Hov.
+  apply Hov; clear Hov.
+  rewrite <- Htt.
+  apply angle_add_not_overflow_iff.
+  right.
+  rewrite Htt.
+...
+  apply angle_add_not_overflow_move_add. {
+    rewrite angle_add_overflow_comm.
+    apply angle_add_not_overflow_move_add. {
+...
+  apply angle_nle_gt.
+  intros H1.
+  apply Bool.not_false_iff_true in Hov.
+  apply Hov; clear Hov.
+Search (angle_add_overflow...
+Search (angle_add_overflow _ _ = true → _).
 (* bon, je fatigue... *)
 ...
     apply angle_add_overflow_gt_straight_ge_straight; [ | easy ].

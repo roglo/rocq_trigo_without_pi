@@ -55,6 +55,39 @@ Context {ac : angle_ctx T}.
 
 Definition angle_add_overflow θ1 θ2 := ((θ1 ≠? 0)%A && (- θ1 ≤? θ2)%A)%bool.
 
+Theorem angle_lt_le_incl :
+  ∀ θ1 θ2, (θ1 < θ2 → θ1 ≤ θ2)%A.
+Proof.
+destruct_ac.
+intros * H12.
+progress unfold angle_ltb in H12.
+progress unfold angle_leb.
+remember (0 ≤? rngl_sin θ1)%L as z1 eqn:Hz1.
+remember (0 ≤? rngl_sin θ2)%L as z2 eqn:Hz2.
+symmetry in Hz1, Hz2.
+destruct z1. {
+  destruct z2; [ | easy ].
+  apply (rngl_ltb_lt Heo) in H12.
+  apply rngl_leb_le.
+  now apply rngl_lt_le_incl.
+} {
+  destruct z2; [ easy | ].
+  apply (rngl_ltb_lt Heo) in H12.
+  apply rngl_leb_le.
+  now apply rngl_lt_le_incl.
+}
+Qed.
+
+Theorem angle_le_refl : ∀ θ, (θ ≤? θ)%A = true.
+Proof.
+intros.
+destruct_ac.
+progress unfold angle_leb.
+remember (0 ≤? rngl_sin θ)%L as zs eqn:Hzs.
+symmetry in Hzs.
+destruct zs; apply (rngl_leb_refl Hor).
+Qed.
+
 Theorem angle_lt_iff : ∀ θ1 θ2, (θ1 < θ2 ↔ θ1 ≤ θ2 ∧ θ1 ≠ θ2)%A.
 Proof.
 destruct_ac; intros.
@@ -129,6 +162,18 @@ destruct zs1. {
   cbn in Hzs1.
   apply (rngl_opp_neg_pos Hop Hor) in Hzs1.
   now apply rngl_lt_le_incl, (rngl_nlt_ge Hor) in Hzs1.
+}
+Qed.
+
+Theorem angle_le_iff : ∀ θ1 θ2, (θ1 ≤ θ2)%A ↔ (θ1 < θ2)%A ∨ θ1 = θ2.
+Proof.
+intros.
+split; intros H. {
+  destruct (angle_eq_dec θ1 θ2) as [H12| H12]; [ now right | left ].
+  now apply angle_lt_iff.
+} {
+  destruct H as [H| H]; [ now apply angle_lt_le_incl | subst ].
+  apply angle_le_refl.
 }
 Qed.
 
@@ -274,16 +319,6 @@ destruct zs. {
   apply (rngl_ltb_lt Heo) in H.
   now apply rngl_lt_irrefl in H.
 }
-Qed.
-
-Theorem angle_le_refl : ∀ θ, (θ ≤? θ)%A = true.
-Proof.
-intros.
-destruct_ac.
-progress unfold angle_leb.
-remember (0 ≤? rngl_sin θ)%L as zs eqn:Hzs.
-symmetry in Hzs.
-destruct zs; apply (rngl_leb_refl Hor).
 Qed.
 
 Theorem angle_nonneg : ∀ θ, (0 ≤ θ)%A.
@@ -642,29 +677,6 @@ split; intros H. {
   apply (rngl_nle_gt_iff Hto).
   intros H1; apply H; clear H.
   now apply rngl_sin_nonneg_angle_le_straight.
-}
-Qed.
-
-Theorem angle_lt_le_incl :
-  ∀ θ1 θ2, (θ1 < θ2 → θ1 ≤ θ2)%A.
-Proof.
-destruct_ac.
-intros * H12.
-progress unfold angle_ltb in H12.
-progress unfold angle_leb.
-remember (0 ≤? rngl_sin θ1)%L as z1 eqn:Hz1.
-remember (0 ≤? rngl_sin θ2)%L as z2 eqn:Hz2.
-symmetry in Hz1, Hz2.
-destruct z1. {
-  destruct z2; [ | easy ].
-  apply (rngl_ltb_lt Heo) in H12.
-  apply rngl_leb_le.
-  now apply rngl_lt_le_incl.
-} {
-  destruct z2; [ easy | ].
-  apply (rngl_ltb_lt Heo) in H12.
-  apply rngl_leb_le.
-  now apply rngl_lt_le_incl.
 }
 Qed.
 
