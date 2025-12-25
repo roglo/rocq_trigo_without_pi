@@ -1791,6 +1791,23 @@ now apply glop.
 ...
 *)
 
+Theorem angle_lim_0_le :
+  rngl_is_ordered T = true →
+  ∀ f g,
+  (∀ i, (g i ≤ f i ≤ π)%A)
+  → angle_lim f 0
+  → angle_lim g 0.
+Proof.
+intros Hor.
+intros * Hgf Hf ε Hε.
+specialize (Hf ε Hε).
+destruct Hf as (N, Hn).
+exists N; intros i Hi.
+eapply (rngl_le_lt_trans Hor); [ | apply Hn, Hi ].
+apply angle_le_angle_eucl_dist_le; [ | apply Hgf | apply Hgf ].
+apply (angle_le_trans _ (f i)); apply Hgf.
+Qed.
+
 (* to be completed
 Theorem angle_div_nat_integral :
   rngl_characteristic T = 0 →
@@ -1800,6 +1817,7 @@ Theorem angle_div_nat_integral :
   angle_div_nat θ n θ'
   → angle_mul_nat_div_2π n θ' = 0.
 Proof.
+destruct_ac.
 intros Hch Har Hco * Htt.
 generalize Htt; intros H.
 apply (angle_div_nat_prop Hch Har Hco) in H.
@@ -1863,6 +1881,11 @@ destruct n. {
 destruct n. {
 (**)
   apply angle_lim_move_0_r in Htt.
+  eapply (angle_lim_0_le Hor) in Htt. 2: {
+    intros i.
+    progress unfold seq_angle_to_div_nat.
+Search seq_angle_to_div_nat.
+...
   eapply (angle_lim_eq_compat 0 0) in Htt. 2: {
     intros i.
     rewrite Nat.add_0_r.
