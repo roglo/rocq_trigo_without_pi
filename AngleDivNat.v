@@ -1880,6 +1880,14 @@ destruct n. {
 }
 destruct n. {
 (**)
+  eapply (angle_lim_eq_compat 0 0) in Htt. 2: {
+    intros i.
+    rewrite Nat.add_0_r.
+    progress unfold seq_angle_to_div_nat.
+Check angle_div_2_pow_mul.
+...
+    rewrite angle_div_2_pow_mul. 2: {
+...
   apply angle_lim_move_0_r in Htt.
   apply angle_lim_opp in Htt.
   rewrite angle_opp_0 in Htt.
@@ -1889,14 +1897,20 @@ destruct n. {
     rewrite angle_opp_sub_distr.
     easy.
   }
-  apply (angle_lim_0_le Hor) with (g := λ i, (θ - 2 ^ i / 2 ^ Nat.log2_up 3 * (3 * θ) /₂^i)%A) in Htt. 2: {
-    intros i.
-Search (_ - _ ≤ _ )%A.
-(* pfff... chais pas *)
+  eapply (angle_lim_eq_compat (Nat.log2_up 3) 0) in Htt. 2: {
+    intros.
+    rewrite Nat.add_0_r.
+    progress unfold seq_angle_to_div_nat.
+...
+    rewrite angle_div_2_pow_mul. 2: {
+
 ...
   eapply (angle_lim_0_le Hor) in Htt. 2: {
     intros i.
     progress unfold seq_angle_to_div_nat.
+    replace ((3 * θ) /₂^i)%A with (3 * (θ /₂^i))%A.
+rewrite (angle_div_2_pow_mul i 3) at 2.
+...
     specialize (Nat.div_mod (2 ^ i) 3 (Nat.neq_succ_0 _)) as H1.
 Search (_ ≤ 2 ^ Nat.log2_up _).
 ...
