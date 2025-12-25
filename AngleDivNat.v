@@ -1838,7 +1838,17 @@ assert (Htp : (θ' ≤ 2 * π_n)%A). {
     (g := λ i, (θ' - 2 ^ i / 2 ^ Nat.log2_up n * (θ /₂^i))%A) in Htt. 2: {
     intros i.
     split. {
-      apply angle_add_le_mono_l.
+      apply angle_add_le_mono_l. 2: {
+        apply angle_opp_le_compat_if. {
+          progress unfold seq_angle_to_div_nat.
+          intros H.
+          apply angle_mul_nat_integral in H. 2: {
+            apply angle_mul_nat_div_2π_div_pow2.
+            admit. (* donc ça, c'est bon *)
+          }
+(* il faut que 2^i soit supérieur ou égal à n,
+   donc va falloir décaler de Nat.log2 n, au départ
+   un truc comme ça *)
 ...
 Search (_ - _ ≤ _ - _)%A.
 Search (_ - _ ≤ _ = _)%A.
