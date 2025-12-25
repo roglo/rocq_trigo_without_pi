@@ -1857,71 +1857,10 @@ destruct n. {
   apply angle_lim_const in Htt.
   symmetry in Htt.
   apply -> angle_sub_move_0_r in Htt.
-...
-  rewrite <- angle_mul_nat_div_2 in Htt.
-2: {
-...
-    replace (θ + θ)%A with (2 * θ)%A.
-  rewrite angle_div_2_add in Htt.
-  remember (angle_add_overflow θ θ) as ov eqn:Hov.
-  symmetry in Hov.
-  destruct ov. 2: {
-    apply angle_nlt_ge.
-    intros H1.
-    apply Bool.not_true_iff_false in Hov.
-    apply Hov; clear Hov.
-    apply angle_add_overflow_gt_straight_ge_straight; [ easy | ].
-    now apply angle_lt_le_incl.
-  }
-  apply angle_le_iff.
-...
-  apply angle_nlt_ge.
-  intros H1.
-  apply Bool.not_false_iff_true in Hov.
-  apply Hov; clear Hov.
-...
   rewrite <- Htt.
-  apply angle_add_not_overflow_move_add. {
-    rewrite angle_add_overflow_comm.
-    apply angle_add_not_overflow_move_add. {
-...
-  apply angle_nle_gt.
-  intros H1.
-  apply Bool.not_false_iff_true in Hov.
-  apply Hov; clear Hov.
-Search (angle_add_overflow...
-Search (angle_add_overflow _ _ = true → _).
-(* bon, je fatigue... *)
-...
-    apply angle_add_overflow_gt_straight_ge_straight; [ | easy ].
-    apply angle_lt_iff.
-    split; [ easy | ].
-    intros H'; subst θ.
-...
-    apply angle_le_neq.
-Search (angle_add_overflow _ _ = true).
-angle_add_overflow_gt_straight_ge_straight:
-  ∀ {T : Type} {ro : ring_like_op T} {rp : ring_like_prop T} {ac : angle_ctx T} (θ1 θ2 : angle T),
-    (π < θ1)%A → (π ≤ θ2)%A → angle_add_overflow θ1 θ2 = true
-...
-    apply angle_add_overflow_lt_straight_ge_straight.
-...
-    apply angle_add_overflow_lt_straight_ge_straight.
-  ∀ {T : Type} {ro : ring_like_op T} {rp : ring_like_prop T} {ac : angle_ctx T} (θ1 θ2 : angle T),
-    angle_add_overflow θ1 θ2 = true → (θ1 < π)%A → (π ≤ θ2)%A
-    rewrite <- angle_add_overflow_equiv2 in Hov.
-    progress unfold angle_add_overflow2 in Hov.
-    apply Bool.not_true_iff_false in Hov.
-    apply angle_nlt_ge in Hov.
-Search (_ + _ < π)%A.
-...
-    apply angle_add_not_overflow_iff in Hov.
-    destruct Hov as [H1| H1]. {
-      subst θ.
-      apply angle_straight_pos.
-      now rewrite Hch.
-    }
-Search (_ < π)%A.
+  apply angle_div_2_le_straight.
+}
+destruct n. {
 ...
 
 Theorem exists_angle_div_nat :
