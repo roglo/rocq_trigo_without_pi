@@ -1826,14 +1826,30 @@ destruct H1 as (π_n, Hp).
 assert (Htp : (θ' ≤ 2 * π_n)%A). {
   progress unfold angle_div_nat in Htt.
   apply angle_lim_move_0_r in Htt.
+  apply angle_lim_opp in Htt.
+  rewrite angle_opp_0 in Htt.
+  eapply (angle_lim_eq_compat 0 0) in Htt. 2: {
+    intros i.
+    rewrite Nat.add_0_r.
+    rewrite angle_opp_sub_distr.
+    easy.
+  }
+  apply angle_lim_le_compat with
+    (g := λ i, (θ' - 2 ^ i / 2 ^ Nat.log2_up n * (θ /₂^i))%A) in Htt. 2: {
+    intros i.
+    split. {
+      apply angle_add_le_mono_l.
+...
+Search (_ - _ ≤ _ - _)%A.
+Search (_ - _ ≤ _ = _)%A.
 ...
   eapply (angle_lim_eq_compat 5 0) in Htt. 2: {
     intros i.
     rewrite Nat.add_0_r.
     progress unfold seq_angle_to_div_nat.
     rewrite Nat.pow_add_r.
+...
     rewrite Nat.pow_1_r.
-
     rewrite Nat.div_mul; [ | easy ].
       rewrite Nat.add_comm.
       rewrite angle_div_2_pow_add_r.
