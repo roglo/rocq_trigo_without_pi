@@ -1857,7 +1857,10 @@ assert (Htp : (θ' ≤ 2 * π_n)%A). {
     now intros i; rewrite Nat.add_0_r.
   }
   apply angle_lim_le_compat with
-    (g := λ i, (θ' - 2 ^ i / 2 ^ Nat.log2_up n * (θ /₂^i))%A) in Htt. 2: {
+    (g :=
+       λ i,
+       let j := i + Nat.log2_up n in
+       (θ' - 2 ^ j / 2 ^ Nat.log2_up n * (θ /₂^j))%A) in Htt. 2: {
     intros i.
     split. {
       apply angle_add_le_mono_l. 2: {
@@ -1866,7 +1869,7 @@ assert (Htp : (θ' ≤ 2 * π_n)%A). {
           intros H.
           apply angle_mul_nat_integral in H. 2: {
             apply angle_mul_nat_div_2π_div_pow2.
-            admit. (* donc ça, c'est bon *)
+admit. (* donc ça, c'est bon *)
           }
           rewrite Nat.pow_add_r in H.
           destruct H as [H| H]. {
@@ -1882,27 +1885,19 @@ assert (Htp : (θ' ≤ 2 * π_n)%A). {
           }
           now apply eq_angle_div_2_pow_0 in H.
         }
+        rewrite <- Nat.pow_sub_r; [ | easy | apply Nat.le_add_l ].
+        rewrite Nat.add_sub.
+        progress unfold seq_angle_to_div_nat.
+        apply angle_mul_le_mono_r. 2: {
+          rewrite Nat.pow_add_r.
+(* ah bin non : 2 ^ Nat.log2_up n / n, c'est supérieur à 1 *)
 ...
-  eapply (angle_lim_eq_compat 5 0) in Htt. 2: {
-    intros i.
-    rewrite Nat.add_0_r.
-    progress unfold seq_angle_to_div_nat.
-    rewrite Nat.pow_add_r.
-...
-    rewrite Nat.pow_1_r.
-    rewrite Nat.div_mul; [ | easy ].
-      rewrite Nat.add_comm.
-      rewrite angle_div_2_pow_add_r.
-      rewrite angle_div_pow2_1.
-      rewrite angle_div_2_pow_mul_2_pow.
-      rewrite <- angle_mul_2_l.
-      reflexivity.
-    }
-    apply angle_lim_const in Htt.
-    symmetry in Htt.
-    apply -> angle_sub_move_0_r in Htt.
-    rewrite <- Htt.
-    apply angle_div_2_le_straight.
+          eapply Nat.le_trans. {
+Search (_ * _ / _).
+            apply Nat.Div0.div_mul_le.
+Nat.Div0.div_mul_le: ∀ a b c : nat, c * (a / b) ≤ c * a / b
+ Search (_ / _ ≤ _).
+         apply Nat.Div-.le_div_l.
 ... ...
 }
 generalize Htt; intros H.
