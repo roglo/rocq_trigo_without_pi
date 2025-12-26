@@ -1856,6 +1856,45 @@ assert (Htp : (θ' ≤ 2 * π_n)%A). {
   eapply (angle_lim_eq_compat (Nat.log2_up n) 0) in Htt. 2: {
     now intros i; rewrite Nat.add_0_r.
   }
+(**)
+...
+  eapply angle_lim_le_compat in Htt. 2: {
+    intros i.
+    split. {
+      apply angle_add_le_mono_l. 2: {
+        apply angle_opp_le_compat_if. {
+          progress unfold seq_angle_to_div_nat.
+          intros H.
+          apply angle_mul_nat_integral in H. 2: {
+            apply angle_mul_nat_div_2π_div_pow2.
+admit. (* donc ça, c'est bon *)
+          }
+          rewrite Nat.pow_add_r in H.
+          destruct H as [H| H]. {
+            apply Nat.div_small_iff in H; [ | easy ].
+            apply Nat.nle_gt in H.
+            apply H; clear H.
+            apply (Nat.le_trans _ (2 ^ Nat.log2_up n)). {
+              apply Nat.log2_log2_up_spec.
+              now apply Nat.neq_0_lt_0.
+            }
+            apply Nat.le_mul_l.
+            now apply Nat.pow_nonzero.
+          }
+          now apply eq_angle_div_2_pow_0 in H.
+        }
+admit.
+}
+  Htt :
+    angle_lim
+      (λ i : nat, (θ' - seq_angle_to_div_nat θ n (i + Nat.log2_up n))%A) 0
+...
+        rewrite <- Nat.pow_sub_r; [ | easy | apply Nat.le_add_l ].
+        rewrite Nat.add_sub.
+        progress unfold seq_angle_to_div_nat.
+        apply angle_mul_le_mono_r. 2: {
+          rewrite Nat.pow_add_r.
+...
   apply angle_lim_le_compat with
     (g :=
        λ i,
@@ -1891,6 +1930,9 @@ admit. (* donc ça, c'est bon *)
         apply angle_mul_le_mono_r. 2: {
           rewrite Nat.pow_add_r.
 (* ah bin non : 2 ^ Nat.log2_up n / n, c'est supérieur à 1 *)
+...
+  ============================
+  2 ^ i * 2 ^ Nat.log2_up n / n ≤ 2 ^ i
 ...
           eapply Nat.le_trans. {
 Search (_ * _ / _).
