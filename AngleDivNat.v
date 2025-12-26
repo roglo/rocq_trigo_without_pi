@@ -1808,6 +1808,20 @@ apply angle_le_angle_eucl_dist_le; [ | apply Hgf | apply Hgf ].
 apply (angle_le_trans _ (f i)); apply Hgf.
 Qed.
 
+Theorem angle_div_nat_0_l : ∀ n θ, angle_div_nat 0 n θ → θ = 0%A.
+Proof.
+intros * Hn.
+progress unfold angle_div_nat in Hn.
+progress unfold seq_angle_to_div_nat in Hn.
+eapply (angle_lim_eq_compat 0 0) in Hn. 2: {
+  intros i; rewrite Nat.add_0_r.
+  rewrite angle_0_div_2_pow.
+  rewrite angle_mul_0_r.
+  easy.
+}
+now apply angle_lim_const in Hn.
+Qed.
+
 (* to be completed
 Theorem angle_div_nat_integral :
   rngl_characteristic T = 0 →
@@ -1821,6 +1835,11 @@ Proof.
 destruct_ac.
 intros Hch Har Hco * Htt.
 destruct (Nat.eq_dec n 0) as [| Hnz]; [ now subst n | ].
+destruct (angle_eq_dec θ 0) as [Htz| Htz]. {
+  subst θ.
+  apply angle_div_nat_0_l in Htt; subst θ'.
+  apply angle_mul_nat_div_2π_0_r.
+}
 specialize (exists_angle_div_nat Hch Har Hco π n Hnz) as H1.
 destruct H1 as (π_n, Hp).
 assert (Htp : (θ' ≤ 2 * π_n)%A). {
@@ -1834,6 +1853,9 @@ assert (Htp : (θ' ≤ 2 * π_n)%A). {
     rewrite angle_opp_sub_distr.
     easy.
   }
+  eapply (angle_lim_eq_compat (Nat.log2_up n) 0) in Htt. 2: {
+    now intros i; rewrite Nat.add_0_r.
+  }
   apply angle_lim_le_compat with
     (g := λ i, (θ' - 2 ^ i / 2 ^ Nat.log2_up n * (θ /₂^i))%A) in Htt. 2: {
     intros i.
@@ -1846,12 +1868,20 @@ assert (Htp : (θ' ≤ 2 * π_n)%A). {
             apply angle_mul_nat_div_2π_div_pow2.
             admit. (* donc ça, c'est bon *)
           }
-(* il faut que 2^i soit supérieur ou égal à n,
-   donc va falloir décaler de Nat.log2 n, au départ
-   un truc comme ça *)
-...
-Search (_ - _ ≤ _ - _)%A.
-Search (_ - _ ≤ _ = _)%A.
+          rewrite Nat.pow_add_r in H.
+          destruct H as [H| H]. {
+            apply Nat.div_small_iff in H; [ | easy ].
+            apply Nat.nle_gt in H.
+            apply H; clear H.
+            apply (Nat.le_trans _ (2 ^ Nat.log2_up n)). {
+              apply Nat.log2_log2_up_spec.
+              now apply Nat.neq_0_lt_0.
+            }
+            apply Nat.le_mul_l.
+            now apply Nat.pow_nonzero.
+          }
+          now apply eq_angle_div_2_pow_0 in H.
+        }
 ...
   eapply (angle_lim_eq_compat 5 0) in Htt. 2: {
     intros i.
