@@ -1831,7 +1831,7 @@ Theorem angle_div_nat_integral :
   angle_div_nat θ n θ'
   → angle_mul_nat_div_2π n θ' = 0.
 Proof.
-(**)
+(*
 destruct_ac.
 intros Hch Har Hco * Htt.
 destruct (Nat.eq_dec n 0) as [| Hnz]; [ now subst n | ].
@@ -1842,7 +1842,12 @@ destruct (angle_eq_dec θ 0) as [Htz| Htz]. {
 }
 specialize (exists_angle_div_nat Hch Har Hco π n Hnz) as H1.
 destruct H1 as (π_n, Hp).
-assert (Htp : (θ' ≤ 2 * π_n)%A). {
+generalize Htt; intros H.
+apply (angle_div_nat_prop Hch Har Hco) in H.
+destruct H as [(H1, H2)| H]; [ now subst n | ].
+subst θ; rename θ' into θ; move Hnz after Htt.
+move π_n before θ.
+assert (Htp : (θ ≤ 2 * π_n)%A). {
   progress unfold angle_div_nat in Htt.
   apply angle_lim_move_0_r in Htt.
   apply angle_lim_opp in Htt.
@@ -1857,17 +1862,17 @@ assert (Htp : (θ' ≤ 2 * π_n)%A). {
   eapply (angle_lim_eq_compat (Nat.log2_up n) 0) in Htt. 2: {
     now intros i; rewrite Nat.add_0_r.
   }
-...
 (**)
   eapply angle_lim_le_compat in Htt. 2: {
     intros i.
     split. {
+...
       apply angle_add_le_mono_l. 2: {
         apply angle_opp_le_compat_if. {
           intros H.
           apply angle_mul_nat_integral in H. 2: {
             apply angle_mul_nat_div_2π_div_pow2.
-admit. (* donc ça, c'est bon *)
+...admit. (* donc ça, c'est bon *)
           }
           rewrite Nat.pow_add_r in H.
           destruct H as [H| H]. {
@@ -1963,6 +1968,7 @@ destruct H as [(H, _)| H1]; [ easy | ].
     split. {
         Search (_ < _ - _)%A.
 ...
+*)
 destruct_ac.
 intros Hch Har Hco * Htt.
 generalize Htt; intros H.
