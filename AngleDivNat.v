@@ -1822,6 +1822,14 @@ eapply (angle_lim_eq_compat 0 0) in Hn. 2: {
 now apply angle_lim_const in Hn.
 Qed.
 
+Theorem angle_add_not_overflow_diag :
+  ∀ θ, (θ < π)%A → angle_add_overflow θ θ = false.
+Proof.
+intros * Htp.
+apply angle_add_not_overflow_lt_straight_le_straight; [ easy | ].
+now apply angle_lt_le_incl.
+Qed.
+
 (* to be completed
 Theorem angle_div_nat_integral :
   rngl_characteristic T = 0 →
@@ -2008,16 +2016,13 @@ destruct n. {
     rewrite <- Htt.
     apply angle_div_2_le_straight.
   }
+  apply angle_add_not_overflow_diag.
   apply angle_le_iff in H.
-  destruct H as [H| H]. {
-    apply angle_add_not_overflow_lt_straight_le_straight; [ easy | ].
-    now apply angle_lt_le_incl.
-  }
-  exfalso.
+  destruct H as [H| H]; [ easy | ].
   subst θ.
   rewrite angle_straight_add_straight in Htt.
   apply angle_div_nat_0_l in Htt.
-  revert Htt.
+  exfalso; revert Htt.
   apply angle_straight_neq_0.
   congruence.
 }
@@ -2035,13 +2040,9 @@ destruct n. {
   destruct H as [H| H]. {
     split. {
       apply Nat_eq_b2n_0.
-      apply angle_add_not_overflow_lt_straight_le_straight. {
-        apply (angle_lt_le_trans _ (2 * π_n)); [ easy | ].
-        rewrite <- Hp.
-        apply angle_mul_le_mono_r; [ | flia ].
-        apply angle_mul_nat_div_2π_iff.
-        cbn.
-Search (angle_mul_nat_div_2π _ _ = 0).
+      apply angle_add_not_overflow_diag.
+      rewrite <- Hp.
+      eapply (angle_lt_le_trans _); [ apply H | ].
 ...
     now apply angle_lt_le_incl.
   }
