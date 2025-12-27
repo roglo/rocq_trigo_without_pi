@@ -2029,6 +2029,29 @@ destruct n. {
   apply Nat.eq_add_0.
   specialize (exists_angle_div_nat Hch Har Hco π 3 (Nat.neq_succ_0 _)) as H1.
   destruct H1 as (π_n, Hp).
+(**)
+  assert (H : (θ ≤ 2 * π_n)%A) by admit.
+  apply angle_le_iff in H.
+  destruct H as [H| H]. {
+    split. {
+      apply Nat_eq_b2n_0.
+      apply angle_add_not_overflow_lt_straight_le_straight. {
+        apply (angle_lt_le_trans _ (2 * π_n)); [ easy | ].
+        rewrite <- Hp.
+        apply angle_mul_le_mono_r; [ | flia ].
+        apply angle_mul_nat_div_2π_iff.
+        cbn.
+Search (angle_mul_nat_div_2π _ _ = 0).
+...
+    now apply angle_lt_le_incl.
+  }
+  exfalso.
+  subst θ.
+  rewrite angle_straight_add_straight in Htt.
+  apply angle_div_nat_0_l in Htt.
+  revert Htt.
+  apply angle_straight_neq_0.
+  congruence.
 ...
   assert (H : (θ ≤ 2 * π_n)%A). {
     progress unfold angle_div_nat in Htt.
