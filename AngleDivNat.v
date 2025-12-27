@@ -2016,19 +2016,10 @@ destruct n. {
   exfalso.
   subst θ.
   rewrite angle_straight_add_straight in Htt.
-  (* lemma *)
-  progress unfold angle_div_nat in Htt.
-  progress unfold seq_angle_to_div_nat in Htt.
-  eapply (angle_lim_eq_compat 0 0) in Htt. 2: {
-    intros i.
-    rewrite Nat.add_0_r.
-    rewrite angle_0_div_2_pow.
-    now rewrite angle_mul_0_r.
-  }
-  apply angle_lim_const in Htt.
+  apply angle_div_nat_0_l in Htt.
   revert Htt.
   apply angle_straight_neq_0.
-  now rewrite Hch.
+  congruence.
 }
 destruct n. {
 (**)
@@ -2038,6 +2029,7 @@ destruct n. {
   apply Nat.eq_add_0.
   specialize (exists_angle_div_nat Hch Har Hco π 3 (Nat.neq_succ_0 _)) as H1.
   destruct H1 as (π_n, Hp).
+...
   assert (H : (θ ≤ 2 * π_n)%A). {
     progress unfold angle_div_nat in Htt.
     apply angle_lim_move_0_r in Htt.
@@ -2052,6 +2044,11 @@ destruct n. {
     progress unfold seq_angle_to_div_nat in Htt.
     eapply (angle_lim_le_compat) in Htt. 2: {
       intros i.
+      split. 2: {
+        eapply angle_le_trans. {
+Search (_ + _ ≤ _)%A.
+          apply angle_add_le_mono_l.
+        apply (rngl_le_le_sub_l
 ...
 (*
 i     2 ^ i / 3 * ((3 * θ) /₂^i
