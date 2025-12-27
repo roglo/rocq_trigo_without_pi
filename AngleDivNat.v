@@ -2032,8 +2032,8 @@ destruct n. {
 }
 destruct n. {
 (**)
-  cbn in Htt |-*.
-  rewrite angle_add_0_r in Htt |-*.
+  cbn.
+  rewrite angle_add_0_r.
   rewrite angle_add_overflow_0_r; cbn.
   apply Nat.eq_add_0.
   specialize (exists_angle_div_nat Hch Har Hco π 3 (Nat.neq_succ_0 _)) as H1.
@@ -2049,9 +2049,26 @@ destruct n. {
       rewrite angle_opp_sub_distr.
       easy.
     }
+    progress unfold seq_angle_to_div_nat in Htt.
     eapply (angle_lim_le_compat) in Htt. 2: {
       intros i.
-      progress unfold seq_angle_to_div_nat.
+...
+(*
+i     2 ^ i / 3 * ((3 * θ) /₂^i
+0     0
+1     0
+2     (3 * θ / 4)
+3     (3 * θ / 4)
+4     5 * (3 * θ / 16)
+5     5 * (3 * θ / 16)
+6     21 * (3 * θ / 64)
+7     21 * (3 * θ / 64)
+8     85 * (3 * θ / 256)
+9     85 * (3 * θ / 256)
+10    341 * (3 * θ / 1024)
+11    341 * (3 * θ / 1024)
+...
+*)
       split. {
         Search (_ < _ - _)%A.
 ...
