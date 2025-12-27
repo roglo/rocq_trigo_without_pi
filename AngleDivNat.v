@@ -2041,6 +2041,8 @@ destruct n. {
       apply Nat_eq_b2n_0.
       apply angle_add_not_overflow_diag.
       eapply (angle_lt_le_trans _); [ apply H | ].
+      apply rngl_sin_nonneg_angle_le_straight.
+      rewrite rngl_sin_mul_2_l.
 ...
     now apply angle_lt_le_incl.
   }
