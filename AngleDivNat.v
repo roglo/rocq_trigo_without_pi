@@ -2033,15 +2033,13 @@ destruct n. {
   rewrite angle_add_overflow_0_r; cbn.
   apply Nat.eq_add_0.
   specialize (exists_angle_div_nat Hch Har Hco π 3 (Nat.neq_succ_0 _)) as H1.
-  destruct H1 as (π_n, Hp).
-(**)
-  assert (H : (θ ≤ 2 * π_n)%A) by admit.
+  destruct H1 as (π_3, Hp).
+  assert (H : (θ ≤ 2 * π_3)%A) by admit.
   apply angle_le_iff in H.
   destruct H as [H| H]. {
     split. {
       apply Nat_eq_b2n_0.
       apply angle_add_not_overflow_diag.
-      rewrite <- Hp.
       eapply (angle_lt_le_trans _); [ apply H | ].
 ...
     now apply angle_lt_le_incl.
