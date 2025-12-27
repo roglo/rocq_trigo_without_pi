@@ -2034,15 +2034,59 @@ destruct n. {
   apply Nat.eq_add_0.
   specialize (exists_angle_div_nat Hch Har Hco π 3 (Nat.neq_succ_0 _)) as H1.
   destruct H1 as (π_3, Hp).
-  assert (H : (θ ≤ 2 * π_3)%A) by admit.
+  assert (H : (θ ≤ 2 * π_3)%A). {
+    progress unfold angle_div_nat in Htt.
+    progress unfold seq_angle_to_div_nat in Htt.
+    apply angle_lim_move_0_r in Htt.
+    apply angle_lim_opp in Htt.
+    rewrite angle_opp_0 in Htt.
+    eapply (angle_lim_eq_compat 0 0) in Htt. 2: {
+      intros i.
+      rewrite Nat.add_0_r.
+      rewrite angle_opp_sub_distr.
+      easy.
+    }
+    apply (angle_lim_le_compat) with (g := λ i, (θ /₂^ i)%A) in Htt. 2: {
+      intros i.
+      split. {
+(* bon, faut voir, ça marche peut-être *)
+...
+        rewrite <- (angle_div_2_pow_mul_2_pow i θ) at 2.
+...
+        eapply angle_le_trans. {
+Search (_ + _ ≤ _)%A.
+          apply angle_add_le_mono_l.
+        apply (rngl_le_le_sub_l
+...
+(*
+i     2 ^ i / 3 * ((3 * θ) /₂^i   θ - ""
+0     0                           θ
+1     0                           θ
+2     (3 * θ / 4)                 θ / 4
+3     (3 * θ / 4)                 θ / 4
+4     5 * (3 * θ / 16)            θ / 16
+5     5 * (3 * θ / 16)
+6     21 * (3 * θ / 64)           θ / 64
+7     21 * (3 * θ / 64)
+8     85 * (3 * θ / 256)
+9     85 * (3 * θ / 256)
+10    341 * (3 * θ / 1024)
+11    341 * (3 * θ / 1024)
+...
+*)
+... ...
   apply angle_le_iff in H.
   destruct H as [H| H]. {
-    split. {
-      apply Nat_eq_b2n_0.
+    split; apply Nat_eq_b2n_0. {
       apply angle_add_not_overflow_diag.
       eapply (angle_lt_le_trans _); [ apply H | ].
       apply rngl_sin_nonneg_angle_le_straight.
       rewrite rngl_sin_mul_2_l.
+(* possible, mais pas simple *)
+...
+    }
+Search (angle_add_overflow _ (_ + _)).
+(* ouais, c'est la merde *)
 ...
     now apply angle_lt_le_incl.
   }
@@ -2055,41 +2099,6 @@ destruct n. {
   congruence.
 ...
   assert (H : (θ ≤ 2 * π_n)%A). {
-    progress unfold angle_div_nat in Htt.
-    apply angle_lim_move_0_r in Htt.
-    apply angle_lim_opp in Htt.
-    rewrite angle_opp_0 in Htt.
-    eapply (angle_lim_eq_compat 0 0) in Htt. 2: {
-      intros i.
-      rewrite Nat.add_0_r.
-      rewrite angle_opp_sub_distr.
-      easy.
-    }
-    progress unfold seq_angle_to_div_nat in Htt.
-    eapply (angle_lim_le_compat) in Htt. 2: {
-      intros i.
-      split. 2: {
-        eapply angle_le_trans. {
-Search (_ + _ ≤ _)%A.
-          apply angle_add_le_mono_l.
-        apply (rngl_le_le_sub_l
-...
-(*
-i     2 ^ i / 3 * ((3 * θ) /₂^i
-0     0
-1     0
-2     (3 * θ / 4)
-3     (3 * θ / 4)
-4     5 * (3 * θ / 16)
-5     5 * (3 * θ / 16)
-6     21 * (3 * θ / 64)
-7     21 * (3 * θ / 64)
-8     85 * (3 * θ / 256)
-9     85 * (3 * θ / 256)
-10    341 * (3 * θ / 1024)
-11    341 * (3 * θ / 1024)
-...
-*)
       split. {
         Search (_ < _ - _)%A.
 ...
