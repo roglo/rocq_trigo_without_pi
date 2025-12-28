@@ -1843,7 +1843,7 @@ Theorem angle_div_nat_integral :
   angle_div_nat θ n θ'
   → angle_mul_nat_div_2π n θ' = 0.
 Proof.
-(*
+(**)
 destruct_ac.
 intros Hch Har Hco * Htt.
 destruct (Nat.eq_dec n 0) as [| Hnz]; [ now subst n | ].
@@ -1860,6 +1860,7 @@ destruct H as [(H1, H2)| H]; [ now subst n | ].
 subst θ; rename θ' into θ; move Hnz after Htt.
 move π_n before θ.
 assert (Htp : (θ ≤ 2 * π_n)%A). {
+  generalize Htt; intros Htt_v.
   progress unfold angle_div_nat in Htt.
   apply angle_lim_move_0_r in Htt.
   apply angle_lim_opp in Htt.
@@ -1883,12 +1884,24 @@ Theorem glop :
   angle_div_nat (n * θ) n θ
   → (θ /₂^i ≤ θ - seq_angle_to_div_nat (n * θ) n i)%A.
 Proof.
+intros * Hnt.
+progress unfold seq_angle_to_div_nat.
 (* voir avec des exemples si c'est vrai pour les premières
    valeurs de i *)
-... ...
-  apply glop.
-...
+(*
+n=5
+i    θ/₂^i   2^i/n    2^i/n*((n*θ)/2^i)   θ-2^i...
+0    θ       0        0                   θ        v
+1    θ/2     0        0                   θ        v
+2    θ/4     0        0                   θ        v
+3    θ/8     1        (5*θ)/8             3θ/8     v
+4    θ/16    3        3*(5*θ)/16          15θ/16   v
+5    θ/32    6        6*(5*θ)/32          30θ/32   v
+ça a l'air bon...
 *)
+... ...
+  apply glop, Htt_v.
+...
 destruct_ac.
 intros Hch Har Hco * Htt.
 generalize Htt; intros H.
@@ -1962,11 +1975,6 @@ destruct n. {
       intros i.
       split. {
         rewrite fold_seq_angle_to_div_nat.
-...
-  Htt : angle_div_nat (3 * θ) 3 θ
-  Hp : (3 * π_3)%A = π
-  ============================
-  (θ /₂^i ≤ θ - seq_angle_to_div_nat (3 * θ) 3 i)%A
 (* bon, faut voir, ça marche peut-être *)
 ...
 (*
