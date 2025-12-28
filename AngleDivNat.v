@@ -1830,6 +1830,10 @@ apply angle_add_not_overflow_lt_straight_le_straight; [ easy | ].
 now apply angle_lt_le_incl.
 Qed.
 
+Theorem fold_seq_angle_to_div_nat :
+  ∀ θ n i, (2 ^ i / n * (θ /₂^i))%A = seq_angle_to_div_nat θ n i.
+Proof. easy. Qed.
+
 (* to be completed
 Theorem angle_div_nat_integral :
   rngl_characteristic T = 0 →
@@ -2049,14 +2053,8 @@ destruct n. {
     apply (angle_lim_le_compat) with (g := λ i, (θ /₂^ i)%A) in Htt. 2: {
       intros i.
       split. {
+        rewrite fold_seq_angle_to_div_nat.
 (* bon, faut voir, ça marche peut-être *)
-...
-        rewrite <- (angle_div_2_pow_mul_2_pow i θ) at 2.
-...
-        eapply angle_le_trans. {
-Search (_ + _ ≤ _)%A.
-          apply angle_add_le_mono_l.
-        apply (rngl_le_le_sub_l
 ...
 (*
 i     2 ^ i / 3 * ((3 * θ) /₂^i   θ - ""
