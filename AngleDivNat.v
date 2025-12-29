@@ -1843,6 +1843,8 @@ Theorem angle_div_nat_integral :
   angle_div_nat θ n θ'
   → angle_mul_nat_div_2π n θ' = 0.
 Proof.
+(* could be renamed angle_mul_div_nat_if to reflect the fact that
+   the theorem angle_mul_div_nat is its reverse *)
 (**)
 destruct_ac.
 intros Hch Har Hco * Htt.
