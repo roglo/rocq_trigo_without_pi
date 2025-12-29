@@ -1880,14 +1880,24 @@ assert (Htp : (θ ≤ 2 * π_n)%A). {
     intros i.
     split. {
 Theorem glop :
+  rngl_characteristic T = 0 →
+  rngl_is_archimedean T = true →
+  is_complete T rngl_dist →
   ∀ n θ i,
   angle_div_nat (n * θ) n θ
   → (θ /₂^i ≤ θ - seq_angle_to_div_nat (n * θ) n i)%A.
 Proof.
-intros * Hnt.
+intros Hch Har Hco * Hnt.
 progress unfold seq_angle_to_div_nat.
-(* voir avec des exemples si c'est vrai pour les premières
-   valeurs de i *)
+...
+remember (θ /₂^i)%A as θ' eqn:Ht.
+assert (θ = (2 ^ i * θ')%A). {
+  subst θ'.
+  symmetry; apply angle_div_2_pow_mul_2_pow.
+}
+subst θ; rename θ' into θ.
+Search (_ /₂^ _ ≤ _)%A.
+...
 (*
 n=5
 i    θ/₂^i   2^i/n    2^i/n*((n*θ)/2^i)   θ-2^i...
