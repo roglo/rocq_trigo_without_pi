@@ -1889,8 +1889,20 @@ Theorem glop :
   angle_div_nat (n * θ) n θ
   → (θ /₂^i ≤ θ - seq_angle_to_div_nat (n * θ) n i)%A.
 Proof.
-intros Hch Har Hco * Hnt.
+intros Hch Har Hco * Htt.
 progress unfold seq_angle_to_div_nat.
+progress unfold angle_div_nat in Htt.
+progress unfold seq_angle_to_div_nat in Htt.
+apply angle_lim_move_0_r in Htt.
+apply angle_lim_opp in Htt.
+rewrite angle_opp_0 in Htt.
+eapply (angle_lim_eq_compat 0 0) in Htt. 2: {
+  clear i.
+  intros i.
+  rewrite Nat.add_0_r.
+  rewrite angle_opp_sub_distr.
+  easy.
+}
 ...
 remember (θ /₂^i)%A as θ' eqn:Ht.
 assert (θ = (2 ^ i * θ')%A). {
