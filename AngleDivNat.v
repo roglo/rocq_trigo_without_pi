@@ -1893,6 +1893,7 @@ intros Hch Har Hco * Htt.
 progress unfold seq_angle_to_div_nat.
 progress unfold angle_div_nat in Htt.
 progress unfold seq_angle_to_div_nat in Htt.
+(*
 apply angle_lim_move_0_r in Htt.
 apply angle_lim_opp in Htt.
 rewrite angle_opp_0 in Htt.
@@ -1903,6 +1904,28 @@ eapply (angle_lim_eq_compat 0 0) in Htt. 2: {
   rewrite angle_opp_sub_distr.
   easy.
 }
+*)
+specialize (Htt (1 / 2^i)%L).
+cbn in Htt.
+assert (H : (0 < 1 / 2^i)%L) by admit. (* ... *)
+specialize (Htt H); clear H.
+destruct Htt as (N, Hn).
+remember (∀ m, _) as u in Hn; subst u. (* renaming *)
+specialize (Hn i).
+assert (H : N ≤ i) by admit. (* ... *)
+specialize (Hn H); clear H.
+apply rngl_cos_lt_angle_eucl_dist_lt in Hn; [ | admit ].
+(*
+rewrite angle_sub_0_l in Hn.
+rewrite rngl_cos_opp in Hn.
+*)
+remember (θ - 2 ^ i / n * ((n * θ) /₂^i))%A as θ' eqn:Ht.
+progress unfold angle_leb.
+(* c'est pas gagné, chais pas, mais c'est pas perdu, poil au cul *)
+...
+rewrite angle_opp_sub_distr in Hn.
+rewrite rngl_cos_opp in Hn.
+rewrite anrlg_cos
 ...
 remember (θ /₂^i)%A as θ' eqn:Ht.
 assert (θ = (2 ^ i * θ')%A). {
