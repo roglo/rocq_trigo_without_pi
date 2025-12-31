@@ -1987,7 +1987,7 @@ destruct n. {
       intros i.
       split. {
         rewrite fold_seq_angle_to_div_nat.
-(* bon, faut voir, ça marche peut-être *)
+        progress unfold seq_angle_to_div_nat.
 ...
 (*
 i     2 ^ i / 3 * ((3 * θ) /₂^i   θ - ""
