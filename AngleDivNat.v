@@ -1912,12 +1912,19 @@ assert (Hzi : (0 < 1 / 2^i)%L). {
 specialize (Htt Hzi).
 destruct Htt as (N, Hn).
 remember (∀ m, _) as u in Hn; subst u. (* renaming *)
+(**)
+destruct (lt_dec i N) as [Hin| Hin].
+...
+apply Nat.nlt_ge in Hin.
+specialize (Hn _ Hin).
+...
 specialize (Hn (N + i)).
 assert (H : N ≤ N + i) by apply Nat.le_add_r.
 specialize (Hn H); clear H.
 apply rngl_cos_lt_angle_eucl_dist_lt in Hn. 2: {
   apply rngl_lt_le_incl, Hzi.
 }
+(* ah oui mais non, y a un N+i dans Hn, mais c'est juste i dans le but *)
 ...
 remember (θ - 2 ^ i / n * ((n * θ) /₂^i))%A as θ' eqn:Ht.
 progress unfold angle_leb.
