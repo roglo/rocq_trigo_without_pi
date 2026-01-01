@@ -1889,36 +1889,36 @@ Theorem glop :
   angle_div_nat (n * θ) n θ
   → (θ /₂^i ≤ θ - seq_angle_to_div_nat (n * θ) n i)%A.
 Proof.
-intros Hch Har Hco * Htt.
+destruct_ac.
+destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
+  specialize (rngl_characteristic_1_angle_0 Hc1) as H1.
+  intros.
+  rewrite (H1 (θ /₂^ i)%A).
+  apply angle_nonneg.
+}
+intros Hch Har Hco.
+intros * Htt.
 progress unfold seq_angle_to_div_nat.
 progress unfold angle_div_nat in Htt.
 progress unfold seq_angle_to_div_nat in Htt.
-(*
-apply angle_lim_move_0_r in Htt.
-apply angle_lim_opp in Htt.
-rewrite angle_opp_0 in Htt.
-eapply (angle_lim_eq_compat 0 0) in Htt. 2: {
-  clear i.
-  intros i.
-  rewrite Nat.add_0_r.
-  rewrite angle_opp_sub_distr.
-  easy.
-}
-*)
 specialize (Htt (1 / 2^i)%L).
 cbn in Htt.
-assert (H : (0 < 1 / 2^i)%L) by admit. (* ... *)
-specialize (Htt H); clear H.
+assert (Hzi : (0 < 1 / 2^i)%L). {
+  rewrite (rngl_div_1_l Hiv).
+  apply (rngl_inv_pos Hop Hiv Hto).
+  apply (rngl_pow_pos_pos Hop Hiv Hto).
+  apply (rngl_0_lt_2 Hos Hc1 Hto).
+}
+specialize (Htt Hzi).
 destruct Htt as (N, Hn).
 remember (∀ m, _) as u in Hn; subst u. (* renaming *)
-specialize (Hn i).
-assert (H : N ≤ i) by admit. (* ... *)
+specialize (Hn (N + i)).
+assert (H : N ≤ N + i) by apply Nat.le_add_r.
 specialize (Hn H); clear H.
-apply rngl_cos_lt_angle_eucl_dist_lt in Hn; [ | admit ].
-(*
-rewrite angle_sub_0_l in Hn.
-rewrite rngl_cos_opp in Hn.
-*)
+apply rngl_cos_lt_angle_eucl_dist_lt in Hn. 2: {
+  apply rngl_lt_le_incl, Hzi.
+}
+...
 remember (θ - 2 ^ i / n * ((n * θ) /₂^i))%A as θ' eqn:Ht.
 progress unfold angle_leb.
 (* c'est pas gagné, chais pas, mais c'est pas perdu, poil au cul *)
