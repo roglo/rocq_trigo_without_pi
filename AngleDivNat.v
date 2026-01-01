@@ -1929,6 +1929,10 @@ progress unfold angle_leb.
    Peut-être que ça va le faire, parce que θ/₂^i peut être rendu aussi
    proche de possible de 0, donc avec un cosinus aussi costaud qu'on
    veut, aussi proche de 1, pour que cos θ' ferme sa gueule devant lui *)
+assert (Hzs : (0 ≤? rngl_sin (θ /₂^i))%L = true). {
+  apply rngl_leb_le.
+  destruct i. {
+    cbn.
 ...
 rewrite angle_opp_sub_distr in Hn.
 rewrite rngl_cos_opp in Hn.
