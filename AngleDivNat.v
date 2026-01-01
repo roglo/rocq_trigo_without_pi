@@ -1922,6 +1922,13 @@ rewrite rngl_cos_opp in Hn.
 remember (θ - 2 ^ i / n * ((n * θ) /₂^i))%A as θ' eqn:Ht.
 progress unfold angle_leb.
 (* c'est pas gagné, chais pas, mais c'est pas perdu, poil au cul *)
+(* bon, on a bien (0 ≤? rngl_sin (θ /₂^i))%L, faut que je me démerde
+   pour que ça commence à i=1, pas de pb ;
+   reste à prouver que si (0 ≤? rngl_sin θ')%L alors
+      (rngl_cos θ' ≤? rngl_cos (θ /₂^i))%L
+   Peut-être que ça va le faire, parce que θ/₂^i peut être rendu aussi
+   proche de possible de 0, donc avec un cosinus aussi costaud qu'on
+   veut, aussi proche de 1, pour que cos θ' ferme sa gueule devant lui *)
 ...
 rewrite angle_opp_sub_distr in Hn.
 rewrite rngl_cos_opp in Hn.
