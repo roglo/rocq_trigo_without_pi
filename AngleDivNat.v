@@ -1913,45 +1913,30 @@ specialize (Htt Hzi).
 destruct Htt as (N, Hn).
 remember (∀ m, _) as u in Hn; subst u. (* renaming *)
 (**)
-destruct (lt_dec i N) as [Hin| Hin].
-...
-apply Nat.nlt_ge in Hin.
-specialize (Hn _ Hin).
-...
-specialize (Hn (N + i)).
-assert (H : N ≤ N + i) by apply Nat.le_add_r.
-specialize (Hn H); clear H.
-apply rngl_cos_lt_angle_eucl_dist_lt in Hn. 2: {
-  apply rngl_lt_le_incl, Hzi.
-}
-(* ah oui mais non, y a un N+i dans Hn, mais c'est juste i dans le but *)
-...
-remember (θ - 2 ^ i / n * ((n * θ) /₂^i))%A as θ' eqn:Ht.
-progress unfold angle_leb.
-(* c'est pas gagné, chais pas, mais c'est pas perdu, poil au cul *)
-(* bon, on a bien (0 ≤? rngl_sin (θ /₂^i))%L, faut que je me démerde
-   pour que ça commence à i=1, pas de pb ;
-   reste à prouver que si (0 ≤? rngl_sin θ')%L alors
-      (rngl_cos θ' ≤? rngl_cos (θ /₂^i))%L
-   Peut-être que ça va le faire, parce que θ/₂^i peut être rendu aussi
-   proche de possible de 0, donc avec un cosinus aussi costaud qu'on
-   veut, aussi proche de 1, pour que cos θ' ferme sa gueule devant lui *)
-assert (Hzs : (0 ≤? rngl_sin (θ /₂^i))%L = true). {
-  apply rngl_leb_le.
-  destruct i. {
+destruct (le_dec i N) as [Hin| Hin]. 2: {
+  apply Nat.nle_gt in Hin.
+  generalize Hin; intros H.
+  apply Nat.lt_le_incl in H.
+  specialize (Hn _ H); clear H.
+  apply rngl_cos_lt_angle_eucl_dist_lt in Hn. 2: {
+    apply rngl_lt_le_incl, Hzi.
+  }
+  remember (θ - 2 ^ i / n * ((n * θ) /₂^i))%A as θ' eqn:Ht.
+  progress unfold angle_leb.
+  assert (Hzs : (0 ≤? rngl_sin (θ /₂^i))%L = true). {
+    apply rngl_leb_le.
+    destruct i; [ easy | ].
+    apply rngl_sin_nonneg_angle_le_straight.
     cbn.
-...
-rewrite angle_opp_sub_distr in Hn.
-rewrite rngl_cos_opp in Hn.
-rewrite anrlg_cos
-...
-remember (θ /₂^i)%A as θ' eqn:Ht.
-assert (θ = (2 ^ i * θ')%A). {
-  subst θ'.
-  symmetry; apply angle_div_2_pow_mul_2_pow.
-}
-subst θ; rename θ' into θ.
-Search (_ /₂^ _ ≤ _)%A.
+    apply angle_div_2_le_straight.
+  }
+  rewrite Hzs.
+  apply rngl_leb_le in Hzs.
+  remember (0 ≤? rngl_sin θ')%L as zs' eqn:Hzs'.
+  symmetry in Hzs'.
+  destruct zs'; [ | easy ].
+  apply rngl_leb_le in Hzs'.
+  apply rngl_leb_le.
 ...
 (*
 n=5
