@@ -1922,7 +1922,6 @@ destruct (le_dec i N) as [Hin| Hin]. 2: {
     apply rngl_lt_le_incl, Hzi.
   }
   remember (θ - 2 ^ i / n * ((n * θ) /₂^i))%A as θ' eqn:Ht.
-  progress unfold angle_leb.
   assert (Hzs : (0 ≤? rngl_sin (θ /₂^i))%L = true). {
     apply rngl_leb_le.
     destruct i; [ easy | ].
@@ -1930,12 +1929,17 @@ destruct (le_dec i N) as [Hin| Hin]. 2: {
     cbn.
     apply angle_div_2_le_straight.
   }
-  rewrite Hzs.
-  apply rngl_leb_le in Hzs.
   remember (0 ≤? rngl_sin θ')%L as zs' eqn:Hzs'.
   symmetry in Hzs'.
-  destruct zs'; [ | easy ].
-  apply rngl_leb_le in Hzs'.
+  destruct zs'. 2: {
+    progress unfold angle_leb.
+    now rewrite Hzs, Hzs'.
+  }
+  apply rngl_leb_le in Hzs, Hzs'.
+  progress unfold angle_leb.
+  apply rngl_leb_le in Hzs, Hzs'.
+  rewrite Hzs, Hzs'.
+  apply rngl_leb_le in Hzs, Hzs'.
   apply rngl_leb_le.
 ...
 (*
