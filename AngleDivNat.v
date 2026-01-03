@@ -1886,7 +1886,7 @@ Theorem glop :
   rngl_is_archimedean T = true →
   is_complete T rngl_dist →
   ∀ n θ i,
-  n ≠ 1
+  (∀ i, seq_angle_to_div_nat (n * θ) n i ≠ θ)
   → angle_div_nat (n * θ) n θ
   → (θ /₂^i ≤ θ - seq_angle_to_div_nat (n * θ) n i)%A.
 Proof.
@@ -1898,7 +1898,7 @@ destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
   apply angle_nonneg.
 }
 intros Hch Har Hco.
-intros * Hn1 Htt.
+intros * Hsnz Htt.
 progress unfold seq_angle_to_div_nat.
 progress unfold angle_div_nat in Htt.
 progress unfold seq_angle_to_div_nat in Htt.
@@ -1913,55 +1913,33 @@ destruct (Nat.eq_dec n 0) as [Hnz| Hnz]. {
   rewrite angle_sub_0_r.
   apply angle_div_2_pow_le_diag.
 }
-move Hnz after Hn1.
+move Hnz after Hsnz.
 remember (θ - 2 ^ i / n * ((n * θ) /₂^i))%A as θ' eqn:Ht.
 specialize (H1 (1 - rngl_cos θ')%L).
-(**)
 destruct (angle_eq_dec θ' 0) as [Ht'z| Ht'z]. {
-(* chais pas, fait chier *)
-...
+  rewrite Ht'z in Ht.
+  symmetry in Ht.
+  apply -> angle_sub_move_0_r in Ht.
+  symmetry in Ht.
+  exfalso; revert Ht.
+  apply Hsnz.
+}
 assert (Hzt : (0 < 1 - rngl_cos θ')%L). {
   apply (rngl_lt_0_sub Hop Hor).
   apply rngl_le_neq.
   split ; [ apply rngl_cos_bound | ].
   intros H.
-  apply eq_rngl_cos_1 in H.
-...
-  move H at top; subst θ'.
-  symmetry in Ht.
-  apply -> angle_sub_move_0_r in Ht.
-  specialize (angle_div_2_pow_le_diag i θ) as H2.
-
-...
-rewrite angle_div_2_pow_mul in Ht.
-2: {
-Search angle_mul_nat_div_2π.
-Check angle_mul_div_nat.
-...
-  induction i. {
-    cbn in Ht.
-    destruct n; [ easy | clear Hnz ].
-    destruct n; [ easy | clear Hn1 ].
-    now rewrite Nat.div_small in Ht.
-  }
-...
-  rewrite (rngl_div_1_l Hiv).
-  apply (rngl_inv_pos Hop Hiv Hto).
-  apply (rngl_pow_pos_pos Hop Hiv Hto).
-  apply (rngl_0_lt_2 Hos Hc1 Hto).
+  now apply eq_rngl_cos_1 in H.
 }
-specialize (Htt Hzi).
-specialize (H1 Hzi).
-destruct Htt as (N, Hn).
-destruct H1 as (M, Hm).
+specialize (H1 Hzt).
+destruct H1 as (N, Hn).
 remember (∀ m, _) as u in Hn; subst u. (* renaming *)
-remember (∀ m, _) as u in Hm; subst u. (* renaming *)
 (**)
-destruct (le_dec i M) as [Him| Him]. 2: {
-  apply Nat.nle_gt in Him.
-  generalize Him; intros H.
+destruct (le_dec i N) as [Hin| Hin]. 2: {
+  apply Nat.nle_gt in Hin.
+  generalize Hin; intros H.
   apply Nat.lt_le_incl in H.
-  specialize (Hm _ H); clear H.
+  specialize (Hn _ H); clear H.
   assert (Hzs : (0 ≤? rngl_sin (θ /₂^i))%L = true). {
     apply rngl_leb_le.
     destruct i; [ easy | ].
@@ -1981,8 +1959,17 @@ destruct (le_dec i M) as [Him| Him]. 2: {
   rewrite Hzs, Hzs'.
   apply rngl_leb_le in Hzs, Hzs'.
   apply rngl_leb_le.
-  eapply (rngl_le_lt_trans Hor); [ | apply Hm ].
-...
+  eapply (rngl_le_lt_trans Hor); [ | apply Hn ].
+  rewrite (rngl_squ_sub Hop Hic).
+  rewrite rngl_squ_1, rngl_mul_1_r.
+  rewrite <- (rngl_add_sub_swap Hop).
+  rewrite (rngl_div_sub_distr_r Hop Hiv).
+  rewrite (rngl_mul_comm Hic).
+  rewrite (rngl_mul_div Hiq). 2: {
+    apply (rngl_2_neq_0 Hos Hc1 Hto).
+  }
+  rewrite (rngl_sub_sub_distr Hop).
+(* je crois que ça devrait le faire *)
 ...
 destruct (le_dec i N) as [Hin| Hin]. 2: {
   apply Nat.nle_gt in Hin.
