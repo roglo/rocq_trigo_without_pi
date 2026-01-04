@@ -1,5 +1,6 @@
 Set Nested Proofs Allowed.
 Require Import Stdlib.Arith.Arith.
+Require Init.
 
 Require Import RingLike.Utf8.
 Require Import RingLike.Core.
@@ -1934,8 +1935,10 @@ assert (Hzt : (0 < 1 - rngl_cos θ')%L). {
 specialize (H1 Hzt).
 destruct H1 as (N, Hn).
 remember (∀ m, _) as u in Hn; subst u. (* renaming *)
-destruct (le_dec i N) as [Hin| Hin]. 2: {
+destruct (le_dec i (Nat.max N (Nat.log2 n))) as [Hin| Hin]. 2: {
   apply Nat.nle_gt in Hin.
+  apply Nat.max_lub_lt_iff in Hin.
+  destruct Hin as (Hin, Hnn).
   generalize Hin; intros H.
   apply Nat.lt_le_incl in H.
   specialize (Hn _ H); clear H.
@@ -1983,6 +1986,16 @@ destruct (le_dec i N) as [Hin| Hin]. 2: {
   apply (rngl_squ_le_1_iff Hop Hiq Hto).
   apply rngl_cos_bound.
 }
+apply Nat.max_le in Hin.
+destruct Hin as [Hin| Hin]. 2: {
+  rewrite Nat.div_small in Ht. 2: {
+    apply Nat.log2_le_pow2 in Hin; [ | now apply Nat.neq_0_lt_0 ].
+    apply Nat.le_neq.
+    split; [ easy | ].
+    intros H; clear Hin.
+    rewrite <- H in Ht.
+    rewrite Nat.div_same in Ht; [ | now apply Nat.pow_nonzero ].
+    rewrite angle_mul_1_l in Ht.
 ...
 destruct (le_dec i N) as [Hin| Hin]. 2: {
   apply Nat.nle_gt in Hin.
