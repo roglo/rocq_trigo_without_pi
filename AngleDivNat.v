@@ -1934,7 +1934,6 @@ assert (Hzt : (0 < 1 - rngl_cos θ')%L). {
 specialize (H1 Hzt).
 destruct H1 as (N, Hn).
 remember (∀ m, _) as u in Hn; subst u. (* renaming *)
-(**)
 destruct (le_dec i N) as [Hin| Hin]. 2: {
   apply Nat.nle_gt in Hin.
   generalize Hin; intros H.
@@ -1969,7 +1968,21 @@ destruct (le_dec i N) as [Hin| Hin]. 2: {
     apply (rngl_2_neq_0 Hos Hc1 Hto).
   }
   rewrite (rngl_sub_sub_distr Hop).
-(* je crois que ça devrait le faire *)
+  rewrite (rngl_div_add_distr_r Hiv).
+  rewrite (rngl_sub_add_distr Hos).
+  rewrite <- (rngl_div_diag Hiq 2) at 1. 2: {
+    apply (rngl_2_neq_0 Hos Hc1 Hto).
+  }
+  rewrite <- (rngl_div_sub_distr_r Hop Hiv).
+  rewrite (rngl_add_sub Hos).
+  apply (rngl_le_add_l Hos Hor).
+  apply (rngl_le_0_sub Hop Hor).
+  apply (rngl_div_le_mono_pos_r Hop Hiv Hto). {
+    apply (rngl_0_lt_2 Hos Hc1 Hto).
+  }
+  apply (rngl_squ_le_1_iff Hop Hiq Hto).
+  apply rngl_cos_bound.
+}
 ...
 destruct (le_dec i N) as [Hin| Hin]. 2: {
   apply Nat.nle_gt in Hin.
