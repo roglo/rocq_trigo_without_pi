@@ -1935,16 +1935,23 @@ assert (Hzt : (0 < 1 - rngl_cos θ')%L). {
 specialize (H1 Hzt).
 destruct H1 as (N, Hn).
 remember (∀ m, _) as u in Hn; subst u. (* renaming *)
-destruct (le_dec i (Nat.max N (Nat.log2 n))) as [Hin| Hin]. 2: {
-  apply Nat.nle_gt in Hin.
-  apply Nat.max_lub_lt_iff in Hin.
+destruct (lt_dec i (Nat.max N (Nat.log2 n))) as [Hin| Hin]. 2: {
+  apply Nat.nlt_ge in Hin.
+  apply Nat.max_lub_iff in Hin.
   destruct Hin as (Hin, Hnn).
   generalize Hin; intros H.
-  apply Nat.lt_le_incl in H.
   specialize (Hn _ H); clear H.
   assert (Hzs : (0 ≤? rngl_sin (θ /₂^i))%L = true). {
     apply rngl_leb_le.
-    destruct i; [ easy | ].
+    destruct i. {
+      apply Nat.le_0_r in Hnn.
+      apply Nat.log2_null in Hnn.
+      apply Nat.le_1_r in Hnn.
+      destruct Hnn as [Hnn| Hnn]; [ easy | ].
+      subst n; cbn in Ht.
+      do 2 rewrite angle_add_0_r in Ht.
+      now rewrite angle_sub_diag in Ht.
+    }
     apply rngl_sin_nonneg_angle_le_straight.
     cbn.
     apply angle_div_2_le_straight.
@@ -1986,59 +1993,18 @@ destruct (le_dec i (Nat.max N (Nat.log2 n))) as [Hin| Hin]. 2: {
   apply (rngl_squ_le_1_iff Hop Hiq Hto).
   apply rngl_cos_bound.
 }
-apply Nat.max_le in Hin.
+apply Nat.max_lt_iff in Hin.
 destruct Hin as [Hin| Hin]. 2: {
   rewrite Nat.div_small in Ht. 2: {
     apply Nat.log2_le_pow2 in Hin; [ | now apply Nat.neq_0_lt_0 ].
-    apply Nat.le_neq.
-    split; [ easy | ].
-    intros H; clear Hin.
-    rewrite <- H in Ht.
-    rewrite Nat.div_same in Ht; [ | now apply Nat.pow_nonzero ].
-    rewrite angle_mul_1_l in Ht.
-...
-destruct (le_dec i N) as [Hin| Hin]. 2: {
-  apply Nat.nle_gt in Hin.
-  generalize Hin; intros H.
-  apply Nat.lt_le_incl in H.
-  specialize (Hn _ H); clear H.
-  apply rngl_cos_lt_angle_eucl_dist_lt in Hn. 2: {
-    apply rngl_lt_le_incl, Hzi.
+    apply (Nat.lt_le_trans _ (2 ^ S i)); [ | easy ].
+    now apply Nat.pow_lt_mono_r_iff.
   }
-  remember (θ - 2 ^ i / n * ((n * θ) /₂^i))%A as θ' eqn:Ht.
-  assert (Hzs : (0 ≤? rngl_sin (θ /₂^i))%L = true). {
-    apply rngl_leb_le.
-    destruct i; [ easy | ].
-    apply rngl_sin_nonneg_angle_le_straight.
-    cbn.
-    apply angle_div_2_le_straight.
-  }
-  remember (0 ≤? rngl_sin θ')%L as zs' eqn:Hzs'.
-  symmetry in Hzs'.
-  destruct zs'. 2: {
-    progress unfold angle_leb.
-    now rewrite Hzs, Hzs'.
-  }
-  apply rngl_leb_le in Hzs, Hzs'.
-  progress unfold angle_leb.
-  apply rngl_leb_le in Hzs, Hzs'.
-  rewrite Hzs, Hzs'.
-  apply rngl_leb_le in Hzs, Hzs'.
-  apply rngl_leb_le.
-...
-(*
-n=5
-i    θ/₂^i   2^i/n    2^i/n*((n*θ)/2^i)   θ-2^i...
-0    θ       0        0                   θ        v
-1    θ/2     0        0                   θ        v
-2    θ/4     0        0                   θ        v
-3    θ/8     1        (5*θ)/8             3θ/8     v
-4    θ/16    3        3*(5*θ)/16          15θ/16   v
-5    θ/32    6        6*(5*θ)/32          30θ/32   v
-ça a l'air bon...
-*)
-... ...
-  apply glop, Htt_v.
+  cbn in Ht.
+  rewrite angle_sub_0_r in Ht.
+  subst θ'.
+  apply angle_div_2_pow_le_diag.
+}
 ...
 destruct_ac.
 intros Hch Har Hco * Htt.
