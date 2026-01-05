@@ -1837,10 +1837,10 @@ Proof. easy. Qed.
 
 Theorem angle_div_2_pow_le_angle_sub_seq :
   rngl_is_archimedean T = true →
-  ∀ n θ i,
-  (∀ i, seq_angle_to_div_nat (n * θ) n i ≠ θ)
-  → angle_div_nat (n * θ) n θ
-  → ∃ N, N < i → (θ /₂^i ≤ θ - seq_angle_to_div_nat (n * θ) n i)%A.
+  ∀ n θ,
+  angle_div_nat (n * θ) n θ
+  → (∀ i, seq_angle_to_div_nat (n * θ) n i ≠ θ)
+  → ∀ i, ∃ N, N < i → (θ /₂^i ≤ θ - seq_angle_to_div_nat (n * θ) n i)%A.
 Proof.
 destruct_ac.
 destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
@@ -1849,7 +1849,7 @@ destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
   rewrite (H1 (θ /₂^ i)%A).
   apply angle_nonneg.
 }
-intros Har * Hsnz Htt.
+intros Har * Htt Hsnz *.
 progress unfold seq_angle_to_div_nat.
 progress unfold angle_div_nat in Htt.
 progress unfold seq_angle_to_div_nat in Htt.
@@ -1953,12 +1953,32 @@ destruct (angle_eq_dec θ 0) as [Htz| Htz]. {
   apply angle_div_nat_0_l in Htt; subst θ'.
   apply angle_mul_nat_div_2π_0_r.
 }
-specialize (exists_angle_div_nat Hch Har Hco π n Hnz) as H1.
-destruct H1 as (π_n, Hp).
 generalize Htt; intros H.
 apply (angle_div_nat_prop Hch Har Hco) in H.
 destruct H as [(H1, H2)| H]; [ now subst n | ].
 subst θ; rename θ' into θ; move Hnz after Htt.
+(**)
+specialize (angle_div_2_pow_le_angle_sub_seq Har n θ Htt) as H1.
+assert (H : ∀ i, n ≤ 2 ^ i → seq_angle_to_div_nat (n * θ) n i ≠ 0%A). {
+  intros * Hni.
+  progress unfold seq_angle_to_div_nat.
+  intros H.
+  apply angle_mul_nat_integral in H. 2: {
+    apply (angle_mul_nat_not_overflow_le_l _ (2 ^ i)). {
+      apply Nat.Div0.div_le_upper_bound.
+      now apply Nat.le_mul_l.
+    }
+    apply angle_mul_nat_div_2π_pow_div.
+  }
+  destruct H as [H| H]. {
+    apply Nat.div_small_iff in H; [ | easy ].
+    now apply Nat.nle_gt in H.
+  }
+  now apply eq_angle_div_2_pow_0 in H.
+}
+...
+specialize (exists_angle_div_nat Hch Har Hco π n Hnz) as H1.
+destruct H1 as (π_n, Hp).
 move π_n before θ.
 assert (Htp : (θ ≤ 2 * π_n)%A). {
   generalize Htt; intros Htt_v.
