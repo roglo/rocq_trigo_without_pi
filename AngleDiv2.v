@@ -84,7 +84,7 @@ Definition angle_div_2 a :=
 
 End a.
 
-Notation "θ /₂" := (angle_div_2 θ) (at level 40) : angle_scope.
+Notation "α /₂" := (angle_div_2 α) (at level 40) : angle_scope.
 
 Section a.
 
@@ -238,7 +238,7 @@ destruct saz. {
 }
 Qed.
 
-Theorem rngl_sin_div_2_nonneg : ∀ θ, (0 ≤ rngl_sin (θ /₂))%L.
+Theorem rngl_sin_div_2_nonneg : ∀ α, (0 ≤ rngl_sin (α /₂))%L.
 Proof.
 destruct_ac.
 destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
@@ -256,7 +256,7 @@ apply (rngl_le_0_sub Hop Hor).
 apply rngl_cos_bound.
 Qed.
 
-Theorem angle_div_2_le_straight : ∀ θ, (θ /₂ ≤ π)%A.
+Theorem angle_div_2_le_straight : ∀ α, (α /₂ ≤ π)%A.
 Proof.
 destruct_ac.
 destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
@@ -267,13 +267,13 @@ destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
 }
 intros.
 progress unfold angle_leb.
-specialize (rngl_sin_div_2_nonneg θ) as H1.
+specialize (rngl_sin_div_2_nonneg α) as H1.
 apply rngl_leb_le in H1.
 rewrite H1; clear H1.
 cbn.
 rewrite (rngl_leb_refl Hor).
 apply rngl_leb_le.
-remember (0 ≤? rngl_sin θ)%L as zs eqn:Hzs.
+remember (0 ≤? rngl_sin α)%L as zs eqn:Hzs.
 symmetry in Hzs.
 destruct zs. {
   rewrite rngl_mul_1_l.
@@ -359,7 +359,7 @@ apply (rl_sqrt_1 Hop Hiq Hto).
 Qed.
 
 Theorem angle_opp_div_2 :
-  ∀ θ, (- (θ /₂) = (- θ) /₂ + if (θ =? 0)%A then 0 else π)%A.
+  ∀ α, (- (α /₂) = (- α) /₂ + if (α =? 0)%A then 0 else π)%A.
 Proof.
 destruct_ac.
 destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
@@ -375,7 +375,7 @@ assert (Hsz2 : (√(0 / 2) = 0)%L). {
   }
   now rewrite (rl_sqrt_0 Hop Hto Hii).
 }
-remember (θ =? 0)%A as z eqn:Hz.
+remember (α =? 0)%A as z eqn:Hz.
 symmetry in Hz.
 destruct z. {
   apply angle_eqb_eq in Hz; subst.
@@ -395,15 +395,15 @@ rewrite (rngl_leb_0_opp Hop Hto).
 do 2 rewrite (rngl_mul_opp_r Hop).
 do 2 rewrite rngl_mul_1_r.
 f_equal.
-remember (0 ≤? rngl_sin θ)%L as zs eqn:Hzs.
-remember (rngl_sin θ ≤? 0)%L as sz eqn:Hsz.
+remember (0 ≤? rngl_sin α)%L as zs eqn:Hzs.
+remember (rngl_sin α ≤? 0)%L as sz eqn:Hsz.
 symmetry in Hzs, Hsz.
 destruct zs. {
   destruct sz. {
     apply rngl_leb_le in Hzs, Hsz.
     apply (rngl_le_antisymm Hor) in Hzs; [ clear Hsz | easy ].
     apply eq_rngl_sin_0 in Hzs.
-    destruct Hzs as [Hzs| Hzs]; [ easy | subst θ ].
+    destruct Hzs as [Hzs| Hzs]; [ easy | subst α ].
     cbn.
     rewrite (rngl_add_opp_r Hop).
     rewrite (rngl_sub_diag Hos).
@@ -421,7 +421,7 @@ now apply (rngl_lt_asymm Hor) in Hzs.
 Qed.
 
 Theorem angle_div_2_le_compat :
-  ∀ θ1 θ2, (θ1 ≤ θ2 → θ1 /₂ ≤ θ2 /₂)%A.
+  ∀ α1 α2, (α1 ≤ α2 → α1 /₂ ≤ α2 /₂)%A.
 Proof.
 destruct_ac.
 intros * H12.
@@ -435,18 +435,18 @@ progress unfold angle_leb.
 cbn.
 specialize rngl_1_add_cos_div_2_nonneg as Hzac.
 specialize rngl_1_sub_cos_div_2_nonneg as Hzsc.
-specialize (rl_sqrt_nonneg ((1 - rngl_cos θ1) / 2)%L) as H1.
+specialize (rl_sqrt_nonneg ((1 - rngl_cos α1) / 2)%L) as H1.
 rewrite fold_rl_sqrt in H1.
 specialize (H1 (Hzsc _)).
 apply rngl_leb_le in H1.
 rewrite H1; clear H1.
-specialize (rl_sqrt_nonneg ((1 - rngl_cos θ2) / 2)%L) as H1.
+specialize (rl_sqrt_nonneg ((1 - rngl_cos α2) / 2)%L) as H1.
 rewrite fold_rl_sqrt in H1.
 specialize (H1 (Hzsc _)).
 apply rngl_leb_le in H1.
 rewrite H1; clear H1.
-remember (0 ≤? rngl_sin θ1)%L as zs1 eqn:Hzs1.
-remember (0 ≤? rngl_sin θ2)%L as zs2 eqn:Hzs2.
+remember (0 ≤? rngl_sin α1)%L as zs1 eqn:Hzs1.
+remember (0 ≤? rngl_sin α2)%L as zs2 eqn:Hzs2.
 symmetry in Hzs1, Hzs2.
 destruct zs1. {
   apply rngl_leb_le in Hzs1.
@@ -517,9 +517,9 @@ Qed.
 
 Theorem rngl_cos_lt_sqrt_1_add_cos_div_2 :
   rngl_characteristic T ≠ 1 →
-  ∀ θ,
-  θ ≠ 0%A
-  → (rngl_cos θ < √((1 + rngl_cos θ) / 2))%L.
+  ∀ α,
+  α ≠ 0%A
+  → (rngl_cos α < √((1 + rngl_cos α) / 2))%L.
 Proof.
 destruct_ac.
 intros Hc1.
@@ -532,13 +532,13 @@ rewrite <- (rngl_abs_nonneg_eq Hop Hor √_)%L. 2: {
   apply (rngl_le_opp_l Hop Hor).
   apply rngl_cos_bound.
 }
-destruct (rngl_ltb_dec (rngl_cos θ) 0) as [Hcz| Hzc]. {
+destruct (rngl_ltb_dec (rngl_cos α) 0) as [Hcz| Hzc]. {
   apply (rngl_ltb_lt Heo) in Hcz.
   apply (rngl_lt_le_trans Hor _ 0); [ easy | ].
   apply (rngl_abs_nonneg Hop Hto).
 }
 apply (rngl_ltb_ge_iff Hto) in Hzc.
-rewrite <- (rngl_abs_nonneg_eq Hop Hor (rngl_cos θ)) at 1; [ | easy ].
+rewrite <- (rngl_abs_nonneg_eq Hop Hor (rngl_cos α)) at 1; [ | easy ].
 apply (rngl_squ_lt_abs_lt Hop Hiq Hto).
 rewrite rngl_squ_sqrt. 2: {
   apply (rngl_le_div_r Hop Hiv Hto); [ easy | ].
@@ -547,7 +547,7 @@ rewrite rngl_squ_sqrt. 2: {
   apply rngl_cos_bound.
 }
 apply -> (rngl_lt_div_r Hop Hiv Hto); [ | easy ].
-apply (rngl_le_lt_trans Hor _ (rngl_cos θ * 2))%L. 2: {
+apply (rngl_le_lt_trans Hor _ (rngl_cos α * 2))%L. 2: {
   rewrite rngl_mul_add_distr_l.
   rewrite rngl_mul_1_r.
   apply (rngl_add_lt_le_mono Hos Hor); [ | now apply (rngl_le_refl Hor) ].
@@ -819,9 +819,9 @@ now rewrite (rngl_0_leb_opp_sqrt_3_div_2 Hop Hiv Hto Hc1).
 Qed.
 
 Theorem rngl_cos_le_cos_div_2 :
-  ∀ θ,
-  (θ ≤ 4 * angle_straight_div_3)%A
-  ↔ (rngl_cos θ ≤ rngl_cos (θ /₂))%L.
+  ∀ α,
+  (α ≤ 4 * angle_straight_div_3)%A
+  ↔ (rngl_cos α ≤ rngl_cos (α /₂))%L.
 Proof.
 destruct_ac.
 destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
@@ -829,7 +829,7 @@ destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
   specialize (rngl_characteristic_1_angle_0 Hc1) as H2.
   intros.
   do 2 rewrite (H1 (rngl_cos _)).
-  rewrite (H2 θ), (H2 (4 * angle_straight_div_3)%A).
+  rewrite (H2 α), (H2 (4 * angle_straight_div_3)%A).
   split; intros H; [ apply (rngl_le_refl Hor) | apply angle_le_refl ].
 }
 specialize (rngl_0_lt_2 Hos Hc1 Hto) as Hz2.
@@ -841,14 +841,14 @@ split; intros Hs3. {
   rewrite rngl_cos_add_straight_r in Hs3.
   rewrite rngl_sin_add_straight_r in Hs3.
   cbn in Hs3.
-  remember (0 ≤? rngl_sin θ)%L as zs eqn:Hzs.
+  remember (0 ≤? rngl_sin α)%L as zs eqn:Hzs.
   symmetry in Hzs.
   destruct zs. {
-    remember (θ =? 0)%A as tz eqn:Htz.
+    remember (α =? 0)%A as tz eqn:Htz.
     symmetry in Htz.
     destruct tz. {
       apply angle_eqb_eq in Htz.
-      subst θ.
+      subst α.
       rewrite angle_0_div_2.
       apply (rngl_le_refl Hor).
     }
@@ -894,7 +894,7 @@ split; intros Hs3. {
   rewrite rngl_sin_add_straight_r.
   cbn.
   rewrite (rngl_0_leb_opp_sqrt_3_div_2 Hop Hiv Hto Hc1).
-  remember (0 ≤? rngl_sin θ)%L as zs eqn:Hzs.
+  remember (0 ≤? rngl_sin α)%L as zs eqn:Hzs.
   symmetry in Hzs.
   destruct zs; [ easy | ].
   apply rngl_leb_le.
@@ -902,9 +902,9 @@ split; intros Hs3. {
   rewrite Hzs in Hs3.
   rewrite (rngl_mul_opp_l Hop) in Hs3.
   rewrite rngl_mul_1_l in Hs3.
-  remember (θ - π)%A as θ' eqn:Hθ';
-  apply angle_add_move_r in Hθ';
-  subst θ; rename θ' into θ.
+  remember (α - π)%A as α' eqn:Hα';
+  apply angle_add_move_r in Hα';
+  subst α; rename α' into α.
   rewrite rngl_cos_add_straight_r in Hs3 |-*.
   rewrite rngl_sin_add_straight_r in Hzs.
   apply (rngl_opp_le_compat Hop Hor) in Hs3.
@@ -922,7 +922,7 @@ split; intros Hs3. {
   apply (rngl_opp_neg_pos Hop Hor) in Hzs.
   apply (rngl_le_sub_le_add_r Hop Hor) in Hs3.
   apply (rngl_le_0_sub Hop Hor) in Hs3.
-  remember (rngl_cos θ) as c.
+  remember (rngl_cos α) as c.
   replace (c² * 2 + c - 1)%L with ((2 * c - 1) * (c + 1))%L in Hs3. 2: {
     rewrite rngl_mul_add_distr_l.
     rewrite rngl_mul_1_r.
@@ -954,14 +954,14 @@ split; intros Hs3. {
   split; [ apply rngl_cos_bound | ].
   intros H; symmetry in H.
   apply eq_rngl_cos_opp_1 in H.
-  subst θ.
+  subst α.
   now apply rngl_lt_irrefl in Hzs.
 }
 Qed.
 
 (*
 Theorem rngl_cos_le_cos_div_2 :
-  ∀ θ, (0 ≤ rngl_sin θ)%L → (rngl_cos θ ≤ rngl_cos (θ /₂))%L.
+  ∀ α, (0 ≤ rngl_sin α)%L → (rngl_cos α ≤ rngl_cos (α /₂))%L.
 Proof.
 destruct_ac.
 destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
@@ -971,11 +971,11 @@ destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
   apply (rngl_le_refl Hor).
 }
 intros * Hzs.
-remember (θ =? 0)%A as tz eqn:Htz.
+remember (α =? 0)%A as tz eqn:Htz.
 symmetry in Htz.
 destruct tz. {
   apply angle_eqb_eq in Htz.
-  subst θ.
+  subst α.
   rewrite angle_0_div_2.
   apply (rngl_le_refl Hor).
 }
@@ -989,16 +989,16 @@ now apply (rngl_cos_lt_sqrt_1_add_cos_div_2 Hc1).
 Qed.
 *)
 
-Fixpoint angle_div_2_pow θ i :=
+Fixpoint angle_div_2_pow α i :=
   match i with
-  | 0 => θ
-  | S i' => angle_div_2 (angle_div_2_pow θ i')
+  | 0 => α
+  | S i' => angle_div_2 (angle_div_2_pow α i')
   end.
 
 End a.
 
-Notation "θ /₂^ n" := (angle_div_2_pow θ n)
-  (at level 40, format "θ  /₂^ n") : angle_scope.
+Notation "α /₂^ n" := (angle_div_2_pow α n)
+  (at level 40, format "α  /₂^ n") : angle_scope.
 
 Section a.
 
@@ -1009,11 +1009,11 @@ Context {rl : real_like_prop T}.
 Context {ac : angle_ctx T}.
 
 Theorem angle_div_2_pow_succ_r_1 :
-  ∀ n θ, angle_div_2_pow θ (S n) = (angle_div_2_pow θ n /₂)%A.
+  ∀ n α, angle_div_2_pow α (S n) = (angle_div_2_pow α n /₂)%A.
 Proof. easy. Qed.
 
 Theorem angle_div_2_pow_succ_r_2 :
-  ∀ n θ, angle_div_2_pow θ (S n) = angle_div_2_pow (θ /₂) n.
+  ∀ n α, angle_div_2_pow α (S n) = angle_div_2_pow (α /₂) n.
 Proof.
 intros.
 induction n; intros; [ easy | ].
@@ -1022,10 +1022,10 @@ now rewrite IHn.
 Qed.
 
 Theorem angle_div_2_pow_add_r :
-  ∀ i j θ, (θ /₂^(i + j) = θ /₂^i /₂^j)%A.
+  ∀ i j α, (α /₂^(i + j) = α /₂^i /₂^j)%A.
 Proof.
 intros.
-revert j θ.
+revert j α.
 induction i; intros; [ easy | ].
 rewrite Nat.add_succ_l.
 do 2 rewrite angle_div_2_pow_succ_r_2.
@@ -1033,7 +1033,7 @@ apply IHi.
 Qed.
 
 Theorem angle_div_2_pow_mul_2_pow :
-  ∀ n θ, (2 ^ n * (θ /₂^n))%A = θ.
+  ∀ n α, (2 ^ n * (α /₂^n))%A = α.
 Proof.
 intros.
 induction n; intros; [ apply angle_add_0_r | ].
@@ -1054,17 +1054,17 @@ apply angle_0_div_2.
 Qed.
 
 Theorem angle_div_2_pow_le :
-  ∀ n θ1 θ2, (θ1 ≤ θ2)%A → (θ1 /₂^n ≤ θ2 /₂^n)%A.
+  ∀ n α1 α2, (α1 ≤ α2)%A → (α1 /₂^n ≤ α2 /₂^n)%A.
 Proof.
 intros * H12.
-revert θ1 θ2 H12.
+revert α1 α2 H12.
 induction n; intros; [ easy | cbn ].
 apply angle_div_2_le_compat.
 now apply IHn.
 Qed.
 
 Theorem rngl_cos_div_pow_2_eq :
-  ∀ θ n, rngl_cos (θ /₂^S n) = rngl_cos_div_pow_2 (θ /₂) n.
+  ∀ α n, rngl_cos (α /₂^S n) = rngl_cos_div_pow_2 (α /₂) n.
 Proof.
 destruct_ac.
 intros.
@@ -1087,7 +1087,7 @@ destruct n; cbn. {
 Qed.
 
 Theorem rngl_cos_div_pow_2_div_2_bound :
-  ∀ n θ, (-1 ≤ rngl_cos_div_pow_2 (θ /₂) n)%L.
+  ∀ n α, (-1 ≤ rngl_cos_div_pow_2 (α /₂) n)%L.
 Proof.
 destruct_ac.
 destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
@@ -1109,7 +1109,7 @@ now apply (rngl_le_opp_l Hop Hor).
 Qed.
 
 Theorem squ_rngl_cos_div_pow_2_div_2_bound :
-  ∀ n θ, (-1 ≤ squ_rngl_cos_div_pow_2 (θ /₂) n ≤ 1)%L.
+  ∀ n α, (-1 ≤ squ_rngl_cos_div_pow_2 (α /₂) n ≤ 1)%L.
 Proof.
 destruct_ac.
 destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
@@ -1139,8 +1139,8 @@ split. {
 Qed.
 
 Theorem rngl_cos_div_pow_2_lower_bound :
-  ∀ n θ,
-  (squ_rngl_cos_div_pow_2 (θ /₂) n ≤ rngl_cos_div_pow_2 (θ /₂) n)%L.
+  ∀ n α,
+  (squ_rngl_cos_div_pow_2 (α /₂) n ≤ rngl_cos_div_pow_2 (α /₂) n)%L.
 Proof.
 destruct_ac.
 destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
@@ -1151,18 +1151,18 @@ destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
   apply (rngl_le_refl Hor).
 }
 intros.
-remember (θ =? 0)%A as tz eqn:Htz.
+remember (α =? 0)%A as tz eqn:Htz.
 symmetry in Htz.
 destruct tz. {
   apply angle_eqb_eq in Htz.
-  subst θ.
+  subst α.
   rewrite angle_0_div_2.
   rewrite rngl_cos_div_pow_2_0.
   rewrite squ_rngl_cos_div_pow_2_0.
   apply (rngl_le_refl Hor).
 }
 apply angle_eqb_neq in Htz.
-revert θ Htz.
+revert α Htz.
 induction n; intros; [ apply (rngl_le_refl Hor) | ].
 cbn.
 remember (1 + squ_rngl_cos_div_pow_2 _ _)%L as a eqn:Ha.
@@ -1230,7 +1230,7 @@ rewrite <- rngl_squ_1.
 apply (rngl_abs_le_squ_le Hop Hto).
 rewrite (rngl_abs_1 Hos Hto).
 progress unfold rngl_abs.
-remember (squ_rngl_cos_div_pow_2 (θ /₂) n ≤? 0)%L as scz eqn:Hscz.
+remember (squ_rngl_cos_div_pow_2 (α /₂) n ≤? 0)%L as scz eqn:Hscz.
 symmetry in Hscz.
 destruct scz. {
   apply rngl_leb_le in Hscz.
@@ -1259,8 +1259,8 @@ therefore this notation cannot be put there.
 
 Theorem rngl_cos_angle_div_2_pow_tending_to_1 :
   rngl_is_archimedean T = true →
-  ∀ θ,
-  is_limit_when_seq_tends_to_inf rngl_dist (λ i, rngl_cos (θ /₂^i)) 1%L.
+  ∀ α,
+  is_limit_when_seq_tends_to_inf rngl_dist (λ i, rngl_cos (α /₂^i)) 1%L.
 Proof.
 destruct_ac.
 intros Har.
@@ -1274,7 +1274,7 @@ destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
 }
 intros.
 enough (H :
-    ∀ ε, (0 < ε)%L → ∃ N, ∀ n, N ≤ n → (1 - rngl_cos (θ /₂^n) < ε)%L). {
+    ∀ ε, (0 < ε)%L → ∃ N, ∀ n, N ≤ n → (1 - rngl_cos (α /₂^n) < ε)%L). {
   intros ε Hε.
   specialize (H ε Hε).
   destruct H as (N, HN).
@@ -1292,7 +1292,7 @@ enough (H :
 }
 enough (H :
     ∀ ε, (0 < ε)%L → ∃ N, ∀ n, N ≤ n →
-    (1 - ε < rngl_cos_div_pow_2 (θ /₂) n)%L). {
+    (1 - ε < rngl_cos_div_pow_2 (α /₂) n)%L). {
   intros ε Hε.
   specialize (H ε Hε).
   destruct H as (N, HN).
@@ -1308,7 +1308,7 @@ enough (H :
 }
 enough (H :
     ∀ ε, (0 < ε)%L → ∃ N, ∀ n, N ≤ n →
-    (1 - ε < squ_rngl_cos_div_pow_2 (θ /₂) n)%L). {
+    (1 - ε < squ_rngl_cos_div_pow_2 (α /₂) n)%L). {
   intros ε Hε.
   specialize (H ε Hε).
   destruct H as (N, HN).
@@ -1321,13 +1321,13 @@ enough (H :
 }
 enough (H :
     ∀ ε, (0 < ε)%L → ∃ N, ∀ n, N ≤ n →
-    ((1 - rngl_cos (θ /₂)) / 2 ^ n < ε)%L). {
+    ((1 - rngl_cos (α /₂)) / 2 ^ n < ε)%L). {
   intros ε Hε.
   specialize (H ε Hε).
   destruct H as (N, HN).
   exists N.
   intros n Hn.
-  remember (θ /₂)%A as θ' eqn:Hθ.
+  remember (α /₂)%A as α' eqn:Hα.
   specialize (HN n Hn).
   clear N Hn.
   revert ε Hε HN.
@@ -1365,7 +1365,7 @@ enough (H :
   now destruct n.
 }
 intros ε Hε.
-remember ((1 - rngl_cos (θ /₂)))%L as a eqn:Ha.
+remember ((1 - rngl_cos (α /₂)))%L as a eqn:Ha.
 specialize (int_part Hop Hc1 Hto Har) as H1.
 specialize (H1 (a / ε))%L.
 destruct H1 as (N, HN).
@@ -1434,7 +1434,7 @@ destruct H3 as (H3, H4).
 now apply Nat.lt_irrefl in H4.
 Qed.
 
-Theorem eq_angle_div_2_0 : ∀ θ, (θ /₂ = 0 → θ = 0)%A.
+Theorem eq_angle_div_2_0 : ∀ α, (α /₂ = 0 → α = 0)%A.
 Proof.
 destruct_ac.
 destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
@@ -1457,10 +1457,10 @@ rewrite (rngl_mul_0_l Hos) in Hc.
 apply -> (rngl_sub_move_0_r Hop) in Hc.
 symmetry in Hc.
 apply eq_rngl_cos_1 in Hc.
-now subst θ.
+now subst α.
 Qed.
 
-Theorem eq_angle_div_2_pow_0 : ∀ n θ, (θ /₂^n = 0 → θ = 0)%A.
+Theorem eq_angle_div_2_pow_0 : ∀ n α, (α /₂^n = 0 → α = 0)%A.
 Proof.
 destruct_ac.
 intros * Htn.
@@ -1470,7 +1470,7 @@ apply eq_angle_div_2_0 in Htn.
 now apply IHn.
 Qed.
 
-Theorem angle_add_div_2_diag : ∀ θ, (θ /₂ + θ /₂)%A = θ.
+Theorem angle_add_div_2_diag : ∀ α, (α /₂ + α /₂)%A = α.
 Proof.
 destruct_ac.
 intros.

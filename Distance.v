@@ -16,11 +16,11 @@ Context {ac : angle_ctx T}.
 
 (* euclidean distance *)
 
-Definition angle_eucl_dist θ1 θ2 :=
-  rl_modl (rngl_cos θ2 - rngl_cos θ1) (rngl_sin θ2 - rngl_sin θ1).
+Definition angle_eucl_dist α1 α2 :=
+  rl_modl (rngl_cos α2 - rngl_cos α1) (rngl_sin α2 - rngl_sin α1).
 
 Theorem angle_eucl_dist_is_sqrt :
-  ∀ θ1 θ2, angle_eucl_dist θ1 θ2 = √(2 * (1 - rngl_cos (θ2 - θ1)))%L.
+  ∀ α1 α2, angle_eucl_dist α1 α2 = √(2 * (1 - rngl_cos (α2 - α1)))%L.
 Proof.
 destruct_ac.
 intros.
@@ -49,7 +49,7 @@ easy.
 Qed.
 
 Theorem angle_eucl_dist_symmetry :
-  ∀ θ1 θ2, angle_eucl_dist θ1 θ2 = angle_eucl_dist θ2 θ1.
+  ∀ α1 α2, angle_eucl_dist α1 α2 = angle_eucl_dist α2 α1.
 Proof.
 destruct_ac.
 intros.
@@ -61,14 +61,14 @@ easy.
 Qed.
 
 Theorem angle_eucl_dist_separation :
-  ∀ θ1 θ2, angle_eucl_dist θ1 θ2 = 0%L ↔ θ1 = θ2.
+  ∀ α1 α2, angle_eucl_dist α1 α2 = 0%L ↔ α1 = α2.
 Proof.
 destruct_ac.
 intros *.
 progress unfold angle_eucl_dist.
 progress unfold rl_modl.
 split; intros H12. 2: {
-  subst θ2.
+  subst α2.
   do 2 rewrite (rngl_sub_diag Hos).
   rewrite (rngl_squ_0 Hos).
   rewrite rngl_add_0_r.
@@ -99,14 +99,14 @@ now rewrite Hc, Hs.
 Qed.
 
 Theorem angle_eucl_dist_triangular :
-  ∀ θ1 θ2 θ3,
-  (angle_eucl_dist θ1 θ3 ≤ angle_eucl_dist θ1 θ2 + angle_eucl_dist θ2 θ3)%L.
+  ∀ α1 α2 α3,
+  (angle_eucl_dist α1 α3 ≤ angle_eucl_dist α1 α2 + angle_eucl_dist α2 α3)%L.
 Proof.
 intros *.
 destruct_ac.
-destruct θ1 as (c1, s1, Hcs1).
-destruct θ2 as (c2, s2, Hcs2).
-destruct θ3 as (c3, s3, Hcs3).
+destruct α1 as (c1, s1, Hcs1).
+destruct α2 as (c2, s2, Hcs2).
+destruct α3 as (c3, s3, Hcs3).
 progress unfold angle_eucl_dist.
 cbn.
 apply (euclidean_distance_triangular Hic Hop Hiv Hto).
@@ -126,12 +126,12 @@ Qed.
 
 (* taxicab distance *)
 
-Definition angle_taxi_dist θ1 θ2 :=
-  (rngl_abs (rngl_cos θ2 - rngl_cos θ1) +
-   rngl_abs (rngl_sin θ2 - rngl_sin θ1))%L.
+Definition angle_taxi_dist α1 α2 :=
+  (rngl_abs (rngl_cos α2 - rngl_cos α1) +
+   rngl_abs (rngl_sin α2 - rngl_sin α1))%L.
 
 Theorem angle_taxi_dist_symmetry :
-  ∀ θ1 θ2, angle_taxi_dist θ1 θ2 = angle_taxi_dist θ2 θ1.
+  ∀ α1 α2, angle_taxi_dist α1 α2 = angle_taxi_dist α2 α1.
 Proof.
 destruct_ac; intros.
 progress unfold angle_taxi_dist.
@@ -141,7 +141,7 @@ apply (rngl_abs_sub_comm Hop Hto).
 Qed.
 
 Theorem angle_taxi_dist_separation :
-  ∀ θ1 θ2, angle_taxi_dist θ1 θ2 = 0%L ↔ θ1 = θ2.
+  ∀ α1 α2, angle_taxi_dist α1 α2 = 0%L ↔ α1 = α2.
 Proof.
 destruct_ac; intros.
 progress unfold angle_taxi_dist.
@@ -156,7 +156,7 @@ split; intros H12. {
   apply eq_angle_eq.
   now rewrite Hcc, Hss.
 } {
-  subst θ2.
+  subst α2.
   do 2 rewrite (rngl_sub_diag Hos).
   rewrite (rngl_abs_0 Hop).
   apply rngl_add_0_l.
@@ -164,13 +164,13 @@ split; intros H12. {
 Qed.
 
 Theorem angle_taxi_dist_triangular :
-  ∀ θ1 θ2 θ3,
-  (angle_taxi_dist θ1 θ3 ≤ angle_taxi_dist θ1 θ2 + angle_taxi_dist θ2 θ3)%L.
+  ∀ α1 α2 α3,
+  (angle_taxi_dist α1 α3 ≤ angle_taxi_dist α1 α2 + angle_taxi_dist α2 α3)%L.
 Proof.
 destruct_ac; intros.
-destruct θ1 as (c1, s1, Hcs1).
-destruct θ2 as (c2, s2, Hcs2).
-destruct θ3 as (c3, s3, Hcs3).
+destruct α1 as (c1, s1, Hcs1).
+destruct α2 as (c2, s2, Hcs2).
+destruct α3 as (c3, s3, Hcs3).
 progress unfold angle_taxi_dist.
 cbn.
 specialize (rngl_abs_triangle Hop Hto) as H1.
@@ -215,7 +215,7 @@ Definition angle_taxi_distance :=
 Definition angle_lim := is_limit_when_seq_tends_to_inf angle_eucl_dist.
 
 Theorem angle_eucl_dist_opp_opp :
-  ∀ θ1 θ2, angle_eucl_dist (- θ1) (- θ2) = angle_eucl_dist θ1 θ2.
+  ∀ α1 α2, angle_eucl_dist (- α1) (- α2) = angle_eucl_dist α1 α2.
 Proof.
 destruct_ac.
 intros.
@@ -232,13 +232,13 @@ apply (rngl_squ_opp Hop).
 Qed.
 
 Theorem angle_eucl_dist_sub_l_diag :
-  ∀ θ Δθ, angle_eucl_dist (θ - Δθ) θ = angle_eucl_dist Δθ 0.
+  ∀ α Δα, angle_eucl_dist (α - Δα) α = angle_eucl_dist Δα 0.
 Proof.
 destruct_ac.
 intros.
 progress unfold angle_eucl_dist.
 progress unfold rl_modl.
-remember (θ - Δθ)%A as x; cbn; subst x.
+remember (α - Δα)%A as x; cbn; subst x.
 do 4 rewrite (rngl_squ_sub Hop Hic).
 rewrite rngl_squ_1.
 rewrite rngl_mul_1_r.
@@ -250,7 +250,7 @@ rewrite rngl_add_0_l.
 rewrite rngl_add_assoc.
 rewrite (rngl_add_sub_assoc Hop).
 rewrite rngl_add_add_swap.
-rewrite <- (rngl_add_sub_swap Hop (rngl_cos² θ)).
+rewrite <- (rngl_add_sub_swap Hop (rngl_cos² α)).
 rewrite cos2_sin2_1.
 rewrite <- (rngl_add_sub_swap Hop).
 rewrite <- rngl_add_assoc.
@@ -260,8 +260,8 @@ do 2 rewrite <- rngl_mul_assoc.
 rewrite (rngl_sub_mul_r_diag_l Hop).
 rewrite <- (rngl_mul_sub_distr_l Hop).
 rewrite <- (rngl_sub_add_distr Hos).
-remember (θ - Δθ)%A as x.
-replace (_ * _ + _ * _)%L with (rngl_cos (θ - x))%A. 2: {
+remember (α - Δα)%A as x.
+replace (_ * _ + _ * _)%L with (rngl_cos (α - x))%A. 2: {
   cbn.
   rewrite (rngl_mul_opp_r Hop).
   now rewrite rngl_sub_opp_r.
@@ -277,11 +277,11 @@ now rewrite (rngl_sub_mul_r_diag_l Hop).
 Qed.
 
 Theorem angle_eucl_dist_move_0_l :
-  ∀ θ1 θ2, angle_eucl_dist θ1 θ2 = angle_eucl_dist (θ2 - θ1) 0.
+  ∀ α1 α2, angle_eucl_dist α1 α2 = angle_eucl_dist (α2 - α1) 0.
 Proof.
 destruct_ac.
 intros.
-replace θ1 with (θ2 - (θ2 - θ1))%A. 2: {
+replace α1 with (α2 - (α2 - α1))%A. 2: {
   rewrite angle_sub_sub_distr.
   rewrite angle_sub_diag.
   apply angle_add_0_l.
@@ -294,7 +294,7 @@ apply angle_add_0_l.
 Qed.
 
 Theorem angle_eucl_dist_move_0_r :
-  ∀ θ1 θ2, angle_eucl_dist θ1 θ2 = angle_eucl_dist (θ1 - θ2) 0.
+  ∀ α1 α2, angle_eucl_dist α1 α2 = angle_eucl_dist (α1 - α2) 0.
 Proof.
 destruct_ac.
 intros.
@@ -306,7 +306,7 @@ apply angle_opp_sub_distr.
 Qed.
 
 Theorem angle_eucl_dist_0_r_cos_sin :
-  ∀ θ, ((angle_eucl_dist θ 0)² = (1 - rngl_cos θ)² + rngl_sin² θ)%L.
+  ∀ α, ((angle_eucl_dist α 0)² = (1 - rngl_cos α)² + rngl_sin² α)%L.
 Proof.
 destruct_ac.
 intros.
@@ -320,8 +320,8 @@ apply (rngl_squ_nonneg Hos Hto).
 Qed.
 
 Theorem angle_eucl_dist_straight_r_cos_sin :
-  ∀ θ,
-  ((angle_eucl_dist θ π)² = (1 + rngl_cos θ)² + rngl_sin² θ)%L.
+  ∀ α,
+  ((angle_eucl_dist α π)² = (1 + rngl_cos α)² + rngl_sin² α)%L.
 Proof.
 destruct_ac.
 intros.
@@ -338,7 +338,7 @@ apply (rngl_squ_nonneg Hos Hto).
 Qed.
 
 Theorem rngl_cos_angle_eucl_dist_0_r :
-  ∀ θ, (rngl_cos θ = 1 - (angle_eucl_dist θ 0)² / 2)%L.
+  ∀ α, (rngl_cos α = 1 - (angle_eucl_dist α 0)² / 2)%L.
 Proof.
 destruct_ac.
 destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
@@ -347,7 +347,7 @@ destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
   rewrite H1; apply H1.
 }
 intros.
-specialize (angle_eucl_dist_0_r_cos_sin θ) as H1.
+specialize (angle_eucl_dist_0_r_cos_sin α) as H1.
 rewrite (rngl_squ_sub Hop Hic) in H1.
 rewrite rngl_squ_1 in H1.
 rewrite rngl_mul_1_r in H1.
@@ -363,7 +363,7 @@ now apply (rngl_sub_move_l Hop) in H1.
 Qed.
 
 Theorem rngl_cos_angle_eucl_dist_straight_r :
-  ∀ θ, (rngl_cos θ = (angle_eucl_dist θ π)² / 2 - 1)%L.
+  ∀ α, (rngl_cos α = (angle_eucl_dist α π)² / 2 - 1)%L.
 Proof.
 destruct_ac.
 destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
@@ -372,7 +372,7 @@ destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
   rewrite H1; apply H1.
 }
 intros.
-specialize (angle_eucl_dist_straight_r_cos_sin θ) as H1.
+specialize (angle_eucl_dist_straight_r_cos_sin α) as H1.
 rewrite (rngl_squ_add Hic) in H1.
 rewrite rngl_squ_1 in H1.
 rewrite rngl_mul_1_r in H1.
@@ -387,51 +387,51 @@ apply (rngl_mul_move_l Hic Hi1) in H1. 2: {
 now apply (rngl_add_move_l Hop) in H1.
 Qed.
 
-Theorem angle_eucl_dist_diag : ∀ θ, angle_eucl_dist θ θ = 0%L.
+Theorem angle_eucl_dist_diag : ∀ α, angle_eucl_dist α α = 0%L.
 Proof.
 intros.
 apply (dist_diag angle_eucl_dist_is_dist).
 Qed.
 
-Theorem angle_eucl_dist_nonneg : ∀ θ1 θ2, (0 ≤ angle_eucl_dist θ1 θ2)%L.
+Theorem angle_eucl_dist_nonneg : ∀ α1 α2, (0 ≤ angle_eucl_dist α1 α2)%L.
 Proof.
 destruct_ac.
 intros.
 apply (dist_nonneg Hop Hiv Hto angle_eucl_dist_is_dist).
 Qed.
 
-Theorem angle_taxi_dist_nonneg : ∀ θ1 θ2, (0 ≤ angle_taxi_dist θ1 θ2)%L.
+Theorem angle_taxi_dist_nonneg : ∀ α1 α2, (0 ≤ angle_taxi_dist α1 α2)%L.
 Proof.
 destruct_ac.
 intros.
 apply (dist_nonneg Hop Hiv Hto angle_taxi_dist_is_dist).
 Qed.
 
-Theorem angle_lim_const : ∀ θ1 θ2, angle_lim (λ _, θ1) θ2 ↔ θ2 = θ1.
+Theorem angle_lim_const : ∀ α1 α2, angle_lim (λ _, α1) α2 ↔ α2 = α1.
 Proof.
 destruct_ac.
 destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
   intros.
   specialize (rngl_characteristic_1_angle_0 Hc1) as H1.
-  rewrite (H1 θ1).
+  rewrite (H1 α1).
   split; intros H; [ apply H1 | ].
-  subst θ2.
+  subst α2.
   intros ε Hε.
   now exists 0; intros n _; rewrite angle_eucl_dist_diag.
 }
 intros.
 split; intros H1. 2: {
-  subst θ2; intros ε Hε.
+  subst α2; intros ε Hε.
   now exists 0; intros n _; rewrite angle_eucl_dist_diag.
 }
 progress unfold angle_lim in H1.
 progress unfold is_limit_when_seq_tends_to_inf in H1.
 apply angle_eucl_dist_separation.
 rewrite angle_eucl_dist_symmetry.
-specialize (angle_eucl_dist_nonneg θ1 θ2) as Hzx.
+specialize (angle_eucl_dist_nonneg α1 α2) as Hzx.
 cbn in H1.
-remember (angle_eucl_dist θ1 θ2) as x eqn:Hx.
-clear θ1 θ2 Hx.
+remember (angle_eucl_dist α1 α2) as x eqn:Hx.
+clear α1 α2 Hx.
 specialize (proj1 (rngl_lt_eq_cases Hor _ x) Hzx) as H3.
 destruct H3 as [H3| H3]; [ | easy ].
 clear Hzx; exfalso.

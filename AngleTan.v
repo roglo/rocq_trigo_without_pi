@@ -26,12 +26,12 @@ Context {rp : ring_like_prop T}.
 Context {rl : real_like_prop T}.
 Context {ac : angle_ctx T}.
 
-Definition rngl_tan θ := (rngl_sin θ / rngl_cos θ)%L.
+Definition rngl_tan α := (rngl_sin α / rngl_cos α)%L.
 
 Theorem rngl_tan_derivative :
-  ∀ θ₀, (rngl_cos θ₀ ≠ 0%L) →
+  ∀ α₀, (rngl_cos α₀ ≠ 0%L) →
   is_derivative_at angle_lt_for_deriv angle_eucl_dist
-    rngl_dist rngl_tan (λ θ, (1 / rngl_cos² θ)%L) θ₀.
+    rngl_dist rngl_tan (λ α, (1 / rngl_cos² α)%L) α₀.
 Proof.
 destruct_ac.
 specialize (rngl_integral_or_inv_pdiv_eq_dec_order Hiv Hor) as Hio.
@@ -52,20 +52,20 @@ specialize (H1 angle_eucl_dist).
 specialize (H2 angle_eucl_dist).
 specialize (H1 rngl_cos (rngl_opp ° rngl_sin)).
 specialize (H2 angle_eucl_dist_is_dist rngl_sin).
-specialize (H1 θ₀ Hczz).
+specialize (H1 α₀ Hczz).
 specialize (H1 (rngl_cos_derivative _)).
 specialize (H2 (rngl_inv ° rngl_cos)).
 specialize (H2 rngl_cos).
 specialize (H2 (λ x, (- (rngl_opp ° rngl_sin) x / rngl_cos² x)%L)).
-specialize (H2 θ₀ (rngl_sin_derivative _)).
+specialize (H2 α₀ (rngl_sin_derivative _)).
 specialize (H2 H1).
 cbn in H2.
 eapply is_derivative_at_eq_compat; [ | | apply H2 ]. {
-  intros θ.
+  intros α.
   apply (rngl_mul_inv_r Hiv).
 } {
-  intros θ; cbn.
-  destruct (rngl_eqb_dec (rngl_cos θ) 0) as [Hcz| Hcz]. {
+  intros α; cbn.
+  destruct (rngl_eqb_dec (rngl_cos α) 0) as [Hcz| Hcz]. {
     apply (rngl_eqb_eq Heo) in Hcz.
     rewrite Hcz.
     rewrite (rngl_squ_0 Hos).
@@ -74,7 +74,7 @@ eapply is_derivative_at_eq_compat; [ | | apply H2 ]. {
     progress unfold "°".
     rewrite (rngl_opp_involutive Hop).
     apply eq_rngl_cos_0 in Hcz.
-    destruct Hcz; subst θ; cbn. {
+    destruct Hcz; subst α; cbn. {
       apply rngl_mul_1_l.
     } {
       rewrite (rngl_mul_div_assoc Hiv).
@@ -88,7 +88,7 @@ eapply is_derivative_at_eq_compat; [ | | apply H2 ]. {
   rewrite (rngl_mul_div_assoc Hiv).
   rewrite fold_rngl_squ.
   rewrite (rngl_mul_inv_diag_r Hiv); [ | easy ].
-  assert (Hcz2 : rngl_cos² θ ≠ 0%L). {
+  assert (Hcz2 : rngl_cos² α ≠ 0%L). {
     intros H; apply Hcz.
     now apply (eq_rngl_squ_0 Hos Hio) in H.
   }

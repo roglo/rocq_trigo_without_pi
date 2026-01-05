@@ -17,11 +17,11 @@ Context {rl : real_like_prop T}.
 Context {ac : angle_ctx T}.
 
 Theorem rngl_cos_diff_le_eucl_dist :
-  ∀ θ1 θ2, (rngl_cos θ1 - rngl_cos θ2 ≤ angle_eucl_dist θ1 θ2)%L.
+  ∀ α1 α2, (rngl_cos α1 - rngl_cos α2 ≤ angle_eucl_dist α1 α2)%L.
 Proof.
 destruct_ac.
 intros.
-destruct (rngl_leb_dec (rngl_cos θ1) (rngl_cos θ2)) as [Hc12| Hc12]. {
+destruct (rngl_leb_dec (rngl_cos α1) (rngl_cos α2)) as [Hc12| Hc12]. {
   apply rngl_leb_le in Hc12.
   apply (rngl_le_trans Hor _ 0); [ now apply (rngl_le_sub_0 Hop Hor) | ].
   apply angle_eucl_dist_nonneg.
@@ -47,8 +47,8 @@ rewrite <- (rngl_add_sub_swap Hop).
 rewrite (rngl_sub_sub_swap Hop).
 rewrite (rngl_mul_mul_swap Hic).
 apply (rngl_sub_le_mono_r Hop Hor).
-specialize (cos2_sin2_1 θ1) as H1.
-specialize (cos2_sin2_1 θ2) as H2.
+specialize (cos2_sin2_1 α1) as H1.
+specialize (cos2_sin2_1 α2) as H2.
 apply (rngl_add_move_r Hop) in H1, H2.
 rewrite H1, H2; clear H1 H2.
 rewrite (rngl_add_sub_assoc Hop).
@@ -63,12 +63,12 @@ apply (rngl_squ_nonneg Hos Hto).
 Qed.
 
 Theorem rngl_sin_diff_le_eucl_dist :
-  ∀ θ1 θ2, (rngl_sin θ1 - rngl_sin θ2 ≤ angle_eucl_dist θ1 θ2)%L.
+  ∀ α1 α2, (rngl_sin α1 - rngl_sin α2 ≤ angle_eucl_dist α1 α2)%L.
 Proof.
 destruct_ac.
 intros.
-rewrite <- (rngl_cos_sub_right_l θ1).
-rewrite <- (rngl_cos_sub_right_l θ2).
+rewrite <- (rngl_cos_sub_right_l α1).
+rewrite <- (rngl_cos_sub_right_l α2).
 eapply (rngl_le_trans Hor); [ apply rngl_cos_diff_le_eucl_dist | ].
 rewrite angle_eucl_dist_move_0_l.
 rewrite angle_sub_sub_swap.
@@ -83,9 +83,9 @@ Definition angle_eucl_distance :=
   {| d_dist := angle_eucl_dist; d_prop := angle_eucl_dist_is_dist |}.
 
 Theorem rngl_is_Cauchy_angle_is_Cauchy_cos :
-  ∀ θ,
-  is_Cauchy_sequence angle_eucl_dist θ
-  → is_Cauchy_sequence rngl_dist (λ i, rngl_cos (θ i)).
+  ∀ α,
+  is_Cauchy_sequence angle_eucl_dist α
+  → is_Cauchy_sequence rngl_dist (λ i, rngl_cos (α i)).
 Proof.
 destruct_ac.
 intros * Hcs.
@@ -96,7 +96,7 @@ exists N.
 intros * Hp Hq.
 cbn.
 progress unfold rngl_dist.
-destruct (rngl_leb_dec (rngl_cos (θ q)) (rngl_cos (θ p))) as [Hpq| Hpq]. {
+destruct (rngl_leb_dec (rngl_cos (α q)) (rngl_cos (α p))) as [Hpq| Hpq]. {
   apply rngl_leb_le in Hpq.
   rewrite (rngl_abs_nonneg_eq Hop Hor). 2: {
     now apply (rngl_le_0_sub Hop Hor).
@@ -115,9 +115,9 @@ destruct (rngl_leb_dec (rngl_cos (θ q)) (rngl_cos (θ p))) as [Hpq| Hpq]. {
 Qed.
 
 Theorem rngl_is_Cauchy_angle_is_Cauchy_sin :
-  ∀ θ,
-  is_Cauchy_sequence angle_eucl_dist θ
-  → is_Cauchy_sequence rngl_dist (λ i, rngl_sin (θ i)).
+  ∀ α,
+  is_Cauchy_sequence angle_eucl_dist α
+  → is_Cauchy_sequence rngl_dist (λ i, rngl_sin (α i)).
 Proof.
 destruct_ac.
 intros * Hcs.
@@ -128,7 +128,7 @@ exists N.
 intros * Hp Hq.
 cbn.
 progress unfold rngl_dist.
-destruct (rngl_leb_dec (rngl_sin (θ q)) (rngl_sin (θ p))) as [Hpq| Hpq]. {
+destruct (rngl_leb_dec (rngl_sin (α q)) (rngl_sin (α p))) as [Hpq| Hpq]. {
   apply rngl_leb_le in Hpq.
   rewrite (rngl_abs_nonneg_eq Hop Hor). 2: {
     now apply (rngl_le_0_sub Hop Hor).
@@ -310,12 +310,12 @@ rewrite Nat.sub_add in HN; [ easy | flia Hn ].
 Qed.
 
 Theorem limit_cos_cos_sin_sin :
-  ∀ u θ,
+  ∀ u α,
   is_limit_when_seq_tends_to_inf rngl_dist
-    (λ i, rngl_cos (u i)) (rngl_cos θ)
+    (λ i, rngl_cos (u i)) (rngl_cos α)
   → is_limit_when_seq_tends_to_inf rngl_dist
-      (λ i, rngl_sin (u i)) (rngl_sin θ)
-  → is_limit_when_seq_tends_to_inf angle_eucl_dist u θ.
+      (λ i, rngl_sin (u i)) (rngl_sin α)
+  → is_limit_when_seq_tends_to_inf angle_eucl_dist u α.
 Proof.
 destruct_ac.
 destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
@@ -494,9 +494,9 @@ assert (Hcs1 : (c² + s² = 1)%L). {
   now apply (limit_const Hop Hto) in H.
 }
 rewrite <- (rngl_cos_acos c) in Hc; [ | easy ].
-remember (rngl_acos c) as θ eqn:Hθ.
-assert (Hts : s = rngl_sin θ ∨ s = (- rngl_sin θ)%L). {
-  rewrite Hθ.
+remember (rngl_acos c) as α eqn:Hα.
+assert (Hts : s = rngl_sin α ∨ s = (- rngl_sin α)%L). {
+  rewrite Hα.
   rewrite rngl_sin_acos; [ | easy ].
   destruct (rngl_leb_dec 0 s) as [Hzs| Hzs]; [ left | right ]. {
     apply rngl_leb_le in Hzs.
@@ -534,24 +534,24 @@ assert (Hts : s = rngl_sin θ ∨ s = (- rngl_sin θ)%L). {
     now apply (rngl_add_move_l Hop).
   }
 }
-apply (f_equal rngl_cos) in Hθ.
-rewrite (rngl_cos_acos _ Hci) in Hθ.
-symmetry in Hθ; rename Hθ into Htc.
+apply (f_equal rngl_cos) in Hα.
+rewrite (rngl_cos_acos _ Hci) in Hα.
+symmetry in Hα; rename Hα into Htc.
 move Hts before Htc.
 destruct Hts as [Hts| Hts]. {
   rewrite Hts in Hs.
-  exists θ.
+  exists α.
   now apply limit_cos_cos_sin_sin.
 } {
-  remember (- θ)%A as t eqn:Ht.
+  remember (- α)%A as t eqn:Ht.
   apply (f_equal angle_opp) in Ht.
   rewrite angle_opp_involutive in Ht.
-  subst θ; rename t into θ.
+  subst α; rename t into α.
   rewrite rngl_cos_opp in Htc, Hc.
   rewrite rngl_sin_opp in Hts.
   rewrite Hts in Hs.
   rewrite (rngl_opp_involutive Hop) in Hts, Hs.
-  exists θ.
+  exists α.
   now apply limit_cos_cos_sin_sin.
 }
 Qed.

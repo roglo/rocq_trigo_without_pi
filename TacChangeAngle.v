@@ -5,26 +5,26 @@
 Require Import RingLike.Core.
 Require Import Angle AngleDef.
 
-Ltac change_angle_add_r θ a :=
-  remember (θ + a)%A as θ' eqn:Hθ';
-  apply angle_sub_move_r in Hθ';
-  subst θ; rename θ' into θ.
+Ltac change_angle_add_r α a :=
+  remember (α + a)%A as α' eqn:Hα';
+  apply angle_sub_move_r in Hα';
+  subst α; rename α' into α.
 
-Ltac change_angle_sub_r θ a :=
-  remember (θ - a)%A as θ' eqn:Hθ';
-  apply angle_add_move_r in Hθ';
-  subst θ; rename θ' into θ.
+Ltac change_angle_sub_r α a :=
+  remember (α - a)%A as α' eqn:Hα';
+  apply angle_add_move_r in Hα';
+  subst α; rename α' into α.
 
-Ltac change_angle_sub_l θ a :=
-  remember (a - θ)%A as θ' eqn:Hθ';
-  apply angle_sub_move_l in Hθ';
-  subst θ; rename θ' into θ.
+Ltac change_angle_sub_l α a :=
+  remember (a - α)%A as α' eqn:Hα';
+  apply angle_sub_move_l in Hα';
+  subst α; rename α' into α.
 
-Ltac change_angle_opp θ :=
-  remember (- θ)%A as θ' eqn:Hθ';
-  apply (f_equal angle_opp) in Hθ';
-  rewrite angle_opp_involutive in Hθ';
-  subst θ; rename θ' into θ.
+Ltac change_angle_opp α :=
+  remember (- α)%A as α' eqn:Hα';
+  apply (f_equal angle_opp) in Hα';
+  rewrite angle_opp_involutive in Hα';
+  subst α; rename α' into α.
 
 Ltac sin_cos_add_sub_right_hyp T H :=
   set (Hop' := ac_op);
