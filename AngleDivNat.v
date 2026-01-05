@@ -1953,6 +1953,11 @@ Proof.
 destruct_ac.
 intros Hch Har Hco * Htt.
 destruct (Nat.eq_dec n 0) as [| Hnz]; [ now subst n | ].
+destruct (Nat.eq_dec n 1) as [| Hn1]. {
+  subst n; cbn.
+  apply Nat_eq_b2n_0.
+  apply angle_add_overflow_0_r.
+}
 destruct (angle_eq_dec α 0) as [Htz| Htz]. {
   subst α.
   apply angle_div_nat_0_l in Htt; subst α'.
@@ -1961,17 +1966,19 @@ destruct (angle_eq_dec α 0) as [Htz| Htz]. {
 generalize Htt; intros H.
 apply (angle_div_nat_prop Hch Har Hco) in H.
 destruct H as [(H1, H2)| H]; [ now subst n | ].
-subst α; rename α' into α; move Hnz after Htt.
+subst α; rename α' into α.
 (**)
 specialize (angle_div_2_pow_le_angle_sub_seq Har n α Htt) as H1.
 assert (H : ∀ i, n ≤ 2 ^ i → seq_angle_to_div_nat (n * α) n i ≠ α). {
   intros * Hni.
   progress unfold seq_angle_to_div_nat.
   intros H.
-Search (_ * (_ /₂^ _) = _)%A.
-destruct i. {
-  cbn in H.
-(* faudrait traiter le cas n=1 et le cas α=0 d'abord *)
+  destruct i. {
+    cbn in Hni.
+    destruct n; [ easy | ].
+    destruct n; [ easy | ].
+    now apply Nat.succ_le_mono in Hni.
+  }
 ...
 }
 rewrite angle_div_2_pow_succ_r_1 in H.
