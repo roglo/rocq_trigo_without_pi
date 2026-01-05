@@ -1838,8 +1838,7 @@ Proof. easy. Qed.
 Theorem angle_div_2_pow_le_angle_sub_seq :
   rngl_is_archimedean T = true →
   ∀ n α,
-  angle_div_nat (n * α) n α
-  → (∀ i, n ≤ 2 ^ i → seq_angle_to_div_nat (n * α) n i ≠ α)
+  (∀ i, n ≤ 2 ^ i → seq_angle_to_div_nat (n * α) n i ≠ α)
   → ∀ i, ∃ N, N < i → (α /₂^i ≤ α - seq_angle_to_div_nat (n * α) n i)%A.
 Proof.
 destruct_ac.
@@ -1849,10 +1848,8 @@ destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
   rewrite (H1 (α /₂^ i)%A).
   apply angle_nonneg.
 }
-intros Har * Htt Hsnz *.
+intros Har * Hsnz *.
 progress unfold seq_angle_to_div_nat.
-progress unfold angle_div_nat in Htt.
-progress unfold seq_angle_to_div_nat in Htt.
 specialize (exists_nat_such_that_rngl_cos_close_to_1 Har α) as H1.
 destruct (angle_eq_dec α 0) as [Htz| Htz]. {
   subst α.
@@ -1866,7 +1863,6 @@ destruct (Nat.eq_dec n 0) as [Hnz| Hnz]. {
   exists 0; intros.
   apply angle_div_2_pow_le_diag.
 }
-move Hnz after Hsnz.
 remember (α - 2 ^ i / n * ((n * α) /₂^i))%A as α' eqn:Ht.
 specialize (H1 (1 - rngl_cos α')%L).
 destruct (angle_eq_dec α' 0) as [Ht'z| Ht'z]. {
@@ -1938,6 +1934,20 @@ apply (rngl_squ_le_1_iff Hop Hiq Hto).
 apply rngl_cos_bound.
 Qed.
 
+Theorem is_limit_when_seq_tends_to_inf_shift {A} :
+  ∀ n (da : A → _) u L,
+  is_limit_when_seq_tends_to_inf da u L
+  → is_limit_when_seq_tends_to_inf da (λ i, u (i + n)) L.
+Proof.
+intros * Hlim ε Hε.
+specialize (Hlim ε Hε).
+destruct Hlim as (N, Hn).
+exists N; intros i Hi.
+apply Hn.
+apply (Nat.le_trans _ i); [ easy | ].
+apply Nat.le_add_r.
+Qed.
+
 (* to be completed
 Theorem angle_div_nat_integral :
   rngl_characteristic T = 0 →
@@ -1968,7 +1978,7 @@ apply (angle_div_nat_prop Hch Har Hco) in H.
 destruct H as [(H1, H2)| H]; [ now subst n | ].
 subst α; rename α' into α.
 (**)
-specialize (angle_div_2_pow_le_angle_sub_seq Har n α Htt) as H1.
+specialize (angle_div_2_pow_le_angle_sub_seq Har n α) as H1.
 assert (H : ∀ i, n ≤ 2 ^ i → seq_angle_to_div_nat (n * α) n i ≠ α). {
   intros * Hni.
   progress unfold seq_angle_to_div_nat.
