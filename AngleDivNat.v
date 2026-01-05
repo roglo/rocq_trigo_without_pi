@@ -1839,7 +1839,7 @@ Theorem angle_div_2_pow_le_angle_sub_seq :
   rngl_is_archimedean T = true →
   ∀ n θ,
   angle_div_nat (n * θ) n θ
-  → (∀ i, seq_angle_to_div_nat (n * θ) n i ≠ θ)
+  → (∀ i, n ≤ 2 ^ i → seq_angle_to_div_nat (n * θ) n i ≠ θ)
   → ∀ i, ∃ N, N < i → (θ /₂^i ≤ θ - seq_angle_to_div_nat (n * θ) n i)%A.
 Proof.
 destruct_ac.
@@ -1874,8 +1874,13 @@ destruct (angle_eq_dec θ' 0) as [Ht'z| Ht'z]. {
   symmetry in Ht.
   apply -> angle_sub_move_0_r in Ht.
   symmetry in Ht.
+  destruct (le_dec n (2 ^ i)) as [Hni| Hni]. 2: {
+    apply Nat.nle_gt in Hni.
+    rewrite Nat.div_small in Ht; [ | easy ].
+    now symmetry in Ht.
+  }
   exfalso; revert Ht.
-  apply Hsnz.
+  now apply Hsnz.
 }
 assert (Hzt : (0 < 1 - rngl_cos θ')%L). {
   apply (rngl_lt_0_sub Hop Hor).
@@ -1959,10 +1964,21 @@ destruct H as [(H1, H2)| H]; [ now subst n | ].
 subst θ; rename θ' into θ; move Hnz after Htt.
 (**)
 specialize (angle_div_2_pow_le_angle_sub_seq Har n θ Htt) as H1.
-assert (H : ∀ i, n ≤ 2 ^ i → seq_angle_to_div_nat (n * θ) n i ≠ 0%A). {
+assert (H : ∀ i, n ≤ 2 ^ i → seq_angle_to_div_nat (n * θ) n i ≠ θ). {
   intros * Hni.
   progress unfold seq_angle_to_div_nat.
   intros H.
+Search (_ * (_ /₂^ _) = _)%A.
+destruct i. {
+  cbn in H.
+(* faudrait traiter le cas n=1 et le cas θ=0 d'abord *)
+...
+}
+rewrite angle_div_2_pow_succ_r_1 in H.
+rewrite angle_mul_nat_div_2 in H.
+Search (_ * (_ /₂^_) = _)%A.
+(* ouais, chais pas *)
+...
   apply angle_mul_nat_integral in H. 2: {
     apply (angle_mul_nat_not_overflow_le_l _ (2 ^ i)). {
       apply Nat.Div0.div_le_upper_bound.
@@ -1976,6 +1992,7 @@ assert (H : ∀ i, n ≤ 2 ^ i → seq_angle_to_div_nat (n * θ) n i ≠ 0%A). {
   }
   now apply eq_angle_div_2_pow_0 in H.
 }
+specialize (H1 H); clear H.
 ...
 specialize (exists_angle_div_nat Hch Har Hco π n Hnz) as H1.
 destruct H1 as (π_n, Hp).
