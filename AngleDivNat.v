@@ -1850,7 +1850,6 @@ destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
 }
 intros Har * Hsnz *.
 progress unfold seq_angle_to_div_nat.
-specialize (exists_nat_such_that_rngl_cos_close_to_1 Har α) as H1.
 destruct (angle_eq_dec α 0) as [Htz| Htz]. {
   subst α.
   rewrite angle_0_div_2_pow.
@@ -1864,7 +1863,6 @@ destruct (Nat.eq_dec n 0) as [Hnz| Hnz]. {
   apply angle_div_2_pow_le_diag.
 }
 remember (α - 2 ^ i / n * ((n * α) /₂^i))%A as α' eqn:Ht.
-specialize (H1 (1 - rngl_cos α')%L).
 destruct (angle_eq_dec α' 0) as [Ht'z| Ht'z]. {
   rewrite Ht'z in Ht.
   symmetry in Ht.
@@ -1885,7 +1883,8 @@ assert (Hzt : (0 < 1 - rngl_cos α')%L). {
   intros H.
   now apply eq_rngl_cos_1 in H.
 }
-specialize (H1 Hzt).
+specialize (exists_nat_such_that_rngl_cos_close_to_1 Har α) as H1.
+specialize (H1 (1 - rngl_cos α')%L Hzt).
 destruct H1 as (N, Hn).
 exists N; intros Hin.
 remember (∀ m, _) as u in Hn; subst u. (* renaming *)

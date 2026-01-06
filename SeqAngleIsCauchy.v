@@ -491,12 +491,6 @@ destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
   now apply rngl_lt_irrefl in Hε.
 }
 intros * Hε.
-specialize rngl_cos_angle_div_2_pow_tending_to_1 as H1.
-specialize (H1 Har α).
-progress unfold is_limit_when_seq_tends_to_inf in H1.
-cbn in H1.
-progress unfold rngl_dist in H1.
-specialize (H1 (ε² / 2))%L.
 assert (Hε2 : (0 < ε² / 2)%L). {
   apply (rngl_div_pos Hop Hiv Hto). 2: {
     apply (rngl_0_lt_2 Hos Hc1 Hto).
@@ -512,6 +506,9 @@ assert (Hε2 : (0 < ε² / 2)%L). {
   }
   now subst ε; apply rngl_lt_irrefl in Hε.
 }
+specialize (rngl_cos_angle_div_2_pow_tending_to_1 Har α) as H1.
+progress unfold rngl_dist in H1.
+specialize (H1 (ε² / 2))%L.
 specialize (H1 Hε2); clear Hε2.
 destruct H1 as (N, HN).
 exists N.
