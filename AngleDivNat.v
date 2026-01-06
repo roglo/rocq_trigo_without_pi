@@ -1982,13 +1982,26 @@ specialize (angle_div_2_pow_le_angle_sub_seq Har n α) as H1.
 assert (H : ∀ i, n ≤ 2 ^ i → seq_angle_to_div_nat (n * α) n i ≠ α). {
   intros * Hni.
   progress unfold seq_angle_to_div_nat.
-  intros H.
+  intros H2.
   destruct i. {
     cbn in Hni.
-    destruct n; [ easy | ].
-    destruct n; [ easy | ].
+    destruct n; [ easy | clear Hnz ].
+    destruct n; [ easy | clear Hn1 ].
     now apply Nat.succ_le_mono in Hni.
   }
+  destruct i. {
+    cbn in Hni.
+    destruct n; [ easy | clear Hnz ].
+    destruct n; [ easy | clear Hn1 ].
+    destruct n. {
+      rewrite Nat.div_same in H2; [ | easy ].
+      rewrite angle_mul_1_l in H2.
+      cbn - [ angle_mul_nat ] in H2.
+      (* on doit pouvoir en déduire que α < π *)
+      (* encore faut-il que ça serve à quelque chose *)
+(* ouais, c'est nul *)
+...
+  apply (is_limit_when_seq_tends_to_inf_shift n) in Htt.
 ...
 }
 rewrite angle_div_2_pow_succ_r_1 in H.
