@@ -1976,7 +1976,7 @@ generalize Htt; intros H.
 apply (angle_div_nat_prop Hch Har Hco) in H.
 destruct H as [(H1, H2)| H]; [ now subst n | ].
 subst α; rename α' into α.
-(**)
+(*
 specialize (angle_div_2_pow_le_angle_sub_seq Har n α) as H1.
 assert (H : ∀ i, n ≤ 2 ^ i → seq_angle_to_div_nat (n * α) n i ≠ α). {
   intros * Hni.
@@ -2023,6 +2023,7 @@ Search (_ * (_ /₂^_) = _)%A.
 }
 specialize (H1 H); clear H.
 ...
+*)
 specialize (exists_angle_div_nat Hch Har Hco π n Hnz) as H1.
 destruct H1 as (π_n, Hp).
 move π_n before α.
@@ -2042,7 +2043,7 @@ assert (Htp : (α ≤ 2 * π_n)%A). {
   eapply (angle_lim_eq_compat (Nat.log2_up n) 0) in Htt. 2: {
     now intros i; rewrite Nat.add_0_r.
   }
-(**)
+...
   eapply angle_lim_le_compat in Htt. 2: {
     intros i.
     split. {
