@@ -2027,22 +2027,64 @@ specialize (H1 H); clear H.
 specialize (exists_angle_div_nat Hch Har Hco π n Hnz) as H1.
 destruct H1 as (π_n, Hp).
 move π_n before α.
+Theorem glop :
+  rngl_characteristic T = 0 →
+  rngl_is_archimedean T = true →
+  is_complete T rngl_dist →
+  ∀ n α π_n,
+  angle_div_nat (n * α) n α
+  → (n * π_n)%A = π
+  → (α ≤ 2 * π_n)%A.
+Proof.
+intros Hch Har Hco * Htt Hp.
+destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
+  now rewrite Hch in Hc1.
+}
+move Hc1 before Hch.
+destruct (Nat.eq_dec n 0) as [Hnz| Hnz]. {
+  subst n; symmetry in Hp.
+  now apply (angle_straight_neq_0 Hc1) in Hp.
+}
+specialize (exists_nat_such_that_rngl_cos_close_to_1 Har (n * α)) as H1.
+progress unfold angle_div_nat in Htt.
+progress unfold seq_angle_to_div_nat in Htt.
+progress unfold angle_lim in Htt.
+progress unfold is_limit_when_seq_tends_to_inf in Htt.
+remember (∀ ε, _ → ∃ N, ∀ i, _) as x; subst x. (* renaming *)
+remember (∀ ε, _ → ∃ N, ∀ i, _) as x in H1; subst x. (* renaming *)
+assert (
+  H :
+  ∀ ε, (0 < ε)%L →
+  ∃ N, ∀ i, N ≤ i →
+  (1 - ε² / 2 < rngl_cos (α - 2 ^ i / n * ((n * α) /₂^i)))%L). {
+  intros * Hε.
+  specialize (Htt ε Hε).
+  destruct Htt as (N, Hn).
+  exists N.
+  intros m Hm.
+  apply rngl_cos_lt_angle_eucl_dist_lt; [ now apply rngl_lt_le_incl | ].
+  now apply Hn.
+}
+move H before Htt; clear Htt; rename H into Htt.
+progress unfold angle_leb.
+...
+generalize Htt; intros Htt_v.
+progress unfold angle_div_nat in Htt.
+apply angle_lim_move_0_r in Htt.
+apply angle_lim_opp in Htt.
+rewrite angle_opp_0 in Htt.
+eapply (angle_lim_eq_compat 0 0) in Htt. 2: {
+  intros i.
+  rewrite Nat.add_0_r.
+  rewrite angle_opp_sub_distr.
+  easy.
+}
+...
+eapply (angle_lim_eq_compat (Nat.log2_up n) 0) in Htt. 2: {
+  now intros i; rewrite Nat.add_0_r.
+}
+... ...
 assert (Htp : (α ≤ 2 * π_n)%A). {
-  generalize Htt; intros Htt_v.
-  progress unfold angle_div_nat in Htt.
-  apply angle_lim_move_0_r in Htt.
-  apply angle_lim_opp in Htt.
-  rewrite angle_opp_0 in Htt.
-  eapply (angle_lim_eq_compat 0 0) in Htt. 2: {
-    intros i.
-    rewrite Nat.add_0_r.
-    rewrite angle_opp_sub_distr.
-    easy.
-  }
-  progress unfold seq_angle_to_div_nat in Htt.
-  eapply (angle_lim_eq_compat (Nat.log2_up n) 0) in Htt. 2: {
-    now intros i; rewrite Nat.add_0_r.
-  }
 ...
   eapply angle_lim_le_compat in Htt. 2: {
     intros i.
