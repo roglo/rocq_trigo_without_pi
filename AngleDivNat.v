@@ -2032,11 +2032,12 @@ Theorem glop :
   rngl_is_archimedean T = true →
   is_complete T rngl_dist →
   ∀ n α π_n,
-  angle_div_nat (n * α) n α
+  n ≠ 1
+  → angle_div_nat (n * α) n α
   → (n * π_n)%A = π
   → (α ≤ 2 * π_n)%A.
 Proof.
-intros Hch Har Hco * Htt Hp.
+intros Hch Har Hco * Hn1 Htt Hp.
 destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
   now rewrite Hch in Hc1.
 }
@@ -2045,6 +2046,7 @@ destruct (Nat.eq_dec n 0) as [Hnz| Hnz]. {
   subst n; symmetry in Hp.
   now apply (angle_straight_neq_0 Hc1) in Hp.
 }
+move Hnz after Hn1.
 specialize (exists_nat_such_that_rngl_cos_close_to_1 Har (n * α)) as H1.
 progress unfold angle_div_nat in Htt.
 progress unfold seq_angle_to_div_nat in Htt.
@@ -2067,6 +2069,14 @@ assert (
 }
 move H before Htt; clear Htt; rename H into Htt.
 progress unfold angle_leb.
+remember (0 ≤? rngl_sin α)%L as zs eqn:Hzs.
+remember (0 ≤? rngl_sin (2 * π_n))%L as zp eqn:Hzp.
+symmetry in Hzs, Hzp.
+destruct zs. {
+  destruct zp; [ | easy ].
+  apply rngl_leb_le in Hzs, Hzp.
+  apply rngl_leb_le.
+Search (rngl_cos (2 * _)).
 ...
 generalize Htt; intros Htt_v.
 progress unfold angle_div_nat in Htt.
