@@ -2076,7 +2076,9 @@ destruct zs. {
   destruct zp; [ | easy ].
   apply rngl_leb_le in Hzs, Hzp.
   apply rngl_leb_le.
-Search (rngl_cos (2 * _)).
+...
+Search (_ → rngl_cos _ ≤ rngl_cos _)%L.
+apply quadrant_1_sin_sub_nonneg_cos_le; [ easy | easy | | ].
 ...
 generalize Htt; intros Htt_v.
 progress unfold angle_div_nat in Htt.
