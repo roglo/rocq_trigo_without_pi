@@ -116,10 +116,10 @@ rewrite (rngl_sub_0_r Hos).
 do 2 rewrite rngl_mul_1_r.
 rewrite rngl_add_0_r.
 do 2 rewrite fold_rngl_squ.
-progress unfold rngl_signp.
-set (ε := if (0 ≤? rngl_sin a)%L then 1%L else (-1)%L).
+set (ε := rngl_signp (rngl_sin a)).
 assert (Hε : (ε² = 1)%L). {
   progress unfold ε.
+  progress unfold rngl_signp.
   destruct (0 ≤? _)%L. {
     apply rngl_mul_1_l.
   } {
@@ -217,6 +217,7 @@ apply cos2_sin2_prop_add_squ in Ha.
 rewrite <- Ha, rngl_add_comm, (rngl_add_sub Hos).
 progress unfold rngl_squ.
 progress unfold ε.
+progress unfold rngl_signp.
 remember (0 ≤? sa)%L as saz eqn:Hsaz; symmetry in Hsaz.
 destruct saz. {
   apply rngl_leb_le in Hsaz.

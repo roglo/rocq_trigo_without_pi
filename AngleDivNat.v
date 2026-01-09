@@ -1948,6 +1948,11 @@ apply (Nat.le_trans _ i); [ easy | ].
 apply Nat.le_add_r.
 Qed.
 
+Theorem rngl_cos_div_2 :
+  ∀ α,
+  rngl_cos (α /₂) = (rngl_signp (rngl_sin α) * √ ((1 + rngl_cos α) / 2))%L.
+Proof. easy. Qed.
+
 (* to be completed
 Theorem angle_div_nat_integral :
   rngl_characteristic T = 0 →
@@ -2049,6 +2054,30 @@ destruct (Nat.eq_dec n 0) as [Hnz| Hnz]. {
 }
 move Hnz after Hn1.
 specialize (exists_nat_such_that_rngl_cos_close_to_1 Har (n * α)) as H1.
+Inspect 1.
+Theorem rngl_cos_div_2_pow :
+  ∀ α n,
+  n ≠ 0
+  → rngl_cos (α /₂^ n) =
+      (rngl_signp (rngl_sin α) * √((1 + rngl_cos α) / 2)^n)%L.
+Proof.
+intros * Hnz.
+revert α.
+induction n; intros; [ easy | clear Hnz ].
+destruct n; [ now cbn; rewrite rngl_mul_1_r | ].
+Search (_ ^ S _)%L.
+rewrite rngl_pow_succ_r.
+...
+rewrite <- IHn.
+Search (_ /₂^ S _)%A.
+rewrite angle_div_2_pow_succ_r_1.
+cbn
+rewrite IHn.
+
+remember (S n) as sn; cbn; subst sn.
+rewrite <- IHn.
+
+...
 progress unfold angle_div_nat in Htt.
 progress unfold seq_angle_to_div_nat in Htt.
 progress unfold angle_lim in Htt.
@@ -2083,8 +2112,6 @@ Locate "/₂".
 Print angle_div_2.
 About angle_div_2.
 Search (if _ then 1%L else _).
-Theorem rngl_cos_div_2 :
-  ∀ α, rngl_cos (α /₂) = √ ((1 + rngl_cos α) / 2).
 ...
 Search (_ → rngl_cos _ ≤ rngl_cos _)%L.
 apply quadrant_1_sin_sub_nonneg_cos_le; [ easy | easy | | ].
