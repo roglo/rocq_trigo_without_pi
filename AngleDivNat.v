@@ -335,6 +335,7 @@ destruct_ac.
 intros * Ht21.
 rewrite rngl_sin_sub.
 cbn.
+progress unfold rngl_signp.
 remember (rngl_cos α1) as c1 eqn:Hco1.
 remember (rngl_cos α2) as c2 eqn:Hco2.
 remember (rngl_sin α1) as s1 eqn:Hsi1.
@@ -2076,6 +2077,14 @@ destruct zs. {
   destruct zp; [ | easy ].
   apply rngl_leb_le in Hzs, Hzp.
   apply rngl_leb_le.
+Search (rngl_cos (_ /₂)).
+Search (rngl_cos (_ /₂^ _)).
+Locate "/₂".
+Print angle_div_2.
+About angle_div_2.
+Search (if _ then 1%L else _).
+Theorem rngl_cos_div_2 :
+  ∀ α, rngl_cos (α /₂) = √ ((1 + rngl_cos α) / 2).
 ...
 Search (_ → rngl_cos _ ≤ rngl_cos _)%L.
 apply quadrant_1_sin_sub_nonneg_cos_le; [ easy | easy | | ].

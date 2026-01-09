@@ -26,7 +26,7 @@ Context {rl : real_like_prop T}.
 Context {ac : angle_ctx T}.
 
 Theorem angle_div_2_prop :
-  ∀ a (ε := (if (0 ≤? rngl_sin a)%L then 1%L else (-1)%L)),
+  ∀ a (ε := rngl_signp (rngl_sin a)),
   cos2_sin2_prop
     (ε * √((1 + rngl_cos a) / 2))%L
     (√((1 - rngl_cos a) / 2)%L).
@@ -36,6 +36,7 @@ intros.
 progress unfold cos2_sin2_prop.
 assert (Hε : (ε² = 1)%L). {
   progress unfold ε.
+  progress unfold rngl_signp.
   destruct (0 ≤? _)%L. {
     apply rngl_mul_1_l.
   } {
@@ -77,7 +78,7 @@ apply (rngl_2_neq_0 Hos Hc1 Hto).
 Qed.
 
 Definition angle_div_2 a :=
-  let ε := if (0 ≤? rngl_sin a)%L then 1%L else (-1)%L in
+  let ε := rngl_signp (rngl_sin a) in
   {| rngl_cos := ε * √((1 + rngl_cos a) / 2)%L;
      rngl_sin := √((1 - rngl_cos a)%L / 2%L);
      rngl_cos2_sin2 := angle_div_2_prop a |}.
@@ -115,6 +116,7 @@ rewrite (rngl_sub_0_r Hos).
 do 2 rewrite rngl_mul_1_r.
 rewrite rngl_add_0_r.
 do 2 rewrite fold_rngl_squ.
+progress unfold rngl_signp.
 set (ε := if (0 ≤? rngl_sin a)%L then 1%L else (-1)%L).
 assert (Hε : (ε² = 1)%L). {
   progress unfold ε.
@@ -273,6 +275,7 @@ rewrite H1; clear H1.
 cbn.
 rewrite (rngl_leb_refl Hor).
 apply rngl_leb_le.
+progress unfold rngl_signp.
 remember (0 ≤? rngl_sin α)%L as zs eqn:Hzs.
 symmetry in Hzs.
 destruct zs. {
@@ -318,6 +321,7 @@ destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
   apply H1.
 }
 apply eq_angle_eq; cbn.
+progress unfold rngl_signp.
 rewrite (rngl_leb_refl Hor).
 rewrite rngl_mul_1_l.
 rewrite (rngl_div_diag Hiq). 2: {
@@ -342,6 +346,7 @@ destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
   apply H1.
 }
 apply eq_angle_eq; cbn.
+progress unfold rngl_signp.
 rewrite (rngl_leb_refl Hor).
 rewrite rngl_mul_1_l.
 rewrite (rngl_add_opp_r Hop).
@@ -381,6 +386,7 @@ destruct z. {
   apply angle_eqb_eq in Hz; subst.
   rewrite angle_add_0_r.
   apply eq_angle_eq; cbn.
+  progress unfold rngl_signp.
   rewrite (rngl_leb_0_opp Hop Hto).
   rewrite (rngl_sub_diag Hos).
   rewrite Hsz2.
@@ -391,6 +397,7 @@ apply eq_angle_eq; cbn.
 do 2 rewrite (rngl_mul_0_r Hos).
 rewrite (rngl_sub_0_r Hos).
 rewrite rngl_add_0_r.
+progress unfold rngl_signp.
 rewrite (rngl_leb_0_opp Hop Hto).
 do 2 rewrite (rngl_mul_opp_r Hop).
 do 2 rewrite rngl_mul_1_r.
@@ -445,6 +452,7 @@ rewrite fold_rl_sqrt in H1.
 specialize (H1 (Hzsc _)).
 apply rngl_leb_le in H1.
 rewrite H1; clear H1.
+progress unfold rngl_signp.
 remember (0 ≤? rngl_sin α1)%L as zs1 eqn:Hzs1.
 remember (0 ≤? rngl_sin α2)%L as zs2 eqn:Hzs2.
 symmetry in Hzs1, Hzs2.
@@ -854,6 +862,7 @@ split; intros Hs3. {
     }
     apply angle_eqb_neq in Htz.
     cbn.
+    progress unfold rngl_signp.
     rewrite Hzs.
     apply rngl_lt_le_incl.
     rewrite rngl_mul_1_l.
@@ -862,6 +871,7 @@ split; intros Hs3. {
   rewrite (rngl_0_leb_opp_sqrt_3_div_2 Hop Hiv Hto Hc1) in Hs3.
   apply rngl_leb_le in Hs3.
   cbn.
+  progress unfold rngl_signp.
   rewrite Hzs.
   rewrite (rngl_mul_opp_l Hop).
   rewrite rngl_mul_1_l.
@@ -899,6 +909,7 @@ split; intros Hs3. {
   destruct zs; [ easy | ].
   apply rngl_leb_le.
   cbn in Hs3.
+  progress unfold rngl_signp in Hs3.
   rewrite Hzs in Hs3.
   rewrite (rngl_mul_opp_l Hop) in Hs3.
   rewrite rngl_mul_1_l in Hs3.
@@ -1071,6 +1082,7 @@ intros.
 rewrite angle_div_2_pow_succ_r_2.
 induction n; intros; [ easy | cbn ].
 rewrite IHn.
+progress unfold rngl_signp.
 remember (0 ≤? _)%L as zsa eqn:Hzsa.
 symmetry in Hzsa.
 destruct zsa; [ apply rngl_mul_1_l | ].

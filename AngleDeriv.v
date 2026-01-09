@@ -605,6 +605,7 @@ apply (rngl_add_move_l Hop) in H1.
 rewrite <- H1; clear H1.
 symmetry.
 rewrite (rl_sqrt_squ Hop Hto).
+progress unfold rngl_signp.
 remember (0 ≤? rngl_sin α)%L as ss eqn:Hss.
 symmetry in Hss.
 destruct ss. {
@@ -789,6 +790,7 @@ intros * Htt.
 cbn.
 apply rngl_sin_nonneg_angle_le_straight in Htt.
 apply rngl_leb_le in Htt.
+progress unfold rngl_signp.
 rewrite Htt.
 rewrite rngl_mul_1_l.
 destruct (rngl_leb_dec 1 (angle_eucl_dist α 0)) as [H1d| H1d]. {

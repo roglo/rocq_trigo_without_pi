@@ -62,6 +62,7 @@ rewrite <- angle_add_overflow_equiv2 in Haov.
 progress unfold angle_add_overflow2 in Haov.
 remember (α1 + α2)%A as α3 eqn:Hα3.
 cbn.
+progress unfold rngl_signp.
 remember (0 ≤? rngl_sin α1)%L as zs1 eqn:Hzs1.
 remember (0 ≤? rngl_sin α2)%L as zs2 eqn:Hzs2.
 remember (0 ≤? rngl_sin α3)%L as zs3 eqn:Hzs3.
@@ -324,6 +325,7 @@ cbn.
 move Haov at bottom.
 generalize Haov; intros Haov'.
 progress unfold angle_ltb in Haov.
+progress unfold rngl_signp.
 remember (0 ≤? rngl_sin α1)%L as zs1 eqn:Hzs1.
 remember (0 ≤? rngl_sin α2)%L as zs2 eqn:Hzs2.
 symmetry in Hzs1, Hzs2.
@@ -587,6 +589,7 @@ rewrite <- angle_add_overflow_equiv2 in Haov.
 progress unfold angle_add_overflow2 in Haov.
 progress unfold angle_ltb in Haov.
 cbn.
+progress unfold rngl_signp.
 remember (0 ≤? rngl_sin α1)%L as zs1 eqn:Hzs1.
 remember (0 ≤? rngl_sin α2)%L as zs2 eqn:Hzs2.
 remember (0 ≤? rngl_sin (α1 + α2))%L as zs12 eqn:Hzs12.
@@ -783,6 +786,7 @@ rewrite <- angle_add_overflow_equiv2 in Haov.
 progress unfold angle_add_overflow2 in Haov.
 progress unfold angle_ltb in Haov.
 cbn.
+progress unfold rngl_signp.
 remember (0 ≤? rngl_sin α1)%L as zs1 eqn:Hzs1.
 remember (0 ≤? rngl_sin α2)%L as zs2 eqn:Hzs2.
 remember (0 ≤? rngl_sin (α1 + α2))%L as zs12 eqn:Hzs12.
@@ -1163,6 +1167,7 @@ rewrite H1; clear H1.
 cbn.
 rewrite (rngl_leb_refl Hor).
 apply (rngl_ltb_lt Heo).
+progress unfold rngl_signp.
 remember (0 ≤? rngl_sin α)%L as zs eqn:Hzs.
 symmetry in Hzs.
 destruct zs. {
