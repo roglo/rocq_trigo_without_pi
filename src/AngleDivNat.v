@@ -2016,6 +2016,7 @@ specialize (H1 H); clear H.
 specialize (exists_angle_div_nat Hch Har Hco π n Hnz) as H1.
 destruct H1 as (π_n, Hp).
 move π_n before α.
+...
 Theorem glop :
   rngl_characteristic T = 0 →
   rngl_is_archimedean T = true →
