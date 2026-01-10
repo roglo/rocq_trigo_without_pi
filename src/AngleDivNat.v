@@ -2037,6 +2037,17 @@ destruct (Nat.eq_dec n 0) as [Hnz| Hnz]. {
 }
 move Hnz after Hn1.
 (**)
+progress unfold angle_div_nat in Htt.
+progress unfold seq_angle_to_div_nat in Htt.
+apply angle_lim_move_0_r in Htt.
+apply angle_lim_opp in Htt.
+rewrite angle_opp_0 in Htt.
+eapply (angle_lim_eq_compat 0 0) in Htt. 2: {
+  intros i.
+  rewrite Nat.add_0_r.
+  rewrite angle_opp_sub_distr.
+  easy.
+}
 progress unfold angle_leb.
 remember (0 ≤? rngl_sin α)%L as zs eqn:Hzs.
 remember (0 ≤? rngl_sin (2 * π_n))%L as zp eqn:Hzp.
@@ -2045,9 +2056,6 @@ destruct zs. {
   destruct zp; [ | easy ].
   apply rngl_leb_le in Hzs, Hzp.
   apply rngl_leb_le.
-  progress unfold angle_div_nat in Htt.
-  progress unfold seq_angle_to_div_nat in Htt.
-Search angle_lim.
 ...
 specialize (exists_nat_such_that_rngl_cos_close_to_1 Har (n * α)) as H1.
 progress unfold angle_div_nat in Htt.
