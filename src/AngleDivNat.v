@@ -2016,27 +2016,24 @@ specialize (H1 H); clear H.
 specialize (exists_angle_div_nat Hch Har Hco π n Hnz) as H1.
 destruct H1 as (π_n, Hp).
 move π_n before α.
-...
 Theorem glop :
   rngl_characteristic T = 0 →
   rngl_is_archimedean T = true →
   is_complete T rngl_dist →
-  ∀ n α π_n,
-  n ≠ 1
+  ∀ n α,
+  2 ≤ n
   → angle_div_nat (n * α) n α
-  → (n * π_n)%A = π
-  → (α ≤ 2 * π_n)%A.
+  → (α ≤ π)%A.
 Proof.
-intros Hch Har Hco * Hn1 Htt Hp.
+destruct_ac.
+intros Hch Har Hco * H2n Htt.
 destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
   now rewrite Hch in Hc1.
 }
 move Hc1 before Hch.
-destruct (Nat.eq_dec n 0) as [Hnz| Hnz]. {
-  subst n; symmetry in Hp.
-  now apply (angle_straight_neq_0 Hc1) in Hp.
-}
-move Hnz after Hn1.
+destruct (Nat.eq_dec n 0) as [Hnz| Hnz]; [ flia Hnz H2n | ].
+destruct (Nat.eq_dec n 1) as [Hn1| Hn1]; [ flia Hn1 H2n | ].
+clear H2n.
 (**)
 progress unfold angle_div_nat in Htt.
 progress unfold seq_angle_to_div_nat in Htt.
@@ -2050,13 +2047,13 @@ eapply (angle_lim_eq_compat 0 0) in Htt. 2: {
   easy.
 }
 progress unfold angle_leb.
+cbn.
+rewrite (rngl_leb_refl Hor).
 remember (0 ≤? rngl_sin α)%L as zs eqn:Hzs.
-remember (0 ≤? rngl_sin (2 * π_n))%L as zp eqn:Hzp.
-symmetry in Hzs, Hzp.
-destruct zs. {
-  destruct zp; [ | easy ].
-  apply rngl_leb_le in Hzs, Hzp.
-  apply rngl_leb_le.
+symmetry in Hzs.
+destruct zs; [ apply rngl_leb_le, rngl_cos_bound | exfalso ].
+Search ((_ ≤? _)%L = false).
+apply (rngl_leb_gt_iff Hto) in Hzs.
 ...
 specialize (exists_nat_such_that_rngl_cos_close_to_1 Har (n * α)) as H1.
 progress unfold angle_div_nat in Htt.
