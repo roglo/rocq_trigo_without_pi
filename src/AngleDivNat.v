@@ -2058,40 +2058,6 @@ destruct (Nat.eq_dec n 0) as [Hnz| Hnz]. {
 }
 move Hnz after Hn1.
 specialize (exists_nat_such_that_rngl_cos_close_to_1 Har (n * α)) as H1.
-Inspect 1.
-Theorem rngl_cos_div_2_pow :
-  rngl_mul_is_comm T = true →
-  ∀ α n,
-  n ≠ 0
-  → rngl_cos (α /₂^ n) =
-      ((rngl_signp (rngl_sin α) * √((1 + rngl_cos α) / 2)) ^ n)%L.
-Proof.
-intros Hic * Hnz.
-rewrite (rngl_pow_mul_l Hic).
-revert α.
-induction n; intros; [ easy | clear Hnz ].
-destruct n; [ now cbn; do 2 rewrite rngl_mul_1_r | ].
-specialize (IHn (Nat.neq_succ_0 _)).
-rewrite angle_div_2_pow_succ_r_2.
-rewrite IHn.
-rewrite rngl_cos_div_2.
-(* bon, chais pas, faut voir... *)
-...
-rewrite rngl_pow_succ_r.
-rewrite <- IHn; [ | easy ].
-rewrite angle_div_2_pow_succ_r_2.
-rewrite rngl_cos_div_2.
-...
-rewrite <- IHn.
-Search (_ /₂^ S _)%A.
-rewrite angle_div_2_pow_succ_r_1.
-cbn
-rewrite IHn.
-
-remember (S n) as sn; cbn; subst sn.
-rewrite <- IHn.
-
-...
 progress unfold angle_div_nat in Htt.
 progress unfold seq_angle_to_div_nat in Htt.
 progress unfold angle_lim in Htt.
@@ -2120,6 +2086,7 @@ destruct zs. {
   destruct zp; [ | easy ].
   apply rngl_leb_le in Hzs, Hzp.
   apply rngl_leb_le.
+...
 Search (rngl_cos (_ /₂)).
 Search (rngl_cos (_ /₂^ _)).
 Locate "/₂".
