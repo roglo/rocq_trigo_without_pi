@@ -1936,6 +1936,16 @@ Theorem rngl_sin_div_2 :
   ∀ α, rngl_sin (α /₂) = √ ((1 - rngl_cos α) / 2).
 Proof. easy. Qed.
 
+Theorem angle_mul_nat_div_2π_for_seq :
+  ∀ i n α, angle_mul_nat_div_2π (2 ^ i / n) (α /₂^ i) = 0.
+Proof.
+intros.
+apply angle_mul_nat_div_2π_div_pow2.
+destruct n; [ easy | ].
+apply Nat.Div0.div_le_upper_bound.
+now apply Nat.le_mul_l.
+Qed.
+
 (* to be completed
 Theorem angle_div_nat_integral :
   rngl_characteristic T = 0 →
@@ -2016,6 +2026,8 @@ specialize (H1 H); clear H.
 specialize (exists_angle_div_nat Hch Har Hco π n Hnz) as H1.
 destruct H1 as (π_n, Hp).
 move π_n before α.
+Inspect 1.
+...
 Theorem glop :
   rngl_characteristic T = 0 →
   rngl_is_archimedean T = true →
