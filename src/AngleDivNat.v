@@ -2034,9 +2034,25 @@ move Hc1 before Hch.
 destruct (Nat.eq_dec n 0) as [Hnz| Hnz]; [ flia Hnz H2n | ].
 destruct (Nat.eq_dec n 1) as [Hn1| Hn1]; [ flia Hn1 H2n | ].
 clear H2n.
-(**)
+apply rngl_sin_nonneg_angle_le_straight.
 progress unfold angle_div_nat in Htt.
 progress unfold seq_angle_to_div_nat in Htt.
+(**)
+assert (
+  H :
+  ∀ ε, (0 < ε)%L →
+  ∃ N, ∀ i, N ≤ i →
+  (1 - ε² / 2 < rngl_cos (α - 2 ^ i / n * ((n * α) /₂^i)))%L). {
+  intros * Hε.
+  specialize (Htt ε Hε).
+  destruct Htt as (N, Hn).
+  exists N.
+  intros m Hm.
+  apply rngl_cos_lt_angle_eucl_dist_lt; [ now apply rngl_lt_le_incl | ].
+  now apply Hn.
+}
+clear Htt; rename H into Htt.
+...
 apply angle_lim_move_0_r in Htt.
 apply angle_lim_opp in Htt.
 rewrite angle_opp_0 in Htt.
@@ -2046,14 +2062,6 @@ eapply (angle_lim_eq_compat 0 0) in Htt. 2: {
   rewrite angle_opp_sub_distr.
   easy.
 }
-progress unfold angle_leb.
-cbn.
-rewrite (rngl_leb_refl Hor).
-remember (0 ≤? rngl_sin α)%L as zs eqn:Hzs.
-symmetry in Hzs.
-destruct zs; [ apply rngl_leb_le, rngl_cos_bound | exfalso ].
-Search ((_ ≤? _)%L = false).
-apply (rngl_leb_gt_iff Hto) in Hzs.
 ...
 specialize (exists_nat_such_that_rngl_cos_close_to_1 Har (n * α)) as H1.
 progress unfold angle_div_nat in Htt.
