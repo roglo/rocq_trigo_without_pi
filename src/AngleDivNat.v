@@ -2030,19 +2030,18 @@ progress unfold angle_div_nat in Htt.
 progress unfold seq_angle_to_div_nat in Htt.
 Theorem glop :
   ∀ f g n α,
-  angle_lim (λ i, (f n i * g i)%A) α
-  → (∀ i, angle_mul_nat_div_2π (f n i) (g i) = 0)
+  angle_lim (λ i, (f n i * g (n * α) i)%A) α
+  → (∀ i, angle_mul_nat_div_2π (f n i) (g (n * α)%A i) = 0)
   → angle_mul_nat_div_2π n α = 0.
 Proof.
 intros * Hlim Hni.
-revert f Hlim Hni.
+revert f g Hlim Hni.
 induction n; intros; [ easy | cbn ].
-rewrite (IHn (λ n i, f (S n) i)); [ cbn | easy | easy ].
+rewrite (IHn (λ n i, f (S n) i) (λ α' i, g (S n * α)%A i)); [ | easy | easy ].
 apply Nat_eq_b2n_0.
 ... ...
 specialize (angle_mul_nat_div_2π_for_seq n (n * α)) as H1.
-apply (glop (λ n i, 2 ^ i / n) (λ i, ((n * α) /₂^i)%A)); [ | easy ].
-easy.
+apply (glop (λ n i, 2 ^ i / n) (λ α i, (α /₂^i)%A)); [ easy | easy ].
 ...
 Theorem glop :
   rngl_characteristic T = 0 →
