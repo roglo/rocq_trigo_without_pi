@@ -1937,7 +1937,7 @@ Theorem rngl_sin_div_2 :
 Proof. easy. Qed.
 
 Theorem angle_mul_nat_div_2π_for_seq :
-  ∀ i n α, angle_mul_nat_div_2π (2 ^ i / n) (α /₂^ i) = 0.
+  ∀ n α i, angle_mul_nat_div_2π (2 ^ i / n) (α /₂^ i) = 0.
 Proof.
 intros.
 apply angle_mul_nat_div_2π_div_pow2.
@@ -2026,7 +2026,27 @@ specialize (H1 H); clear H.
 specialize (exists_angle_div_nat Hch Har Hco π n Hnz) as H1.
 destruct H1 as (π_n, Hp).
 move π_n before α.
+progress unfold angle_div_nat in Htt.
+progress unfold seq_angle_to_div_nat in Htt.
+specialize (angle_mul_nat_div_2π_for_seq n (n * α)) as H1.
+Theorem glop :
+  ∀ f g n α,
+  angle_lim (λ i, (f n i * g i)%A) α
+  → (∀ i, angle_mul_nat_div_2π (f n i) (g i) = 0)
+  → angle_mul_nat_div_2π n α = 0.
+Proof.
+intros * Hlim Hni.
+revert f Hlim Hni.
+induction n; intros; [ easy | cbn ].
+rewrite (IHn (λ n i, f (S n) i)); [ cbn | easy | easy ].
+apply Nat_eq_b2n_0.
 Inspect 1.
+... ...
+Inspect 2.
+apply (glop (λ n i, 2 ^ i / n) (λ i, ((n * α) /₂^i)%A)); [ | easy ].
+intros i m.
+Inspect 1.
+(* ok à démontrer *)
 ...
 Theorem glop :
   rngl_characteristic T = 0 →
