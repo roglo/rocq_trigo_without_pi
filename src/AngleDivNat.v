@@ -1985,10 +1985,41 @@ assert (
   progress unfold seq_angle_to_div_nat in Hn.
   now apply Hn.
 }
+assert (H : (α' ≤ π)%A). {
+  progress unfold angle_div_nat in Htt.
+  apply angle_lim_move_0_r in Htt.
+  eapply (angle_lim_eq_compat 1 0) in Htt. 2: {
+    intros i.
+    rewrite Nat.add_0_r.
+    progress unfold seq_angle_to_div_nat.
+    rewrite Nat.pow_add_r.
+    rewrite Nat.pow_1_r.
+(*
+    rewrite Nat.div_mul; [ | easy ].
+*)
+    rewrite Nat.add_comm.
+    rewrite angle_div_2_pow_add_r.
+    rewrite angle_div_pow2_1.
+    rewrite Nat.mul_comm.
+...
+Check angle_div_2_pow_mul_2_pow.
+...
+    rewrite angle_div_2_pow_mul_2_pow.
+      rewrite <- angle_mul_2_l.
+      reflexivity.
+    }
+    apply angle_lim_const in Htt.
+    symmetry in Htt.
+    apply -> angle_sub_move_0_r in Htt.
+    rewrite <- Htt.
+    apply angle_div_2_le_straight.
+  }
+...
 destruct (angle_le_dec π α') as [Hpa| Hpa]. {
   destruct n; [ easy | clear Hnz ].
   destruct n; [ easy | clear Hn1 ].
   exfalso.
+Search angle_div_nat.
 ...
   progress unfold angle_div_nat in Htt.
   progress unfold angle_lim in Htt.
