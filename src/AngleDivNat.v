@@ -2030,6 +2030,34 @@ progress unfold angle_div_nat in Htt.
 progress unfold seq_angle_to_div_nat in Htt.
 specialize (angle_mul_nat_div_2π_for_seq n (n * α)) as H1.
 Theorem glop :
+  ∀ u α n,
+  angle_lim u α
+  → (∀ i, angle_mul_nat_div_2π n (u i) = 0)
+  → angle_mul_nat_div_2π n α = 0.
+Proof.
+(*
+intros * Hlim Hm.
+apply angle_mul_nat_div_2π_iff.
+split. 2: {
+  cbn.
+  intros i Hi.
+  apply Nat.le_0_r.
+...
+*)
+intros * Hlim Hm.
+induction n; [ easy | cbn ].
+rewrite IHn. 2: {
+  intros i.
+  specialize (Hm i); cbn in Hm.
+  now apply Nat.eq_add_0 in Hm.
+}
+cbn; apply Nat_eq_b2n_0.
+Search (angle_add_overflow _ (_ * _)).
+... ...
+eapply glop; [ apply Htt | ].
+cbn; intros i.
+...
+Theorem glop :
   ∀ f g n α,
   angle_lim (λ i, (f n i * g (n * α) i)%A) α
   → (∀ i, angle_mul_nat_div_2π (f n i) (g (n * α)%A i) = 0)
