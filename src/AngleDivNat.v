@@ -1971,6 +1971,30 @@ destruct (angle_eq_dec α 0) as [Htz| Htz]. {
   apply angle_div_nat_0_l in Htt; subst α'.
   apply angle_mul_nat_div_2π_0_r.
 }
+assert (
+  Htt' :
+  ∀ ε, (0 < ε)%L →
+  ∃ N, ∀ i, N ≤ i →
+  (1 - ε² / 2 < rngl_cos (α' - 2 ^ i / n * (α /₂^i)))%L). {
+  intros * Hε.
+  specialize (Htt ε Hε).
+  destruct Htt as (N, Hn).
+  exists N.
+  intros m Hm.
+  apply rngl_cos_lt_angle_eucl_dist_lt; [ now apply rngl_lt_le_incl | ].
+  progress unfold seq_angle_to_div_nat in Hn.
+  now apply Hn.
+}
+destruct (angle_le_dec π α') as [Hpa| Hpa]. {
+  destruct n; [ easy | clear Hnz ].
+  destruct n; [ easy | clear Hn1 ].
+  exfalso.
+...
+  progress unfold angle_div_nat in Htt.
+  progress unfold angle_lim in Htt.
+  progress unfold is_limit_when_seq_tends_to_inf in Htt.
+  progress unfold seq_angle_to_div_nat in Htt.
+...
 generalize Htt; intros H.
 apply (angle_div_nat_prop Hch Har Hco) in H.
 destruct H as [(H1, H2)| H]; [ now subst n | ].
@@ -2062,8 +2086,13 @@ assert (H : ∀ i, angle_add_overflow (u i) (n * u i) = false). {
   now apply Nat_eq_b2n_0 in Hm.
 }
 clear Hm; rename H into Hm.
-induction n; [ apply angle_add_overflow_0_r | ].
+(* lemma *)
+
+revert α u Hlim Hm.
+induction n; intros; [ apply angle_add_overflow_0_r | ].
 cbn in Hm |-*.
+rewrite angle_add_comm.
+apply angle_add_not_overflow_move_add.
 ... ...
 eapply glop; [ apply Htt | ].
 cbn; intros i.
