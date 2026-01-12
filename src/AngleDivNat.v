@@ -1971,6 +1971,11 @@ destruct (angle_eq_dec α 0) as [Htz| Htz]. {
   apply angle_div_nat_0_l in Htt; subst α'.
   apply angle_mul_nat_div_2π_0_r.
 }
+generalize Htt; intros H.
+apply (angle_div_nat_prop Hch Har Hco) in H.
+destruct H as [(H1, H2)| H]; [ now subst n | ].
+subst α; rename α' into α.
+...
 assert (
   Htt' :
   ∀ ε, (0 < ε)%L →
@@ -1985,10 +1990,6 @@ assert (
   progress unfold seq_angle_to_div_nat in Hn.
   now apply Hn.
 }
-generalize Htt; intros H.
-apply (angle_div_nat_prop Hch Har Hco) in H.
-destruct H as [(H1, H2)| H]; [ now subst n | ].
-subst α; rename α' into α.
 assert (H : (α ≤ π)%A). {
   progress unfold angle_div_nat in Htt.
   apply angle_lim_move_0_r in Htt.
