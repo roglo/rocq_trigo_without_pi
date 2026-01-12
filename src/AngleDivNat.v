@@ -2046,13 +2046,24 @@ split. 2: {
 *)
 intros * Hlim Hm.
 induction n; [ easy | cbn ].
-rewrite IHn. 2: {
+erewrite IHn. 2: {
   intros i.
   specialize (Hm i); cbn in Hm.
   now apply Nat.eq_add_0 in Hm.
 }
 cbn; apply Nat_eq_b2n_0.
-Search (angle_add_overflow _ (_ * _)).
+clear IHn.
+cbn in Hm.
+assert (H : ∀ i, angle_add_overflow (u i) (n * u i) = false). {
+  intros i.
+  specialize (Hm i).
+  apply Nat.eq_add_0 in Hm.
+  destruct Hm as (_, Hm).
+  now apply Nat_eq_b2n_0 in Hm.
+}
+clear Hm; rename H into Hm.
+induction n; [ apply angle_add_overflow_0_r | ].
+cbn in Hm |-*.
 ... ...
 eapply glop; [ apply Htt | ].
 cbn; intros i.
