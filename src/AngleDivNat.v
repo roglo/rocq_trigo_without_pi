@@ -1960,12 +1960,6 @@ Proof.
 (**)
 destruct_ac.
 intros Hch Har Hco * Htt.
-destruct (Nat.eq_dec n 0) as [| Hnz]; [ now subst n | ].
-destruct (Nat.eq_dec n 1) as [| Hn1]. {
-  subst n; cbn.
-  apply Nat_eq_b2n_0.
-  apply angle_add_overflow_0_r.
-}
 destruct (angle_eq_dec α 0) as [Htz| Htz]. {
   subst α.
   apply angle_div_nat_0_l in Htt; subst α'.
@@ -1975,6 +1969,20 @@ generalize Htt; intros H.
 apply (angle_div_nat_prop Hch Har Hco) in H.
 destruct H as [(H1, H2)| H]; [ now subst n | ].
 subst α; rename α' into α.
+clear Htz.
+destruct n; [ easy | ].
+cbn.
+destruct n. {
+  cbn.
+  apply Nat_eq_b2n_0.
+  apply angle_add_overflow_0_r.
+}
+destruct n. {
+  cbn.
+  rewrite angle_add_0_r.
+  rewrite angle_add_overflow_0_r.
+  cbn.
+  apply Nat_eq_b2n_0.
 ...
 assert (
   Htt' :
