@@ -1985,13 +1985,21 @@ assert (
   progress unfold seq_angle_to_div_nat in Hn.
   now apply Hn.
 }
-assert (H : (α' ≤ π)%A). {
+generalize Htt; intros H.
+apply (angle_div_nat_prop Hch Har Hco) in H.
+destruct H as [(H1, H2)| H]; [ now subst n | ].
+subst α; rename α' into α.
+assert (H : (α ≤ π)%A). {
   progress unfold angle_div_nat in Htt.
   apply angle_lim_move_0_r in Htt.
-  eapply (angle_lim_eq_compat 1 0) in Htt. 2: {
+  progress unfold seq_angle_to_div_nat in Htt.
+...
+  eapply (angle_lim_eq_compat 0 0) in Htt. 2: {
     intros i.
     rewrite Nat.add_0_r.
-    progress unfold seq_angle_to_div_nat.
+    reflexivity.
+  }
+...
     rewrite Nat.pow_add_r.
     rewrite Nat.pow_1_r.
 (*
