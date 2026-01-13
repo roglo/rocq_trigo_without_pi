@@ -7,7 +7,7 @@ Require Import Stdlib.Arith.Arith.
 Require Import RingLike.Utf8.
 
 Require Import RingLike.Core.
-Require Import AngleDef TrigoWithoutPiExt.
+Require Import Angle AngleDef TrigoWithoutPiExt.
 Require Import AngleAddOverflowLe.
 Require Import Order.
 Require Import TacChangeAngle.
@@ -233,15 +233,13 @@ Qed.
 
 (* to be completed
 Theorem angle_sub_le_mono_l' :
-  ∀ α2 α3 α1,
-  angle_add_overflow α3 (- α1) = false
-  → α1 ≠ 0%A
-  → (α1 ≤ α2)%A
+  ∀ α1 α2 α3,
+  (α1 ≤ α2 ≤ α3)%A
   → (α3 - α2 ≤ α3 - α1)%A.
 Proof.
-intros * Hov H1z H12.
+destruct_ac.
+intros * (H12, H23).
 progress unfold angle_leb.
-progress unfold angle_leb in H12.
 remember (0 ≤? rngl_sin (α3 - α2))%L as s32 eqn:Hs32.
 remember (0 ≤? rngl_sin (α3 - α1))%L as s31 eqn:Hs31.
 symmetry in Hs32, Hs31.
@@ -249,11 +247,37 @@ destruct s32. {
   destruct s31; [ | easy ].
   apply rngl_leb_le in Hs32, Hs31.
   apply rngl_leb_le.
-  apply Angle.rngl_sin_sub_nonneg_iff; [ | easy | ]. 2: {
-    rewrite angle_sub_sub_distr.
-    rewrite angle_sub_sub_swap.
-    rewrite angle_sub_diag, angle_sub_0_l.
-    rewrite angle_add_opp_l.
+  progress unfold angle_leb in H12, H23.
+  remember (0 ≤? rngl_sin α1)%L as zs1 eqn:Hzs1.
+  remember (0 ≤? rngl_sin α2)%L as zs2 eqn:Hzs2.
+  remember (0 ≤? rngl_sin α3)%L as zs3 eqn:Hzs3.
+  symmetry in Hzs1, Hzs2, Hzs3.
+  destruct zs1. {
+    destruct zs2. {
+      destruct zs3. {
+        apply rngl_leb_le in Hzs1, Hzs2, H12, Hzs3, H23.
+About rngl_sin_sub_nonneg_iff.
+...
+        apply rngl_sin_sub_nonneg_iff; [ | easy | ]. {
+          (* lemma *)
+          apply rngl_le_neq.
+          split. {
+            apply rngl_sin_sub_nonneg; [ easy | easy | ].
+            now apply (rngl_le_trans Hor _ (rngl_cos α2)).
+          }            
+          intros H; symmetry in H.
+          apply eq_rngl_sin_0 in H.
+          destruct H as [H| H]. {
+            apply -> angle_sub_move_0_r in H; subst α3.
+            apply (rngl_le_antisymm Hor) in H12; [ | easy ].
+            clear Hs31 H23 Hzs3.
+... ...
+        }
+        rewrite angle_sub_sub_distr.
+        rewrite angle_sub_sub_swap.
+        rewrite angle_sub_diag, angle_sub_0_l.
+        rewrite angle_add_opp_l.
+        now apply rngl_sin_sub_nonneg.
 ...
 Search (0 ≤ rngl_sin (_ - _))%L.
 ...

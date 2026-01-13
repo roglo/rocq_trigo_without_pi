@@ -1221,6 +1221,56 @@ apply (rngl_opp_nonneg_nonpos Hop Hor) in Hs2.
 now apply (rngl_nle_gt Hor) in Hs1.
 Qed.
 
+(* to be completed
+Theorem rngl_sin_sub_nonneg_iff' :
+  ∀ α1 α2,
+  α2 ≠ π
+  → (0 ≤ rngl_sin α1)%L
+  → (0 ≤ rngl_sin α2)%L
+  → (rngl_cos α1 ≤ rngl_cos α2)%L
+  ↔ (0 ≤ rngl_sin (α1 - α2))%L.
+Proof.
+destruct_ac.
+destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
+  specialize (rngl_characteristic_1 Hos Hc1) as H1.
+  intros * H1p Hs1 Hs2.
+  do 2 rewrite (H1 (rngl_cos _)).
+  now rewrite (H1 (rngl_sin _)).
+}
+intros * H2p Hs1 Hs2.
+(**)
+clear H2p.
+destruct (angle_eq_dec α2 π) as [H2p| H2p]. {
+  subst α2.
+  rewrite rngl_sin_sub_straight_r.
+  cbn.
+  split; intros H1. {
+Search (rngl_cos _ = (-1)%L).
+...
+    assert (H : rngl_cos α1 = (-1)%L). {
+      apply eq_rngl_cos_opp_1.
+...
+    apply (rngl_opp_nonneg_nonpos Hop Hor).
+    apply rngl_cos_le_opp_1 in H1.
+...
+split; [ now apply rngl_sin_sub_nonneg | ].
+intros Hs12.
+apply (rngl_lt_eq_cases Hor) in Hs1.
+destruct Hs1 as [Hs1| Hs1]; [ now apply rngl_sin_sub_nonneg_iff | ].
+symmetry in Hs1.
+apply eq_rngl_sin_0 in Hs1.
+destruct Hs1; subst α1; [ cbn | apply rngl_cos_bound ].
+rewrite angle_sub_0_l in Hs12.
+cbn in Hs12.
+apply (rngl_opp_nonneg_nonpos Hop Hor) in Hs12.
+apply (rngl_le_antisymm Hor) in Hs2; [ | easy ].
+apply eq_rngl_sin_0 in Hs2.
+destruct Hs2 as [Hs2| Hs2]; subst α2; [ | easy ].
+apply (rngl_le_refl Hor).
+Qed.
+...
+*)
+
 Theorem rngl_characteristic_1_angle_0 :
   rngl_characteristic T = 1 →
   ∀ α, (α = 0)%A.
