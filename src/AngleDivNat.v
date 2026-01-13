@@ -2044,11 +2044,22 @@ destruct n. {
       reflexivity.
     }
     apply
-      (angle_lim_le_compat _ (λ i, (α - seq_angle_to_div_nat (4 * α) 4 i))%A)
+      (angle_lim_le_compat _
+         (λ i, α - seq_angle_to_div_nat (2 * α) 2 (i + 2))%A)
     in Htt. 2: {
       intros i.
       split. {
-        apply angle_sub_le_mono_l. 2: {
+Check angle_sub_le_mono_l.
+...
+        apply angle_sub_le_mono_l. {
+          progress unfold seq_angle_to_div_nat.
+          apply (angle_add_overflow_le_lt α); [ apply angle_le_refl | ].
+          apply angle_opp_lt_compat_if. {
+            intros H; subst α; apply Htz.
+            apply angle_mul_0_r.
+          }
+... ...
+        } {
           progress unfold seq_angle_to_div_nat.
           intros H.
           apply angle_mul_nat_integral in H. {
@@ -2063,6 +2074,8 @@ destruct n. {
             }
             now apply eq_angle_div_2_pow_0 in H.
           }
+          apply angle_mul_nat_div_2π_for_seq.
+        }
 ...
 Search (_ - _ < _ - _)%A.
 Search (_ + _ < _ + _)%A.

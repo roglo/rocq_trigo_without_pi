@@ -10,3 +10,6 @@ let rec seq i n =
   else i :: seq (i + 1) (n - 1);;
 
 let u n i = float (pow 2 i / n) /. (2. ** float i);;
+
+let i = 4;;
+float (pow 2 (i + 2) / 3) *. (3. /. float (pow 2 (i + 2)));;

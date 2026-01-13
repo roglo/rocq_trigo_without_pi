@@ -1228,6 +1228,25 @@ apply angle_lt_opp_r; [ easy | ].
 now rewrite angle_opp_involutive.
 Qed.
 
+Theorem angle_add_overflow_le_lt :
+  ∀ α α1 α2,
+  (α1 ≤ α)%A
+  → (α2 < -α)%A
+  → angle_add_overflow α1 α2 = false.
+Proof.
+destruct_ac.
+intros * H1 H2.
+progress unfold angle_add_overflow.
+remember (α1 =? 0)%A as z1 eqn:Hz1.
+symmetry in Hz1.
+destruct z1; [ easy | ].
+apply angle_leb_gt.
+apply (angle_lt_le_trans _ (- α))%A; [ easy | ].
+apply angle_eqb_neq in Hz1.
+apply angle_le_opp_r; [ easy | ].
+now rewrite angle_opp_involutive.
+Qed.
+
 Theorem angle_add_not_overflow_lt_straight_le_straight :
   ∀ α1 α2,
   (α1 < π)%A
