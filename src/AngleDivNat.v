@@ -2037,13 +2037,37 @@ destruct n. {
     apply angle_lim_opp in Htt.
     rewrite angle_opp_0 in Htt.
     specialize (angle_div_2_pow_le_angle_sub_seq Har 3 α) as H1.
+    eapply (angle_lim_eq_compat 2 0) in Htt. 2: {
+      intros i.
+      rewrite Nat.add_0_r.
+      rewrite angle_opp_sub_distr.
+      reflexivity.
+    }
     apply
       (angle_lim_le_compat _ (λ i, (α - seq_angle_to_div_nat (4 * α) 4 i))%A)
     in Htt. 2: {
       intros i.
-      remember (- (_ - _))%A as x.
-      rewrite angle_opp_sub_distr in Heqx; subst x.
-Search (_ - _ ≤ _ - _)%A.
+      split. {
+        apply angle_sub_le_mono_l. 2: {
+          progress unfold seq_angle_to_div_nat.
+          intros H.
+          apply angle_mul_nat_integral in H. {
+            destruct H as [H| H]. {
+              apply Nat.div_small_iff in H; [ | easy ].
+              apply Nat.nle_gt in H.
+              apply H; clear H.
+              rewrite Nat.pow_add_r; cbn.
+              apply (Nat.le_trans _ 4); [ flia | ].
+              apply Nat.le_mul_l.
+              now apply Nat.pow_nonzero.
+            }
+            now apply eq_angle_div_2_pow_0 in H.
+          }
+...
+Search (_ - _ < _ - _)%A.
+Search (_ + _ < _ + _)%A.
+Search (_ + _ ≤ _ + _)%A.
+About angle_add_le_mono_l.
 Search (_ ≤ _ - _)%A.
 progress unfold seq_angle_to_div_nat.
 ...

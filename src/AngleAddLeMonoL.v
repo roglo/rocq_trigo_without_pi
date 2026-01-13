@@ -219,4 +219,16 @@ subst α3.
 now apply angle_lt_irrefl in H23.
 Qed.
 
+Theorem angle_sub_le_mono_l :
+  ∀ θ2 θ3 θ1,
+  angle_add_overflow θ3 (- θ1) = false
+  → θ1 ≠ 0%A
+  → (θ1 ≤ θ2)%A
+  → (θ3 - θ2 ≤ θ3 - θ1)%A.
+Proof.
+intros * Hov H1z H12.
+apply angle_add_le_mono_l; [ easy | ].
+now apply angle_opp_le_compat_if.
+Qed.
+
 End a.
