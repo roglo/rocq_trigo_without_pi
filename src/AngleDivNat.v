@@ -1959,7 +1959,11 @@ Proof.
    the theorem angle_mul_div_nat is its reverse *)
 (**)
 destruct_ac.
-intros Hch Har Hco * Htt.
+intros Hch.
+destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
+  now rewrite Hch in Hc1.
+}
+intros Har Hco * Htt.
 destruct (angle_eq_dec α 0) as [Htz| Htz]. {
   subst α.
   apply angle_div_nat_0_l in Htt; subst α'.
@@ -1969,9 +1973,7 @@ generalize Htt; intros H.
 apply (angle_div_nat_prop Hch Har Hco) in H.
 destruct H as [(H1, H2)| H]; [ now subst n | ].
 subst α; rename α' into α.
-clear Htz.
 destruct n; [ easy | ].
-cbn.
 destruct n. {
   cbn.
   apply Nat_eq_b2n_0.
@@ -1983,6 +1985,41 @@ destruct n. {
   rewrite angle_add_overflow_0_r.
   cbn.
   apply Nat_eq_b2n_0.
+  apply angle_add_not_overflow_diag.
+  progress unfold angle_div_nat in Htt.
+  eapply (angle_lim_eq_compat 1 0) in Htt. 2: {
+    intros i.
+    rewrite Nat.add_0_r.
+    progress unfold seq_angle_to_div_nat.
+    rewrite Nat.pow_add_r.
+    rewrite Nat.pow_1_r.
+    rewrite Nat.div_mul; [ | easy ].
+    rewrite Nat.add_comm.
+    rewrite angle_div_2_pow_add_r.
+    rewrite angle_div_2_pow_mul_2_pow.
+    rewrite angle_div_pow2_1.
+    reflexivity.
+  }
+  apply angle_lim_const in Htt.
+  symmetry in Htt.
+  rewrite <- Htt.
+  apply (angle_div_2_lt_straight Hc1).
+}
+destruct n. {
+  cbn.
+  rewrite angle_add_0_r.
+  rewrite angle_add_overflow_0_r; cbn.
+  apply Nat.eq_add_0.
+  split. {
+    apply Nat_eq_b2n_0.
+    apply angle_add_not_overflow_diag.
+    progress unfold angle_div_nat in Htt.
+    eapply (angle_lim_eq_compat 1 0) in Htt. 2: {
+      intros i.
+      rewrite Nat.add_0_r.
+      progress unfold seq_angle_to_div_nat.
+      rewrite Nat.pow_add_r.
+      rewrite Nat.pow_1_r.
 ...
 assert (
   Htt' :
