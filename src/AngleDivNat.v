@@ -1946,6 +1946,24 @@ apply Nat.Div0.div_le_upper_bound.
 now apply Nat.le_mul_l.
 Qed.
 
+Theorem angle_lim_le_compat :
+  ∀ f g,
+  (∀ i, (g i ≤ f i ≤ π)%A)
+  → angle_lim f 0
+  → angle_lim g 0.
+Proof.
+destruct_ac.
+intros * Hgf Hf.
+intros ε Hε.
+specialize (Hf ε Hε).
+destruct Hf as (N, Hn).
+exists N.
+intros n Hnn.
+eapply (rngl_le_lt_trans Hor); [ | apply Hn, Hnn ].
+apply angle_le_angle_eucl_dist_le; [ | apply Hgf | apply Hgf ].
+apply (angle_le_trans _ (f n)); apply Hgf.
+Qed.
+
 (* to be completed
 Theorem angle_div_nat_integral :
   rngl_characteristic T = 0 →
@@ -2016,21 +2034,18 @@ destruct n. {
     progress unfold angle_div_nat in Htt.
 (**)
     apply angle_lim_move_0_r in Htt.
-Theorem glop :
-  ∀ f g,
-  (∀ i, (g i ≤ f i)%A)
-  → angle_lim f 0
-  → angle_lim g 0.
-Proof.
-Admitted.
     apply angle_lim_opp in Htt.
     rewrite angle_opp_0 in Htt.
-    eapply glop in Htt. 2: {
+    specialize (angle_div_2_pow_le_angle_sub_seq Har 3 α) as H1.
+    apply
+      (angle_lim_le_compat _ (λ i, (α - seq_angle_to_div_nat (4 * α) 4 i))%A)
+    in Htt. 2: {
       intros i.
       remember (- (_ - _))%A as x.
       rewrite angle_opp_sub_distr in Heqx; subst x.
-      specialize (angle_div_2_pow_le_angle_sub_seq Har 3 α) as H1.
-(* pffff.... *)
+Search (_ - _ ≤ _ - _)%A.
+Search (_ ≤ _ - _)%A.
+progress unfold seq_angle_to_div_nat.
 ...
     eapply (angle_lim_eq_compat 1 0) in Htt. 2: {
       intros i.
