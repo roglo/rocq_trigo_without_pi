@@ -2014,6 +2014,24 @@ destruct n. {
     apply Nat_eq_b2n_0.
     apply angle_add_not_overflow_diag.
     progress unfold angle_div_nat in Htt.
+(**)
+    apply angle_lim_move_0_r in Htt.
+Theorem glop :
+  ∀ f g,
+  (∀ i, (g i ≤ f i)%A)
+  → angle_lim f 0
+  → angle_lim g 0.
+Proof.
+Admitted.
+    apply angle_lim_opp in Htt.
+    rewrite angle_opp_0 in Htt.
+    eapply glop in Htt. 2: {
+      intros i.
+      remember (- (_ - _))%A as x.
+      rewrite angle_opp_sub_distr in Heqx; subst x.
+      specialize (angle_div_2_pow_le_angle_sub_seq Har 3 α) as H1.
+(* pffff.... *)
+...
     eapply (angle_lim_eq_compat 1 0) in Htt. 2: {
       intros i.
       rewrite Nat.add_0_r.
