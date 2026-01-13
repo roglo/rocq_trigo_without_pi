@@ -220,15 +220,48 @@ now apply angle_lt_irrefl in H23.
 Qed.
 
 Theorem angle_sub_le_mono_l :
-  ∀ θ2 θ3 θ1,
-  angle_add_overflow θ3 (- θ1) = false
-  → θ1 ≠ 0%A
-  → (θ1 ≤ θ2)%A
-  → (θ3 - θ2 ≤ θ3 - θ1)%A.
+  ∀ α2 α3 α1,
+  angle_add_overflow α3 (- α1) = false
+  → α1 ≠ 0%A
+  → (α1 ≤ α2)%A
+  → (α3 - α2 ≤ α3 - α1)%A.
 Proof.
 intros * Hov H1z H12.
 apply angle_add_le_mono_l; [ easy | ].
 now apply angle_opp_le_compat_if.
 Qed.
+
+(* to be completed
+Theorem angle_sub_le_mono_l' :
+  ∀ α2 α3 α1,
+  angle_add_overflow α3 (- α1) = false
+  → α1 ≠ 0%A
+  → (α1 ≤ α2)%A
+  → (α3 - α2 ≤ α3 - α1)%A.
+Proof.
+intros * Hov H1z H12.
+progress unfold angle_leb.
+progress unfold angle_leb in H12.
+remember (0 ≤? rngl_sin (α3 - α2))%L as s32 eqn:Hs32.
+remember (0 ≤? rngl_sin (α3 - α1))%L as s31 eqn:Hs31.
+symmetry in Hs32, Hs31.
+destruct s32. {
+  destruct s31; [ | easy ].
+  apply rngl_leb_le in Hs32, Hs31.
+  apply rngl_leb_le.
+  apply Angle.rngl_sin_sub_nonneg_iff; [ | easy | ]. 2: {
+    rewrite angle_sub_sub_distr.
+    rewrite angle_sub_sub_swap.
+    rewrite angle_sub_diag, angle_sub_0_l.
+    rewrite angle_add_opp_l.
+...
+Search (0 ≤ rngl_sin (_ - _))%L.
+...
+Search (rngl_cos _ ≤ rngl_cos (_ - _))%L.
+Search (rngl_cos (_ - _) ≤ rngl_cos _)%L.
+...
+Search (rngl_cos (_ - _) ≤ rngl_cos (_ - _))%L.
+...
+*)
 
 End a.
