@@ -322,6 +322,25 @@ destruct s32. {
       do 2 rewrite <- angle_opp_add_distr.
       do 2 rewrite rngl_cos_opp.
       apply (rngl_opp_nonneg_nonpos Hop Hor) in Hs31, Hs32.
+      destruct (rngl_ltb_dec 0 (rngl_cos α1)) as [Hco1| Hco1]. {
+        apply (rngl_ltb_lt Heo) in Hco1.
+        destruct (rngl_leb_dec 0 (rngl_cos α3)) as [Hco3| Hco3]. {
+          apply rngl_leb_le in Hco3.
+          exfalso.
+          apply (rngl_nlt_ge Hor) in Hs31.
+          apply Hs31; clear Hs31.
+          now apply rngl_sin_add_pos_1.
+        }
+        apply (rngl_leb_gt_iff Hto) in Hco3.
+        change_angle_sub_l α3 π.
+        progress sin_cos_add_sub_straight_hyp T Hzs3.
+        progress sin_cos_add_sub_straight_hyp T Hs32.
+        progress sin_cos_add_sub_straight_hyp T Hs31.
+        progress sin_cos_add_sub_straight_hyp T Hco3.
+        progress sin_cos_add_sub_straight_goal T.
+Search (rngl_cos _ ≤ rngl_cos _)%L.
+        apply rngl_sin_sub_nonneg_iff'; try easy.
+About rngl_sin_sub_nonneg_iff.
 ...
 *)
 
