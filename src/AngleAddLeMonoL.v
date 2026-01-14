@@ -272,8 +272,19 @@ destruct s32. {
           now apply rngl_sin_sub_nonneg.
         }
         destruct (rngl_ltb_dec 0 (rngl_sin (α3 - α2))) as [Hs32'| Hs32']. {
+          apply (rngl_ltb_ge_iff Hto) in Hs31'.
           apply (rngl_ltb_lt Heo) in Hs32'.
-          apply rngl_sin_sub_nonneg_iff'; [ easy | easy | ].
+          apply rngl_sin_sub_nonneg_iff'; [ | easy | easy | ]. {
+            apply (rngl_le_antisymm Hor) in Hs31; [ | easy ].
+            apply eq_rngl_sin_0 in Hs31.
+            destruct Hs31 as [Hs31| Hs31]; [ right | left ]. {
+              apply -> angle_sub_move_0_r in Hs31; subst α3.
+              intros H; rewrite H in Hs32'.
+              now apply (rngl_lt_irrefl) in Hs32'.
+            }
+            rewrite Hs31.
+            apply (angle_straight_neq_0 Hc1).
+          }
           rewrite angle_sub_sub_distr.
           rewrite angle_sub_sub_swap.
           rewrite angle_sub_diag, angle_sub_0_l.
@@ -338,9 +349,7 @@ destruct s32. {
         progress sin_cos_add_sub_straight_hyp T Hs31.
         progress sin_cos_add_sub_straight_hyp T Hco3.
         progress sin_cos_add_sub_straight_goal T.
-Search (rngl_cos _ ≤ rngl_cos _)%L.
-        apply rngl_sin_sub_nonneg_iff'; try easy.
-About rngl_sin_sub_nonneg_iff.
+        apply rngl_sin_sub_nonneg_iff'; [ | easy | easy | ]. {
 ...
 *)
 
