@@ -350,6 +350,23 @@ destruct s32. {
         progress sin_cos_add_sub_straight_hyp T Hco3.
         progress sin_cos_add_sub_straight_goal T.
         apply rngl_sin_sub_nonneg_iff'; [ | easy | easy | ]. {
+          right.
+          intros H.
+          apply angle_sub_move_r in H; subst α1.
+          rewrite rngl_sin_add_straight_l in Hzs1.
+          apply (rngl_opp_nonneg_nonpos Hop Hor) in Hzs1.
+          now apply (rngl_nlt_ge Hor) in Hzs1.
+        }
+        rewrite angle_sub_sub_distr.
+        rewrite angle_sub_sub_swap.
+        rewrite angle_sub_add.
+        apply rngl_sin_sub_nonneg_iff'; try easy.
+        right; intros H; subst α1.
+        apply (rngl_nle_gt Hor) in Hco1.
+        apply Hco1; clear Hco1; cbn.
+        apply (rngl_opp_1_le_0 Hop Hto).
+      }
+      apply (rngl_ltb_ge_iff Hto) in Hco1.
 ...
 *)
 
