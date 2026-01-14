@@ -1223,7 +1223,7 @@ Qed.
 
 Theorem rngl_sin_sub_nonneg_iff' :
   ∀ α1 α2,
-  α2 ≠ π
+  α1 ≠ 0%A ∨ α2 ≠ π
   → (0 ≤ rngl_sin α1)%L
   → (0 ≤ rngl_sin α2)%L
   → (rngl_cos α1 ≤ rngl_cos α2)%L
@@ -1232,11 +1232,11 @@ Proof.
 destruct_ac.
 destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
   specialize (rngl_characteristic_1 Hos Hc1) as H1.
-  intros * H2p Hs1 Hs2.
+  intros * H12p Hs1 Hs2.
   do 2 rewrite (H1 (rngl_cos _)).
   now rewrite (H1 (rngl_sin _)).
 }
-intros * H2p Hs1 Hs2.
+intros * H12p Hs1 Hs2.
 split; [ now apply rngl_sin_sub_nonneg | ].
 intros Hs12.
 apply (rngl_lt_eq_cases Hor) in Hs1.
@@ -1244,6 +1244,7 @@ destruct Hs1 as [Hs1| Hs1]; [ now apply rngl_sin_sub_nonneg_iff | ].
 symmetry in Hs1.
 apply eq_rngl_sin_0 in Hs1.
 destruct Hs1; subst α1; [ cbn | apply rngl_cos_bound ].
+destruct H12p as [H12p| H12p]; [ easy | ].
 rewrite angle_sub_0_l in Hs12.
 cbn in Hs12.
 apply (rngl_opp_nonneg_nonpos Hop Hor) in Hs12.
