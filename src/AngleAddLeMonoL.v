@@ -315,6 +315,13 @@ destruct s32. {
       clear H23.
       apply rngl_leb_le in Hzs1, Hzs2, H12.
       apply (rngl_leb_gt_iff Hto) in Hzs3.
+      change_angle_opp α3.
+      progress sin_cos_opp_hyp T Hs31.
+      progress sin_cos_opp_hyp T Hs32.
+      progress sin_cos_opp_hyp T Hzs3.
+      do 2 rewrite <- angle_opp_add_distr.
+      do 2 rewrite rngl_cos_opp.
+      apply (rngl_opp_nonneg_nonpos Hop Hor) in Hs31, Hs32.
 ...
 *)
 
