@@ -238,6 +238,12 @@ Theorem angle_sub_le_mono_l' :
   → (α3 - α2 ≤ α3 - α1)%A.
 Proof.
 destruct_ac.
+destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
+  specialize (rngl_characteristic_1_angle_0 Hc1) as H1.
+  intros * (H12, H23).
+  rewrite (H1 α2), (H1 α1).
+  apply angle_le_refl.
+}
 intros * (H12, H23).
 progress unfold angle_leb.
 remember (0 ≤? rngl_sin (α3 - α2))%L as s32 eqn:Hs32.
@@ -256,35 +262,59 @@ destruct s32. {
     destruct zs2. {
       destruct zs3. {
         apply rngl_leb_le in Hzs1, Hzs2, H12, Hzs3, H23.
-About rngl_sin_sub_nonneg_iff.
-...
-        apply rngl_sin_sub_nonneg_iff; [ | easy | ]. {
-          (* lemma *)
-          apply rngl_le_neq.
-          split. {
-            apply rngl_sin_sub_nonneg; [ easy | easy | ].
-            now apply (rngl_le_trans Hor _ (rngl_cos α2)).
-          }            
-          intros H; symmetry in H.
-          apply eq_rngl_sin_0 in H.
-          destruct H as [H| H]. {
-            apply -> angle_sub_move_0_r in H; subst α3.
-            apply (rngl_le_antisymm Hor) in H12; [ | easy ].
-            clear Hs31 H23 Hzs3.
-... ...
+        destruct (rngl_ltb_dec 0 (rngl_sin (α3 - α1))) as [Hs31'| Hs31']. {
+          apply (rngl_ltb_lt Heo) in Hs31'.
+          apply rngl_sin_sub_nonneg_iff; [ easy | easy | ].
+          rewrite angle_sub_sub_distr.
+          rewrite angle_sub_sub_swap.
+          rewrite angle_sub_diag, angle_sub_0_l.
+          rewrite angle_add_opp_l.
+          now apply rngl_sin_sub_nonneg.
         }
-        rewrite angle_sub_sub_distr.
-        rewrite angle_sub_sub_swap.
-        rewrite angle_sub_diag, angle_sub_0_l.
-        rewrite angle_add_opp_l.
-        now apply rngl_sin_sub_nonneg.
-...
-Search (0 ≤ rngl_sin (_ - _))%L.
-...
-Search (rngl_cos _ ≤ rngl_cos (_ - _))%L.
-Search (rngl_cos (_ - _) ≤ rngl_cos _)%L.
-...
-Search (rngl_cos (_ - _) ≤ rngl_cos (_ - _))%L.
+        destruct (rngl_ltb_dec 0 (rngl_sin (α3 - α2))) as [Hs32'| Hs32']. {
+          apply (rngl_ltb_lt Heo) in Hs32'.
+          apply rngl_sin_sub_nonneg_iff'; [ easy | easy | ].
+          rewrite angle_sub_sub_distr.
+          rewrite angle_sub_sub_swap.
+          rewrite angle_sub_diag, angle_sub_0_l.
+          rewrite angle_add_opp_l.
+          now apply rngl_sin_sub_nonneg.
+        }
+        apply (rngl_ltb_ge_iff Hto) in Hs31', Hs32'.
+        apply (rngl_le_antisymm Hor) in Hs31; [ | easy ].
+        apply (rngl_le_antisymm Hor) in Hs32; [ | easy ].
+        clear Hs31' Hs32'.
+        apply eq_rngl_sin_0 in Hs32, Hs31.
+        destruct Hs32 as [Hs32| Hs32]. {
+          apply -> angle_sub_move_0_r in Hs32; subst α3.
+          rewrite angle_sub_diag.
+          apply rngl_cos_bound.
+        }
+        rewrite Hs32; cbn - [ angle_sub ].
+        destruct Hs31 as [Hs31| Hs31]. {
+          exfalso.
+          apply -> angle_sub_move_0_r in Hs31; subst α3.
+          apply angle_sub_move_r in Hs32; subst α1.
+          apply (rngl_le_antisymm Hor) in H12; [ | easy ].
+          clear H23 Hzs3.
+          rewrite rngl_sin_add_straight_l in Hzs1.
+          rewrite rngl_cos_add_straight_l in H12.
+          apply (rngl_opp_nonneg_nonpos Hop Hor) in Hzs1.
+          apply (rngl_le_antisymm Hor) in Hzs2; [ | easy ].
+          clear Hzs1.
+          apply eq_rngl_sin_0 in Hzs2.
+          destruct Hzs2; subst α2.
+          now apply (rngl_opp_1_neq_1 Hop Hc1 Hto) in H12.
+          symmetry in H12; cbn in H12.
+          rewrite (rngl_opp_involutive Hop) in H12.
+          now apply (rngl_opp_1_neq_1 Hop Hc1 Hto) in H12.
+        }
+        rewrite Hs31; cbn.
+        apply (rngl_le_refl Hor).
+      }
+      clear H23.
+      apply rngl_leb_le in Hzs1, Hzs2, H12.
+      apply (rngl_leb_gt_iff Hto) in Hzs3.
 ...
 *)
 
