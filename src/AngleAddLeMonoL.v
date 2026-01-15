@@ -8,7 +8,7 @@ Require Import RingLike.Utf8.
 
 Require Import RingLike.Core.
 Require Import Angle AngleDef TrigoWithoutPiExt.
-Require Import AngleAddOverflowLe.
+Require Import AngleAddOverflowLe AngleAddOverflowEquiv.
 Require Import Order.
 Require Import TacChangeAngle.
 Require Import AngleAddLeMonoL_1.
@@ -425,6 +425,7 @@ destruct s32. {
     intros Hcc.
     apply (rngl_nlt_ge Hor) in Hs31.
     apply Hs31; clear Hs31.
+    move α2 before α1; move α3 before α2.
     destruct (rngl_ltb_dec 0 (rngl_cos α1)) as [Hzc1| Hzc1]. {
       apply (rngl_ltb_lt Heo) in Hzc1.
       destruct (rngl_leb_dec 0 (rngl_cos α3)) as [Hzc3| Hzc3]. {
@@ -453,6 +454,38 @@ destruct s32. {
           now apply rngl_lt_le_incl.
         }
         apply (rngl_leb_gt_iff Hto) in Hc31.
+        exfalso.
+        apply (rngl_nle_gt Hor) in Hcc.
+        apply Hcc; clear Hcc.
+        rewrite rngl_cos_sub_comm.
+        apply (rngl_le_0_add Hos Hor). {
+          apply rngl_lt_le_incl in Hzs2, Hzs3, Hzc3.
+          apply rngl_cos_sub_nonneg; [ easy | easy | easy | ].
+          now apply (rngl_le_trans Hor _ (rngl_cos α3)).
+        } {
+          apply rngl_lt_le_incl in Hzs3, Hzc3, Hzc1.
+          now apply rngl_cos_sub_nonneg.
+        }
+      }
+      intros H; symmetry in H.
+      apply eq_rngl_sin_0 in H.
+      destruct H as [H| H]. {
+        apply -> angle_sub_move_0_r in H; subst α3.
+        rewrite angle_sub_diag in Hcc.
+        cbn - [ angle_sub ] in Hcc.
+        apply (rngl_nle_gt Hor) in Hcc.
+        apply Hcc; clear Hcc.
+        rewrite rngl_add_comm.
+        apply (rngl_le_opp_l Hop Hor).
+        apply rngl_cos_bound.
+      } {
+        apply angle_sub_move_r in H; subst α3.
+        rewrite rngl_sin_add_straight_l in Hzs3.
+        apply (rngl_opp_pos_neg Hop Hor) in Hzs3.
+        now apply (rngl_nle_gt Hor) in Hzs3.
+      }
+    }
+    apply (rngl_ltb_ge_iff Hto) in Hzc1.
 ...
 *)
 
