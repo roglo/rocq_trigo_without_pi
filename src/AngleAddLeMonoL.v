@@ -486,6 +486,70 @@ destruct s32. {
       }
     }
     apply (rngl_ltb_ge_iff Hto) in Hzc1.
+(*
+    change_angle_sub_r α1 angle_right.
+    progress sin_cos_add_sub_right_hyp T Hzs1.
+    progress sin_cos_add_sub_right_hyp T Hzc1.
+    progress sin_cos_add_sub_right_hyp T Hcc.
+    progress sin_cos_add_sub_right_goal T.
+    apply -> (rngl_lt_0_sub Hop Hor) in Hcc.
+Search (0 < rngl_cos (_ + _))%L.
+Search (0 ≤ rngl_cos (_ + _))%L.
+apply rngl_le_neq.
+split. {
+apply (rngl_cos_add_nonneg_cos_add_nonneg _ _ α2); try easy.
+...
+*)
+    change_angle_sub_l α1 π.
+    progress sin_cos_add_sub_straight_hyp T Hzs1.
+    progress sin_cos_add_sub_straight_hyp T Hzc1.
+    progress sin_cos_add_sub_straight_hyp T Hcc.
+    progress sin_cos_add_sub_straight_goal T.
+    apply -> (rngl_lt_0_sub Hop Hor) in Hcc.
+    destruct (rngl_leb_dec (rngl_cos α1) (rngl_cos α3)) as [Hc13| Hc13]. {
+      apply rngl_leb_le in Hc13.
+      apply rngl_le_neq.
+      split. {
+        apply rngl_sin_sub_nonneg; try easy.
+        now apply rngl_lt_le_incl.
+      }
+      intros H; symmetry in H.
+      apply eq_rngl_sin_0 in H.
+      destruct H as [H| H]. {
+        apply -> angle_sub_move_0_r in H; subst α3.
+        rewrite angle_sub_diag in Hcc.
+        apply (rngl_nle_gt Hor) in Hcc.
+        apply Hcc, rngl_cos_bound.
+      } {
+        apply angle_sub_move_r in H; subst α1.
+        rewrite rngl_sin_add_straight_l in Hzs1.
+        apply (rngl_opp_nonneg_nonpos Hop Hor) in Hzs1.
+        now apply (rngl_nle_gt Hor) in Hzs1.
+      }
+    }
+    apply (rngl_leb_gt_iff Hto) in Hc13.
+    exfalso.
+    apply (rngl_nle_gt Hor) in Hc13.
+    apply Hc13; clear Hc13.
+    destruct (rngl_leb_dec 0 (rngl_cos α3)) as [Hzc3| Hzc3]. {
+      apply rngl_leb_le in Hzc3.
+      apply quadrant_1_sin_sub_nonneg_cos_le; try easy. {
+        now apply rngl_lt_le_incl.
+      }
+...
+Search (0 ≤ rngl_sin (_ - _))%L.
+apply rngl_sin_sub_nonneg; try easy.
+...
+apply rngl_sin_sub_nonneg_iff'; try easy.
+apply rngl_cos_decr.
+...
+    apply rngl_le_neq.
+    split. {
+Search (0 ≤ rngl_sin (_ - _))%L.
+      apply rngl_sin_sub_nonneg_iff'; try easy.
+...
+Search (0 < rngl_sin (_ - _))%L.
+Search (0 ≤ rngl_sin (_ - _))%L.
 ...
 *)
 
