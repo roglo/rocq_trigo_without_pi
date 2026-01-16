@@ -542,9 +542,9 @@ apply (rngl_cos_add_nonneg_cos_add_nonneg _ _ α2); try easy.
           intros Hcc'.
           apply (rngl_nle_gt Hor) in Hcc.
           apply Hcc; clear Hcc.
-apply rngl_lt_le_incl in Hzs2, Hzs3.
-clear - Hto Hor Hop Hzc3 Hc21 Hos Hzs1 Hzs2 Hzs3.
-(* lemma *)
+          apply rngl_lt_le_incl in Hzs2, Hzs3.
+          clear - Hto Hor Hop Hzc3 Hc21 Hos Hzs1 Hzs2 Hzs3.
+          (* lemma *)
           rewrite rngl_cos_add, rngl_cos_sub.
           apply (rngl_le_sub_le_add_r Hop Hor).
           rewrite <- rngl_add_assoc.
@@ -564,6 +564,14 @@ clear - Hto Hor Hop Hzc3 Hc21 Hos Hzs1 Hzs2 Hzs3.
         intros Hc31.
         apply (rngl_nle_gt Hor) in Hcc.
         apply Hcc; clear Hcc.
+        apply (rngl_le_trans Hor _ (rngl_cos α3)). {
+          rewrite angle_add_comm.
+          apply rngl_lt_le_incl in Hzs2, Hzs3.
+          now apply quadrant_1_rngl_cos_add_le_cos_l.
+        }
+        apply rngl_lt_le_incl in Hzs3, Hc21, Hc31.
+        now apply rngl_cos_le_cos_sub.
+      }
 ...
 *)
 
