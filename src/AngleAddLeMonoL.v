@@ -245,15 +245,6 @@ destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
   apply angle_le_refl.
 }
 intros * (H12, H23).
-specialize angle_add_overflow_le_lemma_6 as H1.
-specialize quadrant_1_quadrant_4_cos_lt_cos_add as H2.
-specialize angle_add_overflow_le_lemma_5 as H4.
-specialize angle_add_overflow_le_lemma_8 as H5.
-specialize angle_add_overflow_le_lemma_9 as H6.
-...
-Search (rngl_cos _ ≤ rngl_cos _)%L.
-Search (_ → 0 ≤ rngl_sin (_ + _))%L.
-...
 progress unfold angle_leb.
 remember (0 ≤? rngl_sin (α3 - α2))%L as s32 eqn:Hs32.
 remember (0 ≤? rngl_sin (α3 - α1))%L as s31 eqn:Hs31.
@@ -581,6 +572,26 @@ apply (rngl_cos_add_nonneg_cos_add_nonneg _ _ α2); try easy.
         apply rngl_lt_le_incl in Hzs3, Hc21, Hc31.
         now apply rngl_cos_le_cos_sub.
       }
+      apply (rngl_leb_gt_iff Hto) in Hzc2.
+      clear H23. (* useless *)
+      exfalso.
+      apply (rngl_nle_gt Hor) in Hcc.
+      apply Hcc; clear Hcc.
+      apply (rngl_le_trans Hor _ 0). {
+        rewrite rngl_cos_add.
+        apply (rngl_le_sub_0 Hop Hor).
+        apply (rngl_le_trans Hor _ 0). {
+          apply rngl_lt_le_incl in Hzc2.
+          now apply (rngl_mul_nonpos_nonneg Hop Hor).
+        }
+        apply rngl_lt_le_incl in Hzs2, Hzs3.
+        now apply (rngl_mul_nonneg_nonneg Hos Hor).
+      }
+      apply rngl_lt_le_incl in Hzs3.
+      now apply rngl_cos_sub_nonneg.
+    }
+    exfalso.
+    apply (rngl_leb_gt_iff Hto) in Hzc3.
 ...
 *)
 
