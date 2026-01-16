@@ -248,7 +248,11 @@ intros * (H12, H23).
 specialize angle_add_overflow_le_lemma_6 as H1.
 specialize quadrant_1_quadrant_4_cos_lt_cos_add as H2.
 specialize angle_add_overflow_le_lemma_5 as H4.
+specialize angle_add_overflow_le_lemma_8 as H5.
+specialize angle_add_overflow_le_lemma_9 as H6.
+...
 Search (rngl_cos _ ≤ rngl_cos _)%L.
+Search (_ → 0 ≤ rngl_sin (_ + _))%L.
 ...
 progress unfold angle_leb.
 remember (0 ≤? rngl_sin (α3 - α2))%L as s32 eqn:Hs32.

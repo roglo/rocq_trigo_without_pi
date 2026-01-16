@@ -385,13 +385,14 @@ Theorem angle_add_overflow_le_lemma_8 :
   (0 ≤ rngl_sin α1)%L
   → (rngl_sin α2 < 0)%L
   → (rngl_sin α3 < 0)%L
-  → (rngl_sin (α1 + α2) < 0)%L
   → (0 ≤ rngl_sin (α1 + α3))%L
   → (rngl_cos α3 ≤ rngl_cos α2)%L
-  → False.
+  → (0 ≤ rngl_sin (α1 + α2))%L.
 Proof.
 destruct_ac.
-intros * Hzs1 Hzs2 Hzs3 Hzs12 Hzs13 H32.
+intros * Hzs1 Hzs2 Hzs3 Hzs13 H32.
+apply (rngl_nlt_ge_iff Hto).
+intros Hzs12.
 destruct (rngl_leb_dec (rngl_cos α2) 0) as [Hc2z| Hzc2]. {
   apply rngl_leb_le in Hc2z.
   change_angle_add_r α2 π.
@@ -500,13 +501,14 @@ Theorem angle_add_overflow_le_lemma_9 :
   (rngl_sin α1 < 0)%L
   → (0 ≤ rngl_sin α2)%L
   → (0 ≤ rngl_sin α3)%L
-  → (rngl_sin (α1 + α2) < 0)%L
   → (0 ≤ rngl_sin (α1 + α3))%L
   → (rngl_cos α2 ≤ rngl_cos α3)%L
-  → False.
+  → (0 ≤ rngl_sin (α1 + α2))%L.
 Proof.
 destruct_ac.
-intros * Hzs1 Hzs2 Hzs3 Hzs12 Hzs13 H32.
+intros * Hzs1 Hzs2 Hzs3 Hzs13 H32.
+apply (rngl_nlt_ge_iff Hto).
+intros Hzs12.
 destruct (rngl_leb_dec 0 (rngl_cos α1)) as [Hzc1| Hc1z]. {
   apply rngl_leb_le in Hzc1.
   change_angle_add_r α1 π/₂.
@@ -775,7 +777,9 @@ destruct zs1. {
     }
     clear H12.
     apply (rngl_leb_gt_iff Hto) in Hzs12.
-    now apply (angle_add_overflow_le_lemma_8 α1 α2 α3).
+    apply (rngl_nle_gt Hor) in Hzs12.
+    apply Hzs12; clear Hzs12.
+    now apply (angle_add_overflow_le_lemma_8 _ _ α3).
   }
 }
 destruct zs12; [ easy | ].
@@ -788,7 +792,9 @@ destruct zs13. {
     apply rngl_leb_le in Hzs2.
     destruct zs3; [ | easy ].
     apply rngl_leb_le in Hzs3, H32.
-    now apply (angle_add_overflow_le_lemma_9 α1 α2 α3).
+    apply (rngl_nle_gt Hor) in Hzs12.
+    apply Hzs12; clear Hzs12.
+    now apply (angle_add_overflow_le_lemma_9 _ _ α3).
   } {
     apply (rngl_leb_gt_iff Hto) in Hzs2.
     apply (rngl_nlt_ge Hor) in H12.
