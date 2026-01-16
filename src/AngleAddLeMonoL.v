@@ -592,6 +592,47 @@ apply (rngl_cos_add_nonneg_cos_add_nonneg _ _ α2); try easy.
     }
     exfalso.
     apply (rngl_leb_gt_iff Hto) in Hzc3.
+(**)
+    change_angle_sub_l α3 π.
+    progress sin_cos_add_sub_straight_hyp T Hzs3.
+    progress sin_cos_add_sub_straight_hyp T Hs32.
+    progress sin_cos_add_sub_straight_hyp T H23.
+    progress sin_cos_add_sub_straight_hyp T Hcc.
+    progress sin_cos_add_sub_straight_hyp T Hzc3.
+    rewrite (rngl_add_opp_r Hop) in H23.
+    apply -> (rngl_le_0_sub Hop Hor) in H23.
+    rewrite rngl_sin_sub_anticomm in Hs32.
+    apply (rngl_opp_nonpos_nonneg Hop Hor) in Hs32.
+    apply (rngl_nle_gt Hor) in Hcc.
+    apply Hcc; clear Hcc.
+    rewrite rngl_cos_sub_comm.
+...
+Search (rngl_cos _ ≤ rngl_cos _)%L.
+apply angle_le_sub_le_add_l_lemma_1; try easy.
+apply rngl_sin_sub_nonneg_iff'; try easy.
+apply rngl_cos_cos_sin_sin_nonneg_sin_le_cos_le_iff; try easy.
+apply quadrant_1_sin_sub_nonneg_cos_le; try easy.
+...
+    apply (rngl_nlt_ge Hor) in H23.
+    apply H23; clear H23.
+Search (rngl_cos _ < rngl_cos _)%L.
+apply rngl_cos_cos_sin_sin_nonneg_sin_lt_cos_lt_iff; try easy.
+apply quadrant_1_sin_sub_pos_cos_lt; try easy.
+...
+    apply (rngl_nlt_ge Hor) in Hs32.
+    apply Hs32; clear Hs32.
+Search (0 < rngl_sin (_ - _))%L.
+...
+    change_angle_sub_r α3 π/₂.
+    progress sin_cos_add_sub_right_hyp T Hzs3.
+    progress sin_cos_add_sub_right_hyp T Hs32.
+    progress sin_cos_add_sub_right_hyp T H23.
+    progress sin_cos_add_sub_right_hyp T Hcc.
+    progress sin_cos_add_sub_right_hyp T Hzc3.
+    apply (rngl_nle_gt Hor) in Hcc.
+    apply Hcc; clear Hcc.
+    apply (rngl_le_opp_l Hop Hor).
+Search (0 ≤ rngl_sin _ + rngl_sin _)%L.
 ...
 *)
 
