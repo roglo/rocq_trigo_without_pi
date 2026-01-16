@@ -533,12 +533,37 @@ apply (rngl_cos_add_nonneg_cos_add_nonneg _ _ α2); try easy.
     apply Hc13; clear Hc13.
     destruct (rngl_leb_dec 0 (rngl_cos α3)) as [Hzc3| Hzc3]. {
       apply rngl_leb_le in Hzc3.
+(*
       apply quadrant_1_sin_sub_nonneg_cos_le; try easy. {
         now apply rngl_lt_le_incl.
       }
+*)
+      destruct (rngl_leb_dec 0 (rngl_cos α2)) as [Hzc2| Hzc2]. {
+        apply rngl_leb_le in Hzc2.
+        clear H23 Hs32. (* pas utiles *)
+apply (rngl_nlt_ge_iff Hto).
+intros Hcc'.
+apply (rngl_nle_gt Hor) in Hcc.
+apply Hcc; clear Hcc.
+...
+rewrite rngl_cos_sub_comm.
+rewrite angle_add_comm.
+apply angle_add_le_mono_l_lemma_3.
+...
+Search (rngl_cos _ ≤ rngl_cos _)%L.
+apply angle_add_le_mono_l_lemma_1; try easy.
+apply rngl_cos_cos_sin_sin_nonneg_sin_le_cos_le_iff; try easy.
+...
+      rewrite rngl_cos_sub_comm in Hcc.
+      rewrite angle_add_comm in Hcc.
+      change_angle_sub_l α1 π/₂.
+      progress sin_cos_add_sub_right_hyp T Hzs1.
+      progress sin_cos_add_sub_right_hyp T Hcc.
+      progress sin_cos_add_sub_right_hyp T Hzc1.
+      rewrite <- angle_sub_add_distr.
+      rewrite rngl_sin_sub_right_l.
 ...
 Search (0 ≤ rngl_sin (_ - _))%L.
-apply rngl_sin_sub_nonneg; try easy.
 ...
 apply rngl_sin_sub_nonneg_iff'; try easy.
 apply rngl_cos_decr.
