@@ -602,11 +602,12 @@ Theorem angle_add_overflow_le_lemma_10 :
   (rngl_sin α1 < 0)%L
   → (rngl_sin α2 < 0)%L
   → (rngl_sin (α1 + α2) < 0)%L
-  → (rngl_cos α1 ≤ rngl_cos (α1 + α2))%L
-  → False.
+  → (rngl_cos (α1 + α2) < rngl_cos α1)%L.
 Proof.
 destruct_ac.
-intros * Hzs1 Hzs2 Hzs12 H12.
+intros * Hzs1 Hzs2 Hzs12.
+apply (rngl_nle_gt_iff Hto).
+intros H12.
 destruct (rngl_leb_dec 0 (rngl_cos α1)) as [Hzc1| Hc1z]. {
   apply rngl_leb_le in Hzc1.
   change_angle_add_r α1 π/₂.
@@ -787,8 +788,9 @@ destruct zs13. {
     now apply (angle_add_overflow_le_lemma_9 α1 α2 α3).
   } {
     apply (rngl_leb_gt_iff Hto) in Hzs2.
-    specialize angle_add_overflow_le_lemma_10 as H1.
-    apply (H1 α1 α2 Hzs1 Hzs2 Hzs12 H12).
+    apply (rngl_nlt_ge Hor) in H12.
+    apply H12; clear H12.
+    now apply angle_add_overflow_le_lemma_10.
   }
 }
 apply (rngl_leb_gt_iff Hto) in Hzs13.
@@ -798,10 +800,12 @@ destruct zs3. {
   apply rngl_lt_le_incl in Hzs1.
   now apply rngl_cos_le_cos_add.
 }
+exfalso.
 destruct zs2; [ easy | ].
 apply (rngl_leb_gt_iff Hto) in Hzs2, Hzs3.
-apply rngl_leb_le in H32.
-apply angle_add_overflow_le_lemma_10 in H12; try easy.
+apply (rngl_nlt_ge Hor) in H12.
+apply H12; clear H12.
+now apply angle_add_overflow_le_lemma_10.
 Qed.
 
 End a.

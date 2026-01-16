@@ -116,6 +116,8 @@ apply (rngl_add_neg_nonpos Hop Hor). {
 }
 Qed.
 
+(* a version in TrigoWithoutPiExt.v named angle_add_overflow_le_lemma_6
+   doesn't require the hypothesis 0 ≤ rngl_cos α2... *)
 Theorem quadrant_1_quadrant_4_cos_lt_cos_add :
   ∀ α1 α2,
   (0 ≤ rngl_sin α1)%L
@@ -129,7 +131,6 @@ intros * Hzs1 Hzs2 Hzc2 Hzs12.
 change_angle_opp α2.
 progress sin_cos_opp_hyp T Hzs2.
 progress sin_cos_opp_hyp T Hzs12.
-progress sin_cos_opp_hyp T Hzc2.
 progress sin_cos_opp_goal T.
 rewrite rngl_cos_sub_comm.
 apply rngl_cos_lt_cos_sub; [ easy | easy | ].

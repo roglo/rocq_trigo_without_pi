@@ -248,6 +248,16 @@ intros * (H12, H23).
 specialize angle_add_overflow_le_lemma_6 as H1.
 specialize quadrant_1_quadrant_4_cos_lt_cos_add as H2.
 About quadrant_1_quadrant_4_cos_lt_cos_add.
+Search (rngl_cos _ ≤ rngl_cos _)%L.
+About angle_add_overflow_le_lemma_10.
+...
+angle_add_overflow_le_lemma_10:
+  ∀ {T : Type} {ro : ring_like_op T} {rp : ring_like_prop T} 
+    {ac : angle_ctx T} (α1 α2 : angle T),
+    (rngl_sin α1 < 0)%L
+    → (rngl_sin α2 < 0)%L
+      → (rngl_sin (α1 + α2) < 0)%L
+        → (rngl_cos α1 ≤ rngl_cos (α1 + α2))%L → False
 ...
 progress unfold angle_leb.
 remember (0 ≤? rngl_sin (α3 - α2))%L as s32 eqn:Hs32.
