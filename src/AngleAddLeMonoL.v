@@ -247,9 +247,8 @@ destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
 intros * (H12, H23).
 specialize angle_add_overflow_le_lemma_6 as H1.
 specialize quadrant_1_quadrant_4_cos_lt_cos_add as H2.
-About quadrant_1_quadrant_4_cos_lt_cos_add.
-Search (rngl_cos _ ≤ rngl_cos _)%L.
 specialize angle_add_overflow_le_lemma_5 as H4.
+Search (rngl_cos _ ≤ rngl_cos _)%L.
 ...
 progress unfold angle_leb.
 remember (0 ≤? rngl_sin (α3 - α2))%L as s32 eqn:Hs32.
