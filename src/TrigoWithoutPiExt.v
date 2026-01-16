@@ -434,11 +434,12 @@ Theorem angle_add_overflow_le_lemma_5 :
   → (rngl_sin α2 < 0)%L
   → (0 < rngl_cos α1)%L
   → (0 ≤ rngl_sin (α1 + α2))%L
-  → (rngl_cos (α1 + α2) ≤ rngl_cos α1)%L
-  → False.
+  → (rngl_cos α1 < rngl_cos (α1 + α2))%L.
 Proof.
 destruct_ac.
-intros * Hc11 Hzs1 Hzs2 Hzc1 Hzs12 H12.
+intros * Hc11 Hzs1 Hzs2 Hzc1 Hzs12.
+apply (rngl_nle_gt_iff Hto).
+intros H12.
 destruct (rngl_ltb_dec 0 (rngl_cos α2)) as [Hzc2| Hzc2]. {
   apply (rngl_ltb_lt Heo) in Hzc2.
   change_angle_opp α2.
@@ -508,8 +509,6 @@ destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
   now apply rngl_lt_irrefl in Hzs2.
 }
 intros * Hzs1 Hzs2 Hzs12.
-apply (rngl_nle_gt_iff Hto).
-intros H12.
 destruct (rngl_ltb_dec 0 (rngl_cos α1)) as [Hzc1| Hzc1]. {
   apply (rngl_ltb_lt Heo) in Hzc1.
   destruct (rngl_eqb_dec (rngl_cos α1) 1) as [H| H]. {
@@ -520,8 +519,10 @@ destruct (rngl_ltb_dec 0 (rngl_cos α1)) as [Hzc1| Hzc1]. {
     now apply (rngl_nlt_ge Hor) in Hzs12.
   }
   apply (rngl_eqb_neq Heo) in H.
-  now apply angle_add_overflow_le_lemma_5 in H12.
+  now apply angle_add_overflow_le_lemma_5.
 }
+apply (rngl_nle_gt_iff Hto).
+intros H12.
 apply (rngl_ltb_ge_iff Hto) in Hzc1.
 change_angle_sub_r α1 π/₂.
 progress sin_cos_add_sub_right_hyp T Hzs1.
