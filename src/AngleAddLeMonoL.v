@@ -533,48 +533,37 @@ apply (rngl_cos_add_nonneg_cos_add_nonneg _ _ α2); try easy.
     apply Hc13; clear Hc13.
     destruct (rngl_leb_dec 0 (rngl_cos α3)) as [Hzc3| Hzc3]. {
       apply rngl_leb_le in Hzc3.
-(*
-      apply quadrant_1_sin_sub_nonneg_cos_le; try easy. {
-        now apply rngl_lt_le_incl.
-      }
-*)
       destruct (rngl_leb_dec 0 (rngl_cos α2)) as [Hzc2| Hzc2]. {
         apply rngl_leb_le in Hzc2.
         clear H23 Hs32. (* pas utiles *)
-apply (rngl_nlt_ge_iff Hto).
-intros Hcc'.
-apply (rngl_nle_gt Hor) in Hcc.
-apply Hcc; clear Hcc.
-...
-rewrite rngl_cos_sub_comm.
-rewrite angle_add_comm.
-apply angle_add_le_mono_l_lemma_3.
-...
-Search (rngl_cos _ ≤ rngl_cos _)%L.
-apply angle_add_le_mono_l_lemma_1; try easy.
-apply rngl_cos_cos_sin_sin_nonneg_sin_le_cos_le_iff; try easy.
-...
-      rewrite rngl_cos_sub_comm in Hcc.
-      rewrite angle_add_comm in Hcc.
-      change_angle_sub_l α1 π/₂.
-      progress sin_cos_add_sub_right_hyp T Hzs1.
-      progress sin_cos_add_sub_right_hyp T Hcc.
-      progress sin_cos_add_sub_right_hyp T Hzc1.
-      rewrite <- angle_sub_add_distr.
-      rewrite rngl_sin_sub_right_l.
-...
-Search (0 ≤ rngl_sin (_ - _))%L.
-...
-apply rngl_sin_sub_nonneg_iff'; try easy.
-apply rngl_cos_decr.
-...
-    apply rngl_le_neq.
-    split. {
-Search (0 ≤ rngl_sin (_ - _))%L.
-      apply rngl_sin_sub_nonneg_iff'; try easy.
-...
-Search (0 < rngl_sin (_ - _))%L.
-Search (0 ≤ rngl_sin (_ - _))%L.
+        destruct (rngl_leb_dec (rngl_cos α2) (rngl_cos α1)) as [Hc21| Hc21]. {
+          apply rngl_leb_le in Hc21.
+          apply (rngl_nlt_ge_iff Hto).
+          intros Hcc'.
+          apply (rngl_nle_gt Hor) in Hcc.
+          apply Hcc; clear Hcc.
+apply rngl_lt_le_incl in Hzs2, Hzs3.
+clear - Hto Hor Hop Hzc3 Hc21 Hos Hzs1 Hzs2 Hzs3.
+(* lemma *)
+          rewrite rngl_cos_add, rngl_cos_sub.
+          apply (rngl_le_sub_le_add_r Hop Hor).
+          rewrite <- rngl_add_assoc.
+          rewrite <- rngl_mul_add_distr_r.
+          apply (rngl_le_sub_le_add_l Hop Hor).
+          rewrite <- (rngl_mul_sub_distr_r Hop).
+          rewrite rngl_add_comm.
+          apply (rngl_le_trans Hor _ 0). {
+            apply (rngl_mul_nonpos_nonneg Hop Hor); [ | easy ].
+            now apply (rngl_le_sub_0 Hop Hor).
+          }
+          apply (rngl_mul_nonneg_nonneg Hos Hor); [ | easy ].
+          now apply (rngl_le_0_add Hos Hor).
+        }
+        apply (rngl_leb_gt_iff Hto) in Hc21.
+        apply (rngl_nlt_ge_iff Hto).
+        intros Hc31.
+        apply (rngl_nle_gt Hor) in Hcc.
+        apply Hcc; clear Hcc.
 ...
 *)
 
