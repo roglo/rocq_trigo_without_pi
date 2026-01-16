@@ -245,6 +245,10 @@ destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
   apply angle_le_refl.
 }
 intros * (H12, H23).
+specialize angle_add_overflow_le_lemma_6 as H1.
+specialize quadrant_1_quadrant_4_cos_lt_cos_add as H2.
+About quadrant_1_quadrant_4_cos_lt_cos_add.
+...
 progress unfold angle_leb.
 remember (0 ≤? rngl_sin (α3 - α2))%L as s32 eqn:Hs32.
 remember (0 ≤? rngl_sin (α3 - α1))%L as s31 eqn:Hs31.

@@ -119,14 +119,13 @@ Qed.
 Theorem quadrant_1_quadrant_4_cos_lt_cos_add :
   ∀ α1 α2,
   (0 ≤ rngl_sin α1)%L
-  → (0 ≤ rngl_cos α1)%L
   → (rngl_sin α2 < 0)%L
   → (0 ≤ rngl_cos α2)%L
   → (0 ≤ rngl_sin (α1 + α2))%L
   → (rngl_cos α1 < rngl_cos (α1 + α2))%L.
 Proof.
 destruct_ac.
-intros * Hzs1 Hzc1 Hzs2 Hzc2 Hzs12.
+intros * Hzs1 Hzs2 Hzc2 Hzs12.
 change_angle_opp α2.
 progress sin_cos_opp_hyp T Hzs2.
 progress sin_cos_opp_hyp T Hzs12.
