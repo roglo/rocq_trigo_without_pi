@@ -496,20 +496,20 @@ Qed.
 Theorem angle_add_overflow_le_lemma_6 :
   ∀ α1 α2,
   (0 ≤ rngl_sin α1)%L
+  → (rngl_sin α2 < 0)%L
   → (0 ≤ rngl_sin (α1 + α2))%L
-  → (rngl_cos (α1 + α2) ≤ rngl_cos α1)%L
-  → (0 ≤ rngl_sin α2)%L.
+  → (rngl_cos α1 < rngl_cos (α1 + α2))%L.
 Proof.
 destruct_ac.
 destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
   specialize (rngl_characteristic_1 Hos Hc1) as H1.
-  intros * Hzs1 Hzs12 H12.
-  rewrite (H1 (rngl_sin _)).
-  apply (rngl_le_refl Hor).
+  intros * Hzs1 Hzs2 Hzs12.
+  rewrite (H1 (rngl_sin _)) in Hzs2.
+  now apply rngl_lt_irrefl in Hzs2.
 }
-intros * Hzs1 Hzs12 H12.
-apply (rngl_nlt_ge_iff Hto).
-intros Hzs2.
+intros * Hzs1 Hzs2 Hzs12.
+apply (rngl_nle_gt_iff Hto).
+intros H12.
 destruct (rngl_ltb_dec 0 (rngl_cos α1)) as [Hzc1| Hzc1]. {
   apply (rngl_ltb_lt Heo) in Hzc1.
   destruct (rngl_eqb_dec (rngl_cos α1) 1) as [H| H]. {

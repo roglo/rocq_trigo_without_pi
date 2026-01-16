@@ -765,9 +765,9 @@ destruct zs1. {
     destruct zs12. {
       apply rngl_leb_le in Hzs12.
       apply (rngl_ltb_ge_iff Hto) in H12.
-      apply (rngl_nle_gt Hor) in Hzs2.
-      apply Hzs2; clear Hzs2.
-      now apply (angle_add_overflow_le_lemma_6 α1).
+      apply (rngl_nlt_ge Hor) in H12.
+      apply H12; clear H12.
+      now apply angle_add_overflow_le_lemma_6.
     }
     clear H12.
     apply (rngl_leb_gt_iff Hto) in Hzs12.
