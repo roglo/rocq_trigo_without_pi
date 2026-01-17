@@ -592,7 +592,6 @@ apply (rngl_cos_add_nonneg_cos_add_nonneg _ _ α2); try easy.
     }
     exfalso.
     apply (rngl_leb_gt_iff Hto) in Hzc3.
-(**)
     change_angle_sub_l α3 π.
     progress sin_cos_add_sub_straight_hyp T Hzs3.
     progress sin_cos_add_sub_straight_hyp T Hs32.
@@ -643,6 +642,55 @@ apply (rngl_cos_add_nonneg_cos_add_nonneg _ _ α2); try easy.
   }
   destruct zs2; [ easy | ].
   destruct zs3; [ easy | ].
+  apply rngl_leb_le in H12, H23.
+  apply (rngl_leb_gt_iff Hto) in Hzs1, Hzs2, Hzs3.
+  destruct (rngl_leb_dec 0 (rngl_cos α1)) as [Hzc1| Hzc1]. {
+    apply rngl_leb_le in Hzc1.
+    change_angle_opp α1.
+    progress sin_cos_opp_hyp T Hzs1.
+    progress sin_cos_opp_hyp T H12.
+    progress sin_cos_opp_hyp T Hzc1.
+    progress sin_cos_opp_hyp T Hs31.
+    progress sin_cos_opp_goal T.
+    change_angle_opp α2.
+    progress sin_cos_opp_hyp T H12.
+    progress sin_cos_opp_hyp T Hzs2.
+    progress sin_cos_opp_hyp T Hs32.
+    progress sin_cos_opp_hyp T H23.
+    progress sin_cos_opp_goal T.
+    change_angle_opp α3.
+    progress sin_cos_opp_hyp T H23.
+    progress sin_cos_opp_hyp T Hs32.
+    progress sin_cos_opp_hyp T Hzs3.
+    progress sin_cos_opp_hyp T Hs31.
+    progress sin_cos_opp_goal T.
+    destruct (angle_eq_dec α1 α2) as [He12| He12]. {
+      subst α2; apply (rngl_le_refl Hor).
+    }
+    apply rngl_sin_sub_nonneg_iff. {
+      apply rngl_le_neq.
+      split. {
+        apply rngl_lt_le_incl in Hzs1, Hzs3.
+        apply rngl_sin_sub_nonneg; [ easy | easy | ].
+        now apply (rngl_le_trans Hor _ (rngl_cos α2)).
+      }
+      intros H; symmetry in H.
+      apply eq_rngl_sin_0 in H.
+      destruct H as [H| H]. {
+        apply -> angle_sub_move_0_r in H; subst α3.
+        apply (rngl_le_antisymm Hor) in H12; [ | easy ].
+        apply rngl_cos_eq in H12.
+        destruct H12; subst α2; [ easy | ].
+        cbn in Hzs2.
+        apply (rngl_opp_pos_neg Hop Hor) in Hzs2.
+        now apply (rngl_lt_asymm Hor) in Hzs2.
+      } {
+        apply angle_sub_move_r in H; subst α1.
+        rewrite rngl_sin_add_straight_l in Hzs1.
+        apply (rngl_opp_pos_neg Hop Hor) in Hzs1.
+        now apply (rngl_lt_asymm Hor) in Hzs1.
+      }
+    } {
 ...
 *)
 
