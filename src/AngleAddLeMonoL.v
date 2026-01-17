@@ -667,13 +667,9 @@ apply (rngl_cos_add_nonneg_cos_add_nonneg _ _ α2); try easy.
     destruct (angle_eq_dec α1 α2) as [He12| He12]. {
       subst α2; apply (rngl_le_refl Hor).
     }
-    apply rngl_sin_sub_nonneg_iff. {
+    apply rngl_sin_sub_nonneg_iff; [ | easy | ]. {
       apply rngl_le_neq.
-      split. {
-        apply rngl_lt_le_incl in Hzs1, Hzs3.
-        apply rngl_sin_sub_nonneg; [ easy | easy | ].
-        now apply (rngl_le_trans Hor _ (rngl_cos α2)).
-      }
+      split; [ easy | ].
       intros H; symmetry in H.
       apply eq_rngl_sin_0 in H.
       destruct H as [H| H]. {
@@ -691,6 +687,21 @@ apply (rngl_cos_add_nonneg_cos_add_nonneg _ _ α2); try easy.
         now apply (rngl_lt_asymm Hor) in Hzs1.
       }
     } {
+      rewrite angle_sub_sub_distr.
+      rewrite <- angle_add_sub_swap.
+      rewrite angle_sub_add.
+      apply rngl_lt_le_incl in Hzs1, Hzs2.
+      now apply rngl_sin_sub_nonneg.
+    }
+  } {
+    apply (rngl_leb_gt_iff Hto) in Hzc1.
+    change_angle_add_r α1 π.
+    progress sin_cos_add_sub_straight_hyp T Hzs1.
+    progress sin_cos_add_sub_straight_hyp T H12.
+    progress sin_cos_add_sub_straight_hyp T Hzc1.
+    progress sin_cos_add_sub_straight_hyp T Hs31.
+    rewrite angle_sub_sub_distr.
+    progress sin_cos_add_sub_straight_goal T.
 ...
 *)
 
