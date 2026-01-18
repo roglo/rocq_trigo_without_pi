@@ -846,40 +846,33 @@ destruct s31. {
     apply (rngl_opp_neg_pos Hop Hor) in Hs32.
     apply (rngl_nlt_ge Hor) in H12.
     apply H12; clear H12.
+    destruct (angle_eq_dec α1 π) as [H1p| H1p]. {
+      subst α1.
+      rewrite rngl_sin_sub_straight_l in Hs31.
+      cbn.
+      apply rngl_le_neq.
+      split; [ apply rngl_cos_bound | ].
+      intros H.
+      symmetry in H.
+      apply eq_rngl_cos_opp_1 in H; subst α2.
+      rewrite rngl_sin_sub_straight_r in Hs32.
+      apply (rngl_opp_pos_neg Hop Hor) in Hs32.
+      now apply (rngl_nle_gt Hor) in Hs32.
+    }
     apply (rngl_le_lt_trans Hor _ (rngl_cos α3)). {
-      destruct (rngl_leb_dec 0 (rngl_cos α3)) as [Hzc3| Hzc3]. {
-        apply rngl_leb_le in Hzc3.
-        apply rngl_lt_le_incl in Hzs3.
-...
-        apply rngl_sin_sub_nonneg_iff; [ | easy | easy ].
-        apply rngl_le_neq.
-        split; [ easy | ].
-        intros H; symmetry in H.
-        apply eq_rngl_sin_0 in H.
-        destruct H; subst α1. {
-          rewrite angle_sub_0_l in Hs31.
-          cbn in Hs31.
-          apply (rngl_opp_nonneg_nonpos Hop Hor) in Hs31.
-          apply (rngl_le_antisymm Hor) in Hzs3; [ | easy ].
-          apply eq_rngl_sin_0 in Hzs3.
-          destruct Hzs3; subst α3. {
-            rewrite angle_sub_0_l in Hs32.
-            cbn in Hs32.
-            apply (rngl_opp_pos_neg Hop Hor) in Hs32.
-            now apply (rngl_nle_gt Hor) in Hs32.
-          }
-          now rewrite angle_sub_diag in H3z.
-        }
-        clear Hzs1 Hs31.
-...
-        apply quadrant_1_sin_sub_pos_cos_lt; [ easy | easy | easy | ].
-...
-      apply rngl_cos_decr_lt.
-      split. {
-Search (_ < _)%A.
-apply rngl_sin_sub_nonneg_iff; try easy.
-...
-Search (0 ≤ rngl_sin (_ - _))%L.
+      generalize Hzs3; intros Hzs3'.
+      apply rngl_lt_le_incl in Hzs3'.
+      apply rngl_sin_sub_nonneg_iff; [ | easy | easy ].
+      apply rngl_le_neq.
+      split; [ easy | ].
+      intros H; symmetry in H.
+      apply eq_rngl_sin_0 in H.
+      destruct H; subst α1; [ | easy ].
+      rewrite angle_sub_0_l in Hs31.
+      cbn in Hs31.
+      apply (rngl_opp_nonneg_nonpos Hop Hor) in Hs31.
+      now apply (rngl_nlt_ge Hor) in Hs31.
+    }
 ...
 *)
 
