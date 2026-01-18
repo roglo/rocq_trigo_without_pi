@@ -733,6 +733,80 @@ apply (rngl_cos_add_nonneg_cos_add_nonneg _ _ α2); try easy.
       now apply (rngl_le_trans Hor _ (rngl_cos α2)).
     }
     apply (rngl_leb_gt_iff Hto) in Hzc2.
+    change_angle_add_r α2 π.
+    progress sin_cos_add_sub_straight_hyp T H12.
+    progress sin_cos_add_sub_straight_hyp T Hzs2.
+    progress sin_cos_add_sub_straight_hyp T Hs32.
+    progress sin_cos_add_sub_straight_hyp T H23.
+    progress sin_cos_add_sub_straight_hyp T Hzc2.
+    rewrite angle_sub_sub_distr.
+    progress sin_cos_add_sub_straight_goal T.
+    rewrite (rngl_add_opp_l Hop) in H12.
+    apply -> (rngl_le_sub_0 Hop Hor) in H12.
+    rewrite rngl_sin_sub_anticomm in Hs32, Hs31.
+    apply (rngl_opp_nonpos_nonneg Hop Hor) in Hs32, Hs31.
+    apply (rngl_le_opp_l Hop Hor) in H23.
+    destruct (rngl_leb_dec 0 (rngl_cos α3)) as [Hzc3| Hzc3]. {
+      apply rngl_leb_le in Hzc3.
+      change_angle_opp α3.
+      progress sin_cos_opp_hyp T H23.
+      progress sin_cos_opp_hyp T Hs32.
+      progress sin_cos_opp_hyp T Hzs3.
+      progress sin_cos_opp_hyp T Hs31.
+      progress sin_cos_opp_hyp T Hzc3.
+      do 2 rewrite <- angle_opp_add_distr, rngl_cos_opp.
+      do 2 rewrite (angle_add_comm _ α3).
+      rewrite (angle_add_comm _ α3) in Hs32.
+      rewrite (angle_add_comm _ α3) in Hs31.
+      generalize Hzs2; intros H.
+      apply rngl_lt_le_incl in Hzs1, Hzs2, Hzs3.
+      apply angle_add_le_mono_l_lemma_3; try easy.
+      now apply rngl_sin_add_nonneg_angle_add_not_overflow.
+    }
+    apply (rngl_leb_gt_iff Hto) in Hzc3.
+    change_angle_add_r α3 π.
+    progress sin_cos_add_sub_straight_hyp T H23.
+    progress sin_cos_add_sub_straight_hyp T Hs32.
+    progress sin_cos_add_sub_straight_hyp T Hzs3.
+    progress sin_cos_add_sub_straight_hyp T Hs31.
+    progress sin_cos_add_sub_straight_hyp T Hzc3.
+    progress sin_cos_add_sub_straight_goal T.
+    rewrite (rngl_add_opp_r Hop) in H23.
+    apply -> (rngl_le_0_sub Hop Hor) in H23.
+    rewrite rngl_sin_sub_anticomm in Hs32, Hs31.
+    apply (rngl_opp_nonpos_nonneg Hop Hor) in Hs32, Hs31.
+    replace (α3 - α1)%A with (α3 - α2 + (α2 - α1))%A. 2: {
+      rewrite angle_add_sub_assoc.
+      now rewrite angle_sub_add.
+    }
+    apply rngl_lt_le_incl in Hzs2.
+    apply (angle_add_overflow_le_lemma_1 _ α2); try easy. {
+      apply rngl_lt_le_incl in Hzs1.
+      now apply rngl_sin_sub_nonneg.
+    } {
+      apply rngl_lt_le_incl in Hzs3.
+      now rewrite angle_sub_add.
+    } {
+      rewrite angle_add_sub_assoc.
+      now rewrite angle_sub_add.
+    } {
+      rewrite rngl_cos_sub_comm.
+      apply rngl_lt_le_incl in Hzs1.
+      now apply rngl_cos_le_cos_sub.
+    } {
+      rewrite angle_sub_add.
+      rewrite rngl_cos_sub_comm.
+      apply rngl_lt_le_incl in Hzs3.
+      now apply rngl_cos_le_cos_sub.
+    }
+  }
+}
+apply (rngl_leb_gt_iff Hto) in Hs32.
+rewrite rngl_sin_sub_anticomm in Hs32.
+apply (rngl_opp_neg_pos Hop Hor) in Hs32.
+destruct s31. {
+  exfalso.
+  apply rngl_leb_le in Hs31.
 ...
 *)
 
