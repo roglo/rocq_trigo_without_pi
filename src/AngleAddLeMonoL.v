@@ -873,6 +873,27 @@ destruct s31. {
       apply (rngl_opp_nonneg_nonpos Hop Hor) in Hs31.
       now apply (rngl_nlt_ge Hor) in Hs31.
     }
+    apply rngl_le_neq.
+    split. {
+      apply rngl_lt_le_incl in Hs32.
+      now apply rngl_sin_sub_nonneg_iff.
+    }
+    intros H.
+    apply rngl_cos_eq in H.
+    destruct H; subst α3. {
+      rewrite angle_sub_diag in Hs32.
+      now apply rngl_lt_irrefl in Hs32.
+    }
+    cbn in Hzs3.
+    apply (rngl_opp_pos_neg Hop Hor) in Hzs3.
+    now apply (rngl_nle_gt Hor) in Hzs3.
+  }
+  destruct zs3; [ easy | ].
+  apply (rngl_leb_gt_iff Hto) in Hzs2, Hzs3.
+  apply rngl_leb_le in H23.
+  destruct zs1. {
+    clear H12.
+    apply rngl_leb_le in Hzs1.
 ...
 *)
 
