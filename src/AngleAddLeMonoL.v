@@ -891,9 +891,22 @@ destruct s31. {
   destruct zs3; [ easy | ].
   apply (rngl_leb_gt_iff Hto) in Hzs2, Hzs3.
   apply rngl_leb_le in H23.
-  destruct zs1. {
-    clear H12.
-    apply rngl_leb_le in Hzs1.
+  change_angle_opp α2.
+  progress sin_cos_opp_hyp T Hzs2.
+  progress sin_cos_opp_hyp T H23.
+  progress sin_cos_opp_hyp T Hs32.
+  change_angle_opp α3.
+  progress sin_cos_opp_hyp T Hzs3.
+  progress sin_cos_opp_hyp T H23.
+  progress sin_cos_opp_hyp T Hs32.
+  apply (rngl_nle_gt Hor) in Hs32.
+  apply Hs32; clear Hs32.
+  apply (rngl_opp_nonpos_nonneg Hop Hor).
+  apply rngl_lt_le_incl in Hzs2, Hzs3.
+  now apply rngl_sin_sub_nonneg.
+}
+apply (rngl_leb_gt_iff Hto) in Hs31.
+apply rngl_leb_le.
 ...
 *)
 
