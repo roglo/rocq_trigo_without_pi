@@ -907,6 +907,19 @@ destruct s31. {
 }
 apply (rngl_leb_gt_iff Hto) in Hs31.
 apply rngl_leb_le.
+do 2 rewrite (rngl_cos_sub_comm α3).
+rewrite rngl_sin_sub_anticomm in Hs31.
+apply (rngl_opp_neg_pos Hop Hor) in Hs31.
+...
+generalize Hs31; intros H.
+apply rngl_lt_le_incl in H.
+apply rngl_sin_sub_nonneg_iff; try easy.
+rewrite angle_sub_sub_distr.
+rewrite <- angle_add_sub_swap.
+rewrite angle_sub_add.
+...
+replace (α2 - α1)%A with (α2 - α3 - (α1 - α3))%A.
+apply rngl_sin_sub_nonneg; try easy.
 ...
 *)
 
