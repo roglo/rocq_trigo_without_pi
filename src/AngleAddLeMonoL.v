@@ -922,6 +922,31 @@ destruct zs1. {
     now apply (rngl_add_nonneg_pos Hos Hor).
   }
   apply (rngl_leb_gt_iff Hto) in Hzc2.
+  change_angle_add_r α2 π.
+  progress sin_cos_add_sub_straight_hyp T Hzs2.
+  progress sin_cos_add_sub_straight_hyp T Hs23.
+  progress sin_cos_add_sub_straight_hyp T H23.
+  progress sin_cos_add_sub_straight_hyp T Hzc2.
+  progress sin_cos_add_sub_straight_goal T.
+  rewrite rngl_sin_sub_anticomm in Hs23.
+  apply (rngl_opp_neg_pos Hop Hor) in Hs23.
+  apply (rngl_le_opp_l Hop Hor) in H23.
+  destruct (rngl_leb_dec 0 (rngl_cos α3)) as [Hzc3| Hzc3]. {
+    apply rngl_leb_le in Hzc3.
+    change_angle_opp α3.
+    progress sin_cos_opp_hyp T Hs13.
+    progress sin_cos_opp_hyp T H23.
+    progress sin_cos_opp_hyp T Hs23.
+    progress sin_cos_opp_hyp T Hzs3.
+    progress sin_cos_opp_hyp T Hzc3.
+    exfalso.
+    apply (rngl_nle_gt Hor) in Hs23.
+    apply Hs23; clear Hs23.
+    apply (rngl_opp_nonpos_nonneg Hop Hor).
+    apply rngl_lt_le_incl in Hzs2, Hzs3, Hzc2.
+    now apply rngl_sin_add_nonneg.
+  }
+  apply (rngl_leb_gt_iff Hto) in Hzc3.
 ...
 (*
     change_angle_add_r α2 π/₂.
