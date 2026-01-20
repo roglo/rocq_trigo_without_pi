@@ -1068,32 +1068,32 @@ destruct (rngl_leb_dec 0 (rngl_cos α1)) as [Hzc1| Hzc1]. {
 Qed.
 
 Theorem angle_sub_le_mono_l :
-  ∀ α1 α2 α3,
-  (α1 ≤ α2 ≤ α3)%A
-  → (α3 - α2 ≤ α3 - α1)%A.
+  ∀ α1 α3 α2,
+  (α3 ≤ α2 ≤ α1)%A
+  → (α1 - α2 ≤ α1 - α3)%A.
 Proof.
 destruct_ac.
 destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
   specialize (rngl_characteristic_1_angle_0 Hc1) as H1.
   intros * (H12, H23).
-  rewrite (H1 α2), (H1 α1).
+  rewrite (H1 α2), (H1 α3).
   apply angle_le_refl.
 }
 intros * (H12, H23).
 destruct (angle_eq_dec α2 0) as [H2z| H2z]. {
   subst α2.
-  apply angle_nonpos in H12; subst α1.
+  apply angle_nonpos in H12; subst α3.
   apply angle_le_refl.
 }
-destruct (angle_eq_dec α3 0) as [H3z| H3z]. {
-  subst α3.
+destruct (angle_eq_dec α1 0) as [H3z| H3z]. {
+  subst α1.
   apply angle_nonpos in H23; subst α2.
-  apply angle_nonpos in H12; subst α1.
+  apply angle_nonpos in H12; subst α3.
   apply angle_le_refl.
 }
 progress unfold angle_leb.
-remember (0 ≤? rngl_sin (α3 - α2))%L as s32 eqn:Hs32.
-remember (0 ≤? rngl_sin (α3 - α1))%L as s31 eqn:Hs31.
+remember (0 ≤? rngl_sin (α1 - α2))%L as s32 eqn:Hs32.
+remember (0 ≤? rngl_sin (α1 - α3))%L as s31 eqn:Hs31.
 symmetry in Hs32, Hs31.
 destruct s32. {
   destruct s31; [ | easy ].
@@ -1108,9 +1108,9 @@ destruct s31. {
   exfalso.
   apply rngl_leb_le in Hs31.
   progress unfold angle_leb in H12, H23.
-  remember (0 ≤? rngl_sin α1)%L as zs1 eqn:Hzs1.
+  remember (0 ≤? rngl_sin α3)%L as zs1 eqn:Hzs1.
   remember (0 ≤? rngl_sin α2)%L as zs2 eqn:Hzs2.
-  remember (0 ≤? rngl_sin α3)%L as zs3 eqn:Hzs3.
+  remember (0 ≤? rngl_sin α1)%L as zs3 eqn:Hzs3.
   symmetry in Hzs1, Hzs2, Hzs3.
   destruct zs2. {
     apply rngl_leb_le in Hzs2.
@@ -1126,7 +1126,7 @@ destruct s31. {
     }
     apply (rngl_leb_gt_iff Hto) in Hzs3.
     clear H23.
-    change_angle_add_r α3 π.
+    change_angle_add_r α1 π.
     progress sin_cos_add_sub_straight_hyp T Hs31.
     progress sin_cos_add_sub_straight_hyp T Hs32.
     progress sin_cos_add_sub_straight_hyp T Hzs3.
@@ -1135,8 +1135,8 @@ destruct s31. {
     apply (rngl_opp_neg_pos Hop Hor) in Hs32.
     apply (rngl_nlt_ge Hor) in H12.
     apply H12; clear H12.
-    destruct (angle_eq_dec α1 π) as [H1p| H1p]. {
-      subst α1.
+    destruct (angle_eq_dec α3 π) as [H1p| H1p]. {
+      subst α3.
       rewrite rngl_sin_sub_straight_l in Hs31.
       cbn.
       apply rngl_le_neq.
@@ -1148,7 +1148,7 @@ destruct s31. {
       apply (rngl_opp_pos_neg Hop Hor) in Hs32.
       now apply (rngl_nle_gt Hor) in Hs32.
     }
-    apply (rngl_le_lt_trans Hor _ (rngl_cos α3)). {
+    apply (rngl_le_lt_trans Hor _ (rngl_cos α1)). {
       generalize Hzs3; intros Hzs3'.
       apply rngl_lt_le_incl in Hzs3'.
       apply rngl_sin_sub_nonneg_iff; [ | easy | easy ].
@@ -1156,7 +1156,7 @@ destruct s31. {
       split; [ easy | ].
       intros H; symmetry in H.
       apply eq_rngl_sin_0 in H.
-      destruct H; subst α1; [ | easy ].
+      destruct H; subst α3; [ | easy ].
       rewrite angle_sub_0_l in Hs31.
       cbn in Hs31.
       apply (rngl_opp_nonneg_nonpos Hop Hor) in Hs31.
@@ -1169,7 +1169,7 @@ destruct s31. {
     }
     intros H.
     apply rngl_cos_eq in H.
-    destruct H; subst α3. {
+    destruct H; subst α1. {
       rewrite angle_sub_diag in Hs32.
       now apply rngl_lt_irrefl in Hs32.
     }
@@ -1184,7 +1184,7 @@ destruct s31. {
   progress sin_cos_opp_hyp T Hzs2.
   progress sin_cos_opp_hyp T H23.
   progress sin_cos_opp_hyp T Hs32.
-  change_angle_opp α3.
+  change_angle_opp α1.
   progress sin_cos_opp_hyp T Hzs3.
   progress sin_cos_opp_hyp T H23.
   progress sin_cos_opp_hyp T Hs32.
@@ -1196,22 +1196,35 @@ destruct s31. {
 }
 apply (rngl_leb_gt_iff Hto) in Hs31.
 apply rngl_leb_le.
-do 2 rewrite (rngl_cos_sub_comm α3).
+do 2 rewrite (rngl_cos_sub_comm α1).
 rewrite rngl_sin_sub_anticomm in Hs31.
 apply (rngl_opp_neg_pos Hop Hor) in Hs31.
 now apply angle_sub_le_mono_l_lemma_2.
 Qed.
 
 Theorem angle_sub_le_mono_l' :
-  ∀ α2 α3 α1,
-  angle_add_overflow α3 (- α1) = false
-  → α1 ≠ 0%A
-  → (α1 ≤ α2)%A
-  → (α3 - α2 ≤ α3 - α1)%A.
+  ∀ α1 α2 α3,
+  angle_add_overflow α1 (- α3) = false
+  → α3 ≠ 0%A
+  → (α3 ≤ α2)%A
+  → (α1 - α2 ≤ α1 - α3)%A.
 Proof.
 intros * Hov H1z H12.
 apply angle_add_le_mono_l; [ easy | ].
 now apply angle_opp_le_compat_if.
+Qed.
+
+Theorem angle_add_le_mono_l' :
+  ∀ α1 α3 α2,
+  α2 ≠ 0%A
+  → (- α2 ≤ α1)%A
+  → (α2 ≤ α3)%A
+  → (α1 + α2 ≤ α1 + α3)%A.
+Proof.
+intros * H2z H21 H23.
+do 2 rewrite <- angle_sub_opp_r.
+apply angle_sub_le_mono_l.
+split; [ now apply angle_opp_le_compat_if | easy ].
 Qed.
 
 End a.
