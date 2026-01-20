@@ -2049,10 +2049,12 @@ destruct n. {
     in Htt. 2: {
       intros i.
       split. {
-Check angle_sub_le_mono_l.
-...
-        apply angle_sub_le_mono_l. {
+        apply angle_sub_le_mono_l.
+        split. {
           progress unfold seq_angle_to_div_nat.
+...
+          apply angle_mul_le_mono_l.
+...
           apply (angle_add_overflow_le_lt α); [ apply angle_le_refl | ].
 Check angle_opp_lt_compat_if.
 ...
