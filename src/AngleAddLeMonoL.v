@@ -1058,15 +1058,20 @@ destruct (rngl_leb_dec 0 (rngl_cos α1)) as [Hzc1| Hzc1]. {
     apply rngl_lt_le_incl in Hzs1, Hzs3, Hzc1.
     now apply rngl_sin_add_nonneg.
   }
-...
   apply (rngl_leb_gt_iff Hto) in Hzc3.
   change_angle_add_r α3 π.
   progress sin_cos_add_sub_straight_hyp T H23.
-  progress sin_cos_add_sub_straight_hyp T Hs32.
+  progress sin_cos_add_sub_straight_hyp T Hs23.
   progress sin_cos_add_sub_straight_hyp T Hzs3.
-  progress sin_cos_add_sub_straight_hyp T Hs31.
+  progress sin_cos_add_sub_straight_hyp T Hs13.
   progress sin_cos_add_sub_straight_hyp T Hzc3.
+  do 2 rewrite angle_sub_sub_distr.
   progress sin_cos_add_sub_straight_goal T.
+  rewrite (rngl_add_opp_l Hop) in H23.
+  apply -> (rngl_le_sub_0 Hop Hor) in H23.
+  exfalso.
+...
+  move α2 before α1; move α3 before α2.
   rewrite (rngl_add_opp_r Hop) in H23.
   apply -> (rngl_le_0_sub Hop Hor) in H23.
   rewrite rngl_sin_sub_anticomm in Hs32, Hs31.
