@@ -2014,10 +2014,36 @@ destruct n. {
     apply Nat_eq_b2n_0.
     apply angle_add_not_overflow_diag.
     progress unfold angle_div_nat in Htt.
+    apply angle_lim_move_0_r in Htt.
+    apply angle_lim_opp in Htt.
+    rewrite angle_opp_0 in Htt.
+    eapply (angle_lim_eq_compat 0 0) in Htt. 2: {
+      intros i.
+      rewrite Nat.add_0_r.
+      rewrite angle_opp_sub_distr.
+      reflexivity.
+    }
+...
+    apply (angle_lim_0_le Hor _ (λ i, α - 2 ^ i * (α /₂^i))%A)
+    in Htt. 2: {
+      intros i.
+      split. {
+        apply angle_sub_le_mono_l.
+        split. {
+          progress unfold seq_angle_to_div_nat.
+          apply angle_mul_le_mono_r. {
+            apply angle_mul_nat_div_2π_pow_div.
+          }
+          apply Nat.Div0.div_le_upper_bound.
+          now apply Nat.le_mul_l.
+        }
+...
     eapply (angle_lim_eq_compat 1 0) in Htt. 2: {
       intros i.
       rewrite Nat.add_0_r.
       progress unfold seq_angle_to_div_nat.
+      specialize (Nat.div_mod (2 ^ (i + 1)) 3 (Nat.neq_succ_0 _)) as H1.
+...
       rewrite Nat.pow_add_r.
       rewrite Nat.pow_1_r.
 ...
