@@ -219,19 +219,16 @@ subst α3.
 now apply angle_lt_irrefl in H23.
 Qed.
 
-Theorem angle_sub_le_mono_l :
-  ∀ α2 α3 α1,
-  angle_add_overflow α3 (- α1) = false
-  → α1 ≠ 0%A
-  → (α1 ≤ α2)%A
-  → (α3 - α2 ≤ α3 - α1)%A.
+Theorem rngl_cos_le_opp_1 : ∀ α, (rngl_cos α ≤ -1)%L → α = π.
 Proof.
-intros * Hov H1z H12.
-apply angle_add_le_mono_l; [ easy | ].
-now apply angle_opp_le_compat_if.
+destruct_ac.
+intros * H1.
+apply (rngl_le_antisymm Hor) in H1; [ | apply rngl_cos_bound ].
+symmetry in H1.
+now apply eq_rngl_cos_opp_1 in H1.
 Qed.
 
-Theorem angle_sub_le_mono_l'_lemma_1 :
+Theorem angle_sub_le_mono_l_lemma_1 :
   ∀ α1 α2 α3,
   (α1 ≤ α2 ≤ α3)%A
   → (0 ≤ rngl_sin (α3 - α2))%L
@@ -782,17 +779,7 @@ destruct (rngl_leb_dec 0 (rngl_cos α1)) as [Hzc1| Hzc1]. {
 }
 Qed.
 
-Theorem rngl_cos_le_opp_1 : ∀ α, (rngl_cos α ≤ -1)%L → α = π.
-Proof.
-destruct_ac.
-intros * H1.
-apply (rngl_le_antisymm Hor) in H1; [ | apply rngl_cos_bound ].
-symmetry in H1.
-now apply eq_rngl_cos_opp_1 in H1.
-Qed.
-
-(* to be completed
-Theorem angle_sub_le_mono_l'_lemma_2 :
+Theorem angle_sub_le_mono_l_lemma_2 :
   ∀ α1 α2 α3,
   (α1 ≤ α2 ≤ α3)%A
   → (0 < rngl_sin (α2 - α3))%L
@@ -1069,42 +1056,18 @@ destruct (rngl_leb_dec 0 (rngl_cos α1)) as [Hzc1| Hzc1]. {
   progress sin_cos_add_sub_straight_goal T.
   rewrite (rngl_add_opp_l Hop) in H23.
   apply -> (rngl_le_sub_0 Hop Hor) in H23.
-  exfalso.
-...
   move α2 before α1; move α3 before α2.
-  rewrite (rngl_add_opp_r Hop) in H23.
-  apply -> (rngl_le_0_sub Hop Hor) in H23.
-  rewrite rngl_sin_sub_anticomm in Hs32, Hs31.
-  apply (rngl_opp_nonpos_nonneg Hop Hor) in Hs32, Hs31.
-  replace (α3 - α1)%A with (α3 - α2 + (α2 - α1))%A. 2: {
-    rewrite angle_add_sub_assoc.
-    now rewrite angle_sub_add.
-  }
-  apply rngl_lt_le_incl in Hzs2.
-  apply (angle_add_overflow_le_lemma_1 _ α2); try easy. {
-    apply rngl_lt_le_incl in Hzs1.
-    now apply rngl_sin_sub_nonneg.
-  } {
-    apply rngl_lt_le_incl in Hzs3.
-    now rewrite angle_sub_add.
-  } {
-    rewrite angle_add_sub_assoc.
-    now rewrite angle_sub_add.
-  } {
-    rewrite rngl_cos_sub_comm.
-    apply rngl_lt_le_incl in Hzs1.
-    now apply rngl_cos_le_cos_sub.
-  } {
-    rewrite angle_sub_add.
-    rewrite rngl_cos_sub_comm.
-    apply rngl_lt_le_incl in Hzs3.
-    now apply rngl_cos_le_cos_sub.
-  }
+  exfalso.
+  apply (rngl_nle_gt Hor) in Hs23.
+  apply Hs23; clear Hs23.
+  rewrite rngl_sin_sub_anticomm.
+  apply (rngl_opp_nonpos_nonneg Hop Hor).
+  apply rngl_lt_le_incl in Hzs2, Hzs3.
+  now apply rngl_sin_sub_nonneg.
 }
 Qed.
-...
 
-Theorem angle_sub_le_mono_l' :
+Theorem angle_sub_le_mono_l :
   ∀ α1 α2 α3,
   (α1 ≤ α2 ≤ α3)%A
   → (α3 - α2 ≤ α3 - α1)%A.
@@ -1136,7 +1099,7 @@ destruct s32. {
   destruct s31; [ | easy ].
   apply rngl_leb_le in Hs32, Hs31.
   apply rngl_leb_le.
-  now apply angle_sub_le_mono_l'_lemma_1.
+  now apply angle_sub_le_mono_l_lemma_1.
 }
 apply (rngl_leb_gt_iff Hto) in Hs32.
 rewrite rngl_sin_sub_anticomm in Hs32.
@@ -1180,7 +1143,6 @@ destruct s31. {
       split; [ apply rngl_cos_bound | ].
       intros H.
       symmetry in H.
-...
       apply eq_rngl_cos_opp_1 in H; subst α2.
       rewrite rngl_sin_sub_straight_r in Hs32.
       apply (rngl_opp_pos_neg Hop Hor) in Hs32.
@@ -1237,9 +1199,19 @@ apply rngl_leb_le.
 do 2 rewrite (rngl_cos_sub_comm α3).
 rewrite rngl_sin_sub_anticomm in Hs31.
 apply (rngl_opp_neg_pos Hop Hor) in Hs31.
-... ...
-now apply angle_sub_le_mono_l'_lemma_2.
-...
-*)
+now apply angle_sub_le_mono_l_lemma_2.
+Qed.
+
+Theorem angle_sub_le_mono_l' :
+  ∀ α2 α3 α1,
+  angle_add_overflow α3 (- α1) = false
+  → α1 ≠ 0%A
+  → (α1 ≤ α2)%A
+  → (α3 - α2 ≤ α3 - α1)%A.
+Proof.
+intros * Hov H1z H12.
+apply angle_add_le_mono_l; [ easy | ].
+now apply angle_opp_le_compat_if.
+Qed.
 
 End a.
