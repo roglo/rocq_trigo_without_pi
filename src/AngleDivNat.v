@@ -2014,6 +2014,20 @@ destruct n. {
     apply Nat_eq_b2n_0.
     apply angle_add_not_overflow_diag.
     progress unfold angle_div_nat in Htt.
+    eapply (angle_lim_eq_compat 1 0) in Htt. 2: {
+      intros i.
+      rewrite Nat.add_0_r.
+      progress unfold seq_angle_to_div_nat.
+      rewrite Nat.pow_add_r.
+      rewrite Nat.pow_1_r.
+...
+      rewrite Nat.div_mul; [ | easy ].
+    rewrite Nat.add_comm.
+    rewrite angle_div_2_pow_add_r.
+    rewrite angle_div_2_pow_mul_2_pow.
+    rewrite angle_div_pow2_1.
+    reflexivity.
+...
 (**)
     apply angle_lim_move_0_r in Htt.
     apply angle_lim_opp in Htt.
@@ -2024,25 +2038,19 @@ destruct n. {
       rewrite angle_opp_sub_distr.
       reflexivity.
     }
-Search angle_lim.
-specialize (angle_lim_0_le Hor) as H2.
-...
-    specialize (angle_div_2_pow_le_angle_sub_seq Har 3 α) as H1.
-    eapply (angle_lim_eq_compat 3 0) in Htt. 2: {
-      intros i.
-      rewrite Nat.add_0_r.
-      rewrite angle_opp_sub_distr.
-      reflexivity.
-    }
-...
+    specialize (angle_div_2_pow_le_angle_sub_seq Har 4 α) as H1.
     apply
       (angle_lim_0_le Hor _
-         (λ i, α - seq_angle_to_div_nat (8 * α) 8 (i + 2))%A)
+         (λ i, α - seq_angle_to_div_nat (3 * α) 2 i)%A)
     in Htt. 2: {
       intros i.
       split. {
         apply angle_sub_le_mono_l.
         split. {
+          progress unfold seq_angle_to_div_nat.
+Search (_ * _ ≤ _ * _)%A.
+          apply angle_mul_le_mono_r.
+...
           eapply angle_le_trans.
           now apply seq_angle_to_div_nat_le_straight_div_pow2_log2_pred.
           cbn - [ "*"%A ].
