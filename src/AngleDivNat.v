@@ -2023,8 +2023,7 @@ destruct n. {
       rewrite angle_opp_sub_distr.
       reflexivity.
     }
-...
-    apply (angle_lim_0_le Hor _ (λ i, α - 2 ^ i * (α /₂^i))%A)
+    apply (angle_lim_0_le Hor _ (λ i, α - 2 ^ i / 2 * (3 * α /₂^i))%A)
     in Htt. 2: {
       intros i.
       split. {
@@ -2032,11 +2031,24 @@ destruct n. {
         split. {
           progress unfold seq_angle_to_div_nat.
           apply angle_mul_le_mono_r. {
+            apply (angle_mul_nat_not_overflow_le_l _ (2 ^ i)). {
+              apply Nat.Div0.div_le_upper_bound.
+              now apply Nat.le_mul_l.
+            }
             apply angle_mul_nat_div_2π_pow_div.
           }
           apply Nat.Div0.div_le_upper_bound.
-          now apply Nat.le_mul_l.
+...
         }
+destruct i.
+cbn.
+apply angle_nonneg.
+rewrite Nat.pow_succ_r; [ | easy ].
+rewrite Nat.mul_comm.
+rewrite Nat.div_mul; [ | easy ].
+rewrite angle_div_2_pow_succ_r_2.
+rewrite angle_div_2_pow_mul_2_pow.
+(* marche pas *)
 ...
     eapply (angle_lim_eq_compat 1 0) in Htt. 2: {
       intros i.
