@@ -2037,6 +2037,61 @@ destruct (Nat.eq_dec n 1) as [Hn4| Hn4]. {
       rewrite Htt; cbn.
       apply (angle_div_2_lt_straight Hc1).
     }
+    rewrite <- angle_mul_2_l.
+    progress unfold angle_div_nat in Htt.
+    apply angle_lim_move_0_r in Htt.
+    apply angle_lim_opp in Htt.
+    rewrite angle_opp_0 in Htt.
+    eapply (angle_lim_eq_compat 2 0) in Htt. 2: {
+      intros i.
+      rewrite Nat.add_0_r.
+      rewrite angle_opp_sub_distr.
+      progress unfold seq_angle_to_div_nat.
+      rewrite Nat.pow_add_r.
+      cbn - [ "/" "*"%A ].
+      rewrite Nat.div_mul; [ | easy ].
+      rewrite Nat.add_comm.
+      rewrite angle_div_2_pow_add_r.
+      rewrite angle_div_2_pow_mul_2_pow.
+      reflexivity.
+    }
+    apply angle_lim_const in Htt.
+    symmetry in Htt.
+    apply -> angle_sub_move_0_r in Htt.
+    rewrite Htt.
+    apply angle_add_overflow_mul_div_pow2.
+    cbn.
+    now apply (Nat.lt_trans _ 3).
+  }
+  apply Nat_eq_b2n_0.
+  replace (α + (α + α))%A with (3 * α)%A. 2: {
+    now cbn; rewrite angle_add_0_r.
+  }
+  progress unfold angle_div_nat in Htt.
+  apply angle_lim_move_0_r in Htt.
+  apply angle_lim_opp in Htt.
+  rewrite angle_opp_0 in Htt.
+  eapply (angle_lim_eq_compat 2 0) in Htt. 2: {
+    intros i.
+    rewrite Nat.add_0_r.
+    rewrite angle_opp_sub_distr.
+    progress unfold seq_angle_to_div_nat.
+    rewrite Nat.pow_add_r.
+    cbn - [ "/" "*"%A ].
+    rewrite Nat.div_mul; [ | easy ].
+    rewrite Nat.add_comm.
+    rewrite angle_div_2_pow_add_r.
+    rewrite angle_div_2_pow_mul_2_pow.
+    reflexivity.
+  }
+  apply angle_lim_const in Htt.
+  symmetry in Htt.
+  apply -> angle_sub_move_0_r in Htt.
+  rewrite Htt.
+  apply angle_add_overflow_mul_div_pow2.
+  easy.
+}
+(* donc ça marche pour 4 ; mais j'ai un problème pour 3 *)
 ...
 destruct n. {
   cbn.
