@@ -1992,107 +1992,26 @@ destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
   now rewrite Hch in Hc1.
 }
 intros Har Hco * Htt.
-destruct (angle_eq_dec α 0) as [Htz| Htz]. {
-  subst α.
-  apply angle_div_nat_0_l in Htt; subst α'.
-  apply angle_mul_nat_div_2π_0_r.
-}
 generalize Htt; intros H.
 apply (angle_div_nat_prop Hch Har Hco) in H.
 destruct H as [(H1, H2)| H]; [ now subst n | ].
 subst α; rename α' into α.
 (**)
-destruct (Nat.eq_dec n 2) as [Hn2| Hn2]. {
-  subst n; cbn.
-  replace 2 with (2 ^ 1) in Htt by easy.
+destruct (Nat.eq_dec n (2 ^ Nat.log2 n)) as [Hn2p| Hn2p]. {
+  remember (Nat.log2 n) as m; subst n; rename m into n.
+  clear Heqm.
   apply angle_div_nat_2_pow_mul_div_2_pow in Htt.
-  rewrite angle_add_0_r.
-  rewrite angle_add_overflow_0_r; cbn.
-  apply Nat_eq_b2n_0.
-  apply angle_add_not_overflow_diag.
-  rewrite Htt; cbn.
-  apply (angle_div_2_lt_straight Hc1).
-}
-destruct (Nat.eq_dec n 4) as [Hn4| Hn4]. {
-  subst n; cbn.
-  replace 4 with (2 ^ 2) in Htt by easy.
-  apply angle_div_nat_2_pow_mul_div_2_pow in Htt.
-  rewrite angle_add_0_r.
-  rewrite angle_add_overflow_0_r; cbn.
-  apply Nat.eq_add_0.
-  split. {
-    apply Nat.eq_add_0.
-    split; apply Nat_eq_b2n_0. {
-      apply angle_add_not_overflow_diag.
-      rewrite Htt; cbn.
-      apply (angle_div_2_lt_straight Hc1).
-    }
-    rewrite <- angle_mul_2_l.
-    rewrite Htt.
-    apply angle_add_overflow_mul_div_pow2.
-    cbn.
-    now apply (Nat.lt_trans _ 3).
-  }
-  apply Nat_eq_b2n_0.
-  replace (α + (α + α))%A with (3 * α)%A. 2: {
-    now cbn; rewrite angle_add_0_r.
-  }
   rewrite Htt.
-  apply angle_add_overflow_mul_div_pow2.
-  easy.
+  specialize (angle_mul_nat_div_2π_for_seq 1 (2 ^ n * α)%A n) as H1.
+  now rewrite Nat.div_1_r in H1.
 }
-destruct (Nat.eq_dec n 8) as [Hn8| Hn8]. {
-  subst n; cbn - [ "*"%A ].
-  replace 8 with (2 ^ 3) in Htt by easy.
-  apply angle_div_nat_2_pow_mul_div_2_pow in Htt.
-  replace (0 * α)%A with 0%A by easy.
-  rewrite angle_mul_1_l.
-  rewrite angle_add_overflow_0_r; cbn - [ "*"%A ].
-  apply Nat.eq_add_0.
-  split. {
-    apply Nat.eq_add_0.
-    split. {
-      apply Nat.eq_add_0.
-      split. {
-        apply Nat.eq_add_0.
-        split. {
-          apply Nat.eq_add_0.
-          split. {
-            apply Nat.eq_add_0.
-            split; apply Nat_eq_b2n_0. {
-              apply angle_add_not_overflow_diag.
-              rewrite Htt; cbn.
-              apply (angle_div_2_lt_straight Hc1).
-            }
-            rewrite Htt.
-            apply angle_add_overflow_mul_div_pow2.
-            cbn; flia.
-          }
-          apply Nat_eq_b2n_0.
-          rewrite Htt.
-          apply angle_add_overflow_mul_div_pow2.
-          cbn; flia.
-        }
-        apply Nat_eq_b2n_0.
-        rewrite Htt.
-        apply angle_add_overflow_mul_div_pow2.
-        cbn; flia.
-      }
-      apply Nat_eq_b2n_0.
-      rewrite Htt.
-      apply angle_add_overflow_mul_div_pow2.
-      cbn; flia.
-    }
-    apply Nat_eq_b2n_0.
-    rewrite Htt.
-    apply angle_add_overflow_mul_div_pow2.
-    cbn; flia.
-  }
-  apply Nat_eq_b2n_0.
-  rewrite Htt.
-  apply angle_add_overflow_mul_div_pow2.
-  cbn; easy.
+destruct (angle_eq_dec α 0) as [Htz| Htz]. {
+  subst α.
+  apply angle_mul_nat_div_2π_0_r.
 }
+destruct (Nat.eq_dec n 2) as [Hn2| Hn2]; [ now subst n; cbn in Hn2p | ].
+destruct (Nat.eq_dec n 4) as [Hn4| Hn4]; [ now subst n; cbn in Hn2p | ].
+destruct (Nat.eq_dec n 8) as [Hn8| Hn8]; [ now subst n; cbn in Hn2p | ].
 ...
 destruct n; [ easy | ].
 destruct n. {
