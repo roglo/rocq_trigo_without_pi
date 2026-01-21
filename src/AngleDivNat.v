@@ -2001,6 +2001,99 @@ generalize Htt; intros H.
 apply (angle_div_nat_prop Hch Har Hco) in H.
 destruct H as [(H1, H2)| H]; [ now subst n | ].
 subst α; rename α' into α.
+(**)
+destruct (Nat.eq_dec n 2) as [Hn2| Hn2]. {
+  subst n; cbn.
+  replace 2 with (2 ^ 1) in Htt by easy.
+  apply angle_div_nat_2_pow_mul_div_2_pow in Htt.
+  rewrite angle_add_0_r.
+  rewrite angle_add_overflow_0_r; cbn.
+  apply Nat_eq_b2n_0.
+  apply angle_add_not_overflow_diag.
+  rewrite Htt; cbn.
+  apply (angle_div_2_lt_straight Hc1).
+}
+destruct (Nat.eq_dec n 4) as [Hn4| Hn4]. {
+  subst n; cbn.
+  replace 4 with (2 ^ 2) in Htt by easy.
+  apply angle_div_nat_2_pow_mul_div_2_pow in Htt.
+  rewrite angle_add_0_r.
+  rewrite angle_add_overflow_0_r; cbn.
+  apply Nat.eq_add_0.
+  split. {
+    apply Nat.eq_add_0.
+    split; apply Nat_eq_b2n_0. {
+      apply angle_add_not_overflow_diag.
+      rewrite Htt; cbn.
+      apply (angle_div_2_lt_straight Hc1).
+    }
+    rewrite <- angle_mul_2_l.
+    rewrite Htt.
+    apply angle_add_overflow_mul_div_pow2.
+    cbn.
+    now apply (Nat.lt_trans _ 3).
+  }
+  apply Nat_eq_b2n_0.
+  replace (α + (α + α))%A with (3 * α)%A. 2: {
+    now cbn; rewrite angle_add_0_r.
+  }
+  rewrite Htt.
+  apply angle_add_overflow_mul_div_pow2.
+  easy.
+}
+destruct (Nat.eq_dec n 8) as [Hn8| Hn8]. {
+  subst n; cbn - [ "*"%A ].
+  replace 8 with (2 ^ 3) in Htt by easy.
+  apply angle_div_nat_2_pow_mul_div_2_pow in Htt.
+  replace (0 * α)%A with 0%A by easy.
+  rewrite angle_mul_1_l.
+  rewrite angle_add_overflow_0_r; cbn - [ "*"%A ].
+  apply Nat.eq_add_0.
+  split. {
+    apply Nat.eq_add_0.
+    split. {
+      apply Nat.eq_add_0.
+      split. {
+        apply Nat.eq_add_0.
+        split. {
+          apply Nat.eq_add_0.
+          split. {
+            apply Nat.eq_add_0.
+            split; apply Nat_eq_b2n_0. {
+              apply angle_add_not_overflow_diag.
+              rewrite Htt; cbn.
+              apply (angle_div_2_lt_straight Hc1).
+            }
+            rewrite Htt.
+            apply angle_add_overflow_mul_div_pow2.
+            cbn; flia.
+          }
+          apply Nat_eq_b2n_0.
+          rewrite Htt.
+          apply angle_add_overflow_mul_div_pow2.
+          cbn; flia.
+        }
+        apply Nat_eq_b2n_0.
+        rewrite Htt.
+        apply angle_add_overflow_mul_div_pow2.
+        cbn; flia.
+      }
+      apply Nat_eq_b2n_0.
+      rewrite Htt.
+      apply angle_add_overflow_mul_div_pow2.
+      cbn; flia.
+    }
+    apply Nat_eq_b2n_0.
+    rewrite Htt.
+    apply angle_add_overflow_mul_div_pow2.
+    cbn; flia.
+  }
+  apply Nat_eq_b2n_0.
+  rewrite Htt.
+  apply angle_add_overflow_mul_div_pow2.
+  cbn; easy.
+}
+...
 destruct n; [ easy | ].
 destruct n. {
   cbn.
@@ -2033,35 +2126,6 @@ destruct n. {
   rewrite <- Htt.
   apply (angle_div_2_lt_straight Hc1).
 }
-destruct (Nat.eq_dec n 1) as [Hn4| Hn4]. {
-  subst n; cbn.
-  replace 4 with (2 ^ 2) in Htt by easy.
-  apply angle_div_nat_2_pow_mul_div_2_pow in Htt.
-  rewrite angle_add_0_r.
-  rewrite angle_add_overflow_0_r; cbn.
-  apply Nat.eq_add_0.
-  split. {
-    apply Nat.eq_add_0.
-    split; apply Nat_eq_b2n_0. {
-      apply angle_add_not_overflow_diag.
-      rewrite Htt; cbn.
-      apply (angle_div_2_lt_straight Hc1).
-    }
-    rewrite <- angle_mul_2_l.
-    rewrite Htt.
-    apply angle_add_overflow_mul_div_pow2.
-    cbn.
-    now apply (Nat.lt_trans _ 3).
-  }
-  apply Nat_eq_b2n_0.
-  replace (α + (α + α))%A with (3 * α)%A. 2: {
-    now cbn; rewrite angle_add_0_r.
-  }
-  rewrite Htt.
-  apply angle_add_overflow_mul_div_pow2.
-  easy.
-}
-(* donc ça marche pour 4 ; mais j'ai un problème pour 3 *)
 ...
 destruct n. {
   cbn.
