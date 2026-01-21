@@ -1946,24 +1946,24 @@ apply Nat.Div0.div_le_upper_bound.
 now apply Nat.le_mul_l.
 Qed.
 
-Theorem angle_div_nat_4_mul_div_4 :
-  ∀ α,
-  angle_div_nat (4 * α) 4 α
-  → α = ((4 * α) /₂^2)%A.
+Theorem angle_div_nat_2_pow_mul_div_2_pow :
+  ∀ α n,
+  angle_div_nat (2 ^ n * α) (2 ^ n) α
+  → α = ((2 ^ n * α) /₂^n)%A.
 Proof.
 intros * Htt.
 progress unfold angle_div_nat in Htt.
 apply angle_lim_move_0_r in Htt.
 apply angle_lim_opp in Htt.
 rewrite angle_opp_0 in Htt.
-eapply (angle_lim_eq_compat 2 0) in Htt. 2: {
+eapply (angle_lim_eq_compat n 0) in Htt. 2: {
   intros i.
   rewrite Nat.add_0_r.
   rewrite angle_opp_sub_distr.
   progress unfold seq_angle_to_div_nat.
   rewrite Nat.pow_add_r.
   cbn - [ "/" "*"%A ].
-  rewrite Nat.div_mul; [ | easy ].
+  rewrite Nat.div_mul; [ | now apply Nat.pow_nonzero ].
   rewrite Nat.add_comm.
   rewrite angle_div_2_pow_add_r.
   rewrite angle_div_2_pow_mul_2_pow.
@@ -2035,7 +2035,8 @@ destruct n. {
 }
 destruct (Nat.eq_dec n 1) as [Hn4| Hn4]. {
   subst n; cbn.
-  apply angle_div_nat_4_mul_div_4 in Htt.
+  replace 4 with (2 ^ 2) in Htt by easy.
+  apply angle_div_nat_2_pow_mul_div_2_pow in Htt.
   rewrite angle_add_0_r.
   rewrite angle_add_overflow_0_r; cbn.
   apply Nat.eq_add_0.
