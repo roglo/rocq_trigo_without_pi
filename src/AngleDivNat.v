@@ -2013,6 +2013,34 @@ destruct (Nat.eq_dec n 1) as [Hn1| Hn1]; [ now subst n; cbn in Hn2p | ].
 destruct (Nat.eq_dec n 2) as [Hn2| Hn2]; [ now subst n; cbn in Hn2p | ].
 destruct (Nat.eq_dec n 4) as [Hn4| Hn4]; [ now subst n; cbn in Hn2p | ].
 destruct (Nat.eq_dec n 8) as [Hn8| Hn8]; [ now subst n; cbn in Hn2p | ].
+(**)
+Require Import RingLike.Utils.
+Notation "'∑' ( i = b , e ) , g" :=
+  (Utils.iter_seq b e (λ c i, (c + g)%A) 0%A)
+  (at level 45, i at level 0, b at level 60, e at level 60,
+   right associativity,
+   format "'[hv  ' ∑  ( i  =  b ,  e ) ,  '/' '[' g ']' ']'").
+Theorem glop :
+  ∀ α n i,
+  2 ≤ n
+  → seq_angle_to_div_nat α n i =
+      ∑ (k = 1, i), (((2 ^ k / n mod 2) * α) /₂^k)%A.
+Proof.
+intros * H2n.
+induction i. {
+  rewrite iter_seq_empty; [ | easy ].
+  progress unfold seq_angle_to_div_nat.
+  cbn.
+  destruct n; [ easy | ].
+  destruct n; [ flia H2n | ].
+  now rewrite Nat.div_small.
+}
+progress unfold seq_angle_to_div_nat.
+destruct i. {
+...
+rewrite iter_seq_split_last; [ | flia ].
+...
+rewrite (iter_shift 1).
 ...
 destruct n; [ easy | ].
 destruct n. {
