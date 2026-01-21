@@ -2005,6 +2005,39 @@ destruct n. {
   rewrite <- Htt.
   apply (angle_div_2_lt_straight Hc1).
 }
+destruct (Nat.eq_dec n 1) as [Hn4| Hn4]. {
+  subst n; cbn.
+  rewrite angle_add_0_r.
+  rewrite angle_add_overflow_0_r; cbn.
+  apply Nat.eq_add_0.
+  split. {
+    apply Nat.eq_add_0.
+    split; apply Nat_eq_b2n_0. {
+      apply angle_add_not_overflow_diag.
+      progress unfold angle_div_nat in Htt.
+      apply angle_lim_move_0_r in Htt.
+      apply angle_lim_opp in Htt.
+      rewrite angle_opp_0 in Htt.
+      eapply (angle_lim_eq_compat 2 0) in Htt. 2: {
+        intros i.
+        rewrite Nat.add_0_r.
+        rewrite angle_opp_sub_distr.
+        progress unfold seq_angle_to_div_nat.
+        rewrite Nat.pow_add_r.
+        cbn - [ "/" "*"%A ].
+        rewrite Nat.div_mul; [ | easy ].
+        rewrite Nat.add_comm.
+        rewrite angle_div_2_pow_add_r.
+        rewrite angle_div_2_pow_mul_2_pow.
+        reflexivity.
+      }
+      apply angle_lim_const in Htt.
+      symmetry in Htt.
+      apply -> angle_sub_move_0_r in Htt.
+      rewrite Htt; cbn.
+      apply (angle_div_2_lt_straight Hc1).
+    }
+...
 destruct n. {
   cbn.
   rewrite angle_add_0_r.
@@ -2023,7 +2056,7 @@ destruct n. {
       rewrite angle_opp_sub_distr.
       reflexivity.
     }
-    apply (angle_lim_0_le Hor _ (λ i, α - 2 ^ i / 2 * (3 * α /₂^i))%A)
+    apply (angle_lim_0_le Hor _ (λ i, α - 2 ^ (i+1) / 4 * (3 * α /₂^(i+1)))%A)
     in Htt. 2: {
       intros i.
       split. {
@@ -2031,13 +2064,16 @@ destruct n. {
         split. {
           progress unfold seq_angle_to_div_nat.
           apply angle_mul_le_mono_r. {
-            apply (angle_mul_nat_not_overflow_le_l _ (2 ^ i)). {
+            apply (angle_mul_nat_not_overflow_le_l _ (2 ^ (i+1))). {
               apply Nat.Div0.div_le_upper_bound.
               now apply Nat.le_mul_l.
             }
             apply angle_mul_nat_div_2π_pow_div.
           }
+...
           apply Nat.Div0.div_le_upper_bound.
+          destruct i. {
+            cbn.
 ...
         }
 destruct i.
