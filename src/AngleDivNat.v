@@ -1946,6 +1946,34 @@ apply Nat.Div0.div_le_upper_bound.
 now apply Nat.le_mul_l.
 Qed.
 
+Theorem angle_div_nat_4_mul_div_4 :
+  ∀ α,
+  angle_div_nat (4 * α) 4 α
+  → α = ((4 * α) /₂^2)%A.
+Proof.
+intros * Htt.
+progress unfold angle_div_nat in Htt.
+apply angle_lim_move_0_r in Htt.
+apply angle_lim_opp in Htt.
+rewrite angle_opp_0 in Htt.
+eapply (angle_lim_eq_compat 2 0) in Htt. 2: {
+  intros i.
+  rewrite Nat.add_0_r.
+  rewrite angle_opp_sub_distr.
+  progress unfold seq_angle_to_div_nat.
+  rewrite Nat.pow_add_r.
+  cbn - [ "/" "*"%A ].
+  rewrite Nat.div_mul; [ | easy ].
+  rewrite Nat.add_comm.
+  rewrite angle_div_2_pow_add_r.
+  rewrite angle_div_2_pow_mul_2_pow.
+  reflexivity.
+}
+apply angle_lim_const in Htt.
+symmetry in Htt.
+now apply -> angle_sub_move_0_r in Htt.
+Qed.
+
 (* to be completed
 Theorem angle_div_nat_integral :
   rngl_characteristic T = 0 →
@@ -2007,6 +2035,7 @@ destruct n. {
 }
 destruct (Nat.eq_dec n 1) as [Hn4| Hn4]. {
   subst n; cbn.
+  apply angle_div_nat_4_mul_div_4 in Htt.
   rewrite angle_add_0_r.
   rewrite angle_add_overflow_0_r; cbn.
   apply Nat.eq_add_0.
@@ -2014,50 +2043,10 @@ destruct (Nat.eq_dec n 1) as [Hn4| Hn4]. {
     apply Nat.eq_add_0.
     split; apply Nat_eq_b2n_0. {
       apply angle_add_not_overflow_diag.
-      progress unfold angle_div_nat in Htt.
-      apply angle_lim_move_0_r in Htt.
-      apply angle_lim_opp in Htt.
-      rewrite angle_opp_0 in Htt.
-      eapply (angle_lim_eq_compat 2 0) in Htt. 2: {
-        intros i.
-        rewrite Nat.add_0_r.
-        rewrite angle_opp_sub_distr.
-        progress unfold seq_angle_to_div_nat.
-        rewrite Nat.pow_add_r.
-        cbn - [ "/" "*"%A ].
-        rewrite Nat.div_mul; [ | easy ].
-        rewrite Nat.add_comm.
-        rewrite angle_div_2_pow_add_r.
-        rewrite angle_div_2_pow_mul_2_pow.
-        reflexivity.
-      }
-      apply angle_lim_const in Htt.
-      symmetry in Htt.
-      apply -> angle_sub_move_0_r in Htt.
       rewrite Htt; cbn.
       apply (angle_div_2_lt_straight Hc1).
     }
     rewrite <- angle_mul_2_l.
-    progress unfold angle_div_nat in Htt.
-    apply angle_lim_move_0_r in Htt.
-    apply angle_lim_opp in Htt.
-    rewrite angle_opp_0 in Htt.
-    eapply (angle_lim_eq_compat 2 0) in Htt. 2: {
-      intros i.
-      rewrite Nat.add_0_r.
-      rewrite angle_opp_sub_distr.
-      progress unfold seq_angle_to_div_nat.
-      rewrite Nat.pow_add_r.
-      cbn - [ "/" "*"%A ].
-      rewrite Nat.div_mul; [ | easy ].
-      rewrite Nat.add_comm.
-      rewrite angle_div_2_pow_add_r.
-      rewrite angle_div_2_pow_mul_2_pow.
-      reflexivity.
-    }
-    apply angle_lim_const in Htt.
-    symmetry in Htt.
-    apply -> angle_sub_move_0_r in Htt.
     rewrite Htt.
     apply angle_add_overflow_mul_div_pow2.
     cbn.
@@ -2067,26 +2056,6 @@ destruct (Nat.eq_dec n 1) as [Hn4| Hn4]. {
   replace (α + (α + α))%A with (3 * α)%A. 2: {
     now cbn; rewrite angle_add_0_r.
   }
-  progress unfold angle_div_nat in Htt.
-  apply angle_lim_move_0_r in Htt.
-  apply angle_lim_opp in Htt.
-  rewrite angle_opp_0 in Htt.
-  eapply (angle_lim_eq_compat 2 0) in Htt. 2: {
-    intros i.
-    rewrite Nat.add_0_r.
-    rewrite angle_opp_sub_distr.
-    progress unfold seq_angle_to_div_nat.
-    rewrite Nat.pow_add_r.
-    cbn - [ "/" "*"%A ].
-    rewrite Nat.div_mul; [ | easy ].
-    rewrite Nat.add_comm.
-    rewrite angle_div_2_pow_add_r.
-    rewrite angle_div_2_pow_mul_2_pow.
-    reflexivity.
-  }
-  apply angle_lim_const in Htt.
-  symmetry in Htt.
-  apply -> angle_sub_move_0_r in Htt.
   rewrite Htt.
   apply angle_add_overflow_mul_div_pow2.
   easy.
