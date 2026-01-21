@@ -2009,6 +2009,7 @@ destruct (angle_eq_dec α 0) as [Htz| Htz]. {
   subst α.
   apply angle_mul_nat_div_2π_0_r.
 }
+destruct (Nat.eq_dec n 1) as [Hn1| Hn1]; [ now subst n; cbn in Hn2p | ].
 destruct (Nat.eq_dec n 2) as [Hn2| Hn2]; [ now subst n; cbn in Hn2p | ].
 destruct (Nat.eq_dec n 4) as [Hn4| Hn4]; [ now subst n; cbn in Hn2p | ].
 destruct (Nat.eq_dec n 8) as [Hn8| Hn8]; [ now subst n; cbn in Hn2p | ].
