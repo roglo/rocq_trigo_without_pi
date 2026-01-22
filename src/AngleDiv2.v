@@ -1057,6 +1057,24 @@ rewrite angle_div_2_mul_2.
 apply IHn.
 Qed.
 
+Theorem angle_div_2_pow_sub_r:
+  ∀ i j α,
+  (α /₂^(i - j))%A = if i <? j then α else (2 ^ j * (α /₂^i))%A.
+Proof.
+intros.
+remember (i <? j) as ij eqn:Hij.
+symmetry in Hij.
+destruct ij. {
+  apply Nat.ltb_lt in Hij.
+  now replace (i - j) with 0 by flia Hij.
+}
+apply Nat.ltb_ge in Hij.
+replace i with ((i - j) + j) at 2 by flia Hij.
+rewrite angle_div_2_pow_add_r.
+symmetry.
+apply angle_div_2_pow_mul_2_pow.
+Qed.
+
 Theorem angle_0_div_2_pow : ∀ n, (0 /₂^n = 0)%A.
 Proof.
 intros.

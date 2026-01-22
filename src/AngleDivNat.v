@@ -2048,12 +2048,19 @@ destruct (Nat.eq_dec n 3) as [Hn3| Hn3]. {
       rewrite angle_opp_sub_distr.
       reflexivity.
     }
-    apply (angle_lim_0_le Hor _ (λ i, α - 2 ^ i / 4 * (4 * α /₂^i))%A)
-    in Htt. 2: {
+    apply
+      (angle_lim_0_le Hor _ (λ i, α - (π /₂^(Nat.log2 3 - 1)))%A) in Htt. 2: {
       intros i.
       split. {
         apply angle_sub_le_mono_l.
         split. {
+          now apply seq_angle_to_div_nat_le_straight_div_pow2_log2_pred.
+        }
+        rewrite angle_div_2_pow_sub_r.
+cbn - [ "*"%A ].
+Search (_ /₂^(_ + _))%A.
+About angle_div_2_pow_add_r.
+...
 rewrite fold_seq_angle_to_div_nat.
 destruct i; [ cbn; apply angle_le_refl | ].
 destruct i; [ cbn; apply angle_le_refl | ].
