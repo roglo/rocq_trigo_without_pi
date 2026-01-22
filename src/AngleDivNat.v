@@ -2028,12 +2028,62 @@ destruct (Nat.log2_succ_or (n - 1)) as [H1| H1]. {
   now apply Nat.log2_pow2.
 }
 replace (S (n - 1)) with n in H1 by flia Hnz.
+destruct (Nat.eq_dec n 3) as [Hn3| Hn3]. {
+  subst n.
+  clear Hn2p Hn8 Hn4 Hn2 Hn1 Hnz H1.
+  cbn.
+  rewrite angle_add_0_r.
+  rewrite angle_add_overflow_0_r; cbn.
+  apply Nat.eq_add_0.
+  split. {
+    apply Nat_eq_b2n_0.
+    apply angle_add_not_overflow_diag.
+    progress unfold angle_div_nat in Htt.
+    apply angle_lim_move_0_r in Htt.
+    apply angle_lim_opp in Htt.
+    rewrite angle_opp_0 in Htt.
+    eapply (angle_lim_eq_compat 0 0) in Htt. 2: {
+      intros i.
+      rewrite Nat.add_0_r.
+      rewrite angle_opp_sub_distr.
+      reflexivity.
+    }
+    apply (angle_lim_0_le Hor _ (λ i, α - 2 ^ i / 4 * (4 * α /₂^i))%A)
+    in Htt. 2: {
+      intros i.
+      split. {
+        apply angle_sub_le_mono_l.
+        split. {
+rewrite fold_seq_angle_to_div_nat.
+destruct i; [ cbn; apply angle_le_refl | ].
+destruct i; [ cbn; apply angle_le_refl | ].
+remember (seq_angle_to_div_nat _ _ _) as x.
+progress unfold seq_angle_to_div_nat.
+rewrite Nat.pow_succ_r; [ | easy ].
+rewrite Nat.pow_succ_r; [ | easy ].
+rewrite Nat.mul_assoc.
+rewrite (Nat.mul_comm (2 * 2)).
+rewrite Nat.div_mul; [ | easy ].
+do 2 rewrite angle_div_2_pow_succ_r_2.
+rewrite angle_div_2_pow_mul_2_pow.
+replace (((4 * α) /₂) /₂)%A with ((4 * α) /₂^2)%A by easy.
+subst x.
+progress unfold seq_angle_to_div_nat.
+(* ouais mais si α=π/2, par exemple, ça déconne *)
 ...
-Nat.log2_eq_succ_is_pow2: ∀ a : nat, Nat.log2 (S a) = S (Nat.log2 a) → ∃ b : nat, S a = 2 ^ b
+rewrute M0
+angle_div_2_pow_mul_2_pow.
+rewrite angle_div_2_mul_2.
+Search ((_ /₂) /₂)%A.
+
 ...
-Search Nat.log2.
-remember (Nat.log2 n) as m eqn:Hm.
-Nat.log2_succ_or: ∀ a : nat, Nat.log2 (S a) = S (Nat.log2 a) ∨ Nat.log2 (S a) = Nat.log2 a
+          apply angle_mul_le_mono_r. {
+            apply (angle_mul_nat_not_overflow_le_l _ (2 ^ (i+1))). {
+              apply Nat.Div0.div_le_upper_bound.
+              now apply Nat.le_mul_l.
+            }
+            apply angle_mul_nat_div_2π_pow_div.
+          }
 ...
 Require Import RingLike.Utils.
 Notation "'∑' ( i = b , e ) , g" :=
