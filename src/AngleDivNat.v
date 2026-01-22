@@ -2049,7 +2049,7 @@ destruct (Nat.eq_dec n 3) as [Hn3| Hn3]. {
       reflexivity.
     }
     apply
-      (angle_lim_0_le Hor _ (λ i, α - seq_angle_to_div_nat (3 * α) 2 i)%A)
+      (angle_lim_0_le Hor _ (λ i, α - seq_angle_to_div_nat (3 * α) 2 (i + 1))%A)
       in Htt. 2: {
       intros i.
       split. {
@@ -2069,7 +2069,26 @@ destruct (Nat.eq_dec n 3) as [Hn3| Hn3]. {
             rewrite angle_div_2_pow_succ_r_2.
             apply angle_mul_nat_div_2π_pow_div.
           }
-          rewrite angle_div_2_pow_succ_r_1.
+          rewrite angle_div_2_pow_succ_r_2.
+          rewrite angle_div_2_pow_mul_2_pow.
+          rewrite Nat.add_1_r.
+          rewrite Nat.pow_succ_r; [ | easy ].
+          rewrite Nat.mul_comm, Nat.div_mul; [ | easy ].
+          rewrite angle_div_2_pow_succ_r_2.
+          rewrite angle_div_2_pow_mul_2_pow.
+          apply angle_le_refl.
+        }
+        progress unfold seq_angle_to_div_nat.
+        rewrite Nat.add_1_r.
+        rewrite Nat.pow_succ_r; [ | easy ].
+        rewrite Nat.mul_comm, Nat.div_mul; [ | easy ].
+        rewrite angle_div_2_pow_succ_r_2.
+        rewrite angle_div_2_pow_mul_2_pow.
+(* ah bin non *)
+...
+
+remember ((3 * α) /₂^i)%A as θ eqn:Hθ.
+Search (
 Search (_ * _ ≤ _ * _)%A.
 ...
 (*
