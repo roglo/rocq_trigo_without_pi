@@ -2009,11 +2009,32 @@ destruct (angle_eq_dec α 0) as [Htz| Htz]. {
   subst α.
   apply angle_mul_nat_div_2π_0_r.
 }
+destruct (Nat.eq_dec n 0) as [Hnz| Hnz]; [ now subst n; cbn in Hn2p | ].
 destruct (Nat.eq_dec n 1) as [Hn1| Hn1]; [ now subst n; cbn in Hn2p | ].
 destruct (Nat.eq_dec n 2) as [Hn2| Hn2]; [ now subst n; cbn in Hn2p | ].
 destruct (Nat.eq_dec n 4) as [Hn4| Hn4]; [ now subst n; cbn in Hn2p | ].
 destruct (Nat.eq_dec n 8) as [Hn8| Hn8]; [ now subst n; cbn in Hn2p | ].
 (**)
+destruct (Nat.log2_succ_or (n - 1)) as [H1| H1]. {
+  destruct n; [ easy | ].
+  rewrite Nat_sub_succ_1 in H1.
+  generalize H1; intros H2.
+  apply Nat.log2_eq_succ_is_pow2 in H2.
+  destruct H2 as (b, Hb).
+  exfalso; apply Hn2p; clear Hn2p.
+  rewrite Hb.
+  f_equal.
+  symmetry.
+  now apply Nat.log2_pow2.
+}
+replace (S (n - 1)) with n in H1 by flia Hnz.
+...
+Nat.log2_eq_succ_is_pow2: ∀ a : nat, Nat.log2 (S a) = S (Nat.log2 a) → ∃ b : nat, S a = 2 ^ b
+...
+Search Nat.log2.
+remember (Nat.log2 n) as m eqn:Hm.
+Nat.log2_succ_or: ∀ a : nat, Nat.log2 (S a) = S (Nat.log2 a) ∨ Nat.log2 (S a) = Nat.log2 a
+...
 Require Import RingLike.Utils.
 Notation "'∑' ( i = b , e ) , g" :=
   (Utils.iter_seq b e (λ c i, (c + g)%A) 0%A)
