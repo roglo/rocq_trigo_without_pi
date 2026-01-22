@@ -2069,7 +2069,7 @@ destruct (Nat.eq_dec n 3) as [Hn3| Hn3]. {
             rewrite angle_div_2_pow_succ_r_2.
             apply angle_mul_nat_div_2π_pow_div.
           }
-          rewrite angle_div_2_pow_succ_r_2.
+          rewrite angle_div_2_pow_succ_r_1.
 Search (_ * _ ≤ _ * _)%A.
 ...
 (*
