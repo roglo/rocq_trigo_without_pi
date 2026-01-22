@@ -2049,15 +2049,40 @@ destruct (Nat.eq_dec n 3) as [Hn3| Hn3]. {
       reflexivity.
     }
     apply
-      (angle_lim_0_le Hor _ (λ i, α - (π /₂^(Nat.log2 3 - 1)))%A) in Htt. 2: {
+      (angle_lim_0_le Hor _ (λ i, α - seq_angle_to_div_nat (3 * α) 4 i)%A)
+      in Htt. 2: {
       intros i.
       split. {
         apply angle_sub_le_mono_l.
         split. {
+(*
+Search seq_angle_to_div_nat.
+...
+specialize (seq_angle_to_div_nat_sub 3 (3 * α) 4 i) as H1.
+...
           now apply seq_angle_to_div_nat_le_straight_div_pow2_log2_pred.
         }
         rewrite angle_div_2_pow_sub_r.
-cbn - [ "*"%A ].
+        cbn - [ "*"%A ].
+Search seq_angle_to_div_nat.
+(*
+seq_angle_to_div_nat_sub:
+  ∀ {T : Type} {ro : ring_like_op T} {rp : ring_like_prop T} 
+    {rl : real_like_prop T} {ac : angle_ctx T} (n : nat) 
+    (α : angle T) (p q : nat),
+    p ≤ q
+    → (seq_angle_to_div_nat α n q - seq_angle_to_div_nat α n p)%A =
+      (2 ^ p mod n * 2 ^ (q - p) / n * (α /₂^q))%A
+seq_angle_to_div_nat_le_straight_div_pow2_log2_pred:
+  ∀ {T : Type} {ro : ring_like_op T} {rp : ring_like_prop T} 
+    {rl : real_like_prop T} {ac : angle_ctx T} (n i : nat) 
+    (α : angle T),
+    n ≠ 1 → (seq_angle_to_div_nat α n i ≤ π /₂^(Nat.log2 n - 1))%A
+seq_angle_to_div_nat_div_2_le_straight_div_pow2_log2:
+  ∀ {T : Type} {ro : ring_like_op T} {rp : ring_like_prop T} 
+    {rl : real_like_prop T} {ac : angle_ctx T} (n i : nat) 
+    (α : angle T), (seq_angle_to_div_nat α n i /₂ ≤ π /₂^Nat.log2 n)%A
+*)
 Search (_ /₂^(_ + _))%A.
 About angle_div_2_pow_add_r.
 ...
@@ -2092,6 +2117,7 @@ Search ((_ /₂) /₂)%A.
             apply angle_mul_nat_div_2π_pow_div.
           }
 ...
+*)
 Require Import RingLike.Utils.
 Notation "'∑' ( i = b , e ) , g" :=
   (Utils.iter_seq b e (λ c i, (c + g)%A) 0%A)
@@ -2113,12 +2139,30 @@ induction i. {
   destruct n; [ flia H2n | ].
   now rewrite Nat.div_small.
 }
-progress unfold seq_angle_to_div_nat.
-destruct i. {
-...
 rewrite iter_seq_split_last; [ | flia ].
-...
-rewrite (iter_shift 1).
+destruct (Nat.eq_dec i 0) as [Hiz| Hiz]. {
+  subst i.
+  rewrite iter_seq_empty; [ | easy ].
+  progress unfold seq_angle_to_div_nat.
+  cbn - [ "/" "mod" ].
+  rewrite angle_add_0_l.
+  destruct (Nat.eq_dec n 2) as [Hn2| Hn2]. {
+    subst n; cbn.
+    now do 2 rewrite angle_add_0_r.
+  }
+  rewrite Nat.div_small; [ cbn | flia H2n Hn2 ].
+  symmetry; apply angle_0_div_2.
+}
+rewrite (iter_shift 1); [ | flia Hiz ].
+cbn - [ "/" "mod" ].
+rewrite Nat.sub_0_r, Nat.add_0_r.
+erewrite iter_seq_eq_compat. 2: {
+  intros k Hk.
+  now rewrite Nat.sub_0_r.
+}
+remember (∑ (k = _, _), _) as x in |-*; subst x. (* renaming *)
+rewrite <- IHi.
+Search (seq_angle_to_div_nat _ _ (S _)).
 ...
 destruct n; [ easy | ].
 destruct n. {
