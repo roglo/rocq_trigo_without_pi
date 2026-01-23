@@ -2042,12 +2042,13 @@ destruct (Nat.eq_dec n 3) as [Hn3| Hn3]. {
     apply angle_lim_move_0_r in Htt.
     apply angle_lim_opp in Htt.
     rewrite angle_opp_0 in Htt.
-    eapply (angle_lim_eq_compat (Nat.log2 3) 0) in Htt. 2: {
+    eapply (angle_lim_eq_compat 1 0) in Htt. 2: {
       intros i.
       rewrite Nat.add_0_r.
       rewrite angle_opp_sub_distr.
       reflexivity.
     }
+...
     apply
       (angle_lim_0_le Hor _ (λ i, α - seq_angle_to_div_nat (3 * α) 2 (i + 1))%A)
       in Htt. 2: {
