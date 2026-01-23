@@ -2002,6 +2002,9 @@ apply angle_div_nat_2_pow_mul_div_2_pow.
 apply (angle_mul_div_nat Hch Har Hco); [ now apply Nat.pow_nonzero | easy ].
 Qed.
 
+Theorem angle_mul_0_l : ∀ α, (0 * α = 0)%A.
+Proof. easy. Qed.
+
 (* to be completed
 Theorem angle_div_nat_integral :
   rngl_characteristic T = 0 →
@@ -2080,6 +2083,7 @@ Theorem glop :
 Proof.
 intros * Htt *.
 Search angle_lim.
+(*
 ...
     apply angle_lim_move_0_r in Htt.
     apply angle_lim_opp in Htt.
@@ -2203,6 +2207,7 @@ Search ((_ /₂) /₂)%A.
           }
 ...
 *)
+*)
 Require Import RingLike.Utils.
 Notation "'∑' ( i = b , e ) , g" :=
   (Utils.iter_seq b e (λ c i, (c + g)%A) 0%A)
@@ -2247,7 +2252,57 @@ erewrite iter_seq_eq_compat. 2: {
 }
 remember (∑ (k = _, _), _) as x in |-*; subst x. (* renaming *)
 rewrite <- IHi.
-Search (seq_angle_to_div_nat _ _ (S _)).
+progress unfold seq_angle_to_div_nat.
+rewrite <- Nat_mul_2_l.
+rewrite <- Nat.pow_succ_r; [ | easy ].
+remember (2 ^ S i / n) as b eqn:Hb.
+symmetry in Hb.
+destruct b. {
+  cbn.
+  rewrite angle_0_div_2_pow.
+  rewrite angle_0_div_2.
+  rewrite angle_add_0_r.
+  symmetry.
+  apply Nat.div_small_iff in Hb; [ | flia H2n ].
+  rewrite Nat.div_small; [ easy | ].
+  eapply Nat.le_lt_trans; [ | apply Hb ].
+  apply Nat.pow_le_mono_r; [ easy | ].
+  apply Nat.le_succ_diag_r.
+}
+destruct b. {
+  rewrite Nat.mod_1_l; [ | easy ].
+  do 2 rewrite angle_mul_1_l.
+  apply Nat_div_less_small_iff in Hb; [ | flia H2n ].
+  rewrite Nat.mul_1_l in Hb.
+  replace (1 + 1) with 2 in Hb by easy.
+  destruct Hb as (Hn2, H22).
+  rewrite Nat.pow_succ_r in H22; [ | easy ].
+  apply Nat.mul_lt_mono_pos_l in H22; [ | easy ].
+  rewrite Nat.div_small; [ | easy ].
+  rewrite angle_mul_0_l, angle_add_0_l.
+  apply angle_div_2_pow_succ_r_1.
+}
+...
+  rewrite Nat.add_0_r.
+  rewrite <- Nat_mul_2_l.
+  rewrite <- Nat.pow_succ_r; [ | easy ].
+  apply Nat.Lcm0.mod_divide in Hb.
+  destruct Hb as (k, Hk).
+  rewrite Hk.
+  rewrite <- angle_mul_nat_assoc.
+  rewrite angle_div_2_mul_2.
+  f_equal.
+  cbn in Hk.
+  rewrite Nat.add_0_r in Hk.
+Search ((_ + _) / _).
+...
+  apply Nat.div_small_iff in Hb; [ | flia H2n ].
+  rewrite Nat.div_small; [ easy | ].
+  eapply Nat.le_lt_trans; [ | apply Hb ].
+  apply Nat.pow_le_mono_r; [ easy | ].
+  apply Nat.le_succ_diag_r.
+}
+destruct b.
 ...
 destruct n; [ easy | ].
 destruct n. {
