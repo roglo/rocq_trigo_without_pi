@@ -2067,6 +2067,20 @@ destruct (Nat.eq_dec n 3) as [Hn3| Hn3]. {
     apply Nat_eq_b2n_0.
     apply angle_add_not_overflow_diag.
     progress unfold angle_div_nat in Htt.
+Theorem glop :
+  ∀ α α',
+  angle_lim (seq_angle_to_div_nat α 3) α'
+  → (α' < π)%A.
+Proof.
+intros * Htt.
+Theorem glop :
+  ∀ α α',
+  angle_lim (seq_angle_to_div_nat α 3) α'
+  → ∀ i, (seq_angle_to_div_nat α 3 i ≤ α')%A.
+Proof.
+intros * Htt *.
+Search angle_lim.
+...
     apply angle_lim_move_0_r in Htt.
     apply angle_lim_opp in Htt.
     rewrite angle_opp_0 in Htt.
@@ -2085,6 +2099,7 @@ destruct (Nat.eq_dec n 3) as [Hn3| Hn3]. {
       split. {
         apply angle_sub_le_mono_l.
         split. {
+...
 replace 4 with (2 ^ 2) by easy.
 rewrite (seq_angle_to_div_nat_mul_2_pow_div Hch Har Hco). 2: {
 ...

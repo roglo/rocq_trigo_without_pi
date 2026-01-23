@@ -15,5 +15,5 @@ let i = 4;;
 float (pow 2 (i + 2) / 3) *. (3. /. float (pow 2 (i + 2)));;
 
 List.map (fun i -> 3. *. u 3 i, 4. *. u 4 i) (seq 0 20);;
+List.map (fun i -> (1. -. 4. *. u 4 i, 1. -. 3. *. u 3 i)) (seq 0 20);;
 List.map (fun i -> 3. *. u 3 i, 4. *. u 4 i) (seq 0 40);;
-List.map (fun i -> 1. -. 3. *. u 3 i) (seq 0 20);;
