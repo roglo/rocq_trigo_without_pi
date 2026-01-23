@@ -1974,6 +1974,34 @@ symmetry in Htt.
 now apply -> angle_sub_move_0_r in Htt.
 Qed.
 
+Theorem seq_angle_to_div_nat_mul_2_pow_div :
+  rngl_characteristic T = 0 →
+  rngl_is_archimedean T = true →
+  is_complete T rngl_dist →
+  ∀ α n i,
+  angle_mul_nat_div_2π (2 ^ n) α = 0
+  → seq_angle_to_div_nat (2 ^ n * α) (2 ^ n) i = if i <? n then 0%A else α.
+Proof.
+intros Hch Har Hco * Hmn.
+progress unfold seq_angle_to_div_nat.
+remember (i <? n) as ni eqn:Hin.
+symmetry in Hin.
+destruct ni. {
+  apply Nat.ltb_lt in Hin.
+  rewrite Nat.div_small; [ easy | ].
+  now apply Nat.pow_lt_mono_r.
+}
+apply Nat.ltb_ge in Hin.
+rewrite <- (Nat.sub_add n i); [ | easy ].
+rewrite Nat.pow_add_r, Nat.div_mul; [ | now apply Nat.pow_nonzero ].
+rewrite Nat.add_comm.
+rewrite angle_div_2_pow_add_r.
+rewrite angle_div_2_pow_mul_2_pow.
+symmetry.
+apply angle_div_nat_2_pow_mul_div_2_pow.
+apply (angle_mul_div_nat Hch Har Hco); [ now apply Nat.pow_nonzero | easy ].
+Qed.
+
 (* to be completed
 Theorem angle_div_nat_integral :
   rngl_characteristic T = 0 →
@@ -2042,7 +2070,7 @@ destruct (Nat.eq_dec n 3) as [Hn3| Hn3]. {
     apply angle_lim_move_0_r in Htt.
     apply angle_lim_opp in Htt.
     rewrite angle_opp_0 in Htt.
-    eapply (angle_lim_eq_compat 1 0) in Htt. 2: {
+    eapply (angle_lim_eq_compat 2 0) in Htt. 2: {
       intros i.
       rewrite Nat.add_0_r.
       rewrite angle_opp_sub_distr.
@@ -2050,12 +2078,17 @@ destruct (Nat.eq_dec n 3) as [Hn3| Hn3]. {
     }
 ...
     apply
-      (angle_lim_0_le Hor _ (λ i, α - seq_angle_to_div_nat (3 * α) 2 (i + 1))%A)
+      (angle_lim_0_le Hor _
+         (λ i, α - seq_angle_to_div_nat (4 * α) 4 (i + 2))%A)
       in Htt. 2: {
       intros i.
       split. {
         apply angle_sub_le_mono_l.
         split. {
+replace 4 with (2 ^ 2) by easy.
+rewrite (seq_angle_to_div_nat_mul_2_pow_div Hch Har Hco). 2: {
+...
+Search (seq_angle_to_div_nat _ _ _ ≤ _)%A.
           progress unfold seq_angle_to_div_nat.
           rewrite Nat.pow_add_r.
           cbn - [ "/" "*"%A ].
