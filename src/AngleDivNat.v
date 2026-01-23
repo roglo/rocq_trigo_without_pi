@@ -2262,7 +2262,6 @@ destruct b. {
   rewrite angle_0_div_2_pow.
   rewrite angle_0_div_2.
   rewrite angle_add_0_r.
-  symmetry.
   apply Nat.div_small_iff in Hb; [ | flia H2n ].
   rewrite Nat.div_small; [ easy | ].
   eapply Nat.le_lt_trans; [ | apply Hb ].
@@ -2281,6 +2280,29 @@ destruct b. {
   rewrite Nat.div_small; [ | easy ].
   rewrite angle_mul_0_l, angle_add_0_l.
   apply angle_div_2_pow_succ_r_1.
+}
+destruct b. {
+  cbn.
+  rewrite angle_0_div_2_pow.
+  rewrite angle_0_div_2.
+  do 2 rewrite angle_add_0_r.
+  rewrite angle_add_div_2_diag.
+  apply Nat_div_less_small_iff in Hb; [ | flia H2n ].
+  destruct Hb as (Hb1, Hb2).
+  rewrite Nat.pow_succ_r' in Hb1.
+  apply Nat.mul_le_mono_pos_l in Hb1; [ | easy ].
+  replace (2 + 1) with 3 in Hb2 by easy.
+(* à vérifier : la formule avec ∑ *)
+...
+  destruct (Nat.eq_dec n (2 ^ i)) as [Hni| Hni]. {
+    rewrite <- Hni, Nat.div_same; [ | flia H2n ].
+    symmetry; apply angle_mul_1_l.
+  }
+...
+  rewrite Nat.div_small; [ easy | ].
+  eapply Nat.le_lt_trans; [ | apply Hb ].
+  apply Nat.pow_le_mono_r; [ easy | ].
+  apply Nat.le_succ_diag_r.
 }
 ...
   rewrite Nat.add_0_r.
