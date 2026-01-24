@@ -2005,6 +2005,45 @@ Qed.
 Theorem angle_mul_0_l : ∀ α, (0 * α = 0)%A.
 Proof. easy. Qed.
 
+Theorem Nat_mul_2_div_eq :
+  ∀ i n,
+  Nat.Even (2 * i / n)
+  → 2 * i / n = 2 * (i / n).
+Proof.
+intros * Hev.
+destruct (Nat.eq_dec n 0) as [Hnz| Hnz]; [ now subst n | ].
+specialize (Nat.div_mod i n Hnz) as H1.
+remember (i / n) as k eqn:Hk.
+rewrite H1.
+rewrite Nat.mul_add_distr_l.
+rewrite Nat.mul_assoc.
+rewrite Nat.mul_shuffle0.
+rewrite Nat.div_add_l; [ | easy ].
+destruct (Nat.eq_dec (2 * (i mod n) / n) 0) as [Htz| Htz]. {
+  rewrite Htz; apply Nat.add_0_r.
+}
+exfalso.
+rewrite H1 in Hev.
+rewrite Nat.mul_add_distr_l in Hev.
+rewrite Nat.mul_assoc in Hev.
+rewrite Nat.mul_shuffle0 in Hev.
+rewrite Nat.div_add_l in Hev; [ | easy ].
+apply (Nat.Even_add_Even_inv_r (2 * k)) in Hev. 2: {
+  apply Nat.Even_mul_l.
+  exists 1; symmetry; apply Nat.mul_1_r.
+}
+remember (2 * (i mod n) / n) as a eqn:Ha.
+symmetry in Ha.
+destruct a; [ easy | clear Htz ].
+destruct a; [ now apply Nat.even_spec in Hev | ].
+specialize (Nat.mod_upper_bound i n Hnz) as H2.
+apply (Nat.mul_lt_mono_pos_l 2) in H2; [ | easy ].
+rewrite (Nat.mul_comm _ n) in H2.
+apply Nat.Div0.div_lt_upper_bound in H2.
+rewrite Ha in H2.
+now do 2 apply Nat.succ_lt_mono in H2.
+Qed.
+
 (* to be completed
 Theorem angle_div_nat_integral :
   rngl_characteristic T = 0 →
@@ -2256,7 +2295,6 @@ progress unfold seq_angle_to_div_nat.
 rewrite <- Nat_mul_2_l.
 rewrite <- Nat.pow_succ_r; [ | easy ].
 assert (Hnz : n ≠ 0) by flia H2n.
-(**)
 remember ((2 ^ S i / n) mod 2) as b eqn:Hb.
 symmetry in Hb.
 destruct b. {
@@ -2271,58 +2309,14 @@ destruct b. {
   rewrite angle_div_2_mul_2.
   f_equal.
   symmetry.
-(*
-  remember (2 ^ i mod n) as tin eqn:Htin.
-  symmetry in Htin.
-  destruct tin. {
-    apply Nat.Lcm0.mod_divide in Htin.
-    apply (Nat.mul_reg_l _ _ 2); [ easy | ].
-    rewrite <- Hk.
-    now rewrite <- Nat.Lcm0.divide_div_mul_exact.
-  }
-  specialize (Nat.div_mod (2 ^ i) n Hnz) as H1.
-  rewrite Htin in H1.
+  apply (Nat.mul_reg_l _ _ 2); [ easy | ].
+  rewrite <- Hk; symmetry.
+  apply Nat_mul_2_div_eq.
   rewrite Nat.pow_succ_r' in Hk.
-  rewrite H1 in Hk.
-...
-*)
-Theorem glop :
-  ∀ i n k,
-  2 ^ S i / n = 2 * k
-  → 2 ^ i / n = k.
-Proof.
-intros * Hk.
-Theorem glop :
-  ∀ i n,
-  Nat.Even (2 ^ S i / n)
-  → 2 ^ S i / n = 2 * (2 ^ i / n).
-Proof.
-intros * Hev.
-Theorem glop :
-  ∀ i n,
-  Nat.Even (2 * i / n)
-  → 2 * i / n = 2 * (i / n).
-Proof.
-intros * Hev.
-apply Nat.Even_double in Hev.
-rewrite Hev.
-Search (Nat.div2 (_ / _)).
-...
-Search (Nat.Even (_ / _)).
-Compute
-  (let n := 8 in
-   List.map
-     (λ i,
-       if Nat.even (2 * i / n) then 2 * i / n = 2 * (i / n) else True)
-     (List.seq 0 25)).
-
-... ...
-apply (Nat.mul_reg_l _ _ 2); [ easy | ].
-rewrite <- Hk; symmetry.
-apply glop.
-rewrite Hk.
-apply Nat.even_spec.
-apply Nat.even_even.
+  rewrite Hk.
+  apply Nat.even_spec.
+  apply Nat.even_even.
+}
 ... ...
   rewrite Nat.pow_succ_r' in Hk.
   destruct n. {
