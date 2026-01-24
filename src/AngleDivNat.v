@@ -2255,6 +2255,86 @@ rewrite <- IHi.
 progress unfold seq_angle_to_div_nat.
 rewrite <- Nat_mul_2_l.
 rewrite <- Nat.pow_succ_r; [ | easy ].
+(**)
+remember ((2 ^ S i / n) mod 2) as b eqn:Hb.
+symmetry in Hb.
+destruct b. {
+  rewrite angle_mul_0_l, angle_0_div_2_pow, angle_0_div_2.
+  rewrite angle_add_0_r.
+  apply Nat.Div0.mod_divides in Hb.
+  destruct Hb as (k, Hk).
+  rewrite Hk.
+  rewrite Nat.mul_comm.
+  rewrite <- angle_mul_nat_assoc.
+  rewrite angle_div_2_pow_succ_r_1.
+  rewrite angle_div_2_mul_2.
+  f_equal.
+(**)
+  destruct (Nat.eq_dec (n mod 2) 1) as [Hn21| Hn21]. {
+    specialize (Nat.div_mod n 2) as H1.
+    specialize (H1 (Nat.neq_succ_0 _)).
+    rewrite Hn21 in H1.
+    rewrite H1 in Hk |-*.
+    clear Hn21.
+...
+  specialize (Nat.div_mod (2 ^ i) n) as H1.
+  assert (H : n ≠ 0) by flia H2n.
+  specialize (H1 H); clear H.
+  rewrite Nat.pow_succ_r' in Hk.
+  rewrite H1 in Hk.
+...
+  specialize (Nat.div_mod (2 ^ S i) n) as H1.
+  assert (H : n ≠ 0) by flia H2n.
+  specialize (H1 H); clear H.
+  rewrite Hk in H1.
+...
+  apply (Nat.mul_reg_l _ _ 2); [ easy | ].
+destruct (Nat.eq_dec n 3). {
+  subst n.
+  destruct i; [ easy | ].
+  destruct i; [ cbn in Hk; flia Hk | ].
+  destruct i; [ easy | ].
+  destruct i; [ cbn in Hk; flia Hk | ].
+  destruct i; [ easy | ].
+  destruct i; [ cbn in Hk; flia Hk | ].
+  destruct i; [ easy | ].
+  destruct i; [ cbn in Hk; flia Hk | ].
+  destruct i; [ easy | ].
+  destruct i; [ cbn in Hk; flia Hk | ].
+  destruct i; [ easy | ].
+  destruct i; [ cbn in Hk; flia Hk | ].
+...
+  rewrite Nat.pow_succ_r' in Hk.
+clear IHi Hiz.
+  revert n k Hk H2n.
+  induction i; intros. {
+    cbn.
+    rewrite Nat.mul_1_r in Hk.
+    apply (Nat.mul_reg_l _ _ 2); [ easy | ].
+    rewrite <- Hk.
+    rewrite (Nat.div_small 1); [ | easy ].
+    cbn.
+    destruct (Nat.eq_dec n 2) as [Hn2| Hn2]. {
+      subst n.
+      rewrite Nat.div_same in Hk; [ | easy ].
+      exfalso; flia Hk.
+    }
+    apply Nat.div_small.
+    flia H2n Hn2.
+  }
+  apply (Nat.mul_reg_l _ _ 2); [ easy | ].
+  rewrite <- Hk.
+.,..
+    cbn in Hk.
+
+  }
+
+...
+  apply (Nat.mul_reg_l _ _ 2); [ easy | ].
+  rewrite <- Hk.
+  rewrite Nat.pow_succ_r' in Hk |-*.
+Search (_ * (_ / _)).
+...
 remember (2 ^ S i / n) as b eqn:Hb.
 symmetry in Hb.
 destruct b. {
