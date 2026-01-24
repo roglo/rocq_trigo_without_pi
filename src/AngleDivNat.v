@@ -2286,6 +2286,44 @@ destruct b. {
   rewrite H1 in Hk.
 ...
 *)
+Theorem glop :
+  ∀ i n k,
+  2 ^ S i / n = 2 * k
+  → 2 ^ i / n = k.
+Proof.
+intros * Hk.
+Theorem glop :
+  ∀ i n,
+  Nat.Even (2 ^ S i / n)
+  → 2 ^ S i / n = 2 * (2 ^ i / n).
+Proof.
+intros * Hev.
+Theorem glop :
+  ∀ i n,
+  Nat.Even (2 * i / n)
+  → 2 * i / n = 2 * (i / n).
+Proof.
+intros * Hev.
+apply Nat.Even_double in Hev.
+rewrite Hev.
+Search (Nat.div2 (_ / _)).
+...
+Search (Nat.Even (_ / _)).
+Compute
+  (let n := 8 in
+   List.map
+     (λ i,
+       if Nat.even (2 * i / n) then 2 * i / n = 2 * (i / n) else True)
+     (List.seq 0 25)).
+
+... ...
+apply (Nat.mul_reg_l _ _ 2); [ easy | ].
+rewrite <- Hk; symmetry.
+apply glop.
+rewrite Hk.
+apply Nat.even_spec.
+apply Nat.even_even.
+... ...
   rewrite Nat.pow_succ_r' in Hk.
   destruct n. {
     cbn in Hk |-*.
@@ -2304,7 +2342,6 @@ destruct b. {
   destruct n. {
     apply (Nat.mul_reg_l _ _ 2); [ easy | ].
     rewrite <- Hk.
-    clear IHi Hiz.
     revert k Hk.
     induction i; intros; [ easy | ].
     destruct i; [ cbn in Hk; flia Hk | ].
@@ -2321,7 +2358,6 @@ destruct b. {
   destruct n. {
     apply (Nat.mul_reg_l _ _ 2); [ easy | ].
     rewrite <- Hk.
-    clear IHi Hiz.
     destruct i; [ easy | ].
     destruct i; [ cbn in Hk; flia Hk | ].
     replace (S (S i)) with (i + 2) by flia.
@@ -2333,7 +2369,6 @@ destruct b. {
   destruct n. {
     apply (Nat.mul_reg_l _ _ 2); [ easy | ].
     rewrite <- Hk.
-    clear IHi Hiz.
     revert k Hk.
     induction i; intros; [ easy | ].
     destruct i; [ easy | ].
