@@ -2270,6 +2270,37 @@ destruct b. {
   rewrite angle_div_2_mul_2.
   f_equal.
 (**)
+  rewrite Nat.pow_succ_r' in Hk.
+  destruct n. {
+    cbn in Hk |-*.
+    rewrite Nat.add_0_r in Hk; symmetry in Hk.
+    now apply Nat.eq_add_0 in Hk.
+  }
+  destruct n. {
+    rewrite Nat.div_1_r in Hk |-*.
+    now apply (Nat.mul_reg_l _ _ 2); [ easy | ].
+  }
+  destruct n. {
+    rewrite Nat.mul_comm in Hk.
+    rewrite Nat.div_mul in Hk; [ | easy ].
+    now rewrite Hk, Nat.mul_comm, Nat.div_mul.
+  }
+  destruct n. {
+    apply (Nat.mul_reg_l _ _ 2); [ easy | ].
+    rewrite <- Hk.
+    clear IHi Hiz.
+    revert k Hk.
+    induction i; intros; [ easy | ].
+    destruct i; [ cbn in Hk; flia Hk | ].
+    destruct i; [ easy | ].
+    destruct i; [ cbn in Hk; flia Hk | ].
+    destruct i; [ easy | ].
+    destruct i; [ cbn in Hk; flia Hk | ].
+    destruct i; [ easy | ].
+    destruct i; [ cbn in Hk; flia Hk | ].
+    destruct i; [ easy | ].
+    destruct i; [ cbn in Hk; flia Hk | ].
+...
   destruct (Nat.eq_dec (n mod 2) 1) as [Hn21| Hn21]. {
     specialize (Nat.div_mod n 2) as H1.
     specialize (H1 (Nat.neq_succ_0 _)).
