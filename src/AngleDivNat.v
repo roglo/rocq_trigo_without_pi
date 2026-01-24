@@ -2255,6 +2255,7 @@ rewrite <- IHi.
 progress unfold seq_angle_to_div_nat.
 rewrite <- Nat_mul_2_l.
 rewrite <- Nat.pow_succ_r; [ | easy ].
+assert (Hnz : n ≠ 0) by flia H2n.
 (**)
 remember ((2 ^ S i / n) mod 2) as b eqn:Hb.
 symmetry in Hb.
@@ -2269,7 +2270,19 @@ destruct b. {
   rewrite angle_div_2_pow_succ_r_1.
   rewrite angle_div_2_mul_2.
   f_equal.
+  symmetry.
 (**)
+  remember (2 ^ i mod n) as tin eqn:Htin.
+  symmetry in Htin.
+  destruct tin. {
+    apply Nat.Lcm0.mod_divide in Htin.
+    apply (Nat.mul_reg_l _ _ 2); [ easy | ].
+    rewrite <- Hk.
+    now rewrite <- Nat.Lcm0.divide_div_mul_exact.
+  }
+  specialize (Nat.div_mod (2 ^ i) n Hnz) as H1.
+  rewrite Htin in H1.
+...
   rewrite Nat.pow_succ_r' in Hk.
   destruct n. {
     cbn in Hk |-*.
