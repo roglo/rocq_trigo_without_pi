@@ -2271,7 +2271,7 @@ destruct b. {
   rewrite angle_div_2_mul_2.
   f_equal.
   symmetry.
-(**)
+(*
   remember (2 ^ i mod n) as tin eqn:Htin.
   symmetry in Htin.
   destruct tin. {
@@ -2282,7 +2282,10 @@ destruct b. {
   }
   specialize (Nat.div_mod (2 ^ i) n Hnz) as H1.
   rewrite Htin in H1.
+  rewrite Nat.pow_succ_r' in Hk.
+  rewrite H1 in Hk.
 ...
+*)
   rewrite Nat.pow_succ_r' in Hk.
   destruct n. {
     cbn in Hk |-*.
@@ -2313,6 +2316,39 @@ destruct b. {
     destruct i; [ cbn in Hk; flia Hk | ].
     destruct i; [ easy | ].
     destruct i; [ cbn in Hk; flia Hk | ].
+    admit.
+  }
+  destruct n. {
+    apply (Nat.mul_reg_l _ _ 2); [ easy | ].
+    rewrite <- Hk.
+    clear IHi Hiz.
+    destruct i; [ easy | ].
+    destruct i; [ cbn in Hk; flia Hk | ].
+    replace (S (S i)) with (i + 2) by flia.
+    rewrite Nat.pow_add_r.
+    rewrite Nat.mul_assoc.
+    rewrite Nat.div_mul; [ | easy ].
+    now rewrite Nat.div_mul.
+  }
+  destruct n. {
+    apply (Nat.mul_reg_l _ _ 2); [ easy | ].
+    rewrite <- Hk.
+    clear IHi Hiz.
+    revert k Hk.
+    induction i; intros; [ easy | ].
+    destruct i; [ easy | ].
+    destruct i; [ cbn in Hk; flia Hk | ].
+    destruct i; [ cbn in Hk; flia Hk | ].
+    destruct i; [ easy | ].
+    destruct i; [ easy | ].
+    destruct i; [ cbn in Hk; flia Hk | ].
+    destruct i; [ cbn in Hk; flia Hk | ].
+    destruct i; [ easy | ].
+    destruct i; [ easy | ].
+    destruct i; [ cbn in Hk; flia Hk | ].
+    destruct i; [ cbn in Hk; flia Hk | ].
+    destruct i; [ easy | ].
+    destruct i; [ easy | ].
 ...
   destruct (Nat.eq_dec (n mod 2) 1) as [Hn21| Hn21]. {
     specialize (Nat.div_mod n 2) as H1.
