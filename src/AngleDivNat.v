@@ -2210,7 +2210,6 @@ destruct (Nat.eq_dec n 3) as [Hn3| Hn3]. {
       }
       easy.
     }
-...
 Theorem glop :
   ∀ α α',
   angle_lim (seq_angle_to_div_nat α 3) α'
@@ -2223,9 +2222,17 @@ Theorem glop :
   → ∀ i, (seq_angle_to_div_nat α 3 i ≤ α')%A.
 Proof.
 intros * Htt *.
-Search angle_lim.
-(*
+rewrite seq_angle_to_div_nat_is_summation; [ | flia ].
+eapply (angle_lim_eq_compat 0 0) in Htt. 2: {
+  intros j.
+  rewrite Nat.add_0_r.
+  rewrite seq_angle_to_div_nat_is_summation. 2: {
+    now do 2 apply -> Nat.succ_le_mono.
+  }
+  easy.
+}
 ...
+(*
     apply angle_lim_move_0_r in Htt.
     apply angle_lim_opp in Htt.
     rewrite angle_opp_0 in Htt.
