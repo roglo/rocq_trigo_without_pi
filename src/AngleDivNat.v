@@ -2003,20 +2003,20 @@ Theorem angle_mul_0_l : ∀ α, (0 * α = 0)%A.
 Proof. easy. Qed.
 
 Theorem Nat_mul_2_div_eq :
-  ∀ i n,
-  Nat.Even (2 * i / n)
-  → 2 * i / n = 2 * (i / n).
+  ∀ a b,
+  Nat.Even (2 * a / b)
+  → 2 * a / b = 2 * (a / b).
 Proof.
 intros * Hev.
-destruct (Nat.eq_dec n 0) as [Hnz| Hnz]; [ now subst n | ].
-specialize (Nat.div_mod i n Hnz) as H1.
-remember (i / n) as k eqn:Hk.
+destruct (Nat.eq_dec b 0) as [Hnz| Hnz]; [ now subst b | ].
+specialize (Nat.div_mod a b Hnz) as H1.
+remember (a / b) as k eqn:Hk.
 rewrite H1.
 rewrite Nat.mul_add_distr_l.
 rewrite Nat.mul_assoc.
 rewrite Nat.mul_shuffle0.
 rewrite Nat.div_add_l; [ | easy ].
-destruct (Nat.eq_dec (2 * (i mod n) / n) 0) as [Htz| Htz]. {
+destruct (Nat.eq_dec (2 * (a mod b) / b) 0) as [Htz| Htz]. {
   rewrite Htz; apply Nat.add_0_r.
 }
 exfalso.
@@ -2030,15 +2030,15 @@ apply (Nat.Even_add_Even_inv_r (2 * k)) in Hev. 2: {
   apply Nat.Even_mul_l.
   exists 1; symmetry; apply Nat.mul_1_r.
 }
-remember (2 * (i mod n) / n) as a eqn:Ha.
-symmetry in Ha.
-destruct a; [ easy | exfalso ].
-destruct a; [ now apply Nat.even_spec in Hev | ].
-specialize (Nat.mod_upper_bound i n Hnz) as H2.
+remember (2 * (a mod b) / b) as c eqn:Hc.
+symmetry in Hc.
+destruct c; [ easy | exfalso ].
+destruct c; [ now apply Nat.even_spec in Hev | ].
+specialize (Nat.mod_upper_bound a b Hnz) as H2.
 apply (Nat.mul_lt_mono_pos_l 2) in H2; [ | easy ].
-rewrite (Nat.mul_comm _ n) in H2.
+rewrite (Nat.mul_comm _ b) in H2.
 apply Nat.Div0.div_lt_upper_bound in H2.
-rewrite Ha in H2.
+rewrite Hc in H2.
 now do 2 apply Nat.succ_lt_mono in H2.
 Qed.
 
