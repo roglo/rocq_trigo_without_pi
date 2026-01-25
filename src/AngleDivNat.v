@@ -2020,6 +2020,7 @@ destruct (Nat.eq_dec (2 * (i mod n) / n) 0) as [Htz| Htz]. {
   rewrite Htz; apply Nat.add_0_r.
 }
 exfalso.
+apply Htz; clear Htz.
 rewrite H1 in Hev.
 rewrite Nat.mul_add_distr_l in Hev.
 rewrite Nat.mul_assoc in Hev.
@@ -2031,7 +2032,7 @@ apply (Nat.Even_add_Even_inv_r (2 * k)) in Hev. 2: {
 }
 remember (2 * (i mod n) / n) as a eqn:Ha.
 symmetry in Ha.
-destruct a; [ easy | clear Htz ].
+destruct a; [ easy | exfalso ].
 destruct a; [ now apply Nat.even_spec in Hev | ].
 specialize (Nat.mod_upper_bound i n Hnz) as H2.
 apply (Nat.mul_lt_mono_pos_l 2) in H2; [ | easy ].
