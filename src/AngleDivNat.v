@@ -2,10 +2,7 @@ Set Nested Proofs Allowed.
 Require Import Stdlib.Arith.Arith.
 Require Init.
 
-Require Import RingLike.Utf8.
-Require Import RingLike.Core.
-Require Import RingLike.RealLike.
-Require Import RingLike.Misc.
+From RingLike Require Import Utf8 Core RealLike Misc Utils.
 
 Require Import AngleDef Angle TrigoWithoutPiExt.
 Require Import Order.
@@ -2044,6 +2041,102 @@ rewrite Ha in H2.
 now do 2 apply Nat.succ_lt_mono in H2.
 Qed.
 
+Notation "'∑' ( i = b , e ) , g" :=
+  (Utils.iter_seq b e (λ c i, (c + g)%A) 0%A)
+  (at level 45, i at level 0, b at level 60, e at level 60,
+   right associativity,
+   format "'[hv  ' ∑  ( i  =  b ,  e ) ,  '/' '[' g ']' ']'").
+
+Theorem seq_angle_to_div_nat_is_summation :
+  ∀ α n i,
+  2 ≤ n
+  → seq_angle_to_div_nat α n i =
+      ∑ (k = 1, i), (((2 ^ k / n mod 2) * α) /₂^k)%A.
+Proof.
+intros * H2n.
+assert (Hnz : n ≠ 0) by flia H2n.
+induction i. {
+  rewrite iter_seq_empty; [ | easy ].
+  progress unfold seq_angle_to_div_nat.
+  cbn.
+  destruct n; [ easy | ].
+  destruct n; [ flia H2n | ].
+  now rewrite Nat.div_small.
+}
+rewrite iter_seq_split_last; [ | flia ].
+destruct (Nat.eq_dec i 0) as [Hiz| Hiz]. {
+  subst i.
+  rewrite iter_seq_empty; [ | easy ].
+  progress unfold seq_angle_to_div_nat.
+  cbn - [ "/" "mod" ].
+  rewrite angle_add_0_l.
+  destruct (Nat.eq_dec n 2) as [Hn2| Hn2]. {
+    subst n; cbn.
+    now do 2 rewrite angle_add_0_r.
+  }
+  rewrite Nat.div_small; [ cbn | flia H2n Hn2 ].
+  symmetry; apply angle_0_div_2.
+}
+rewrite (iter_shift 1); [ | flia Hiz ].
+cbn - [ "/" "mod" ].
+rewrite Nat.sub_0_r, Nat.add_0_r.
+erewrite iter_seq_eq_compat. 2: {
+  intros k Hk.
+  now rewrite Nat.sub_0_r.
+}
+remember (∑ (k = _, _), _) as x in |-*; subst x. (* renaming *)
+rewrite <- IHi.
+progress unfold seq_angle_to_div_nat.
+rewrite <- Nat_mul_2_l.
+rewrite <- Nat.pow_succ_r; [ | easy ].
+remember ((2 ^ S i / n) mod 2) as b eqn:Hb.
+symmetry in Hb.
+destruct b. {
+  rewrite angle_mul_0_l, angle_0_div_2_pow, angle_0_div_2.
+  rewrite angle_add_0_r.
+  apply Nat.Div0.mod_divides in Hb.
+  destruct Hb as (k, Hk).
+  rewrite Hk.
+  rewrite Nat.mul_comm.
+  rewrite <- angle_mul_nat_assoc.
+  rewrite angle_div_2_pow_succ_r_1.
+  rewrite angle_div_2_mul_2.
+  f_equal.
+  symmetry.
+  apply (Nat.mul_reg_l _ _ 2); [ easy | ].
+  rewrite <- Hk; symmetry.
+  apply Nat_mul_2_div_eq.
+  rewrite Nat.pow_succ_r' in Hk.
+  rewrite Hk.
+  apply Nat.even_spec.
+  apply Nat.even_even.
+}
+destruct b. 2: {
+  specialize (Nat.mod_upper_bound (2 ^ S i / n) 2 (Nat.neq_succ_0 _)) as H1.
+  rewrite Hb in H1.
+  now do 2 apply Nat.succ_lt_mono in H1.
+}
+rewrite angle_mul_1_l.
+specialize (Nat.div_mod (2 ^ S i / n) 2 (Nat.neq_succ_0 _)) as H1.
+rewrite Hb in H1.
+rewrite Nat.Div0.div_div in H1.
+rewrite (Nat.mul_comm n 2) in H1.
+rewrite <- Nat.Div0.div_div in H1.
+rewrite Nat.pow_succ_r' in H1 at 2.
+rewrite (Nat.mul_comm _ (2 ^ i)) in H1.
+rewrite Nat.div_mul in H1; [ | easy ].
+rewrite H1.
+rewrite angle_mul_add_distr_r.
+rewrite angle_mul_1_l.
+rewrite <- angle_div_2_pow_succ_r_1.
+progress f_equal.
+rewrite angle_div_2_pow_succ_r_1.
+rewrite Nat.mul_comm.
+rewrite <- angle_mul_nat_assoc.
+rewrite angle_div_2_mul_2.
+easy.
+Qed.
+
 (* to be completed
 Theorem angle_div_nat_integral :
   rngl_characteristic T = 0 →
@@ -2109,6 +2202,15 @@ destruct (Nat.eq_dec n 3) as [Hn3| Hn3]. {
     apply Nat_eq_b2n_0.
     apply angle_add_not_overflow_diag.
     progress unfold angle_div_nat in Htt.
+    eapply (angle_lim_eq_compat 0 0) in Htt. 2: {
+      intros i.
+      rewrite Nat.add_0_r.
+      rewrite seq_angle_to_div_nat_is_summation. 2: {
+        now do 2 apply -> Nat.succ_le_mono.
+      }
+      easy.
+    }
+...
 Theorem glop :
   ∀ α α',
   angle_lim (seq_angle_to_div_nat α 3) α'
@@ -2247,76 +2349,6 @@ Search ((_ /₂) /₂)%A.
 ...
 *)
 *)
-Require Import RingLike.Utils.
-Notation "'∑' ( i = b , e ) , g" :=
-  (Utils.iter_seq b e (λ c i, (c + g)%A) 0%A)
-  (at level 45, i at level 0, b at level 60, e at level 60,
-   right associativity,
-   format "'[hv  ' ∑  ( i  =  b ,  e ) ,  '/' '[' g ']' ']'").
-Theorem glop :
-  ∀ α n i,
-  2 ≤ n
-  → seq_angle_to_div_nat α n i =
-      ∑ (k = 1, i), (((2 ^ k / n mod 2) * α) /₂^k)%A.
-Proof.
-intros * H2n.
-induction i. {
-  rewrite iter_seq_empty; [ | easy ].
-  progress unfold seq_angle_to_div_nat.
-  cbn.
-  destruct n; [ easy | ].
-  destruct n; [ flia H2n | ].
-  now rewrite Nat.div_small.
-}
-rewrite iter_seq_split_last; [ | flia ].
-destruct (Nat.eq_dec i 0) as [Hiz| Hiz]. {
-  subst i.
-  rewrite iter_seq_empty; [ | easy ].
-  progress unfold seq_angle_to_div_nat.
-  cbn - [ "/" "mod" ].
-  rewrite angle_add_0_l.
-  destruct (Nat.eq_dec n 2) as [Hn2| Hn2]. {
-    subst n; cbn.
-    now do 2 rewrite angle_add_0_r.
-  }
-  rewrite Nat.div_small; [ cbn | flia H2n Hn2 ].
-  symmetry; apply angle_0_div_2.
-}
-rewrite (iter_shift 1); [ | flia Hiz ].
-cbn - [ "/" "mod" ].
-rewrite Nat.sub_0_r, Nat.add_0_r.
-erewrite iter_seq_eq_compat. 2: {
-  intros k Hk.
-  now rewrite Nat.sub_0_r.
-}
-remember (∑ (k = _, _), _) as x in |-*; subst x. (* renaming *)
-rewrite <- IHi.
-progress unfold seq_angle_to_div_nat.
-rewrite <- Nat_mul_2_l.
-rewrite <- Nat.pow_succ_r; [ | easy ].
-assert (Hnz : n ≠ 0) by flia H2n.
-remember ((2 ^ S i / n) mod 2) as b eqn:Hb.
-symmetry in Hb.
-destruct b. {
-  rewrite angle_mul_0_l, angle_0_div_2_pow, angle_0_div_2.
-  rewrite angle_add_0_r.
-  apply Nat.Div0.mod_divides in Hb.
-  destruct Hb as (k, Hk).
-  rewrite Hk.
-  rewrite Nat.mul_comm.
-  rewrite <- angle_mul_nat_assoc.
-  rewrite angle_div_2_pow_succ_r_1.
-  rewrite angle_div_2_mul_2.
-  f_equal.
-  symmetry.
-  apply (Nat.mul_reg_l _ _ 2); [ easy | ].
-  rewrite <- Hk; symmetry.
-  apply Nat_mul_2_div_eq.
-  rewrite Nat.pow_succ_r' in Hk.
-  rewrite Hk.
-  apply Nat.even_spec.
-  apply Nat.even_even.
-}
 ... ...
   rewrite Nat.pow_succ_r' in Hk.
   destruct n. {
