@@ -2267,13 +2267,20 @@ eapply (angle_lim_eq_compat i 0) in Htt. 2: {
   rewrite <- Hαi.
   reflexivity.
 }
-apply angle_lim_add_angle_lim_sub in Htt.
+(**)
 eapply (angle_lim_eq_compat 1 0) in Htt. 2: {
   intros j.
   rewrite Nat.add_0_r.
   rewrite (iter_shift i); [ | flia ].
   rewrite Nat.add_comm, Nat.add_sub.
   rewrite Nat.add_comm, Nat.add_sub.
+  reflexivity.
+}
+remember (λ j, (_ + ∑ (k = 1, j + 1), _)%A) as x; subst x. (* renaming *)
+apply angle_lim_add_angle_lim_sub in Htt.
+eapply (angle_lim_eq_compat 0 0) in Htt. 2: {
+  intros j.
+  rewrite Nat.add_0_r.
   apply iter_seq_eq_compat.
   intros k Hk.
   rewrite Nat.add_comm.
