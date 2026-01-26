@@ -1,6 +1,6 @@
 Set Nested Proofs Allowed.
 Require Import Stdlib.Arith.Arith.
-Require Init.
+Import Init.Nat.
 
 From RingLike Require Import Utf8 Core RealLike Misc Utils.
 
@@ -2222,6 +2222,7 @@ Theorem glop :
   angle_lim (seq_angle_to_div_nat α 3) α'
   → ∀ i, (seq_angle_to_div_nat α 3 i ≤ α')%A.
 Proof.
+destruct_ac.
 intros * Htt *.
 rewrite seq_angle_to_div_nat_is_summation; [ | flia ].
 eapply (angle_lim_eq_compat 0 0) in Htt. 2: {
@@ -2232,6 +2233,49 @@ eapply (angle_lim_eq_compat 0 0) in Htt. 2: {
   }
   easy.
 }
+progress unfold angle_lim in Htt.
+progress unfold is_limit_when_seq_tends_to_inf in Htt.
+remember (∑ (k = 1, i), ((2 ^ k / 3) mod 2 * α) /₂^k) as αi eqn:Hαi.
+specialize (Htt (angle_eucl_dist αi α')).
+destruct (angle_eq_dec αi α') as [Haa| Haa]. {
+  rewrite Haa; apply angle_le_refl.
+}
+apply angle_le_iff; left.
+assert (H : (0 < angle_eucl_dist αi α')%L). {
+  rewrite <- (angle_eucl_dist_diag αi).
+  apply rngl_cos_lt_iff_angle_eucl_lt.
+  rewrite angle_sub_diag.
+  apply rngl_le_neq.
+  split; [ apply rngl_cos_bound | ].
+  intros H.
+  apply eq_rngl_cos_1 in H.
+  now apply -> angle_sub_move_0_r in H.
+}
+specialize (Htt H); clear H.
+destruct Htt as (N, Hn).
+destruct (le_dec N i) as [Hni| Hni]. {
+  specialize (Hn _ Hni).
+  rewrite <- Hαi in Hn.
+  now apply rngl_lt_irrefl in Hn.
+}
+apply Nat.nle_gt in Hni.
+specialize (Hn (max N i)).
+assert (H : N ≤ max N i) by apply Nat.le_max_l.
+specialize (Hn H); clear H.
+apply angle_nle_gt.
+intros Haai.
+apply (rngl_nle_gt Hor) in Hn.
+apply Hn; clear Hn.
+apply rngl_cos_le_iff_angle_eucl_le.
+rewrite (iter_seq_split _ _ _ i); cycle 1.
+apply angle_add_0_l.
+apply angle_add_0_r.
+apply angle_add_assoc.
+flia Hni.
+rewrite <- Hαi.
+rewrite angle_add_sub_swap.
+apply quadrant_1_rngl_cos_add_le_cos_l.
+(* pas gagné *)
 ...
 (*
     apply angle_lim_move_0_r in Htt.
