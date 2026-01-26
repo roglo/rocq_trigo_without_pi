@@ -2233,9 +2233,32 @@ eapply (angle_lim_eq_compat 0 0) in Htt. 2: {
   }
   easy.
 }
+remember (∑ (k = 1, i), ((2 ^ k / 3) mod 2 * α) /₂^k) as αi eqn:Hαi.
+(**)
+eapply (angle_lim_eq_compat i 0) in Htt. 2: {
+  intros j.
+  rewrite Nat.add_0_r.
+  rewrite Nat.add_comm.
+  rewrite (iter_seq_split _ _ _ i); cycle 1.
+  apply angle_add_0_l.
+  apply angle_add_0_r.
+  apply angle_add_assoc.
+  flia.
+  rewrite <- Hαi.
+  reflexivity.
+}
+Search (angle_lim (λ _, (_ + _)%A) _).
+Theorem glop :
+  ∀ u α α',
+  angle_lim (λ i, (α + u i)%A) α'
+  → angle_lim u (α' - α)%A.
+Proof.
+intros * Hlim.
+... ...
+  apply glop in Htt.
+...
 progress unfold angle_lim in Htt.
 progress unfold is_limit_when_seq_tends_to_inf in Htt.
-remember (∑ (k = 1, i), ((2 ^ k / 3) mod 2 * α) /₂^k) as αi eqn:Hαi.
 specialize (Htt (angle_eucl_dist αi α')).
 destruct (angle_eq_dec αi α') as [Haa| Haa]. {
   rewrite Haa; apply angle_le_refl.
