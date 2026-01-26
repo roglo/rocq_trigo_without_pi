@@ -2268,6 +2268,19 @@ eapply (angle_lim_eq_compat i 0) in Htt. 2: {
   reflexivity.
 }
 apply angle_lim_add_angle_lim_sub in Htt.
+eapply (angle_lim_eq_compat 1 0) in Htt. 2: {
+  intros j.
+  rewrite Nat.add_0_r.
+  rewrite (iter_shift i); [ | flia ].
+  rewrite Nat.add_comm, Nat.add_sub.
+  rewrite Nat.add_comm, Nat.add_sub.
+  apply iter_seq_eq_compat.
+  intros k Hk.
+  rewrite Nat.add_comm.
+  rewrite angle_div_2_pow_add_r.
+  reflexivity.
+}
+remember (λ j, ∑ (k = 1, j + 1), _) as x; subst x. (* renaming *)
 ...
 progress unfold angle_lim in Htt.
 progress unfold is_limit_when_seq_tends_to_inf in Htt.
