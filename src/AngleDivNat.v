@@ -2231,6 +2231,43 @@ destruct (Nat.eq_dec n 3) as [Hn3| Hn3]. {
       }
       easy.
     }
+    apply angle_lim_move_0_r in Htt.
+    apply angle_lim_opp in Htt.
+    rewrite angle_opp_0 in Htt.
+    eapply (angle_lim_eq_compat 0 0) in Htt. 2: {
+      intros i.
+      rewrite Nat.add_0_r.
+      rewrite angle_opp_sub_distr.
+      reflexivity.
+    }
+    apply (angle_lim_0_le Hor) with
+      (g := λ i, (α - ∑ (k = 1, i), (α /₂^k))%A) in Htt. 2: {
+      intros i.
+      split. {
+        apply angle_sub_le_mono_l.
+        split. {
+          induction i. {
+            progress unfold iter_seq.
+            rewrite Nat_sub_succ_1.
+            progress unfold iter_list; cbn.
+            apply angle_nonneg.
+          }
+          destruct (Nat.eq_dec i 0) as [Hiz| Hiz]. {
+            subst i.
+            progress unfold iter_seq.
+            rewrite Nat_sub_succ_1.
+            progress unfold iter_list; cbn.
+            rewrite angle_0_div_2, angle_add_0_l.
+            apply angle_nonneg.
+          }
+          rewrite iter_seq_split_last; [ | flia ].
+          rewrite (iter_shift 1); [ | flia Hiz ].
+          do 2 rewrite Nat_sub_succ_1.
+          rewrite (iter_seq_split_last _ _ _ 1 (S i)); [ | flia ].
+          rewrite (iter_shift 1 2 (S i)); [ | flia Hiz ].
+          do 2 rewrite Nat_sub_succ_1.
+Search (_ + _ ≤ _ + _)%A.
+...
 Theorem glop :
   ∀ α α',
   angle_lim (seq_angle_to_div_nat α 3) α'
