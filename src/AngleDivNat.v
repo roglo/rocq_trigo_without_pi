@@ -2138,6 +2138,26 @@ rewrite angle_div_2_mul_2.
 easy.
 Qed.
 
+Theorem angle_lim_add_angle_lim_sub :
+  ∀ u α α',
+  angle_lim (λ i, (α + u i)%A) α'
+  → angle_lim u (α' - α)%A.
+Proof.
+destruct_ac.
+intros * Hlim.
+intros ε Hε.
+specialize (Hlim ε Hε).
+destruct Hlim as (N, Hn).
+exists N; intros n Hnn.
+specialize (Hn n Hnn).
+eapply (rngl_le_lt_trans Hor); [ | apply Hn ].
+apply rngl_cos_le_iff_angle_eucl_le.
+rewrite angle_sub_sub_distr.
+rewrite angle_add_comm.
+rewrite angle_add_sub_swap.
+apply (rngl_le_refl Hor).
+Qed.
+
 (* to be completed
 Theorem angle_div_nat_integral :
   rngl_characteristic T = 0 →
@@ -2247,15 +2267,7 @@ eapply (angle_lim_eq_compat i 0) in Htt. 2: {
   rewrite <- Hαi.
   reflexivity.
 }
-Search (angle_lim (λ _, (_ + _)%A) _).
-Theorem glop :
-  ∀ u α α',
-  angle_lim (λ i, (α + u i)%A) α'
-  → angle_lim u (α' - α)%A.
-Proof.
-intros * Hlim.
-... ...
-  apply glop in Htt.
+apply angle_lim_add_angle_lim_sub in Htt.
 ...
 progress unfold angle_lim in Htt.
 progress unfold is_limit_when_seq_tends_to_inf in Htt.
