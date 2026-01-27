@@ -2160,6 +2160,41 @@ apply (rngl_le_refl Hor).
 Qed.
 
 (* to be completed
+Theorem angle_div_nat_mul_div :
+  ∀ n α,
+  angle_div_nat (n * α) n α
+  → angle_mul_nat_div_2π n α = 0.
+Proof.
+intros * Htt.
+destruct (Nat.eq_dec n (2 ^ Nat.log2 n)) as [Hn2p| Hn2p]. {
+  remember (Nat.log2 n) as m; subst n; rename m into n.
+  clear Heqm.
+  apply angle_div_nat_2_pow_mul_div_2_pow in Htt.
+  rewrite Htt.
+  specialize (angle_mul_nat_div_2π_for_seq 1 (2 ^ n * α)%A n) as H1.
+  now rewrite Nat.div_1_r in H1.
+}
+destruct (angle_eq_dec α 0) as [Htz| Htz]. {
+  subst α.
+  apply angle_mul_nat_div_2π_0_r.
+}
+destruct (Nat.log2_succ_or (n - 1)) as [H1| H1]. {
+  destruct n; [ easy | ].
+  rewrite Nat_sub_succ_1 in H1.
+  generalize H1; intros H2.
+  apply Nat.log2_eq_succ_is_pow2 in H2.
+  destruct H2 as (b, Hb).
+  exfalso; apply Hn2p; clear Hn2p.
+  rewrite Hb.
+  f_equal.
+  symmetry.
+  now apply Nat.log2_pow2.
+}
+destruct (Nat.eq_dec n 0) as [Hnz| Hnz]; [ now subst n; cbn in Hn2p | ].
+replace (S (n - 1)) with n in H1 by flia Hnz.
+move Hnz before α; move Htz before Hnz.
+...
+
 Theorem angle_div_nat_integral :
   rngl_characteristic T = 0 →
   rngl_is_archimedean T = true →
@@ -2181,38 +2216,17 @@ generalize Htt; intros H.
 apply (angle_div_nat_prop Hch Har Hco) in H.
 destruct H as [(H1, H2)| H]; [ now subst n | ].
 subst α; rename α' into α.
-(**)
-destruct (Nat.eq_dec n (2 ^ Nat.log2 n)) as [Hn2p| Hn2p]. {
-  remember (Nat.log2 n) as m; subst n; rename m into n.
-  clear Heqm.
-  apply angle_div_nat_2_pow_mul_div_2_pow in Htt.
-  rewrite Htt.
-  specialize (angle_mul_nat_div_2π_for_seq 1 (2 ^ n * α)%A n) as H1.
-  now rewrite Nat.div_1_r in H1.
-}
-destruct (angle_eq_dec α 0) as [Htz| Htz]. {
-  subst α.
-  apply angle_mul_nat_div_2π_0_r.
-}
+... ...
+now apply angle_div_nat_mul_div.
+Qed.
+
+... ...
 destruct (Nat.eq_dec n 0) as [Hnz| Hnz]; [ now subst n; cbn in Hn2p | ].
 destruct (Nat.eq_dec n 1) as [Hn1| Hn1]; [ now subst n; cbn in Hn2p | ].
 destruct (Nat.eq_dec n 2) as [Hn2| Hn2]; [ now subst n; cbn in Hn2p | ].
 destruct (Nat.eq_dec n 4) as [Hn4| Hn4]; [ now subst n; cbn in Hn2p | ].
 destruct (Nat.eq_dec n 8) as [Hn8| Hn8]; [ now subst n; cbn in Hn2p | ].
 (**)
-destruct (Nat.log2_succ_or (n - 1)) as [H1| H1]. {
-  destruct n; [ easy | ].
-  rewrite Nat_sub_succ_1 in H1.
-  generalize H1; intros H2.
-  apply Nat.log2_eq_succ_is_pow2 in H2.
-  destruct H2 as (b, Hb).
-  exfalso; apply Hn2p; clear Hn2p.
-  rewrite Hb.
-  f_equal.
-  symmetry.
-  now apply Nat.log2_pow2.
-}
-replace (S (n - 1)) with n in H1 by flia Hnz.
 destruct (Nat.eq_dec n 3) as [Hn3| Hn3]. {
   subst n.
   clear Hn2p Hn8 Hn4 Hn2 Hn1 Hnz H1.
