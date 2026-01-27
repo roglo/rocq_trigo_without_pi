@@ -2213,6 +2213,27 @@ split. {
 Qed.
 
 (* to be completed
+Theorem glop :
+  ∀ α α' n,
+  angle_div_nat α n α'
+  → (α /₂^ Nat.log2_up n ≤ α')%A.
+Proof.
+destruct_ac.
+intros * Htt.
+progress unfold angle_div_nat in Htt.
+apply angle_lim_move_0_r in Htt.
+eapply (angle_lim_0_le Hor) in Htt. 2: {
+  intros i.
+  split. {
+Search (_ - _ ≤ _ - _)%A.
+    apply angle_sub_le_mono_l.
+    split. 2: {
+      apply seq_angle_to_div_nat_bound.
+      admit.
+      admit.
+    }
+...
+
 Theorem angle_div_nat_mul_div :
   ∀ n α,
   angle_div_nat (n * α) n α
