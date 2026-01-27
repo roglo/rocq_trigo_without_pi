@@ -382,6 +382,7 @@ destruct zs1. {
   generalize Hzs2; intros H2.
   apply rngl_lt_le_incl in H1, H2.
   apply angle_eucl_dist_2_mul_sqrt_sub_sqrt; [ | easy | easy ].
+  clear - Ht21 H1 H2 Hzs1 Hzs2 Hop Hor.
   (* lemma *)
   progress unfold angle_leb in Ht21.
   do 2 rewrite rngl_sin_sub_straight_r in Ht21.
@@ -2223,6 +2224,7 @@ destruct (Nat.eq_dec n 3) as [Hn3| Hn3]. {
     apply Nat_eq_b2n_0.
     apply angle_add_not_overflow_diag.
     progress unfold angle_div_nat in Htt.
+(*
 ...
     eapply (angle_lim_eq_compat 0 0) in Htt. 2: {
       intros i.
@@ -2232,7 +2234,44 @@ destruct (Nat.eq_dec n 3) as [Hn3| Hn3]. {
       }
       easy.
     }
+*)
     apply angle_lim_move_0_r in Htt.
+    apply
+      (angle_lim_0_le Hor _
+         (λ i, seq_angle_to_div_nat (4 * α) 4 i - α)%A)
+      in Htt. 2: {
+      intros i.
+      split. {
+        apply angle_sub_le_mono_r.
+        split. {
+          progress unfold seq_angle_to_div_nat.
+...
+          apply (angle_le_trans _ (2 ^ i * ((3 * α) /₂^(S i)))). {
+            apply angle_mul_le_mono_r. 2: {
+              apply Nat.Div0.div_le_upper_bound.
+              rewrite Nat.mul_comm.
+              apply Nat.mul_le_mono_r.
+              flia.
+            }
+            rewrite angle_div_2_pow_succ_r_2.
+            apply angle_mul_nat_div_2π_pow_div.
+          }
+          rewrite angle_div_2_pow_succ_r_2.
+          rewrite angle_div_2_pow_mul_2_pow.
+          rewrite Nat.add_1_r.
+          rewrite Nat.pow_succ_r; [ | easy ].
+          rewrite Nat.mul_comm, Nat.div_mul; [ | easy ].
+          rewrite angle_div_2_pow_succ_r_2.
+          rewrite angle_div_2_pow_mul_2_pow.
+          apply angle_le_refl.
+        }
+        progress unfold seq_angle_to_div_nat.
+        rewrite Nat.add_1_r.
+        rewrite Nat.pow_succ_r; [ | easy ].
+        rewrite Nat.mul_comm, Nat.div_mul; [ | easy ].
+        rewrite angle_div_2_pow_succ_r_2.
+        rewrite angle_div_2_pow_mul_2_pow.
+...
     apply angle_lim_opp in Htt.
     rewrite angle_opp_0 in Htt.
     eapply (angle_lim_eq_compat 0 0) in Htt. 2: {
@@ -3022,7 +3061,6 @@ assert (H : ∀ i, angle_add_overflow (u i) (n * u i) = false). {
 }
 clear Hm; rename H into Hm.
 (* lemma *)
-
 revert α u Hlim Hm.
 induction n; intros; [ apply angle_add_overflow_0_r | ].
 cbn in Hm |-*.

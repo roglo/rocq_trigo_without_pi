@@ -1068,7 +1068,7 @@ destruct (rngl_leb_dec 0 (rngl_cos α1)) as [Hzc1| Hzc1]. {
 Qed.
 
 Theorem angle_sub_le_mono_l :
-  ∀ α1 α3 α2,
+  ∀ α1 α2 α3,
   (α3 ≤ α2 ≤ α1)%A
   → (α1 - α2 ≤ α1 - α3)%A.
 Proof.
@@ -1200,6 +1200,20 @@ do 2 rewrite (rngl_cos_sub_comm α1).
 rewrite rngl_sin_sub_anticomm in Hs31.
 apply (rngl_opp_neg_pos Hop Hor) in Hs31.
 now apply angle_sub_le_mono_l_lemma_2.
+Qed.
+
+Theorem angle_sub_le_mono_r :
+  ∀ α1 α2 α3, (α1 ≤ α2 < α3)%A → (α1 - α3 ≤ α2 - α3)%A.
+Proof.
+intros * (H12, H23).
+do 2 rewrite <- (angle_opp_sub_distr α3).
+apply angle_opp_le_compat_if.
+intros H.
+apply -> angle_sub_move_0_r in H.
+subst α3.
+now apply angle_lt_irrefl in H23.
+apply angle_lt_le_incl in H23.
+now apply angle_sub_le_mono_l.
 Qed.
 
 Theorem angle_sub_le_mono_l' :
