@@ -2223,6 +2223,7 @@ destruct (Nat.eq_dec n 3) as [Hn3| Hn3]. {
     apply Nat_eq_b2n_0.
     apply angle_add_not_overflow_diag.
     progress unfold angle_div_nat in Htt.
+...
     eapply (angle_lim_eq_compat 0 0) in Htt. 2: {
       intros i.
       rewrite Nat.add_0_r.
