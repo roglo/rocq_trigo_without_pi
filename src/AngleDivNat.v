@@ -2195,6 +2195,9 @@ replace (S (n - 1)) with n in H1 by flia Hnz.
 move Hnz before α; move Htz before Hnz.
 ...
 
+*)
+
+(* to be completed
 Theorem angle_div_nat_integral :
   rngl_characteristic T = 0 →
   rngl_is_archimedean T = true →
@@ -2212,6 +2215,7 @@ destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
   now rewrite Hch in Hc1.
 }
 intros Har Hco * Htt.
+...
 generalize Htt; intros H.
 apply (angle_div_nat_prop Hch Har Hco) in H.
 destruct H as [(H1, H2)| H]; [ now subst n | ].
