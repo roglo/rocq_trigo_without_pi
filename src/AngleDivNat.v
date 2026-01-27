@@ -2213,6 +2213,39 @@ split. {
 Qed.
 
 (* to be completed
+Theorem angle_lim_le :
+  ∀ u v α β,
+  (∀ i, (u i ≤ v i)%A)
+  → angle_lim u α
+  → angle_lim v β
+  → (α ≤ β)%A.
+Proof.
+intros * Huv Hu Hv.
+progress unfold angle_lim in Hu.
+progress unfold angle_lim in Hv.
+progress unfold is_limit_when_seq_tends_to_inf in Hu.
+progress unfold is_limit_when_seq_tends_to_inf in Hv.
+About angle_lim_0_le.
+Check angle_le_angle_eucl_dist_le.
+apply angle_nlt_ge.
+intros H1.
+specialize (Hu (angle_eucl_dist α β)).
+specialize (Hv (angle_eucl_dist α β)).
+assert (H : (0 < angle_eucl_dist α β)%L). {
+  apply rngl_le_neq.
+  split; [ apply angle_eucl_dist_nonneg | ].
+  intros H; symmetry in H.
+  apply angle_eucl_dist_separation in H.
+  subst β.
+  now apply angle_lt_irrefl in H1.
+}
+specialize (Hu H).
+specialize (Hv H).
+clear H.
+destruct Hu as (Nu, Hu).
+destruct Hv as (Nv, Hv).
+...
+
 Theorem glop :
   ∀ α α' n,
   angle_div_nat α n α'
@@ -2221,6 +2254,14 @@ Proof.
 destruct_ac.
 intros * Htt.
 progress unfold angle_div_nat in Htt.
+Search angle_lim.
+... ...
+eapply angle_lim_le in Htt. 2: {
+  intros.
+  apply seq_angle_to_div_nat_bound.
+...
+}
+...
 apply angle_lim_move_0_r in Htt.
 eapply (angle_lim_0_le Hor) in Htt. 2: {
   intros i.
