@@ -2159,6 +2159,59 @@ rewrite angle_add_sub_swap.
 apply (rngl_le_refl Hor).
 Qed.
 
+Theorem seq_angle_to_div_nat_bound :
+  ∀ α n i,
+  n ≠ 0
+  → (Nat.log2_up n ≤ i)
+  → (α /₂^Nat.log2_up n ≤ seq_angle_to_div_nat α n i ≤ α /₂^Nat.log2 n)%A.
+Proof.
+intros * Hnz Hni.
+rewrite <- (angle_div_2_pow_mul_2_pow (i - Nat.log2_up n) (α /₂^_)%A).
+rewrite <- (angle_div_2_pow_mul_2_pow (i - Nat.log2 n) (α /₂^Nat.log2 _)%A).
+do 2 rewrite <- angle_div_2_pow_add_r.
+do 2 rewrite (Nat.add_comm _ (i - _)).
+rewrite Nat.sub_add; [ | easy ].
+rewrite Nat.sub_add. 2: {
+  eapply Nat.le_trans; [ | apply Hni ].
+  apply Nat.le_log2_log2_up.
+}
+destruct (Nat.eq_dec n 1) as [Hn1| Hn1]. {
+  progress unfold seq_angle_to_div_nat.
+  subst n.
+  cbn - [ "/" ].
+  rewrite Nat.sub_0_r.
+  rewrite Nat.div_1_r.
+  split; apply angle_le_refl.
+}
+progress unfold seq_angle_to_div_nat.
+split. {
+  apply angle_mul_le_mono_r.
+  apply angle_mul_nat_div_2π_for_seq.
+  rewrite Nat.pow_sub_r; [ | easy | easy ].
+  apply Nat.div_le_compat_l.
+  split; [ now apply Nat.neq_0_lt_0 | ].
+  apply Nat.log2_up_spec.
+  flia Hnz Hn1.
+} {
+  apply angle_mul_le_mono_r. {
+    apply (angle_mul_nat_not_overflow_le_l _ (2 ^ i)).
+    apply Nat.pow_le_mono_r; [ easy | apply Nat.le_sub_l ].
+    apply angle_mul_nat_div_2π_pow_div.
+  }
+  rewrite Nat.pow_sub_r; [ | easy | ].
+  apply Nat.div_le_compat_l. {
+    split. {
+      apply Nat.neq_0_lt_0.
+      now apply Nat.pow_nonzero.
+    }
+    apply Nat.log2_spec.
+    now apply Nat.neq_0_lt_0.
+  }
+  eapply Nat.le_trans; [ | apply Hni ].
+  apply Nat.le_log2_log2_up.
+}
+Qed.
+
 (* to be completed
 Theorem angle_div_nat_mul_div :
   ∀ n α,
@@ -2215,6 +2268,7 @@ destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
   now rewrite Hch in Hc1.
 }
 intros Har Hco * Htt.
+Check seq_angle_to_div_nat_bound.
 ...
 generalize Htt; intros H.
 apply (angle_div_nat_prop Hch Har Hco) in H.
