@@ -2228,12 +2228,30 @@ destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
   split; apply angle_nonneg.
 }
 intros * Huv Hu Hv.
+(**)
+Theorem angle_eucl_dist_lt_compat :
+  ∀ a b,
+  (a < b ≤ π)%A
+  → ∃ ε, ∀ a' b',
+    (angle_eucl_dist a a' < ε)%L
+    → (angle_eucl_dist b b' < ε)%L
+    → (a' < b')%A.
+Admitted.
+(**)
+split. {
+  apply angle_nlt_ge.
+  intros H1.
+  specialize (angle_eucl_dist_lt_compat β α) as H2.
+  assert (H : (β < α ≤ π)%A). {
+    split; [ easy | ].
+Search angle_lim.
+...
+Admitted. (*
+...
 progress unfold angle_lim in Hu.
 progress unfold angle_lim in Hv.
 progress unfold is_limit_when_seq_tends_to_inf in Hu.
 progress unfold is_limit_when_seq_tends_to_inf in Hv.
-Admitted. (*
-...
 apply angle_nlt_ge.
 intros H1.
 set (ε := angle_eucl_dist α β).
