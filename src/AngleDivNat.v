@@ -2220,18 +2220,22 @@ Theorem angle_lim_le :
   → angle_lim v β
   → (α ≤ β)%A.
 Proof.
+destruct_ac.
+destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
+  intros * Huv Hu Hv.
+  specialize (rngl_characteristic_1_angle_0 Hc1) as H1.
+  rewrite (H1 α).
+  apply angle_nonneg.
+}
 intros * Huv Hu Hv.
 progress unfold angle_lim in Hu.
 progress unfold angle_lim in Hv.
 progress unfold is_limit_when_seq_tends_to_inf in Hu.
 progress unfold is_limit_when_seq_tends_to_inf in Hv.
-About angle_lim_0_le.
-Check angle_le_angle_eucl_dist_le.
 apply angle_nlt_ge.
 intros H1.
-specialize (Hu (angle_eucl_dist α β)).
-specialize (Hv (angle_eucl_dist α β)).
-assert (H : (0 < angle_eucl_dist α β)%L). {
+assert (H : (0 < (angle_eucl_dist α β / 2))%L). {
+  apply (rngl_div_pos Hop Hiv Hto); [ | apply (rngl_0_lt_2 Hos Hc1 Hto) ].
   apply rngl_le_neq.
   split; [ apply angle_eucl_dist_nonneg | ].
   intros H; symmetry in H.
@@ -2239,11 +2243,40 @@ assert (H : (0 < angle_eucl_dist α β)%L). {
   subst β.
   now apply angle_lt_irrefl in H1.
 }
-specialize (Hu H).
-specialize (Hv H).
+specialize (Hu _ H).
+specialize (Hv _ H).
 clear H.
 destruct Hu as (Nu, Hu).
 destruct Hv as (Nv, Hv).
+specialize (Hu (max Nu Nv) (Nat.le_max_l _ _)).
+specialize (Hv (max Nu Nv) (Nat.le_max_r _ _)).
+specialize (Huv (max Nu Nv)).
+eapply (rngl_add_lt_compat Hos Hor) in Hu; [ | apply Hv ].
+rewrite <- rngl_mul_2_l in Hu.
+rewrite (rngl_mul_comm Hic) in Hu.
+rewrite (rngl_div_mul Hiv) in Hu. 2: {
+  apply (rngl_2_neq_0 Hos Hc1 Hto).
+}
+apply (rngl_nle_gt Hor) in Hu.
+apply Hu; clear Hu.
+rewrite rngl_add_comm.
+rewrite (angle_eucl_dist_symmetry _ α).
+eapply (rngl_le_trans Hor). {
+  apply (angle_eucl_dist_triangular _ (u (max Nu Nv))).
+}
+apply (rngl_add_le_mono_l Hos Hor).
+apply rngl_cos_le_iff_angle_eucl_le.
+...
+apply angle_sub_le_mono_l_lemma_2. {
+  split; [ easy | ].
+...
+specialize (angle_eucl_dist_triangular) as H2.
+specialize (H2 α (u (max Nu Nv)) β).
+...
+apply angle_nlt_ge in Huv.
+apply Huv; clear Huv.
+Search (angle_eucl_dist _ _ < _)%L.
+apply rngl_cos_lt_iff_angle_eucl_lt in Hu.
 ...
 
 Theorem glop :
