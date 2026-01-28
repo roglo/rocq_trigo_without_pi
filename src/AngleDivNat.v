@@ -2269,6 +2269,24 @@ destruct (angle_le_dec a' a) as [Haa| Haa]. {
   }
   apply angle_nle_gt in Hbb.
   apply (angle_le_lt_trans _ a); [ easy | ].
+(**)
+  apply angle_lt_iff.
+  split. 2: {
+    intros H; subst b'.
+    exfalso; apply (rngl_nle_gt Hor) in Hd; apply Hd.
+    rewrite angle_eucl_dist_symmetry.
+    apply (rngl_le_add_r Hos Hor).
+    apply angle_eucl_dist_nonneg.
+  }
+  apply angle_le_angle_eucl_dist_le. {
+    apply (angle_le_trans _ b); [ | easy ].
+    now apply angle_lt_le_incl.
+  } {
+    apply (angle_le_trans _ b); [ | easy ].
+    now apply angle_lt_le_incl.
+  }
+  do 2 rewrite (angle_eucl_dist_symmetry _ 0).
+...
   progress unfold angle_ltb.
   remember (0 ≤? rngl_sin a)%L as za eqn:Hza.
   remember (0 ≤? rngl_sin b')%L as zb' eqn:Hzb'.
@@ -2288,7 +2306,8 @@ destruct (angle_le_dec a' a) as [Haa| Haa]. {
       apply angle_eucl_dist_nonneg.
     }
     do 2 rewrite (angle_eucl_dist_symmetry _ 0).
-specialize (angle_eucl_dist_triangular 0 b' a) as H1.
+specialize (angle_eucl_dist_triangular 0 a b') as H1.
+Search (angle_eucl_dist _ _ < angle_eucl_dist _ _)%L.
 ...
 rngl_cos_angle_eucl_dist_0_r:
   ∀ {T : Type} {ro : ring_like_op T} {rp : ring_like_prop T} 
