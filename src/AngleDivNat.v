@@ -2232,9 +2232,12 @@ progress unfold angle_lim in Hu.
 progress unfold angle_lim in Hv.
 progress unfold is_limit_when_seq_tends_to_inf in Hu.
 progress unfold is_limit_when_seq_tends_to_inf in Hv.
+...
 apply angle_nlt_ge.
 intros H1.
-assert (H : (0 < (angle_eucl_dist α β / 2))%L). {
+set (ε := angle_eucl_dist α β).
+assert (H : (0 < ε / 2)%L). {
+  progress unfold ε.
   apply (rngl_div_pos Hop Hiv Hto); [ | apply (rngl_0_lt_2 Hos Hc1 Hto) ].
   apply rngl_le_neq.
   split; [ apply angle_eucl_dist_nonneg | ].
@@ -2250,21 +2253,29 @@ destruct Hu as (Nu, Hu).
 destruct Hv as (Nv, Hv).
 specialize (Hu (max Nu Nv) (Nat.le_max_l _ _)).
 specialize (Hv (max Nu Nv) (Nat.le_max_r _ _)).
-specialize (Huv (max Nu Nv)).
-eapply (rngl_add_lt_compat Hos Hor) in Hu; [ | apply Hv ].
-rewrite <- rngl_mul_2_l in Hu.
-rewrite (rngl_mul_comm Hic) in Hu.
-rewrite (rngl_div_mul Hiv) in Hu. 2: {
+specialize (Huv (max Nu Nv)) as Hmuv.
+generalize Hu; intros Hd.
+eapply (rngl_add_lt_compat Hos Hor) in Hd; [ | apply Hv ].
+rewrite <- rngl_mul_2_l in Hd.
+rewrite (rngl_mul_comm Hic) in Hd.
+rewrite (rngl_div_mul Hiv) in Hd. 2: {
   apply (rngl_2_neq_0 Hos Hc1 Hto).
 }
-apply (rngl_nle_gt Hor) in Hu.
-apply Hu; clear Hu.
+(**)
+apply angle_nlt_ge in Hmuv.
+apply Hmuv; clear Hmuv.
+...
+apply (rngl_nle_gt Hor) in Hd.
+apply Hd; clear Hd.
 rewrite rngl_add_comm.
 rewrite (angle_eucl_dist_symmetry _ α).
+progress unfold ε.
+...
 eapply (rngl_le_trans Hor). {
   apply (angle_eucl_dist_triangular _ (u (max Nu Nv))).
 }
 apply (rngl_add_le_mono_l Hos Hor).
+...
 apply rngl_cos_le_iff_angle_eucl_le.
 ...
 apply angle_sub_le_mono_l_lemma_2. {
