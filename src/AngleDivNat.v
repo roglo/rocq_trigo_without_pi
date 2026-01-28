@@ -2232,11 +2232,77 @@ intros * Huv Hu Hv.
 Theorem angle_eucl_dist_lt_compat :
   ∀ a b,
   (a < b ≤ π)%A
-  → ∃ ε, ∀ a' b',
+  → ∃ ε, (0 < ε)%L ∧ ∀ a' b',
     (angle_eucl_dist a a' < ε)%L
     → (angle_eucl_dist b b' < ε)%L
     → (a' < b')%A.
-Admitted.
+Proof.
+destruct_ac.
+destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
+  specialize (rngl_characteristic_1_angle_0 Hc1) as H1.
+  intros * (Hab, _).
+  rewrite (H1 a), (H1 b) in Hab.
+  now apply angle_lt_irrefl in Hab.
+}
+intros * Hab.
+exists (angle_eucl_dist a b / 2)%L.
+split. {
+  apply (rngl_div_pos Hop Hiv Hto); [ | apply (rngl_0_lt_2 Hos Hc1 Hto) ].
+  apply rngl_le_neq.
+  split; [ apply angle_eucl_dist_nonneg | ].
+  intros H; symmetry in H.
+  apply angle_eucl_dist_separation in H.
+  subst b.
+  destruct Hab as (Hab, _).
+  now apply angle_lt_irrefl in Hab.
+}
+intros * Ha Hb.
+generalize Ha; intros Hd.
+eapply (rngl_add_lt_compat Hos Hor) in Hd; [ | apply Hb ].
+rewrite <- rngl_mul_2_l in Hd.
+rewrite (rngl_mul_comm Hic) in Hd.
+rewrite (rngl_div_mul Hiv) in Hd; [ | apply (rngl_2_neq_0 Hos Hc1 Hto) ].
+destruct (angle_le_dec a' a) as [Haa| Haa]. {
+  destruct (angle_le_dec b b') as [Hbb| Hbb]. {
+    apply (angle_le_lt_trans _ a); [ easy | ].
+    now apply (angle_lt_le_trans _ b).
+  }
+  apply angle_nle_gt in Hbb.
+  apply (angle_le_lt_trans _ a); [ easy | ].
+  progress unfold angle_ltb.
+  remember (0 ≤? rngl_sin a)%L as za eqn:Hza.
+  remember (0 ≤? rngl_sin b')%L as zb' eqn:Hzb'.
+  symmetry in Hza, Hzb'.
+  destruct za. {
+    destruct zb'; [ | easy ].
+    apply rngl_leb_le in Hza, Hzb'.
+    apply (rngl_ltb_lt Heo).
+    do 2 rewrite rngl_cos_angle_eucl_dist_0_r.
+    apply (rngl_sub_lt_mono_l Hop Hor).
+    apply (rngl_div_lt_mono_pos_r Hop Hiv Hto). {
+      apply (rngl_0_lt_2 Hos Hc1 Hto).
+    }
+    apply (rngl_lt_lt_squ Hop Hiq Hto). {
+      apply (rngl_mul_comm Hic).
+    } {
+      apply angle_eucl_dist_nonneg.
+    }
+    do 2 rewrite (angle_eucl_dist_symmetry _ 0).
+specialize (angle_eucl_dist_triangular 0 b' a) as H1.
+...
+rngl_cos_angle_eucl_dist_0_r:
+  ∀ {T : Type} {ro : ring_like_op T} {rp : ring_like_prop T} 
+    {rl : real_like_prop T} {ac : angle_ctx T} (α : angle T),
+    rngl_cos α = (1 - (angle_eucl_dist α 0)² / 2)%L
+...
+Search angle_eucl_dist.
+...
+rngl_cos_diff_le_eucl_dist:
+  ∀ {T : Type} {ro : ring_like_op T} {rp : ring_like_prop T} 
+    {rl : real_like_prop T},
+    angle_ctx T
+    → ∀ α1 α2 : angle T, (rngl_cos α1 - rngl_cos α2 ≤ angle_eucl_dist α1 α2)%L
+...
 (**)
 split. {
   apply angle_nlt_ge.
