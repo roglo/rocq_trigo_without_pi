@@ -2292,31 +2292,25 @@ apply rngl_cos_lt_iff_angle_eucl_lt in Hu.
 
 Theorem glop :
   ∀ α α' n,
-  angle_div_nat α n α'
+  n ≠ 0
+  → angle_div_nat α n α'
   → (α /₂^ Nat.log2_up n ≤ α')%A.
 Proof.
 destruct_ac.
-intros * Htt.
+intros * Hnz Htt.
 progress unfold angle_div_nat in Htt.
-Search angle_lim.
-... ...
-eapply angle_lim_le in Htt. 2: {
-  intros.
-  apply seq_angle_to_div_nat_bound.
-...
+eapply (angle_lim_eq_compat (Nat.log2_up n) 0) in Htt. 2: {
+  intros i; rewrite Nat.add_0_r.
+  reflexivity.
 }
-...
-apply angle_lim_move_0_r in Htt.
-eapply (angle_lim_0_le Hor) in Htt. 2: {
-  intros i.
-  split. {
-Search (_ - _ ≤ _ - _)%A.
-    apply angle_sub_le_mono_l.
-    split. 2: {
-      apply seq_angle_to_div_nat_bound.
-      admit.
-      admit.
-    }
+eapply angle_lim_le in Htt; [ apply Htt | | ]. {
+  intros.
+  apply seq_angle_to_div_nat_bound; [ easy | flia ].
+} {
+  now apply angle_lim_const.
+}
+Qed.
+
 ...
 
 Theorem angle_div_nat_mul_div :
