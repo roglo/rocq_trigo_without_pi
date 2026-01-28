@@ -2215,23 +2215,24 @@ Qed.
 (* to be completed
 Theorem angle_lim_le :
   ∀ u v α β,
-  (∀ i, (u i ≤ v i)%A)
+  (∀ i, (u i ≤ v i ≤ π)%A)
   → angle_lim u α
   → angle_lim v β
-  → (α ≤ β)%A.
+  → (α ≤ β ≤ π)%A.
 Proof.
 destruct_ac.
 destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
   intros * Huv Hu Hv.
   specialize (rngl_characteristic_1_angle_0 Hc1) as H1.
-  rewrite (H1 α).
-  apply angle_nonneg.
+  rewrite (H1 α), (H1 β).
+  split; apply angle_nonneg.
 }
 intros * Huv Hu Hv.
 progress unfold angle_lim in Hu.
 progress unfold angle_lim in Hv.
 progress unfold is_limit_when_seq_tends_to_inf in Hu.
 progress unfold is_limit_when_seq_tends_to_inf in Hv.
+Admitted. (*
 ...
 apply angle_nlt_ge.
 intros H1.
@@ -2289,6 +2290,7 @@ apply Huv; clear Huv.
 Search (angle_eucl_dist _ _ < _)%L.
 apply rngl_cos_lt_iff_angle_eucl_lt in Hu.
 ...
+*)
 
 Theorem glop :
   ∀ α α' n,
@@ -2305,7 +2307,29 @@ eapply (angle_lim_eq_compat (Nat.log2_up n) 0) in Htt. 2: {
 }
 eapply angle_lim_le in Htt; [ apply Htt | | ]. {
   intros.
-  apply seq_angle_to_div_nat_bound; [ easy | flia ].
+  split. {
+    apply seq_angle_to_div_nat_bound; [ easy | flia ].
+  }
+  eapply angle_le_trans. {
+    apply seq_angle_to_div_nat_bound; [ easy | flia ].
+  }
+Search (_ /₂^_ ≤ _)%A.
+Search (_ /₂ ≤ _)%A.
+  destruct (Nat.eq_dec (Nat.log2 n) 0) as [H1| H1]. {
+Search (Nat.log2 _ = 0).
+    apply Nat.log2_null in H1.
+    destruct n; [ easy | ].
+    apply Nat.succ_le_mono in H1.
+    apply Nat.le_0_r in H1.
+    subst n.
+    cbn.
+(* merde *)
+...
+  destruct n; [ easy | ].
+  rewrite angle_div_2_pow_succ_r_1.
+angle_div_2_le_straight:
+Search (seq_angle_to_div_nat _ _ _ ≤ _)%A.
+  progre
 } {
   now apply angle_lim_const.
 }
