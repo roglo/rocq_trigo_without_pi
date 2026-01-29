@@ -2285,7 +2285,6 @@ destruct (angle_le_dec a' a) as [Haa| Haa]. {
     apply (angle_le_trans _ b); [ | easy ].
     now apply angle_lt_le_incl.
   }
-  do 2 rewrite (angle_eucl_dist_symmetry _ 0).
   assert (Haab : (angle_eucl_dist a a' < angle_eucl_dist a b')%L). {
     specialize (angle_eucl_dist_triangular a b' b) as H1.
     eapply (rngl_add_lt_mono_l Hos Hor).
@@ -2294,6 +2293,18 @@ destruct (angle_le_dec a' a) as [Haa| Haa]. {
     rewrite rngl_add_comm.
     now rewrite (angle_eucl_dist_symmetry b b').
   }
+  apply rngl_cos_lt_iff_angle_eucl_lt in Haab.
+  apply rngl_cos_lt_iff_angle_eucl_lt.
+  do 2 rewrite angle_sub_0_r.
+  do 2 rewrite (rngl_cos_sub_comm a) in Haab.
+...
+Search (rngl_cos _ < rngl_cos _)%L.
+apply quadrant_1_sin_sub_pos_cos_lt.
+apply rngl_cos_decr_lt.
+...
+Search (rngl_cos (_ + _) < rngl_cos (_ + _))%L.
+apply rngl_lt_le_incl in Haab.
+apply angle_add_le_mono_l_lemma_3 with (α1 := a) in Haab.
 ...
   progress unfold angle_ltb.
   remember (0 ≤? rngl_sin a)%L as za eqn:Hza.
