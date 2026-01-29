@@ -2278,6 +2278,8 @@ destruct (angle_le_dec a' a) as [Haa| Haa]. {
     apply (rngl_le_add_r Hos Hor).
     apply angle_eucl_dist_nonneg.
   }
+Search (angle_eucl_dist _ _ / 2)%L.
+...
   apply angle_le_angle_eucl_dist_le. {
     apply (angle_le_trans _ b); [ | easy ].
     now apply angle_lt_le_incl.
@@ -2285,14 +2287,18 @@ destruct (angle_le_dec a' a) as [Haa| Haa]. {
     apply (angle_le_trans _ b); [ | easy ].
     now apply angle_lt_le_incl.
   }
+  specialize (angle_eucl_dist_triangular a b' b) as H1.
   assert (Haab : (angle_eucl_dist a a' < angle_eucl_dist a b')%L). {
-    specialize (angle_eucl_dist_triangular a b' b) as H1.
     eapply (rngl_add_lt_mono_l Hos Hor).
     eapply (rngl_lt_le_trans Hor).
     apply Hd.
     rewrite rngl_add_comm.
     now rewrite (angle_eucl_dist_symmetry b b').
   }
+  apply angle_le_angle_eucl_dist_le.
+Search (angle_eucl_dist _ _ ≤ _)%L.
+  apply rngl_cos_le_angle_eucl_dist_le in H1.
+...
   apply rngl_cos_lt_iff_angle_eucl_lt in Haab.
   apply rngl_cos_lt_iff_angle_eucl_lt.
   do 2 rewrite angle_sub_0_r.
