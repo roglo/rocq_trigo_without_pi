@@ -2243,6 +2243,38 @@ split; intros Ha. {
 }
 Qed.
 
+Theorem angle_div_2_neq_π :
+  rngl_characteristic T ≠ 1 →
+  ∀ α, (α /₂ ≠ π)%A.
+Proof.
+destruct_ac.
+intros Hc1 * H.
+injection H; clear H; intros H1 H2.
+apply (eq_rl_sqrt_0 Hos) in H1. {
+  apply (f_equal (rngl_mul 2)) in H1.
+  rewrite (rngl_mul_0_r Hos) in H1.
+  rewrite (rngl_mul_comm Hic) in H1.
+  rewrite (rngl_div_mul Hiv) in H1.
+  apply -> (rngl_sub_move_0_r Hop) in H1.
+  rewrite <- H1 in H2.
+  symmetry in H1.
+  apply eq_rngl_cos_1 in H1; subst α.
+  progress unfold rngl_signp in H2.
+  rewrite (rngl_leb_refl Hor) in H2.
+  rewrite rngl_mul_1_l in H2.
+  rewrite (rngl_div_diag Hiq) in H2.
+  rewrite (rl_sqrt_1 Hop Hiq Hto) in H2.
+  symmetry in H2.
+  now apply (rngl_opp_1_neq_1 Hop Hc1 Hto) in H2.
+  apply (rngl_2_neq_0 Hos Hc1 Hto).
+  apply (rngl_2_neq_0 Hos Hc1 Hto).
+}
+apply (rngl_div_nonneg Hop Hiv Hto).
+apply (rngl_le_0_sub Hop Hor).
+apply rngl_cos_bound.
+apply (rngl_0_lt_2 Hos Hc1 Hto).
+Qed.
+
 (* to be completed
 Theorem angle_lim_le :
   ∀ u v α β,
@@ -2294,6 +2326,7 @@ split. {
 }
 intros * Ha Hb.
 assert (Hac : (a < c)%A). {
+  generalize Hab; intros Hab_v.
   destruct Hab as (Hab, Hbp).
   apply rngl_sin_nonneg_angle_le_straight in Hbp.
   progress unfold angle_ltb in Hab.
@@ -2311,8 +2344,9 @@ assert (Hac : (a < c)%A). {
   destruct zsc; [ | easy ].
   apply rngl_leb_le in Hzsc.
   apply (rngl_ltb_lt Heo).
-...
-  apply quadrant_1_sin_sub_pos_cos_lt; try easy. 2: {
+  destruct (rngl_leb_dec 0 (rngl_cos a)) as [Hzca| Hzca]. {
+    apply rngl_leb_le in Hzca.
+    apply quadrant_1_sin_sub_pos_cos_lt; try easy.
     rewrite <- (angle_div_2_mul_2 a).
     progress unfold c.
     rewrite angle_div_2_add_not_overflow.
@@ -2323,7 +2357,26 @@ assert (Hac : (a < c)%A). {
     specialize (H1 (Nat.le_succ_diag_r _)).
     do 2 rewrite angle_mul_1_l in H1.
     rewrite <- H1; clear H1.
-    rewrite angle_div_2_sub'.
+    rewrite angle_div_2_sub'. {
+      destruct Hab_v as (H1, H2).
+      generalize H1; intros H3.
+      apply angle_lt_le_incl in H1.
+      rewrite H1.
+      apply rngl_le_neq.
+      split; [ apply rngl_sin_div_2_nonneg | ].
+      intros H; symmetry in H.
+      apply eq_rngl_sin_0 in H.
+      destruct H as [H| H]. {
+        apply eq_angle_div_2_0 in H.
+        apply -> angle_sub_move_0_r in H; subst b.
+        now apply angle_lt_irrefl in H3.
+      }
+      now apply (angle_div_2_neq_π Hc1) in H.
+    }
+    apply angle_add_not_overflow_lt_straight_le_straight; [ | easy ].
+    now apply (angle_lt_le_trans _ b).
+  }
+  apply (rngl_leb_gt_iff Hto) in Hzca.
 ...
     rewrite <- angle_add_sub_assoc.
 Search ((_ * _)/₂)%A.
