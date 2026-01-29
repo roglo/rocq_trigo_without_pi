@@ -2296,10 +2296,56 @@ destruct (angle_le_dec a' a) as [Haa| Haa]. {
   apply rngl_cos_lt_iff_angle_eucl_lt in Haab.
   apply rngl_cos_lt_iff_angle_eucl_lt.
   do 2 rewrite angle_sub_0_r.
-  do 2 rewrite (rngl_cos_sub_comm a) in Haab.
+  move Hab after Hbb.
+  destruct Hab as (Hab, Hbp).
+  apply rngl_cos_decr_lt.
+  split. 2: {
+    apply (angle_le_trans _ b); [ | easy ].
+    now apply angle_lt_le_incl.
+  }
+  apply angle_nle_gt.
+  intros Hba.
+(* marche pas si b'<a' *)
+...
+  apply rngl_sin_nonneg_angle_le_straight in Hbp.
+  progress unfold angle_leb in Haa.
+  progress unfold angle_ltb in Hbb.
+  progress unfold angle_ltb in Hab.
+  apply rngl_leb_le in Hbp.
+  rewrite Hbp in Hbb, Hab.
+  apply rngl_leb_le in Hbp.
+  remember (0 ≤? rngl_sin a)%L as zsa eqn:Hzsa.
+  remember (0 ≤? rngl_sin a')%L as zsa' eqn:Hzsa'.
+  remember (0 ≤? rngl_sin b')%L as zsb' eqn:Hzsb'.
+  symmetry in Hzsa, Hzsa', Hzsb'.
+  destruct zsa; [ | easy ].
+  destruct zsa'; [ | easy ].
+  destruct zsb'; [ | easy ].
+  apply rngl_leb_le in Hzsa, Hzsa', Haa, Hzsb'.
+  apply (rngl_ltb_lt Heo) in Hbb, Hab.
+  move Hbp before Hzsa.
+  move Hzsb' before Hzsa'.
+  destruct (rngl_leb_dec 0 (rngl_cos a)) as [Hzca| Hzca]. {
+    apply rngl_leb_le in Hzca.
+    destruct (rngl_ltb_dec (rngl_cos b') 0) as [Hzcb'| Hzcb']. {
+      apply (rngl_ltb_lt Heo) in Hzcb'.
+      now apply (rngl_lt_le_trans Hor _ 0).
+    }
+    apply (rngl_ltb_ge_iff Hto) in Hzcb'.
+    apply quadrant_1_sin_sub_pos_cos_lt; try easy.
+    apply rngl_le_neq.
+    split. {
+      apply rngl_sin_sub_nonneg; try easy.
+      apply rngl_cos_cos_sin_sin_nonneg_sin_le_cos_le_iff; try easy.
+(**)
+      do 2 rewrite rngl_cos_sub in Haab.
 ...
 Search (rngl_cos _ < rngl_cos _)%L.
-apply quadrant_1_sin_sub_pos_cos_lt.
+Search (rngl_sin _ ≤ rngl_sin _)%L.
+...
+      apply (rngl_le_trans Hor _ (rngl_cos a)); [ easy | ].
+...
+apply rngl_sin_add_pos_2; try easy.
 apply rngl_cos_decr_lt.
 ...
 Search (rngl_cos (_ + _) < rngl_cos (_ + _))%L.
