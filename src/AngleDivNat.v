@@ -2212,6 +2212,37 @@ split. {
 }
 Qed.
 
+Theorem angle_le_π_le_opp : ∀ α, (α ≤ π)%A ↔ (α ≤ -α)%A.
+Proof.
+destruct_ac.
+intros.
+split; intros Ha. {
+  apply rngl_sin_nonneg_angle_le_straight in Ha.
+  progress unfold angle_leb; cbn.
+  apply rngl_leb_le in Ha.
+  rewrite Ha.
+  rewrite (rngl_leb_0_opp Hop Hto).
+  apply rngl_leb_le in Ha.
+  remember (rngl_sin α ≤? 0)%L as saz eqn:Hsaz.
+  symmetry in Hsaz.
+  destruct saz; [ | easy ].
+  apply (rngl_leb_refl Hor).
+} {
+  apply rngl_sin_nonneg_angle_le_straight.
+  progress unfold angle_leb in Ha.
+  remember (0 ≤? rngl_sin α)%L as zsa eqn:Hzsa.
+  symmetry in Hzsa.
+  destruct zsa; [ now apply rngl_leb_le | cbn in Ha ].
+  apply (rngl_leb_gt_iff Hto) in Hzsa.
+  rewrite (rngl_leb_0_opp Hop Hto) in Ha.
+  remember (rngl_sin α ≤? 0)%L as saz eqn:Hsaz.
+  symmetry in Hsaz.
+  destruct saz; [ easy | ].
+  apply (rngl_leb_gt_iff Hto) in Hsaz.
+  now apply (rngl_lt_asymm Hor) in Hsaz.
+}
+Qed.
+
 (* to be completed
 Theorem angle_lim_le :
   ∀ u v α β,
@@ -2245,23 +2276,93 @@ destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
   now apply angle_lt_irrefl in Hab.
 }
 intros * Hab.
-exists (angle_eucl_dist a b / 2)%L.
+set (c := ((a + b) /₂)%A).
+exists (angle_eucl_dist 0 c).
 split. {
-  apply (rngl_div_pos Hop Hiv Hto); [ | apply (rngl_0_lt_2 Hos Hc1 Hto) ].
   apply rngl_le_neq.
   split; [ apply angle_eucl_dist_nonneg | ].
   intros H; symmetry in H.
   apply angle_eucl_dist_separation in H.
-  subst b.
-  destruct Hab as (Hab, _).
-  now apply angle_lt_irrefl in Hab.
+  symmetry in H.
+  apply eq_angle_div_2_0 in H.
+  apply angle_add_move_0_r in H.
+  subst a.
+  destruct Hab as (Hbb, Hbp).
+  apply angle_nle_gt in Hbb.
+  apply Hbb.
+  now apply angle_le_π_le_opp.
 }
 intros * Ha Hb.
+assert (Hac : (a < c)%A). {
+  destruct Hab as (Hab, Hbp).
+  apply rngl_sin_nonneg_angle_le_straight in Hbp.
+  progress unfold angle_ltb in Hab.
+  apply rngl_leb_le in Hbp.
+  rewrite Hbp in Hab.
+  apply rngl_leb_le in Hbp.
+  progress unfold angle_ltb.
+  remember (0 ≤? rngl_sin a)%L as zsa eqn:Hzsa.
+  symmetry in Hzsa.
+  destruct zsa; [ | easy ].
+  apply (rngl_ltb_lt Heo) in Hab.
+  apply rngl_leb_le in Hzsa.
+  remember (0 ≤? rngl_sin c)%L as zsc eqn:Hzsc.
+  symmetry in Hzsc.
+  destruct zsc; [ | easy ].
+  apply rngl_leb_le in Hzsc.
+  apply (rngl_ltb_lt Heo).
+...
+  apply quadrant_1_sin_sub_pos_cos_lt; try easy. 2: {
+    rewrite <- (angle_div_2_mul_2 a).
+    progress unfold c.
+    rewrite angle_div_2_add_not_overflow.
+    rewrite angle_add_comm.
+    rewrite angle_add_sub_swap.
+    rewrite <- angle_sub_sub_distr.
+    specialize (angle_mul_sub_distr_r 2 1 (a /₂)) as H1.
+    specialize (H1 (Nat.le_succ_diag_r _)).
+    do 2 rewrite angle_mul_1_l in H1.
+    rewrite <- H1; clear H1.
+    rewrite angle_div_2_sub'.
+...
+    rewrite <- angle_add_sub_assoc.
+Search ((_ * _)/₂)%A.
+    rewrite angel_mul
+Search (_ * (_ /₂))%A.
+Search (_ * (_ /₂^ _))%A.
+
+Search (_ /₂ - _)%A.
+Search (rngl_cos _ < rngl_cos _)%L.
+Search (rngl_cos (_ /₂)).
+...
+  rewrite (angle_eucl_dist_symmetry 0 c) in Ha.
+  apply rngl_cos_lt_iff_angle_eucl_lt in Ha.
+  rewrite angle_sub_0_r in Ha.
+  progress unfold angle_ltb.
+  remember (0 ≤? rngl_sin a)%L as zsa eqn:Hzsa.
+  remember (0 ≤? rngl_sin c)%L as zsc eqn:Hzsc.
+  symmetry in Hzsa, Hzsc.
+  destruct zsa. {
+    destruct zsc; [ | easy ].
+    apply rngl_leb_le in Hzsa, Hzsc.
+    apply (rngl_ltb_lt Heo).
+    apply rngl_cos_decr_lt.
+...
+    progress unfold c.
+Search (rngl_cos (_ /₂)).
+...
+    rewrite rngl_cos_div_2.
+
+...
+Search (_ < _/₂)%A.
+Search (rngl_cos (_ - _) ≤ rngl_cos _)%L.
+...
+(*
 generalize Ha; intros Hd.
 eapply (rngl_add_lt_compat Hos Hor) in Hd; [ | apply Hb ].
 rewrite <- rngl_mul_2_l in Hd.
 rewrite (rngl_mul_comm Hic) in Hd.
-rewrite (rngl_div_mul Hiv) in Hd; [ | apply (rngl_2_neq_0 Hos Hc1 Hto) ].
+*)
 destruct (angle_le_dec a' a) as [Haa| Haa]. {
   destruct (angle_le_dec b b') as [Hbb| Hbb]. {
     apply (angle_le_lt_trans _ a); [ easy | ].
@@ -2270,6 +2371,7 @@ destruct (angle_le_dec a' a) as [Haa| Haa]. {
   apply angle_nle_gt in Hbb.
   apply (angle_le_lt_trans _ a); [ easy | ].
 (**)
+...
   apply angle_lt_iff.
   split. 2: {
     intros H; subst b'.
@@ -2278,7 +2380,12 @@ destruct (angle_le_dec a' a) as [Haa| Haa]. {
     apply (rngl_le_add_r Hos Hor).
     apply angle_eucl_dist_nonneg.
   }
-Search (angle_eucl_dist _ _ / 2)%L.
+(**)
+  apply angle_nlt_ge.
+  intros Hba.
+  specialize (angle_eucl_dist_triangular b' a b) as H1.
+  apply (rngl_nlt_ge Hor) in H1.
+  apply H1; clear H1.
 ...
   apply angle_le_angle_eucl_dist_le. {
     apply (angle_le_trans _ b); [ | easy ].
