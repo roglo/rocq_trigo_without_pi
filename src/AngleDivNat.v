@@ -2388,6 +2388,17 @@ assert (Hov : angle_add_overflow a b = false). {
   now apply rngl_lt_le_incl.
 }
 move H before Hab_v; clear Hab_v; rename H into Hab_v.
+assert (Hpa : (π ≤ - a)%A). {
+  rewrite <- (angle_opp_involutive π).
+  apply angle_opp_le_compat_if. {
+    intros H1; subst a.
+    now apply rngl_lt_irrefl in Hzca.
+  }
+  rewrite angle_opp_straight.
+  apply rngl_sin_nonneg_angle_le_straight.
+  now apply rngl_lt_le_incl.
+}
+apply rngl_lt_le_incl in Hzca.
 rewrite angle_add_assoc in Hc.
 rewrite (angle_add_add_swap a) in Hc.
 rewrite <- angle_add_assoc in Hc.
@@ -2398,9 +2409,8 @@ rewrite angle_div_2_add_not_overflow. {
   rewrite rngl_cos_add_right_r.
   apply -> (rngl_opp_lt_compat Hop Hor).
   rewrite rngl_sin_angle_div_2_add_not_overflow; [ | easy ].
-  apply rngl_cos_cos_sin_sin_nonneg_sin_lt_cos_lt_iff; [ | | easy | | ]. {
-    now apply rngl_lt_le_incl.
-  } {
+  apply rngl_cos_cos_sin_sin_nonneg_sin_lt_cos_lt_iff;
+      [ easy | | easy | | ]. {
     apply rngl_sin_add_nonneg. {
       apply rngl_sin_div_2_nonneg.
     } {
@@ -2408,7 +2418,7 @@ rewrite angle_div_2_add_not_overflow. {
     } {
       cbn.
       apply (rngl_mul_nonneg_nonneg Hos Hor). {
-        rewrite rngl_signp_of_pos; [ | now apply rngl_lt_le_incl ].
+        rewrite rngl_signp_of_pos; [ | easy ].
         apply (rngl_0_le_1 Hos Hto).
       }
       apply rl_sqrt_nonneg.
@@ -2423,9 +2433,7 @@ rewrite angle_div_2_add_not_overflow. {
       rewrite rngl_signp_of_pos. {
         apply (rngl_0_le_1 Hos Hto).
       }
-      apply (rngl_le_trans Hor _ (rngl_sin a)). {
-        now apply rngl_lt_le_incl.
-      }
+      apply (rngl_le_trans Hor _ (rngl_sin a)); [ easy | ].
       now apply rngl_lt_le_incl.
     }
     apply rl_sqrt_nonneg.
@@ -2441,12 +2449,8 @@ rewrite angle_div_2_add_not_overflow. {
       rewrite rngl_signp_of_pos. {
         apply (rngl_0_le_1 Hos Hto).
       }
-      apply rngl_sin_add_nonneg; [ | | easy | easy ]. {
-        now apply rngl_lt_le_incl.
-      }
-      apply (rngl_le_trans Hor _ (rngl_sin a)). {
-        now apply rngl_lt_le_incl.
-      }
+      apply rngl_sin_add_nonneg; [ easy | | easy | easy ].
+      apply (rngl_le_trans Hor _ (rngl_sin a)); [ easy | ].
       now apply rngl_lt_le_incl.
     }
     apply rl_sqrt_nonneg.
@@ -2458,16 +2462,14 @@ rewrite angle_div_2_add_not_overflow. {
   }
   apply rngl_le_neq.
   split. {
-    apply angle_le_sub_le_add_l_lemma_1. {
-      now apply rngl_lt_le_incl.
-    } {
+    apply angle_le_sub_le_add_l_lemma_1; [ easy | | | | | | ]. {
       apply rngl_sin_div_2_nonneg.
     } {
       apply rngl_sin_div_2_nonneg.
     } {
       cbn.
       apply (rngl_mul_nonneg_nonneg Hos Hor). {
-        rewrite rngl_signp_of_pos; [ | now apply rngl_lt_le_incl ].
+        rewrite rngl_signp_of_pos; [ | easy ].
         apply (rngl_0_le_1 Hos Hto).
       }
       apply rl_sqrt_nonneg.
@@ -2485,7 +2487,7 @@ rewrite angle_div_2_add_not_overflow. {
       } {
         cbn.
         apply (rngl_mul_nonneg_nonneg Hos Hor). {
-          rewrite rngl_signp_of_pos; [ | now apply rngl_lt_le_incl ].
+          rewrite rngl_signp_of_pos; [ | easy ].
           apply (rngl_0_le_1 Hos Hto).
         } {
           apply rl_sqrt_nonneg.
@@ -2513,24 +2515,13 @@ rewrite angle_div_2_add_not_overflow. {
   destruct H as [H| H]. {
     apply angle_add_move_l in H.
     rewrite angle_sub_diag_div_2 in H.
-    (* lemma *)
     apply (f_equal (λ a, angle_mul_nat a 2)) in H.
     do 2 rewrite angle_div_2_mul_2 in H.
     subst b.
     now apply angle_lt_irrefl in Hab_v.
   }
-  assert (H1 : (π ≤ - a)%A). {
-    rewrite <- (angle_opp_involutive π).
-    apply angle_opp_le_compat_if. {
-      intros H1; subst a.
-      now apply rngl_lt_irrefl in Hzca.
-    }
-    rewrite angle_opp_straight.
-    apply rngl_sin_nonneg_angle_le_straight.
-    now apply rngl_lt_le_incl.
-  }
-  apply angle_nlt_ge in H1.
-  apply H1; clear H1.
+  apply angle_nlt_ge in Hpa.
+  apply Hpa; clear Hpa.
   rewrite <- H.
   rewrite <- angle_div_2_add_not_overflow; [ | easy ].
   apply (angle_div_2_lt_straight Hc1).
@@ -2555,12 +2546,8 @@ apply angle_add_not_overflow_lt_straight_le_straight. {
   exfalso.
   apply rngl_leb_nle in Hzsab.
   apply Hzsab; clear Hzsab.
-  apply rngl_sin_add_nonneg; [ | | easy | easy ]. {
-    now apply rngl_lt_le_incl.
-  }
-  apply (rngl_le_trans Hor _ (rngl_sin a)). {
-    now apply rngl_lt_le_incl.
-  }
+  apply rngl_sin_add_nonneg; [ easy | | easy | easy ].
+  apply (rngl_le_trans Hor _ (rngl_sin a)); [ easy | ].
   now apply rngl_lt_le_incl.
 }
 apply angle_le_refl.
