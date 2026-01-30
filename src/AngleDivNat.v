@@ -2552,6 +2552,104 @@ apply angle_add_not_overflow_lt_straight_le_straight. {
 apply angle_le_refl.
 Qed.
 
+Theorem angle_add_π_sub_π : ∀ α, (α + π = α - π)%A.
+Proof.
+intros.
+apply eq_angle_eq.
+rewrite rngl_cos_add_straight_r.
+rewrite rngl_cos_sub_straight_r.
+rewrite rngl_sin_add_straight_r.
+rewrite rngl_sin_sub_straight_r.
+easy.
+Qed.
+
+Theorem angle_middle_lt : ∀ a b, (a < b ≤ π)%A → ((a + b) /₂ < b)%A.
+Proof.
+destruct_ac.
+destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
+  specialize (rngl_characteristic_1_angle_0 Hc1) as H1.
+  intros * (Hab, _).
+  rewrite (H1 a), (H1 b) in Hab.
+  now apply angle_lt_irrefl in Hab.
+}
+intros * Hab.
+change_angle_sub_l a π.
+change_angle_sub_l b π.
+rewrite angle_add_sub_assoc.
+rewrite <- angle_add_sub_swap.
+rewrite angle_straight_add_straight.
+rewrite angle_sub_0_l.
+rewrite <- angle_opp_add_distr.
+rewrite angle_add_comm.
+specialize (angle_opp_div_2 (a + b)) as H1.
+remember (a + b =? 0)%A as ab eqn:Haeb.
+symmetry in Haeb.
+destruct ab. {
+  apply angle_eqb_eq in Haeb.
+  rewrite angle_add_comm in Haeb.
+  apply angle_add_move_0_r in Haeb; subst b.
+  rewrite angle_add_opp_r.
+  rewrite angle_sub_diag.
+  rewrite angle_opp_0.
+  rewrite angle_0_div_2.
+  rewrite angle_sub_opp_r in Hab |-*.
+  apply angle_lt_iff.
+  split; [ apply angle_nonneg | ].
+  intros H; symmetry in H.
+  rewrite H in Hab.
+  destruct Hab as (Hab, _).
+  apply angle_nle_gt in Hab.
+  apply Hab, angle_nonneg.
+}
+apply angle_eqb_neq in Haeb.
+symmetry in H1.
+apply angle_add_move_r in H1.
+rewrite H1.
+rewrite <- (angle_add_opp_l b).
+rewrite angle_add_π_sub_π.
+do 2 rewrite <- angle_opp_add_distr.
+apply angle_opp_lt_compat_if. {
+  intros H.
+  rewrite angle_add_comm in H.
+  apply angle_add_move_0_r in H.
+  rewrite angle_opp_straight in H; subst b.
+  rewrite angle_sub_diag in Hab.
+  destruct Hab as (Hab, _).
+  apply angle_nle_gt in Hab.
+  apply Hab, angle_nonneg.
+}
+apply angle_add_lt_mono_l. {
+  rewrite angle_add_overflow_comm.
+  apply angle_add_not_overflow_lt_straight_le_straight.
+  apply (angle_div_2_lt_straight Hc1).
+  apply angle_le_refl.
+}
+rewrite angle_add_comm.
+apply angle_lt_middle.
+split. {
+  destruct Hab as (Hab, Hbp).
+  apply angle_nle_gt.
+  apply angle_nle_gt in Hab.
+  intros H; apply Hab; clear Hab.
+  apply angle_sub_le_mono_l.
+  split; [ easy | ].
+  apply (angle_le_le_sub_l Hop Hto) in Hbp.
+  rewrite angle_sub_sub_distr in Hbp.
+  rewrite angle_sub_diag in Hbp.
+  now rewrite angle_add_0_l in Hbp.
+} {
+  destruct Hab as (Hab, Hbp).
+  assert (H : (π - a < π)%A). {
+    now apply (angle_lt_le_trans _ (π - b)).
+  }
+  apply angle_lt_le_incl in H.
+  apply (angle_le_le_sub_l Hop Hto) in H.
+  rewrite angle_sub_sub_distr in H.
+  rewrite angle_sub_diag in H.
+  now rewrite angle_add_0_l in H.
+}
+Qed.
+
 (* to be completed
 Theorem angle_lim_le :
   ∀ u v α β,
@@ -2603,6 +2701,8 @@ split. {
 }
 intros * Ha Hb.
 assert (Hac : (a < c)%A) by now apply angle_lt_middle.
+assert (Hcb : (c < b)%A) by now apply angle_middle_lt.
+...
 assert (Ha'c : (a' < c)%A). {
   destruct (angle_le_dec a' a) as [Haa| Haa]. {
     now apply (angle_le_lt_trans _ a).
