@@ -2684,25 +2684,19 @@ destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
 }
 intros * Hab.
 set (c := ((a + b) /₂)%A).
-exists (angle_eucl_dist 0 c).
+exists (angle_eucl_dist a c).
+assert (Hac : (a < c)%A) by now apply angle_lt_middle.
+assert (Hcb : (c < b)%A) by now apply angle_middle_lt.
 split. {
   apply rngl_le_neq.
   split; [ apply angle_eucl_dist_nonneg | ].
   intros H; symmetry in H.
   apply angle_eucl_dist_separation in H.
-  symmetry in H.
-  apply eq_angle_div_2_0 in H.
-  apply angle_add_move_0_r in H.
-  subst a.
-  destruct Hab as (Hbb, Hbp).
-  apply angle_nle_gt in Hbb.
-  apply Hbb.
-  now apply angle_le_π_le_opp.
+  subst c.
+  rewrite <- H in Hac.
+  now apply angle_lt_irrefl in Hac.
 }
 intros * Ha Hb.
-assert (Hac : (a < c)%A) by now apply angle_lt_middle.
-assert (Hcb : (c < b)%A) by now apply angle_middle_lt.
-...
 assert (Ha'c : (a' < c)%A). {
   destruct (angle_le_dec a' a) as [Haa| Haa]. {
     now apply (angle_le_lt_trans _ a).
