@@ -2603,6 +2603,12 @@ split. {
 }
 intros * Ha Hb.
 assert (Hac : (a < c)%A) by now apply angle_lt_middle.
+assert (Ha'c : (a' < c)%A). {
+  destruct (angle_le_dec a' a) as [Haa| Haa]. {
+    now apply (angle_le_lt_trans _ a).
+  }
+  apply angle_nle_gt in Haa.
+  specialize (angle_eucl_dist_triangular a a' c) as H1.
 ...
 destruct (angle_le_dec a' a) as [Haa| Haa]. {
   destruct (angle_le_dec b b') as [Hbb| Hbb]. {
