@@ -2410,6 +2410,22 @@ assert (Hac : (a < c)%A). {
     apply rngl_cos_cos_sin_sin_nonneg_sin_lt_cos_lt_iff; try easy.
     now apply rngl_lt_le_incl.
   }
+  assert (Hov : angle_add_overflow a b = false). {
+    apply angle_add_not_overflow_lt_straight_le_straight. {
+      apply angle_lt_iff.
+      split. {
+        apply rngl_sin_nonneg_angle_le_straight.
+        now apply rngl_lt_le_incl.
+      }
+      intros H1; subst a.
+      now apply rngl_lt_irrefl in Hzca.
+    }
+    apply rngl_sin_nonneg_angle_le_straight.
+    apply (rngl_le_trans Hor _ (rngl_sin a)). {
+      now apply rngl_lt_le_incl.
+    }
+    now apply rngl_lt_le_incl.
+  }
   move H before Hab_v; clear Hab_v; rename H into Hab_v.
   rewrite angle_add_assoc in Hc.
   rewrite (angle_add_add_swap a) in Hc.
@@ -2420,7 +2436,7 @@ assert (Hac : (a < c)%A). {
   rewrite angle_straight_div_2.
   rewrite rngl_cos_add_right_r.
   apply -> (rngl_opp_lt_compat Hop Hor).
-  rewrite rngl_sin_angle_div_2_add_not_overflow.
+  rewrite rngl_sin_angle_div_2_add_not_overflow; [ | easy ].
   apply rngl_cos_cos_sin_sin_nonneg_sin_lt_cos_lt_iff; try easy.
   now apply rngl_lt_le_incl.
   apply rngl_sin_add_nonneg.
@@ -2517,23 +2533,8 @@ assert (Hac : (a < c)%A). {
       rewrite angle_sub_diag_div_2.
       apply rngl_sin_div_2_nonneg.
     }
-    rewrite <- angle_div_2_add_not_overflow. {
-      apply rngl_sin_div_2_nonneg.
-    }
-    apply angle_add_not_overflow_lt_straight_le_straight. {
-      apply angle_lt_iff.
-      split. {
-        apply rngl_sin_nonneg_angle_le_straight.
-        now apply rngl_lt_le_incl.
-      }
-      intros H; subst a.
-      now apply rngl_lt_irrefl in Hzca.
-    }
-    apply rngl_sin_nonneg_angle_le_straight.
-    apply (rngl_le_trans Hor _ (rngl_sin a)). {
-      now apply rngl_lt_le_incl.
-    }
-    now apply rngl_lt_le_incl.
+    rewrite <- angle_div_2_add_not_overflow; [ | easy ].
+    apply rngl_sin_div_2_nonneg.
   } {
     intros H.
     apply rngl_cos_eq in H.
@@ -2546,6 +2547,20 @@ assert (Hac : (a < c)%A). {
       subst b.
       now apply angle_lt_irrefl in Hab_v.
     }
+    assert (H1 : (π ≤ - a)%A). {
+      rewrite <- (angle_opp_involutive π).
+      apply angle_opp_le_compat_if. {
+        intros H1; subst a.
+        now apply rngl_lt_irrefl in Hzca.
+      }
+      rewrite angle_opp_straight.
+      apply rngl_sin_nonneg_angle_le_straight.
+      now apply rngl_lt_le_incl.
+    }
+    apply angle_nlt_ge in H1.
+    apply H1; clear H1.
+    rewrite <- H.
+    rewrite <- angle_div_2_add_not_overflow; [ | easy ].
 ...
   rewrite (angle_eucl_dist_symmetry 0 c) in Ha.
   apply rngl_cos_lt_iff_angle_eucl_lt in Ha.
