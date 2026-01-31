@@ -2731,6 +2731,55 @@ assert (Habc : angle_eucl_dist a c = angle_eucl_dist b c). {
   apply angle_add_div_2_diag.
 }
 assert (Hcb' : (c < b')%A). {
+Inspect 1.
+...
+  subst c.
+  change_angle_sub_l a π.
+  change_angle_sub_l b π.
+  change_angle_sub_l a' π.
+  change_angle_sub_l b' π.
+  rewrite angle_add_sub_assoc.
+  rewrite <- angle_add_sub_swap.
+  rewrite angle_straight_add_straight.
+  rewrite angle_sub_0_l.
+  rewrite <- angle_opp_add_distr.
+  rewrite angle_add_comm.
+  specialize (angle_opp_div_2 (a + b)) as H1.
+  remember (a + b =? 0)%A as abz eqn:Habz.
+  symmetry in Habz, H1.
+  apply -> angle_add_move_r in H1.
+  rewrite H1; clear H1.
+  destruct abz. {
+    apply angle_eqb_eq in Habz.
+    apply -> angle_add_move_0_r in Habz.
+    subst a.
+    admit.
+  }
+  rewrite <- angle_add_π_sub_π.
+  rewrite angle_add_opp_l.
+  apply angle_lt_iff.
+  split. {
+Search (_ - _ ≤ _ - _)%A.
+    apply angle_sub_le_mono_l.
+    split. {
+Inspect 1.
+      apply angle_eucl_dist_lt_lt_middle.
+...
+  remember (-a)%A as α eqn:Hα.
+  remember (-b)%A as β eqn:Hβ.
+  remember (-a')%A as α' eqn:Hα'.
+  remember (-b')%A as β' eqn:Hβ'.
+  apply (f_equal angle_opp) in Hα, Hβ, Hα', Hβ'.
+  rewrite angle_opp_involutive in Hα, Hβ, Hα', Hβ'.
+  subst a b a' b'.
+  rename α into b.
+  rename β into a.
+  rename α' into b'.
+  rename β' into a'.
+  rewrite angle_add_opp_r.
+  rewrite <- angle_opp_add_distr.
+  Search (- _ /₂)%A.
+  specialize (angle_opp_div_2 (a + b)) as H1.
 ...
   rewrite Habc in Hb.
   destruct (angle_le_dec b b') as [Hbb| Hbb]. {
