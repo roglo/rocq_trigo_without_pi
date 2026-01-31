@@ -2403,6 +2403,19 @@ assert (Hzsb : (0 ≤ rngl_sin b)%L). {
   apply (rngl_le_trans Hor _ (rngl_sin a)); [ easy | ].
   now apply rngl_lt_le_incl.
 }
+assert (Hzca2 : (0 ≤ rngl_cos (a /₂))%L). {
+  cbn.
+  apply (rngl_mul_nonneg_nonneg Hos Hor). {
+    rewrite rngl_signp_of_pos; [ | easy ].
+    apply (rngl_0_le_1 Hos Hto).
+  }
+  apply rl_sqrt_nonneg.
+  apply (rngl_div_nonneg Hop Hiv Hto). {
+    apply (rngl_le_opp_l Hop Hor).
+    apply rngl_cos_bound.
+  }
+  apply (rngl_0_lt_2 Hos Hc1 Hto).
+}
 rewrite angle_add_assoc in Hc.
 rewrite (angle_add_add_swap a) in Hc.
 rewrite <- angle_add_assoc in Hc.
@@ -2415,22 +2428,10 @@ rewrite angle_div_2_add_not_overflow. {
   rewrite rngl_sin_angle_div_2_add_not_overflow; [ | easy ].
   apply rngl_cos_cos_sin_sin_nonneg_sin_lt_cos_lt_iff;
       [ easy | | easy | | ]. {
-    apply rngl_sin_add_nonneg. {
+    apply rngl_sin_add_nonneg; [ | | easy | ]. {
       apply rngl_sin_div_2_nonneg.
     } {
       apply rngl_sin_div_2_nonneg.
-    } {
-      cbn.
-      apply (rngl_mul_nonneg_nonneg Hos Hor). {
-        rewrite rngl_signp_of_pos; [ | easy ].
-        apply (rngl_0_le_1 Hos Hto).
-      }
-      apply rl_sqrt_nonneg.
-      apply (rngl_div_nonneg Hop Hiv Hto). {
-        apply (rngl_le_opp_l Hop Hor).
-        apply rngl_cos_bound.
-      }
-      apply (rngl_0_lt_2 Hos Hc1 Hto).
     }
     cbn.
     apply (rngl_mul_nonneg_nonneg Hos Hor). {
@@ -2461,41 +2462,16 @@ rewrite angle_div_2_add_not_overflow. {
   }
   apply rngl_le_neq.
   split. {
-    apply angle_le_sub_le_add_l_lemma_1; [ easy | | | | | | ]. {
+    apply angle_le_sub_le_add_l_lemma_1; [ easy | | | easy | | | ]. {
       apply rngl_sin_div_2_nonneg.
     } {
       apply rngl_sin_div_2_nonneg.
-    } {
-      cbn.
-      apply (rngl_mul_nonneg_nonneg Hos Hor). {
-        rewrite rngl_signp_of_pos; [ | easy ].
-        apply (rngl_0_le_1 Hos Hto).
-      }
-      apply rl_sqrt_nonneg.
-      apply (rngl_div_nonneg Hop Hiv Hto). {
-        apply (rngl_le_opp_l Hop Hor).
-        apply rngl_cos_bound.
-      }
-      apply (rngl_0_lt_2 Hos Hc1 Hto).
     } {
       rewrite angle_sub_diag_div_2.
-      apply quadrant_1_sin_sub_nonneg_cos_le. {
+      apply quadrant_1_sin_sub_nonneg_cos_le; [ | | easy | ]. {
         apply rngl_sin_div_2_nonneg.
       } {
         apply rngl_sin_div_2_nonneg.
-      } {
-        cbn.
-        apply (rngl_mul_nonneg_nonneg Hos Hor). {
-          rewrite rngl_signp_of_pos; [ | easy ].
-          apply (rngl_0_le_1 Hos Hto).
-        } {
-          apply rl_sqrt_nonneg.
-          apply (rngl_div_nonneg Hop Hiv Hto). {
-            apply (rngl_le_opp_l Hop Hor).
-            apply rngl_cos_bound.
-          }
-          apply (rngl_0_lt_2 Hos Hc1 Hto).
-        }
       }
       rewrite angle_div_2_sub'.
       generalize Hab_v; intros H.
