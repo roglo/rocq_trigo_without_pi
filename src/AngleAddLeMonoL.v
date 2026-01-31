@@ -1206,6 +1206,39 @@ now apply angle_sub_le_mono_l_lemma_2.
 Qed.
 
 Theorem angle_sub_le_mono_r :
+  ∀ α1 α2 α3, (α3 ≤ α1 ≤ α2)%A → (α1 - α3 ≤ α2 - α3)%A.
+Proof.
+intros * (H31, H12).
+destruct (angle_eq_dec α1 0) as [Ha1z| Ha1z]. {
+  subst α1.
+  apply angle_nonpos in H31; subst α3.
+  rewrite angle_sub_diag.
+  apply angle_nonneg.
+}
+destruct (angle_eq_dec α3 0) as [Ha3z| Ha3z]. {
+  subst α3.
+  now do 2 rewrite angle_sub_0_r.
+}
+remember (-α1)%A as a1 eqn:Ha1.
+remember (-α2)%A as a2 eqn:Ha2.
+remember (-α3)%A as a3 eqn:Ha3.
+apply (f_equal angle_opp) in Ha1, Ha2, Ha3.
+rewrite angle_opp_involutive in Ha1, Ha2, Ha3.
+subst α1 α2 α3.
+do 2 rewrite angle_sub_opp_r.
+do 2 rewrite angle_add_opp_l.
+apply angle_sub_le_mono_l.
+split. {
+  apply angle_opp_le_compat_if in H12; [ | easy ].
+  now do 2 rewrite angle_opp_involutive in H12.
+}
+apply angle_opp_le_compat_if in H31; [ | easy ].
+now do 2 rewrite angle_opp_involutive in H31.
+Qed.
+
+(*
+strange negatives comoparisons...
+Theorem angle_sub_le_mono_r :
   ∀ α1 α2 α3, (α1 ≤ α2 < α3)%A → (α1 - α3 ≤ α2 - α3)%A.
 Proof.
 intros * (H12, H23).
@@ -1218,6 +1251,7 @@ now apply angle_lt_irrefl in H23.
 apply angle_lt_le_incl in H23.
 now apply angle_sub_le_mono_l.
 Qed.
+*)
 
 Theorem angle_sub_le_mono_l' :
   ∀ α1 α2 α3,
