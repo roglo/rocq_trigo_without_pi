@@ -2399,6 +2399,10 @@ assert (Hpa : (π ≤ - a)%A). {
   now apply rngl_lt_le_incl.
 }
 apply rngl_lt_le_incl in Hzca.
+assert (Hzsb : (0 ≤ rngl_sin b)%L). {
+  apply (rngl_le_trans Hor _ (rngl_sin a)); [ easy | ].
+  now apply rngl_lt_le_incl.
+}
 rewrite angle_add_assoc in Hc.
 rewrite (angle_add_add_swap a) in Hc.
 rewrite <- angle_add_assoc in Hc.
@@ -2430,11 +2434,8 @@ rewrite angle_div_2_add_not_overflow. {
     }
     cbn.
     apply (rngl_mul_nonneg_nonneg Hos Hor). {
-      rewrite rngl_signp_of_pos. {
-        apply (rngl_0_le_1 Hos Hto).
-      }
-      apply (rngl_le_trans Hor _ (rngl_sin a)); [ easy | ].
-      now apply rngl_lt_le_incl.
+      rewrite rngl_signp_of_pos; [ | easy ].
+      apply (rngl_0_le_1 Hos Hto).
     }
     apply rl_sqrt_nonneg.
     apply (rngl_div_nonneg Hop Hiv Hto). {
@@ -2449,9 +2450,7 @@ rewrite angle_div_2_add_not_overflow. {
       rewrite rngl_signp_of_pos. {
         apply (rngl_0_le_1 Hos Hto).
       }
-      apply rngl_sin_add_nonneg; [ easy | | easy | easy ].
-      apply (rngl_le_trans Hor _ (rngl_sin a)); [ easy | ].
-      now apply rngl_lt_le_incl.
+      now apply rngl_sin_add_nonneg.
     }
     apply rl_sqrt_nonneg.
     apply (rngl_div_nonneg Hop Hiv Hto). {
@@ -2546,9 +2545,7 @@ apply angle_add_not_overflow_lt_straight_le_straight. {
   exfalso.
   apply rngl_leb_nle in Hzsab.
   apply Hzsab; clear Hzsab.
-  apply rngl_sin_add_nonneg; [ easy | | easy | easy ].
-  apply (rngl_le_trans Hor _ (rngl_sin a)); [ easy | ].
-  now apply rngl_lt_le_incl.
+  now apply rngl_sin_add_nonneg.
 }
 apply angle_le_refl.
 Qed.
