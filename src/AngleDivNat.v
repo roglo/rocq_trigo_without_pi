@@ -2607,6 +2607,75 @@ split. {
 }
 Qed.
 
+Theorem angle_eucl_dist_lt_lt_middle :
+  ∀ a b a',
+  (a < b ≤ π)%A
+  → (a' < π)%A
+  → (angle_eucl_dist a a' < angle_eucl_dist a ((a + b) /₂))%L
+  → (a' < (a + b) /₂)%A.
+Proof.
+destruct_ac.
+destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
+  specialize (rngl_characteristic_1_angle_0 Hc1) as H1.
+  intros * (Hab, _) Hap Ha.
+  rewrite (H1 a), (H1 b) in Hab.
+  now apply angle_lt_irrefl in Hab.
+}
+intros * Hab Hap Ha.
+set (c := ((a + b) /₂)%A) in *.
+assert (Hac : (a < c)%A) by now apply angle_lt_middle.
+destruct (angle_le_dec a' a) as [Haa| Haa]. {
+  now apply (angle_le_lt_trans _ a).
+}
+apply angle_nle_gt in Haa.
+apply angle_nle_gt.
+intros Hca.
+do 2 rewrite (angle_eucl_dist_symmetry a) in Ha.
+do 2 rewrite angle_eucl_dist_is_2_mul_sin_sub_div_2 in Ha.
+apply (rngl_mul_lt_mono_pos_l Hop Hiq Hto) in Ha. 2: {
+  apply (rngl_0_lt_2 Hos Hc1 Hto).
+}
+apply (rngl_nle_gt Hor) in Ha.
+apply Ha; clear Ha.
+apply rngl_sin_sub_nonneg_sin_le_sin. {
+  apply rngl_sin_div_2_nonneg.
+} {
+  apply rngl_cos_div_2_nonneg.
+  apply rngl_sin_sub_nonneg_iff. {
+    apply rngl_le_neq.
+    split. {
+      apply rngl_sin_nonneg_angle_le_straight.
+      now apply angle_lt_le_incl.
+    }
+    intros H; symmetry in H.
+    apply eq_rngl_sin_0 in H.
+    destruct H; subst a'. {
+      apply angle_nle_gt in Haa.
+      apply Haa, angle_nonneg.
+    }
+    now apply angle_lt_irrefl in Hap.
+  } {
+    apply rngl_sin_nonneg_angle_le_straight.
+    apply (angle_le_trans _ b); [ | easy ].
+    now apply angle_lt_le_incl.
+  }
+  apply rngl_cos_decr.
+  now apply angle_lt_le_incl in Haa, Hap.
+}
+rewrite angle_div_2_sub'.
+rewrite angle_sub_sub_distr.
+rewrite <- angle_add_sub_swap.
+rewrite angle_sub_add.
+remember (c - a ≤? a' - a)%A as ca eqn:Hcaa.
+symmetry in Hcaa.
+destruct ca; [ apply rngl_sin_div_2_nonneg | ].
+apply angle_leb_gt in Hcaa.
+exfalso; apply angle_nle_gt in Hcaa.
+apply Hcaa; clear Hcaa.
+apply angle_sub_le_mono_r.
+now apply angle_lt_le_incl in Hac.
+Qed.
+
 (* to be completed
 Theorem angle_lim_le :
   ∀ u v α β,
@@ -2655,65 +2724,14 @@ split. {
   now apply angle_lt_irrefl in Hac.
 }
 intros * Hap Ha Hb.
-assert (Ha'c : (a' < c)%A). {
-  clear - Hac Ha Hop Hiq Hto Hos Hc1 Hor Hap Hab.
-  destruct (angle_le_dec a' a) as [Haa| Haa]. {
-    now apply (angle_le_lt_trans _ a).
-  }
-  apply angle_nle_gt in Haa.
-  apply angle_nle_gt.
-  intros Hca.
-  do 2 rewrite (angle_eucl_dist_symmetry a) in Ha.
-  do 2 rewrite angle_eucl_dist_is_2_mul_sin_sub_div_2 in Ha.
-  apply (rngl_mul_lt_mono_pos_l Hop Hiq Hto) in Ha. 2: {
-    apply (rngl_0_lt_2 Hos Hc1 Hto).
-  }
-  apply (rngl_nle_gt Hor) in Ha.
-  apply Ha; clear Ha.
-  apply rngl_sin_sub_nonneg_sin_le_sin. {
-    apply rngl_sin_div_2_nonneg.
-  } {
-    apply rngl_cos_div_2_nonneg.
-    apply rngl_sin_sub_nonneg_iff. {
-      apply rngl_le_neq.
-      split. {
-        apply rngl_sin_nonneg_angle_le_straight.
-        now apply angle_lt_le_incl.
-      }
-      intros H; symmetry in H.
-      apply eq_rngl_sin_0 in H.
-      destruct H; subst a'. {
-        apply angle_nle_gt in Haa.
-        apply Haa, angle_nonneg.
-      }
-      now apply angle_lt_irrefl in Hap.
-    } {
-      apply rngl_sin_nonneg_angle_le_straight.
-      apply (angle_le_trans _ b); [ | easy ].
-      now apply angle_lt_le_incl.
-    }
-    apply rngl_cos_decr.
-    now apply angle_lt_le_incl in Haa, Hap.
-  }
-  rewrite angle_div_2_sub'.
-  rewrite angle_sub_sub_distr.
-  rewrite <- angle_add_sub_swap.
-  rewrite angle_sub_add.
-  remember (c - a ≤? a' - a)%A as ca eqn:Hcaa.
-  symmetry in Hcaa.
-  destruct ca; [ apply rngl_sin_div_2_nonneg | ].
-  apply angle_leb_gt in Hcaa.
-  exfalso; apply angle_nle_gt in Hcaa.
-  apply Hcaa; clear Hcaa.
-  apply angle_sub_le_mono_r.
-  now apply angle_lt_le_incl in Hac.
-}
+assert (Ha'c : (a' < c)%A) by now apply angle_eucl_dist_lt_lt_middle.
 assert (Habc : angle_eucl_dist a c = angle_eucl_dist b c). {
   apply angle_eucl_dist_eq_angle_eucl_dist; right.
   progress unfold c; symmetry.
   apply angle_add_div_2_diag.
 }
 assert (Hcb' : (c < b')%A). {
+...
   rewrite Habc in Hb.
   destruct (angle_le_dec b b') as [Hbb| Hbb]. {
     now apply (angle_lt_le_trans _ b).
