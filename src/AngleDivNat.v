@@ -2462,7 +2462,8 @@ rewrite angle_div_2_add_not_overflow. {
   }
   apply rngl_le_neq.
   split. {
-    apply angle_le_sub_le_add_l_lemma_1; [ easy | easy | easy | easy | | | ]. {
+    apply angle_le_sub_le_add_l_lemma_1;
+        [ easy | easy | easy | easy | | | ]. {
       rewrite angle_sub_diag_div_2.
       apply quadrant_1_sin_sub_nonneg_cos_le; [ easy | easy | easy | ].
       rewrite angle_div_2_sub'.
