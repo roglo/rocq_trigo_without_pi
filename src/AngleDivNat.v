@@ -2705,17 +2705,10 @@ assert (Ha'c : (a' < c)%A). {
     apply angle_leb_gt in Hcaa.
     exfalso; apply angle_nle_gt in Hcaa.
     apply Hcaa; clear Hcaa.
-About angle_sub_le_mono_r.
-Search (_ - _ ≤ _ - _)%A.
-...
     apply angle_sub_le_mono_r.
-...
-  apply rngl_cos_lt_iff_angle_eucl_lt in Ha.
-  apply (rngl_nle_gt Hor) in Ha.
-  apply Ha; clear Ha.
-  do 2 rewrite (rngl_cos_sub_comm a).
-About angle_sub_le_mono_l_lemma_2.
-  apply angle_sub_le_mono_l_lemma_2.
+    now apply angle_lt_le_incl in Hac.
+  }
+  apply Hap; clear Hap.
 ...
 destruct (angle_le_dec a' a) as [Haa| Haa]. {
   destruct (angle_le_dec b b') as [Hbb| Hbb]. {
