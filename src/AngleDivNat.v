@@ -2282,6 +2282,32 @@ rewrite <- (angle_add_div_2_diag α) at 1.
 apply angle_add_sub.
 Qed.
 
+Theorem rngl_cos_div_2_nonneg :
+  ∀ α,
+  (0 ≤ rngl_sin α)%L
+  → (0 ≤ rngl_cos (α /₂))%L.
+Proof.
+destruct_ac.
+destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
+  specialize (rngl_characteristic_1 Hos Hc1) as H1.
+  intros * Hzca.
+  rewrite (H1 (rngl_cos _)).
+  apply (rngl_le_refl Hor).
+}
+intros * Hzca.
+cbn.
+apply (rngl_mul_nonneg_nonneg Hos Hor). {
+  rewrite rngl_signp_of_pos; [ | easy ].
+  apply (rngl_0_le_1 Hos Hto).
+}
+apply rl_sqrt_nonneg.
+apply (rngl_div_nonneg Hop Hiv Hto). {
+  apply (rngl_le_opp_l Hop Hor).
+  apply rngl_cos_bound.
+}
+apply (rngl_0_lt_2 Hos Hc1 Hto).
+Qed.
+
 Theorem angle_lt_middle : ∀ a b, (a < b ≤ π)%A → (a < (a + b) /₂)%A.
 Proof.
 destruct_ac.
@@ -2405,32 +2431,8 @@ assert (Hzsb : (0 ≤ rngl_sin b)%L). {
 }
 assert (Hzsa2 : (0 ≤ rngl_sin (a /₂))%L) by apply rngl_sin_div_2_nonneg.
 assert (Hzsb2 : (0 ≤ rngl_sin (b /₂))%L) by apply rngl_sin_div_2_nonneg.
-assert (Hzca2 : (0 ≤ rngl_cos (a /₂))%L). {
-  cbn.
-  apply (rngl_mul_nonneg_nonneg Hos Hor). {
-    rewrite rngl_signp_of_pos; [ | easy ].
-    apply (rngl_0_le_1 Hos Hto).
-  }
-  apply rl_sqrt_nonneg.
-  apply (rngl_div_nonneg Hop Hiv Hto). {
-    apply (rngl_le_opp_l Hop Hor).
-    apply rngl_cos_bound.
-  }
-  apply (rngl_0_lt_2 Hos Hc1 Hto).
-}
-assert (Hzcb2 : (0 ≤ rngl_cos (b /₂))%L). {
-  cbn.
-  apply (rngl_mul_nonneg_nonneg Hos Hor). {
-    rewrite rngl_signp_of_pos; [ | easy ].
-    apply (rngl_0_le_1 Hos Hto).
-  }
-  apply rl_sqrt_nonneg.
-  apply (rngl_div_nonneg Hop Hiv Hto). {
-    apply (rngl_le_opp_l Hop Hor).
-    apply rngl_cos_bound.
-  }
-  apply (rngl_0_lt_2 Hos Hc1 Hto).
-}
+assert (Hzca2 : (0 ≤ rngl_cos (a /₂))%L) by now apply rngl_cos_div_2_nonneg.
+assert (Hzcb2 : (0 ≤ rngl_cos (b /₂))%L) by now apply rngl_cos_div_2_nonneg.
 rewrite angle_add_assoc in Hc.
 rewrite (angle_add_add_swap a) in Hc.
 rewrite <- angle_add_assoc in Hc.
@@ -2446,19 +2448,8 @@ rewrite angle_div_2_add_not_overflow. {
     now apply rngl_sin_add_nonneg.
   } {
     rewrite <- angle_div_2_add_not_overflow; [ | easy ].
-    cbn - [ angle_add ].
-    apply (rngl_mul_nonneg_nonneg Hos Hor). {
-      rewrite rngl_signp_of_pos. {
-        apply (rngl_0_le_1 Hos Hto).
-      }
-      now apply rngl_sin_add_nonneg.
-    }
-    apply rl_sqrt_nonneg.
-    apply (rngl_div_nonneg Hop Hiv Hto). {
-      apply (rngl_le_opp_l Hop Hor).
-      apply rngl_cos_bound.
-    }
-    apply (rngl_0_lt_2 Hos Hc1 Hto).
+    apply rngl_cos_div_2_nonneg.
+    now apply rngl_sin_add_nonneg.
   }
   apply rngl_le_neq.
   split. {
