@@ -802,9 +802,12 @@ destruct (angle_eq_dec α2 0) as [H2z| H2z]. {
 }
 destruct (angle_eq_dec α3 0) as [H3z| H3z]. {
   subst α3.
-  apply angle_nonpos in H23; subst α2.
-  apply angle_nonpos in H12; subst α1.
-  apply (rngl_le_refl Hor).
+  rewrite angle_sub_0_r in Hs13, Hs23.
+  do 2 rewrite angle_sub_0_r.
+  apply rngl_cos_decr.
+  split; [ easy | ].
+  apply rngl_sin_nonneg_angle_le_straight.
+  now apply rngl_lt_le_incl.
 }
 destruct (angle_eq_dec α2 π) as [H2p| H2p]. {
   subst α2.

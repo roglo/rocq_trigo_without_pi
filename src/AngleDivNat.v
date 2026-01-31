@@ -2659,8 +2659,14 @@ assert (Ha'c : (a' < c)%A). {
     now apply (angle_le_lt_trans _ a).
   }
   apply angle_nle_gt in Haa.
-  specialize (angle_eucl_dist_triangular a a' c) as H1.
-  specialize (angle_eucl_dist_triangular a' c b') as H2.
+  apply angle_nle_gt.
+  intros Hca.
+  apply rngl_cos_lt_iff_angle_eucl_lt in Ha.
+  apply (rngl_nle_gt Hor) in Ha.
+  apply Ha; clear Ha.
+  do 2 rewrite (rngl_cos_sub_comm a).
+About angle_sub_le_mono_l_lemma_2.
+  apply angle_sub_le_mono_l_lemma_2.
 ...
 destruct (angle_le_dec a' a) as [Haa| Haa]. {
   destruct (angle_le_dec b b') as [Hbb| Hbb]. {
