@@ -2732,6 +2732,81 @@ assert (Habc : angle_eucl_dist a c = angle_eucl_dist b c). {
   apply angle_add_div_2_diag.
 }
 assert (Hcb' : (c < b')%A). {
+(**)
+rewrite Habc in Hb.
+subst c.
+set (c := ((a + b) /₂)%A) in *.
+destruct (angle_le_dec b b') as [Hbb| Hbb]. {
+  now apply (angle_lt_le_trans _ b).
+}
+apply angle_nle_gt in Hbb.
+apply angle_nle_gt.
+intros Hbc.
+do 2 rewrite (angle_eucl_dist_symmetry b) in Hb.
+do 2 rewrite angle_eucl_dist_is_2_mul_sin_sub_div_2 in Hb.
+apply (rngl_mul_lt_mono_pos_l Hop Hiq Hto) in Hb. 2: {
+  apply (rngl_0_lt_2 Hos Hc1 Hto).
+}
+apply (rngl_nle_gt Hor) in Hb.
+apply Hb; clear Hb.
+do 2 rewrite <- (angle_opp_sub_distr b).
+do 2 rewrite angle_opp_div_2'.
+remember (b - c =? 0)%A as bcz eqn:Hbcz.
+remember (b - b' =? 0)%A as bbz eqn:Hbbz.
+symmetry in Hbcz, Hbbz.
+destruct bcz. {
+  apply angle_eqb_eq in Hbcz.
+  apply -> angle_sub_move_0_r in Hbcz; rewrite Hbcz in Hcb.
+  now apply angle_lt_irrefl in Hcb.
+}
+clear Hbcz.
+destruct bbz. {
+  apply angle_eqb_eq in Hbbz.
+  apply -> angle_sub_move_0_r in Hbbz; rewrite Hbbz in Hbb.
+  now apply angle_lt_irrefl in Hbb.
+}
+clear Hbbz.
+do 2 rewrite angle_add_opp_l.
+do 2 rewrite rngl_sin_sub_straight_l.
+apply rngl_sin_sub_nonneg_sin_le_sin. {
+  apply rngl_sin_div_2_nonneg.
+} {
+  apply rngl_cos_div_2_nonneg.
+  apply rngl_sin_sub_nonneg_iff. {
+    apply rngl_le_neq.
+    split. {
+      now apply rngl_sin_nonneg_angle_le_straight.
+    }
+    intros H; symmetry in H.
+    apply eq_rngl_sin_0 in H.
+    destruct H; subst b. {
+      apply angle_nle_gt in Hbb.
+      apply Hbb, angle_nonneg.
+    }
+...
+    now apply angle_lt_irrefl in Hap.
+  } {
+    apply rngl_sin_nonneg_angle_le_straight.
+    apply (angle_le_trans _ b); [ | easy ].
+    now apply angle_lt_le_incl.
+  }
+  apply rngl_cos_decr.
+  now apply angle_lt_le_incl in Haa, Hap.
+}
+rewrite angle_div_2_sub'.
+rewrite angle_sub_sub_distr.
+rewrite <- angle_add_sub_swap.
+rewrite angle_sub_add.
+remember (c - a ≤? a' - a)%A as ca eqn:Hcaa.
+symmetry in Hcaa.
+destruct ca; [ apply rngl_sin_div_2_nonneg | ].
+apply angle_leb_gt in Hcaa.
+exfalso; apply angle_nle_gt in Hcaa.
+apply Hcaa; clear Hcaa.
+apply angle_sub_le_mono_r.
+now apply angle_lt_le_incl in Hac.
+... version symétrique de angle_eucl_dist_lt_lt_middle
+    mais dont la symétrie est compliquée...
   subst c.
   change_angle_sub_l a π.
   change_angle_sub_l b π.
@@ -2743,7 +2818,6 @@ assert (Hcb' : (c < b')%A). {
   rewrite angle_sub_0_l.
   rewrite <- angle_opp_add_distr.
   rewrite angle_add_comm.
-(**)
   rewrite angle_eucl_dist_move_0_r in Hb.
   rewrite angle_sub_sub_distr in Hb.
   rewrite angle_sub_sub_swap in Hb.
@@ -2757,7 +2831,6 @@ assert (Hcb' : (c < b')%A). {
   rewrite angle_sub_0_l in Hb.
   rewrite <- angle_opp_add_distr in Hb.
   rewrite angle_add_comm in Hb.
-(**)
   remember (angle_eucl_dist b' b) as x.
   rewrite angle_eucl_dist_move_0_r in Hb; subst x.
   rewrite angle_opp_div_2' in Hb |-*.
@@ -2789,7 +2862,49 @@ assert (Hcb' : (c < b')%A). {
   apply angle_sub_lt_mono_l.
   rewrite angle_add_comm.
   split. {
-    apply angle_eucl_dist_lt_lt_middle.
+    apply angle_eucl_dist_lt_lt_middle. {
+      destruct Hab as (Hab, Hbp).
+      move Hbp at bottom.
+      split. {
+        apply angle_nle_gt.
+        intros H.
+        apply angle_nle_gt in Hab.
+        apply Hab; clear Hab.
+        apply angle_sub_le_mono_l.
+        split; [ easy | ].
+        (* lemma *)
+        progress unfold angle_leb in Hbp.
+        progress unfold angle_leb.
+        rewrite rngl_sin_sub_straight_l in Hbp.
+        rewrite rngl_cos_sub_straight_l in Hbp.
+        cbn in Hbp |-*.
+        rewrite (rngl_leb_refl Hor) in Hbp |-*.
+        destruct (0 ≤? rngl_sin b)%L; [ | easy ].
+        apply rngl_leb_le, rngl_cos_bound.
+      }
+      move Hab at bottom.
+      (* lemma *)
+      progress unfold angle_ltb in Hab.
+      progress unfold angle_leb in Hbp.
+      progress unfold angle_leb.
+      do 2 rewrite rngl_sin_sub_straight_l in Hab.
+      do 2 rewrite rngl_cos_sub_straight_l in Hab.
+      rewrite rngl_sin_sub_straight_l in Hbp.
+      rewrite rngl_cos_sub_straight_l in Hbp.
+      cbn in Hab, Hbp |-*.
+      rewrite (rngl_leb_refl Hor) in Hbp |-*.
+      remember (0 ≤? rngl_sin a)%L as zsa eqn:Hzsa.
+      remember (0 ≤? rngl_sin b)%L as zsb eqn:Hzsb.
+      symmetry in Hzsa, Hzsb.
+      destruct zsb; [ | easy ].
+      destruct zsa; [ apply rngl_leb_le, rngl_cos_bound | easy ].
+    } {
+...
+        apply angle_nlt_ge.
+        apply angle_nlt_ge in Hbp.
+        intros H'; apply Hbp; clear Hbp.
+Search (_ < _ - _)%A.
+        apply angle_le_le_sub_l
 ...
   rewrite Habc in Hb.
   destruct (angle_le_dec b b') as [Hbb| Hbb]. {
