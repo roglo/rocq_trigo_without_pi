@@ -2760,104 +2760,36 @@ assert (Hcb' : (c < b')%A). {
 (**)
   remember (angle_eucl_dist b' b) as x.
   rewrite angle_eucl_dist_move_0_r in Hb; subst x.
-...
-  rewrite angle_opp_div_2' in Hb.
-  remember (angle_eucl_dist b' b) as x.
-  rewrite angle_eucl_dist_move_0_r in Hb; subst x.
-
+  rewrite angle_opp_div_2' in Hb |-*.
   remember (a + b =? 0)%A as abz eqn:Habz.
   symmetry in Habz.
   destruct abz. {
+    clear - Hb Habz.
     apply angle_eqb_eq in Habz.
-    rewrite Habz.
-    rewrite angle_opp_0.
-    rewrite angle_0_div_2.
-    apply angle_lt_iff.
-    split; [ apply angle_nonneg | ].
-    symmetry.
-    intros H; apply -> angle_sub_move_0_r in H.
-    subst b'.
-    apply (rngl_nle_gt Hor) in Hb.
-    apply Hb; clear Hb.
-    rewrite angle_add_0_r.
-Search angle_ducl_dist,
-...
-About angle_opp_div_2.
-...
-  rewrite angle_sub_diag.
-    rewrite angle_0_div_2.
-    rewrite angle_add_comm.
-    rewrite angle_add_π_sub_π.
-...
-...
-  specialize (angle_opp_div_2 (a + b)) as H1.
-  remember (a + b =? 0)%A as abz eqn:Habz.
-  symmetry in Habz, H1.
-  apply -> angle_add_move_r in H1.
-  rewrite H1; clear H1.
-  destruct abz. {
-    clear - Habz Hb Hor.
-    apply angle_eqb_eq in Habz.
+    rewrite angle_add_0_r in Hb |-*.
     apply -> angle_add_move_0_r in Habz.
     subst a.
-    rewrite angle_add_opp_l.
-    rewrite angle_sub_diag.
-    rewrite angle_0_div_2.
-    rewrite angle_sub_0_r.
-    rewrite angle_opp_0.
+    rewrite (angle_add_opp_l b) in Hb |-*.
+    rewrite angle_sub_diag in Hb |-*.
+    rewrite angle_0_div_2 in Hb |-*.
+    rewrite angle_opp_0 in Hb |-*.
+    rewrite angle_sub_0_r in Hb.
+    rewrite angle_sub_opp_r in Hb.
+    rewrite angle_add_comm in Hb.
+    rewrite angle_add_π_sub_π in Hb.
+    rewrite <- angle_eucl_dist_move_0_r in Hb.
     apply angle_lt_iff.
     split; [ apply angle_nonneg | ].
     symmetry; intros H.
     apply -> angle_sub_move_0_r in H; subst b'.
-...
-    apply (rngl_nle_gt Hor) in Hb.
-    apply Hb; clear Hb.
-    rewrite angle_sub_diag.
-    rewrite angle_sub_opp_r.
-    rewrite angle_add_sub_assoc.
-    rewrite angle_add_add_swap.
-    rewrite angle_straight_add_straight.
-    rewrite angle_add_0_l.
-    rewrite angle_sub_diag.
-    rewrite angle_0_div_2.
-    rewrite angle_add_comm.
-    rewrite angle_add_π_sub_π.
-    do 2 rewrite <- angle_eucl_dist_move_0_r.
-    rewrite angle_eucl_dist_symmetry.
-    apply (rngl_le_refl Hor).
+    rewrite angle_eucl_dist_symmetry in Hb.
+    now apply rngl_lt_irrefl in Hb.
   }
-  rewrite <- angle_add_π_sub_π.
   rewrite angle_add_opp_l.
   apply angle_sub_lt_mono_l.
   rewrite angle_add_comm.
   split. {
     apply angle_eucl_dist_lt_lt_middle.
-2: {
-
-...
-  apply angle_lt_iff.
-  split. {
-    apply angle_sub_le_mono_l.
-    split. {
-...
-      apply angle_eucl_dist_lt_lt_middle.
-...
-  remember (-a)%A as α eqn:Hα.
-  remember (-b)%A as β eqn:Hβ.
-  remember (-a')%A as α' eqn:Hα'.
-  remember (-b')%A as β' eqn:Hβ'.
-  apply (f_equal angle_opp) in Hα, Hβ, Hα', Hβ'.
-  rewrite angle_opp_involutive in Hα, Hβ, Hα', Hβ'.
-  subst a b a' b'.
-  rename α into b.
-  rename β into a.
-  rename α' into b'.
-  rename β' into a'.
-  rewrite angle_add_opp_r.
-  rewrite <- angle_opp_add_distr.
-  Search (- _ /₂)%A.
-...
-  specialize (angle_opp_div_2 (a + b)) as H1.
 ...
   rewrite Habc in Hb.
   destruct (angle_le_dec b b') as [Hbb| Hbb]. {
