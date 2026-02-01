@@ -2826,13 +2826,55 @@ split. {
   specialize (angle_eucl_dist_lt_compat β α) as H2.
   assert (Hbap : (β < α ≤ π)%A). {
     split; [ easy | ].
+Theorem glop :
+  ∀ u α, (∀ i, (u i ≤ π)%A) → angle_lim u α → (α ≤ π)%A.
+Proof.
+destruct_ac.
+intros * Hup Hlim.
+apply angle_nlt_ge.
+intros Hpa.
+specialize (Hlim (angle_eucl_dist π α)).
+assert (H : (0 < angle_eucl_dist π α)%L). {
+  apply rngl_le_neq.
+  split; [ apply angle_eucl_dist_nonneg | ].
+  intros H; symmetry in H.
+  apply angle_eucl_dist_separation in H; subst α.
+  now apply angle_lt_irrefl in Hpa.
+}
+specialize (Hlim H); clear H.
+destruct Hlim as (N, Hn).
+specialize (Hn _ (Nat.le_refl _)).
+apply (rngl_nle_gt Hor) in Hn.
+apply Hn; clear Hn.
+apply rngl_cos_le_iff_angle_eucl_le.
+do 2 rewrite (rngl_cos_sub_comm _ α).
+apply rngl_cos_decr.
+split. {
+  apply angle_sub_le_mono_l.
+  split; [ apply Hup | ].
+  now apply angle_lt_le_incl.
+}
+... ...
+    apply (glop u).
+...
     progress unfold angle_lim in Hu.
     progress unfold is_limit_when_seq_tends_to_inf in Hu.
     apply angle_nlt_ge.
     intros Hpa.
     specialize (Hu (angle_eucl_dist π α)).
-Inspect 3.
-...
+    assert (H : (0 < angle_eucl_dist π α)%L). {
+      apply rngl_le_neq.
+      split; [ apply angle_eucl_dist_nonneg | ].
+      intros H; symmetry in H.
+      apply angle_eucl_dist_separation in H; subst α.
+      now apply angle_lt_irrefl in Hpa.
+    }
+    specialize (Hu H); clear H.
+    destruct Hu as (N, Hn).
+    specialize (Hn _ (Nat.le_refl _)).
+    apply (rngl_nle_gt Hor) in Hn.
+    apply Hn; clear Hn.
+    apply rngl_cos_le_iff_angle_eucl_le.
 ...
         apply angle_nlt_ge.
         apply angle_nlt_ge in Hbp.
