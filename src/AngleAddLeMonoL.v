@@ -1236,22 +1236,26 @@ apply angle_opp_le_compat_if in H31; [ | easy ].
 now do 2 rewrite angle_opp_involutive in H31.
 Qed.
 
-(*
-strange negatives comoparisons...
-Theorem angle_sub_le_mono_r :
-  ∀ α1 α2 α3, (α1 ≤ α2 < α3)%A → (α1 - α3 ≤ α2 - α3)%A.
+Theorem angle_sub_lt_mono_l :
+  ∀ α1 α2 α3,
+  (α3 < α2 ≤ α1)%A
+  → (α1 - α2 < α1 - α3)%A.
 Proof.
-intros * (H12, H23).
-do 2 rewrite <- (angle_opp_sub_distr α3).
-apply angle_opp_le_compat_if.
+intros * H321.
+apply angle_lt_iff.
+split. {
+  apply angle_sub_le_mono_l.
+  split; [ | easy ].
+  now apply angle_lt_le_incl.
+}
 intros H.
-apply -> angle_sub_move_0_r in H.
-subst α3.
-now apply angle_lt_irrefl in H23.
-apply angle_lt_le_incl in H23.
-now apply angle_sub_le_mono_l.
+apply angle_sub_move_l in H.
+rewrite angle_sub_sub_distr in H.
+rewrite angle_sub_diag, angle_add_0_l in H.
+subst α2.
+destruct H321 as (H, _).
+now apply angle_lt_irrefl in H.
 Qed.
-*)
 
 Theorem angle_sub_le_mono_l' :
   ∀ α1 α2 α3,

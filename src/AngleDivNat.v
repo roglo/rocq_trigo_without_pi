@@ -2731,8 +2731,6 @@ assert (Habc : angle_eucl_dist a c = angle_eucl_dist b c). {
   apply angle_add_div_2_diag.
 }
 assert (Hcb' : (c < b')%A). {
-Inspect 1.
-...
   subst c.
   change_angle_sub_l a π.
   change_angle_sub_l b π.
@@ -2750,19 +2748,44 @@ Inspect 1.
   apply -> angle_add_move_r in H1.
   rewrite H1; clear H1.
   destruct abz. {
+    clear - Habz Hb Hor.
     apply angle_eqb_eq in Habz.
     apply -> angle_add_move_0_r in Habz.
     subst a.
-    admit.
+    rewrite angle_add_opp_l.
+    rewrite angle_sub_diag.
+    rewrite angle_0_div_2.
+    rewrite angle_sub_0_r.
+    rewrite angle_opp_0.
+    apply angle_lt_iff.
+    split; [ apply angle_nonneg | ].
+    symmetry; intros H.
+    apply -> angle_sub_move_0_r in H; subst b'.
+    apply (rngl_nle_gt Hor) in Hb.
+    apply Hb; clear Hb.
+    rewrite angle_sub_diag.
+    rewrite angle_sub_opp_r.
+    rewrite angle_add_sub_assoc.
+    rewrite angle_add_add_swap.
+    rewrite angle_straight_add_straight.
+    rewrite angle_add_0_l.
+    rewrite angle_sub_diag.
+    rewrite angle_0_div_2.
+    rewrite angle_add_comm.
+    rewrite angle_add_π_sub_π.
+    do 2 rewrite <- angle_eucl_dist_move_0_r.
+    rewrite angle_eucl_dist_symmetry.
+    apply (rngl_le_refl Hor).
   }
   rewrite <- angle_add_π_sub_π.
   rewrite angle_add_opp_l.
+  apply angle_sub_lt_mono_l.
+...
   apply angle_lt_iff.
   split. {
-Search (_ - _ ≤ _ - _)%A.
     apply angle_sub_le_mono_l.
     split. {
-Inspect 1.
+...
       apply angle_eucl_dist_lt_lt_middle.
 ...
   remember (-a)%A as α eqn:Hα.
