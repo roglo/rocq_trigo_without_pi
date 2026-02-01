@@ -2810,25 +2810,29 @@ Theorem angle_lim_le :
   (∀ i, (u i ≤ v i ≤ π)%A)
   → angle_lim u α
   → angle_lim v β
-  → (α ≤ β ≤ π)%A.
+  → (β ≤ π)%A
+  → (α ≤ β)%A.
 Proof.
 destruct_ac.
 destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
-  intros * Huv Hu Hv.
+  intros * Huv Hu Hv Hb.
   specialize (rngl_characteristic_1_angle_0 Hc1) as H1.
-  rewrite (H1 α), (H1 β).
-  split; apply angle_nonneg.
+  rewrite (H1 α).
+  apply angle_nonneg.
 }
-intros * Huv Hu Hv.
-split. {
-  apply angle_nlt_ge.
-  intros H1.
-  specialize (angle_eucl_dist_lt_compat β α) as H2.
-  assert (Hbap : (β < α ≤ π)%A). {
-    split; [ easy | ].
+intros * Huv Hu Hv Hb.
+apply angle_nlt_ge.
+intros H1.
+specialize (angle_eucl_dist_lt_compat β α) as H2.
+assert (Hbap : (β < α ≤ π)%A). {
+  split; [ easy | ].
 Theorem glop :
-  ∀ u α, (∀ i, (u i ≤ π)%A) → angle_lim u α → (α ≤ π)%A.
+  ∀ u α β, (∀ i, (u i ≤ β ≤ π)%A) → angle_lim u α → (α ≤ π)%A → (α ≤ β)%A.
 Proof.
+Admitted.
+    apply (glop u); [ | easy | ].
+2: {
+...
 destruct_ac.
 intros * Hup Hlim.
 apply angle_nlt_ge.
