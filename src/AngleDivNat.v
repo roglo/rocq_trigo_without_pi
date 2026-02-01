@@ -2538,6 +2538,7 @@ rewrite angle_straight_add_straight.
 rewrite angle_sub_0_l.
 rewrite <- angle_opp_add_distr.
 rewrite angle_add_comm.
+(* ... *)
 specialize (angle_opp_div_2 (a + b)) as H1.
 remember (a + b =? 0)%A as ab eqn:Haeb.
 symmetry in Haeb.
@@ -2742,6 +2743,29 @@ assert (Hcb' : (c < b')%A). {
   rewrite angle_sub_0_l.
   rewrite <- angle_opp_add_distr.
   rewrite angle_add_comm.
+(**)
+  rewrite angle_eucl_dist_move_0_r in Hb.
+  rewrite angle_sub_sub_distr in Hb.
+  rewrite angle_sub_sub_swap in Hb.
+  rewrite angle_add_sub_assoc in Hb.
+  rewrite angle_sub_diag in Hb.
+  rewrite angle_sub_0_l in Hb.
+  rewrite angle_add_opp_l in Hb.
+  rewrite <- angle_eucl_dist_move_0_r in Hb.
+  rewrite <- angle_add_sub_swap in Hb.
+  rewrite angle_straight_add_straight in Hb.
+  rewrite angle_sub_0_l in Hb.
+  rewrite <- angle_opp_add_distr in Hb.
+Search (- _ /₂)%A.
+...
+About angle_opp_div_2.
+...
+  rewrite angle_sub_diag.
+    rewrite angle_0_div_2.
+    rewrite angle_add_comm.
+    rewrite angle_add_π_sub_π.
+...
+...
   specialize (angle_opp_div_2 (a + b)) as H1.
   remember (a + b =? 0)%A as abz eqn:Habz.
   symmetry in Habz, H1.
@@ -2761,6 +2785,7 @@ assert (Hcb' : (c < b')%A). {
     split; [ apply angle_nonneg | ].
     symmetry; intros H.
     apply -> angle_sub_move_0_r in H; subst b'.
+...
     apply (rngl_nle_gt Hor) in Hb.
     apply Hb; clear Hb.
     rewrite angle_sub_diag.
@@ -2780,6 +2805,11 @@ assert (Hcb' : (c < b')%A). {
   rewrite <- angle_add_π_sub_π.
   rewrite angle_add_opp_l.
   apply angle_sub_lt_mono_l.
+  rewrite angle_add_comm.
+  split. {
+    apply angle_eucl_dist_lt_lt_middle.
+2: {
+
 ...
   apply angle_lt_iff.
   split. {
@@ -2802,6 +2832,7 @@ assert (Hcb' : (c < b')%A). {
   rewrite angle_add_opp_r.
   rewrite <- angle_opp_add_distr.
   Search (- _ /₂)%A.
+...
   specialize (angle_opp_div_2 (a + b)) as H1.
 ...
   rewrite Habc in Hb.

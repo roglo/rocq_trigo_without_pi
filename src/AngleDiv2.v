@@ -428,6 +428,21 @@ apply (rngl_leb_gt_iff Hto) in Hzs, Hsz.
 now apply (rngl_lt_asymm Hor) in Hzs.
 Qed.
 
+Theorem angle_opp_div_2' :
+  ∀ α, ((- α) /₂ = - (α /₂) + if (α =? 0)%A then 0 else π)%A.
+Proof.
+intros.
+rewrite angle_opp_div_2.
+symmetry.
+destruct (α =? 0)%A. {
+  rewrite angle_add_0_r.
+  apply angle_add_0_r.
+}
+rewrite <- angle_add_assoc.
+rewrite angle_straight_add_straight.
+apply angle_add_0_r.
+Qed.
+
 Theorem angle_div_2_le_compat :
   ∀ α1 α2, (α1 ≤ α2 → α1 /₂ ≤ α2 /₂)%A.
 Proof.
