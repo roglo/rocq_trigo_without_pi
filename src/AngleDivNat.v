@@ -2824,10 +2824,14 @@ split. {
   apply angle_nlt_ge.
   intros H1.
   specialize (angle_eucl_dist_lt_compat β α) as H2.
-  assert (H : (β < α ≤ π)%A). {
+  assert (Hbap : (β < α ≤ π)%A). {
     split; [ easy | ].
-(**)
-Inspect 1.
+    progress unfold angle_lim in Hu.
+    progress unfold is_limit_when_seq_tends_to_inf in Hu.
+    apply angle_nlt_ge.
+    intros Hpa.
+    specialize (Hu (angle_eucl_dist π α)).
+Inspect 3.
 ...
 ...
         apply angle_nlt_ge.
