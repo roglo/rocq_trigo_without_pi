@@ -2677,64 +2677,21 @@ apply angle_sub_le_mono_r.
 now apply angle_lt_le_incl in Hac.
 Qed.
 
-(* to be completed
-Theorem angle_lim_le :
-  ∀ u v α β,
-  (∀ i, (u i ≤ v i ≤ π)%A)
-  → angle_lim u α
-  → angle_lim v β
-  → (α ≤ β ≤ π)%A.
-Proof.
-destruct_ac.
-destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
-  intros * Huv Hu Hv.
-  specialize (rngl_characteristic_1_angle_0 Hc1) as H1.
-  rewrite (H1 α), (H1 β).
-  split; apply angle_nonneg.
-}
-intros * Huv Hu Hv.
-(**)
-Theorem angle_eucl_dist_lt_compat :
-  ∀ a b,
+Theorem angle_eucl_dist_lt_middle_lt :
+  ∀ a b b',
   (a < b ≤ π)%A
-  → ∃ ε, (0 < ε)%L ∧ ∀ a' b',
-    (a' < π)%A
-    → (angle_eucl_dist a a' < ε)%L
-    → (angle_eucl_dist b b' < ε)%L
-    → (a' < b')%A.
+  → ((a + b) /₂ < b)%A
+  → (angle_eucl_dist b b' < angle_eucl_dist b ((a + b) /₂))%L
+  → ((a + b) /₂ < b')%A.
 Proof.
 destruct_ac.
 destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
   specialize (rngl_characteristic_1_angle_0 Hc1) as H1.
-  intros * (Hab, _).
+  intros * (Hab, _) Hcb Hb.
   rewrite (H1 a), (H1 b) in Hab.
   now apply angle_lt_irrefl in Hab.
 }
-intros * Hab.
-set (c := ((a + b) /₂)%A).
-exists (angle_eucl_dist a c).
-assert (Hac : (a < c)%A) by now apply angle_lt_middle.
-assert (Hcb : (c < b)%A) by now apply angle_middle_lt.
-split. {
-  apply rngl_le_neq.
-  split; [ apply angle_eucl_dist_nonneg | ].
-  intros H; symmetry in H.
-  apply angle_eucl_dist_separation in H.
-  subst c.
-  rewrite <- H in Hac.
-  now apply angle_lt_irrefl in Hac.
-}
-intros * Hap Ha Hb.
-assert (Ha'c : (a' < c)%A) by now apply angle_eucl_dist_lt_lt_middle.
-assert (Habc : angle_eucl_dist a c = angle_eucl_dist b c). {
-  apply angle_eucl_dist_eq_angle_eucl_dist; right.
-  progress unfold c; symmetry.
-  apply angle_add_div_2_diag.
-}
-assert (Hcb' : (c < b')%A). {
-(**)
-rewrite Habc in Hb.
-subst c.
+intros * Hab Hcb Hb.
 set (c := ((a + b) /₂)%A) in *.
 destruct (angle_le_dec b b') as [Hbb| Hbb]. {
   now apply (angle_lt_le_trans _ b).
@@ -2772,133 +2729,106 @@ apply rngl_sin_sub_nonneg_sin_le_sin. {
   apply rngl_sin_div_2_nonneg.
 } {
   apply rngl_cos_div_2_nonneg.
-  apply rngl_sin_sub_nonneg_iff. {
-    apply rngl_le_neq.
-    split. {
-      now apply rngl_sin_nonneg_angle_le_straight.
-    }
-    intros H; symmetry in H.
-    apply eq_rngl_sin_0 in H.
-    destruct H; subst b. {
-      apply angle_nle_gt in Hbb.
-      apply Hbb, angle_nonneg.
-    }
-...
-    now apply angle_lt_irrefl in Hap.
+  apply rngl_sin_sub_nonneg_iff'. {
+    right.
+    intros Hb'; subst b'.
+    now apply angle_nle_gt in Hbb.
+  } {
+    now apply rngl_sin_nonneg_angle_le_straight.
   } {
     apply rngl_sin_nonneg_angle_le_straight.
     apply (angle_le_trans _ b); [ | easy ].
     now apply angle_lt_le_incl.
   }
   apply rngl_cos_decr.
-  now apply angle_lt_le_incl in Haa, Hap.
+  split; [ | easy ].
+  now apply angle_lt_le_incl.
 }
 rewrite angle_div_2_sub'.
 rewrite angle_sub_sub_distr.
-rewrite <- angle_add_sub_swap.
-rewrite angle_sub_add.
-remember (c - a ≤? a' - a)%A as ca eqn:Hcaa.
-symmetry in Hcaa.
-destruct ca; [ apply rngl_sin_div_2_nonneg | ].
-apply angle_leb_gt in Hcaa.
-exfalso; apply angle_nle_gt in Hcaa.
-apply Hcaa; clear Hcaa.
-apply angle_sub_le_mono_r.
-now apply angle_lt_le_incl in Hac.
-... version symétrique de angle_eucl_dist_lt_lt_middle
-    mais dont la symétrie est compliquée...
+rewrite angle_sub_sub_swap.
+rewrite angle_sub_diag.
+rewrite angle_sub_0_l.
+rewrite angle_add_opp_l.
+remember (b - c ≤? b - b')%A as bcb eqn:Hbcb.
+symmetry in Hbcb.
+destruct bcb; [ apply rngl_sin_div_2_nonneg | ].
+apply angle_leb_gt in Hbcb.
+exfalso; apply angle_nle_gt in Hbcb.
+apply Hbcb; clear Hbcb.
+apply angle_sub_le_mono_l.
+now apply angle_lt_le_incl in Hcb.
+Qed.
+
+Theorem angle_eucl_dist_lt_compat :
+  ∀ a b,
+  (a < b ≤ π)%A
+  → ∃ ε, (0 < ε)%L ∧ ∀ a' b',
+    (a' < π)%A
+    → (angle_eucl_dist a a' < ε)%L
+    → (angle_eucl_dist b b' < ε)%L
+    → (a' < b')%A.
+Proof.
+destruct_ac.
+destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
+  specialize (rngl_characteristic_1_angle_0 Hc1) as H1.
+  intros * (Hab, _).
+  rewrite (H1 a), (H1 b) in Hab.
+  now apply angle_lt_irrefl in Hab.
+}
+intros * Hab.
+set (c := ((a + b) /₂)%A).
+exists (angle_eucl_dist a c).
+assert (Hac : (a < c)%A) by now apply angle_lt_middle.
+assert (Hcb : (c < b)%A) by now apply angle_middle_lt.
+split. {
+  apply rngl_le_neq.
+  split; [ apply angle_eucl_dist_nonneg | ].
+  intros H; symmetry in H.
+  apply angle_eucl_dist_separation in H.
   subst c.
-  change_angle_sub_l a π.
-  change_angle_sub_l b π.
-  change_angle_sub_l a' π.
-  change_angle_sub_l b' π.
-  rewrite angle_add_sub_assoc.
-  rewrite <- angle_add_sub_swap.
-  rewrite angle_straight_add_straight.
-  rewrite angle_sub_0_l.
-  rewrite <- angle_opp_add_distr.
-  rewrite angle_add_comm.
-  rewrite angle_eucl_dist_move_0_r in Hb.
-  rewrite angle_sub_sub_distr in Hb.
-  rewrite angle_sub_sub_swap in Hb.
-  rewrite angle_add_sub_assoc in Hb.
-  rewrite angle_sub_diag in Hb.
-  rewrite angle_sub_0_l in Hb.
-  rewrite angle_add_opp_l in Hb.
-  rewrite <- angle_eucl_dist_move_0_r in Hb.
-  rewrite <- angle_add_sub_swap in Hb.
-  rewrite angle_straight_add_straight in Hb.
-  rewrite angle_sub_0_l in Hb.
-  rewrite <- angle_opp_add_distr in Hb.
-  rewrite angle_add_comm in Hb.
-  remember (angle_eucl_dist b' b) as x.
-  rewrite angle_eucl_dist_move_0_r in Hb; subst x.
-  rewrite angle_opp_div_2' in Hb |-*.
-  remember (a + b =? 0)%A as abz eqn:Habz.
-  symmetry in Habz.
-  destruct abz. {
-    clear - Hb Habz.
-    apply angle_eqb_eq in Habz.
-    rewrite angle_add_0_r in Hb |-*.
-    apply -> angle_add_move_0_r in Habz.
-    subst a.
-    rewrite (angle_add_opp_l b) in Hb |-*.
-    rewrite angle_sub_diag in Hb |-*.
-    rewrite angle_0_div_2 in Hb |-*.
-    rewrite angle_opp_0 in Hb |-*.
-    rewrite angle_sub_0_r in Hb.
-    rewrite angle_sub_opp_r in Hb.
-    rewrite angle_add_comm in Hb.
-    rewrite angle_add_π_sub_π in Hb.
-    rewrite <- angle_eucl_dist_move_0_r in Hb.
-    apply angle_lt_iff.
-    split; [ apply angle_nonneg | ].
-    symmetry; intros H.
-    apply -> angle_sub_move_0_r in H; subst b'.
-    rewrite angle_eucl_dist_symmetry in Hb.
-    now apply rngl_lt_irrefl in Hb.
+  rewrite <- H in Hac.
+  now apply angle_lt_irrefl in Hac.
+}
+intros * Hap Ha Hb.
+assert (Ha'c : (a' < c)%A) by now apply angle_eucl_dist_lt_lt_middle.
+assert (Hcb' : (c < b')%A). {
+  assert (Habc : angle_eucl_dist a c = angle_eucl_dist b c). {
+    apply angle_eucl_dist_eq_angle_eucl_dist; right.
+    progress unfold c; symmetry.
+    apply angle_add_div_2_diag.
   }
-  rewrite angle_add_opp_l.
-  apply angle_sub_lt_mono_l.
-  rewrite angle_add_comm.
-  split. {
-    apply angle_eucl_dist_lt_lt_middle. {
-      destruct Hab as (Hab, Hbp).
-      move Hbp at bottom.
-      split. {
-        apply angle_nle_gt.
-        intros H.
-        apply angle_nle_gt in Hab.
-        apply Hab; clear Hab.
-        apply angle_sub_le_mono_l.
-        split; [ easy | ].
-        (* lemma *)
-        progress unfold angle_leb in Hbp.
-        progress unfold angle_leb.
-        rewrite rngl_sin_sub_straight_l in Hbp.
-        rewrite rngl_cos_sub_straight_l in Hbp.
-        cbn in Hbp |-*.
-        rewrite (rngl_leb_refl Hor) in Hbp |-*.
-        destruct (0 ≤? rngl_sin b)%L; [ | easy ].
-        apply rngl_leb_le, rngl_cos_bound.
-      }
-      move Hab at bottom.
-      (* lemma *)
-      progress unfold angle_ltb in Hab.
-      progress unfold angle_leb in Hbp.
-      progress unfold angle_leb.
-      do 2 rewrite rngl_sin_sub_straight_l in Hab.
-      do 2 rewrite rngl_cos_sub_straight_l in Hab.
-      rewrite rngl_sin_sub_straight_l in Hbp.
-      rewrite rngl_cos_sub_straight_l in Hbp.
-      cbn in Hab, Hbp |-*.
-      rewrite (rngl_leb_refl Hor) in Hbp |-*.
-      remember (0 ≤? rngl_sin a)%L as zsa eqn:Hzsa.
-      remember (0 ≤? rngl_sin b)%L as zsb eqn:Hzsb.
-      symmetry in Hzsa, Hzsb.
-      destruct zsb; [ | easy ].
-      destruct zsa; [ apply rngl_leb_le, rngl_cos_bound | easy ].
-    } {
+  rewrite Habc in Hb.
+  now apply angle_eucl_dist_lt_middle_lt.
+}
+now apply (angle_lt_trans _ c).
+Qed.
+
+(* to be completed
+Theorem angle_lim_le :
+  ∀ u v α β,
+  (∀ i, (u i ≤ v i ≤ π)%A)
+  → angle_lim u α
+  → angle_lim v β
+  → (α ≤ β ≤ π)%A.
+Proof.
+destruct_ac.
+destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
+  intros * Huv Hu Hv.
+  specialize (rngl_characteristic_1_angle_0 Hc1) as H1.
+  rewrite (H1 α), (H1 β).
+  split; apply angle_nonneg.
+}
+intros * Huv Hu Hv.
+split. {
+  apply angle_nlt_ge.
+  intros H1.
+  specialize (angle_eucl_dist_lt_compat β α) as H2.
+  assert (H : (β < α ≤ π)%A). {
+    split; [ easy | ].
+(**)
+Inspect 1.
+...
 ...
         apply angle_nlt_ge.
         apply angle_nlt_ge in Hbp.
