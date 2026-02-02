@@ -38,7 +38,13 @@ Class angle2_ctx :=
     ac_c1 : rngl_characteristic T ≠ 1 }.
 
 Definition sin α :=
-  if a_up α then a_s α else (- a_s α)%L.
+  if a_up α then
+    if a_right α then a_s α
+    else (1 - a_s α)%L
+  else
+    if a_right α then (a_s α - 1)%L
+    else (- a_s α)%L.
+...
 Definition cos α :=
   if a_right α then √ (1 - (a_s α)²) else (- √ (1 - (a_s α)²))%L.
 
