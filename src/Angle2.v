@@ -181,27 +181,11 @@ Proof.
 destruct_ac2.
 intros.
 specialize (cos_sin_add_prop a b) as H1.
-...
-enough ((cos a)² + (sin a)² = 1)%L.
-enough ((cos b)² + (sin b)² = 1)%L.
-enough (-1 ≤ cos a ≤ 1)%L.
-enough (-1 ≤ sin a ≤ 1)%L.
-enough (-1 ≤ cos b ≤ 1)%L.
-enough (-1 ≤ sin b ≤ 1)%L.
-...
-destruct a as (sa, ua, ra, Hpa).
-destruct b as (sb, ub, rb, Hpb).
-move Hpa before Hpb.
-progress unfold sin, cos.
-cbn.
-progress unfold angle2_prop in Hpa, Hpb.
-apply Bool.andb_true_iff in Hpa, Hpb.
-destruct Hpa as (Ha1, Ha2).
-destruct Hpb as (Hb1, Hb2).
-apply rngl_leb_le in Ha1, Hb1.
-apply (rngl_ltb_lt Heo) in Ha2, Hb2.
-destruct ua, ub, ra, rb. {
-...
+apply (rngl_squ_le_1_iff Hop Hiq Hto).
+rewrite <- H1.
+apply (rngl_le_add_l Hos Hor).
+apply (rngl_squ_nonneg Hos Hto).
+Qed.
 
 Theorem angle2_add_prop_1 a b :
   let s := (sin a * cos b + cos a * sin b)%L in
@@ -209,21 +193,13 @@ Theorem angle2_add_prop_1 a b :
 Proof.
 destruct_ac2.
 intros.
-apply (rngl_eqb_neq Heo) in Hs1.
 progress unfold angle2_prop.
+apply (rngl_eqb_neq Heo) in Hs1.
 rewrite Hzs; cbn.
 subst s.
 apply (rngl_ltb_lt Heo).
 apply rngl_le_neq.
-split; [ | easy ].
-...
-progress unfold sin.
-progress unfold cos.
-destruct (a_up a). {
-  destruct (a_right a). {
-    destruct (a_up b). {
-      destruct (a_right b). {
-...
+split; [ apply sin_add_le_1 | easy ].
 Qed.
 
 Definition angle2_add a b :=
@@ -238,11 +214,11 @@ Definition angle2_add a b :=
                  let s := (sin a * cos b + cos a * sin b)%L in
                  match rngl_leb_dec 0 s with
                  | left Hzs =>
-                     match rngl_ltb_dec s 1 with
-                     | left Hs1 =>
+                     match rngl_eqb_dec s 1 with
+                     | left Hs1 => angle2_zero
+                     | right Hs1 =>
                          {| a_s := s; a_up := true; a_right := true;
                             a_prop := angle2_add_prop_1 a b Hzs Hs1 |}
-                     | right Hs1 => angle2_zero
                      end
                  | right Hsz => angle2_zero
                  end
