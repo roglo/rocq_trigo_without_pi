@@ -44,6 +44,7 @@ End a.
 
 Arguments angle2 T {ro}.
 Arguments angle2_ctx T {ro rp}.
+Arguments angle2_prop {T ro} s%_L.
 
 Ltac destruct_ac2 :=
   set (Hop := ac_op);
@@ -91,30 +92,31 @@ Qed.
 Definition angle2_zero :=
   {| a_s := 0%L; a_up := true; a_right := true; a_prop := angle2_zero_prop |}.
 
-Theorem a_prop_up_up a b :
+Theorem a_prop_ur_ur a b :
   a_up a = true
+  → a_right a = true
   → a_up b = true
-  → let s := (sin a * cos b + cos a * sin b)%L in
-    angle2_prop s.
+  → a_right b = true
+  → angle2_prop (sin a * cos b + cos a * sin b).
 Proof.
 destruct_ac2.
-intros * Hua Hub.
+intros * Hua Hra Hub Hrb.
 destruct a as (sa, ua, ra, Hpa).
 destruct b as (sb, ub, rb, Hpb).
-cbn in Hua, Hub |-*.
+cbn in Hua, Hra, Hub, Hrb |-*.
 progress unfold angle2_prop in Hpa.
 progress unfold angle2_prop in Hpb.
 progress unfold angle2_prop.
 progress unfold sin.
 progress unfold cos; cbn.
-rewrite Hua, Hub.
-...
+rewrite Hua, Hra, Hub, Hrb.
 apply Bool.andb_true_iff in Hpa, Hpb.
 apply Bool.andb_true_iff.
 destruct Hpa as (Ha1, Ha2).
 destruct Hpb as (Hb1, Hb2).
 apply rngl_leb_le in Ha1, Hb1.
 apply (rngl_ltb_lt Heo) in Ha2, Hb2.
+clear ra rb Hra Hrb.
 split. {
   apply rngl_leb_le.
   apply (rngl_le_0_add Hos Hor). {
@@ -140,21 +142,27 @@ split. {
   }
 }
 apply (rngl_ltb_lt Heo).
-Admitted.
-
-Print sin.
+...
 
 Definition angle2_add a b :=
   match Bool.bool_dec (a_up a) true with
   | left Hua =>
-     match Bool.bool_dec (a_up b) true with
-     | left Hub =>
-         let s := (sin a * cos b + cos a * sin b)%L in
-         if (0 ≤? s)%L then
-           {| a_s := s; a_up := true; a_right := true;
-              a_prop := a_prop_up_up a b Hua Hub |}
-         else angle2_zero
-    | right Hdb => angle2_zero
+      match Bool.bool_dec (a_right a) true with
+      | left Hra =>
+         match Bool.bool_dec (a_up b) true with
+         | left Hub =>
+             match Bool.bool_dec (a_right b) true with
+             | left Hrb =>
+                 let s := (sin a * cos b + cos a * sin b)%L in
+                 if (0 ≤? s)%L then
+                   {| a_s := s; a_up := true; a_right := true;
+                      a_prop := a_prop_ur_ur a b Hua Hra Hub Hrb |}
+                 else angle2_zero
+             | right Hlb => angle2_zero
+             end
+        | right Hdb => angle2_zero
+         end
+      | right Hla => angle2_zero
     end
   | right Hda => angle2_zero
   end.
