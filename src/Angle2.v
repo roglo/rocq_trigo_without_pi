@@ -102,6 +102,7 @@ rewrite (rngl_squ_opp Hop).
 now apply rngl_asin_prop.
 Qed.
 
+(*
 Definition glop (a : angle2 T) : angle T.
 destruct_ac2.
 destruct a as (s, u, r, Hp).
@@ -135,6 +136,7 @@ Show Proof.
    être une définition, pas un théorème, et faire des
    destruct dessus, ça va être un enfer *)
 ....
+*)
 
 Theorem angle2_zero_prop : angle2_prop 0%L.
 Proof.
@@ -150,30 +152,30 @@ Qed.
 Definition angle2_zero :=
   {| s := 0%L; a_up := true; a_right := true; a_prop := angle2_zero_prop |}.
 
-(*
-Lemma exemple (b : bool) (P Q : Prop) :
-  b = true -> P -> Q -> (if b then P else Q).
-...
-*)
-
 Theorem a_prop_up_right a b :
   a_up a = true
   → let s := (s a * √(1 - (s b)²) + √(1 - (s a)²) * s b)%L in
     ∀ s, angle2_prop s.
 Admitted.
 
-Definition angle2_add1 a b (a_up_true : a_up a = true) :=
-  if a_right a then
-    if a_up b then
-      if a_right b then
-        let s := (s a * √ (1 - (s b)²) + √ (1 - (s a)²) * s b)%L in
-        if (0 ≤? s)%L then
-          {| s := s; a_up := true; a_right := true;
-             a_prop := a_prop_up_right a b a_up_true s |}
+Definition angle2_add a b :=
+  match Bool.bool_dec (a_up a) true with
+  | left Hut =>
+      if a_right a then
+        if a_up b then
+          if a_right b then
+            let s := (s a * √ (1 - (s b)²) + √ (1 - (s a)²) * s b)%L in
+            if (0 ≤? s)%L then
+              {| s := s; a_up := true; a_right := true;
+                 a_prop := a_prop_up_right a b Hut s |}
+            else angle2_zero
+          else angle2_zero
         else angle2_zero
       else angle2_zero
-    else angle2_zero
-  else angle2_zero.
+  | right Huf => angle2_zero
+  end.
+
+...
 
 Definition angle2_add (a b : angle2 T) : angle2 T.
 remember (a_up a) as ua eqn:Hua.
