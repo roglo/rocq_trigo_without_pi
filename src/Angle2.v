@@ -6,6 +6,7 @@ Require Import RingLike.Core.
 Require Import RingLike.RealLike.
 (*
 From TrigoWithoutPi Require Import AngleDef Angle.
+From TrigoWithoutPi Require Import Core.
 *)
 
 Notation "a ≤? b <? c" := ((a ≤? b)%L && (b <? c)%L)%bool
@@ -141,6 +142,33 @@ split. {
   }
 }
 apply (rngl_ltb_lt Heo).
+apply (rngl_lt_add_lt_sub_r Hop Hor).
+apply (rngl_lt_squ_lt Hop Hiq Hto). {
+  apply (rngl_mul_nonneg_nonneg Hos Hor); [ easy | ].
+Search (0 ≤ rl_nth_root _ _)%L.
+About rl_sqrt_nonneg.
+...
+  apply rl_sqrt_nonneg.
+  apply (rngl_le_0_sub Hop Hor).
+  apply (rngl_squ_le_1_iff Hop Hiq Hto).
+  split. {
+    apply (rngl_le_trans Hor _ 0); [ | easy ].
+    apply (rngl_opp_1_le_0 Hop Hto).
+  }
+  now apply rngl_lt_le_incl.
+} {
+  apply (rngl_le_0_sub Hop Hor).
+  rewrite <- (rngl_mul_1_l 1%L) at 2.
+  apply (rngl_mul_le_compat_nonneg Hor). {
+    split. {
+      apply rl_sqrt_nonneg.
+      apply (rngl_le_0_sub Hop Hor).
+      apply (rngl_squ_le_1_iff Hop Hiq Hto).
+...
+Search (_ * _ ≤ _)%L.
+...
+  apply rngl_ord_mul_le_compat_nonneg.
+ apply rngl_mul_
 ...
 
 Definition angle2_add a b :=

@@ -459,12 +459,10 @@ cbn.
 specialize rngl_1_add_cos_div_2_nonneg as Hzac.
 specialize rngl_1_sub_cos_div_2_nonneg as Hzsc.
 specialize (rl_sqrt_nonneg ((1 - rngl_cos α1) / 2)%L) as H1.
-rewrite fold_rl_sqrt in H1.
 specialize (H1 (Hzsc _)).
 apply rngl_leb_le in H1.
 rewrite H1; clear H1.
 specialize (rl_sqrt_nonneg ((1 - rngl_cos α2) / 2)%L) as H1.
-rewrite fold_rl_sqrt in H1.
 specialize (H1 (Hzsc _)).
 apply rngl_leb_le in H1.
 rewrite H1; clear H1.
