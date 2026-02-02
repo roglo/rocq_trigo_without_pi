@@ -96,6 +96,18 @@ apply (rngl_ltb_lt Heo).
 apply (rngl_0_lt_1 Hos Hc1 Hto).
 Qed.
 
+Theorem angle2_one_prop  : angle2_prop 1.
+Proof.
+destruct_ac2.
+progress unfold angle2_prop.
+...
+apply Bool.andb_true_iff.
+rewrite (rngl_leb_refl Hor).
+split; [ easy | ].
+apply (rngl_ltb_lt Heo).
+apply (rngl_0_lt_1 Hos Hc1 Hto).
+...
+
 Definition angle2_zero :=
   {| a_s := 0%L; a_up := true; a_right := true; a_prop := angle2_zero_prop |}.
 
@@ -204,10 +216,10 @@ split; [ apply sin_add_le_1 | easy ].
 Qed.
 
 Example titi :
-  sin {| a_s := 0; a_up := true; a_right := false; a_prop := angle2_zero_prop |} = 1%L.
+  sin {| a_s := 1; a_up := true; a_right := false; a_prop := angle2_one_prop |} = 1%L.
 cbn.
 Example titi :
-  cos {| a_s := 0; a_up := true; a_right := false; a_prop := angle2_zero_prop |} = 1%L.
+  cos {| a_s := 1; a_up := true; a_right := false; a_prop := angle2_one_prop |} = 0%L.
 cbn.
 ...
 
