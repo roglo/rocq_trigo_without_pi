@@ -93,6 +93,23 @@ Qed.
 Definition angle2_zero :=
   {| a_s := 0%L; a_up := true; a_right := true; a_prop := angle2_zero_prop |}.
 
+Theorem rl_sqrt_1_sub_squ_nonneg :
+  rngl_has_opp T = true →
+  rngl_has_inv_or_pdiv T = true →
+  rngl_is_totally_ordered T = true →
+  ∀ x, (0 ≤ x ≤ 1)%L → (0 ≤ √(1 - x²))%L.
+Proof.
+intros Hop Hiq Hto.
+specialize (rngl_is_totally_ordered_is_ordered Hto) as Hor.
+intros * Hx1.
+apply rl_sqrt_nonneg.
+apply (rngl_le_0_sub Hop Hor).
+apply (rngl_squ_le_1_iff Hop Hiq Hto).
+split; [ | easy ].
+apply (rngl_le_trans Hor _ 0); [ | easy ].
+apply (rngl_opp_1_le_0 Hop Hto).
+Qed.
+
 Theorem a_prop_up_up a b :
   a_up a = true
   → a_right a = true
@@ -145,30 +162,38 @@ apply (rngl_ltb_lt Heo).
 apply (rngl_lt_add_lt_sub_r Hop Hor).
 apply (rngl_lt_squ_lt Hop Hiq Hto). {
   apply (rngl_mul_nonneg_nonneg Hos Hor); [ easy | ].
-Search (0 ≤ rl_nth_root _ _)%L.
-About rl_sqrt_nonneg.
-...
-  apply rl_sqrt_nonneg.
-  apply (rngl_le_0_sub Hop Hor).
-  apply (rngl_squ_le_1_iff Hop Hiq Hto).
-  split. {
-    apply (rngl_le_trans Hor _ 0); [ | easy ].
-    apply (rngl_opp_1_le_0 Hop Hto).
-  }
-  now apply rngl_lt_le_incl.
+  apply (rl_sqrt_1_sub_squ_nonneg Hop Hiq Hto).
+  split; [ easy | now apply rngl_lt_le_incl ].
 } {
   apply (rngl_le_0_sub Hop Hor).
   rewrite <- (rngl_mul_1_l 1%L) at 2.
   apply (rngl_mul_le_compat_nonneg Hor). {
     split. {
-      apply rl_sqrt_nonneg.
-      apply (rngl_le_0_sub Hop Hor).
-      apply (rngl_squ_le_1_iff Hop Hiq Hto).
-...
-Search (_ * _ ≤ _)%L.
-...
-  apply rngl_ord_mul_le_compat_nonneg.
- apply rngl_mul_
+      apply (rl_sqrt_1_sub_squ_nonneg Hop Hiq Hto).
+      split; [ easy | now apply rngl_lt_le_incl ].
+    }
+    apply (rngl_le_squ_le Hop Hiq Hto). {
+      apply (rl_sqrt_1_sub_squ_nonneg Hop Hiq Hto).
+      split; [ easy | now apply rngl_lt_le_incl ].
+    } {
+      apply (rngl_0_le_1 Hos Hto).
+    }
+    rewrite rngl_squ_1.
+    rewrite rngl_squ_sqrt. {
+      apply (rngl_le_sub_l Hop Hor).
+      apply (rngl_squ_nonneg Hos Hto).
+    }
+    apply (rngl_le_0_sub Hop Hor).
+    apply (rngl_squ_le_1_iff Hop Hiq Hto).
+    split. {
+      apply (rngl_le_trans Hor _ 0); [ | easy ].
+      apply (rngl_opp_1_le_0 Hop Hto).
+    }
+    now apply rngl_lt_le_incl.
+  }
+  split; [ easy | ].
+  now apply rngl_lt_le_incl.
+}
 ...
 
 Definition angle2_add a b :=
