@@ -2201,6 +2201,23 @@ rewrite rngl_add_comm.
 apply (rngl_sub_add Hop).
 Qed.
 
+Theorem rngl_asin_prop :
+  ∀ x, (x² ≤? 1)%L = true → cos2_sin2_prop √(1 - x²)%L x.
+Proof.
+destruct_ac.
+intros * Hx1.
+apply rngl_leb_le in Hx1.
+progress unfold cos2_sin2_prop.
+apply (rngl_eqb_eq Heo).
+rewrite rngl_squ_sqrt. 2: {
+  apply (rngl_le_add_le_sub_r Hop Hor).
+  now rewrite rngl_add_0_l.
+}
+rewrite rngl_add_comm.
+rewrite rngl_add_comm.
+apply (rngl_sub_add Hop).
+Qed.
+
 Definition rngl_acos (x : T) :=
   match (rngl_leb_dec x² 1)%L with
   | left Hx1 =>

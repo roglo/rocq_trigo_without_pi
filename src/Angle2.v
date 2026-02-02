@@ -4,6 +4,7 @@ Require Import RingLike.Utf8.
 
 Require Import RingLike.Core.
 Require Import RingLike.RealLike.
+From TrigoWithoutPi Require Import AngleDef Angle.
 
 Notation "a ≤? b <? c" := ((a ≤? b)%L && (b <? c)%L)%bool
   (at level 70, b at next level) : ring_like_scope.
@@ -28,6 +29,7 @@ Record angle2 := mk_angle2
 
 Class angle2_ctx :=
   { ac_op : rngl_has_opp T = true;
+    ac_iv : rngl_has_inv T = true;
     ac_to : rngl_is_totally_ordered T = true;
     ac_c1 : rngl_characteristic T ≠ 1 }.
 
@@ -43,9 +45,11 @@ Arguments angle2_ctx T {ro rp}.
 
 Ltac destruct_ac2 :=
   set (Hop := ac_op);
+  set (Hiv := ac_iv);
   set (Hto := ac_to);
   set (Hc1 := ac_c1);
   set (Hos := rngl_has_opp_has_opp_or_psub Hop);
+  set (Hiq := rngl_has_inv_has_inv_or_pdiv Hiv);
   set (Hor := rngl_is_totally_ordered_is_ordered Hto);
   set (Heo := rngl_has_eq_dec_or_is_ordered_r Hor).
 
@@ -70,6 +74,67 @@ subst s2 u2 r2.
 f_equal.
 apply (Eqdep_dec.UIP_dec Bool.bool_dec).
 Qed.
+
+Theorem rngl_asin_prop :
+  ∀ x, (x² ≤? 1)%L = true → cos2_sin2_prop √(1 - x²)%L x.
+Proof.
+destruct_ac2.
+intros * Hx1.
+apply rngl_leb_le in Hx1.
+progress unfold cos2_sin2_prop.
+apply (rngl_eqb_eq Heo).
+rewrite rngl_squ_sqrt. 2: {
+  apply (rngl_le_add_le_sub_r Hop Hor).
+  now rewrite rngl_add_0_l.
+}
+rewrite rngl_add_comm.
+rewrite rngl_add_comm.
+apply (rngl_sub_add Hop).
+Qed.
+
+Theorem rngl_asin_prop' :
+  ∀ x, (x² ≤? 1)%L = true → cos2_sin2_prop (- √(1 - x²))%L x.
+Proof.
+destruct_ac2.
+intros * Hx1.
+progress unfold cos2_sin2_prop.
+rewrite (rngl_squ_opp Hop).
+now apply rngl_asin_prop.
+Qed.
+
+Definition glop (a : angle2 T) : angle T.
+destruct_ac2.
+destruct a as (s, u, r, Hp).
+progress unfold angle2_prop in Hp.
+assert (Hs1 : (s² ≤? 1)%L = true). {
+  apply Bool.andb_true_iff in Hp.
+  destruct Hp as (H1, H2).
+  apply rngl_leb_le in H1.
+  apply (rngl_ltb_lt Heo) in H2.
+  apply rngl_leb_le.
+  apply (rngl_squ_le_1_iff Hop Hiq Hto).
+  split. {
+    apply (rngl_le_trans Hor _ 0); [ | easy ].
+    apply (rngl_opp_1_le_0 Hop Hto).
+  }
+  now apply rngl_lt_le_incl.
+}
+destruct u. {
+  destruct r. {
+    apply
+      {| rngl_cos := √(1-s²); rngl_sin := s;
+         rngl_cos2_sin2 := rngl_asin_prop s Hs1 |}.
+  } {
+    apply
+      {| rngl_cos := - √(1-s²); rngl_sin := s;
+         rngl_cos2_sin2 := rngl_asin_prop' s Hs1 |}.
+  }
+} {
+Show Proof.
+(* ouais bon, c'est bien joli, tout ça, mais c'est censé
+   être une définition, pas un théorème, et faire des
+   destruct dessus, ça va être un enfer *)
+....
 
 Theorem angle2_zero_prop : angle2_prop 0%L.
 Proof.
