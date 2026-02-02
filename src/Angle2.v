@@ -47,6 +47,7 @@ End a.
 Arguments angle2 T {ro}.
 Arguments angle2_ctx T {ro rp}.
 Arguments angle2_prop {T ro} s%_L.
+Arguments mk_angle2 {T ro} a_s%_L (a_up a_right)%_bool a_prop.
 
 Notation "cos² a" := ((cos a)²) (at level 10).
 Notation "sin² a" := ((sin a)²) (at level 10).
@@ -187,7 +188,7 @@ apply (rngl_le_add_l Hos Hor).
 apply (rngl_squ_nonneg Hos Hto).
 Qed.
 
-Theorem angle2_add_prop_1 a b :
+Theorem angle2_add_prop_2 a b :
   let s := (sin a * cos b + cos a * sin b)%L in
   ∀ (Hzs : (0 ≤? s)%L = true) (Hs1 : (s =? 1)%L = false), angle2_prop s.
 Proof.
@@ -202,6 +203,14 @@ apply rngl_le_neq.
 split; [ apply sin_add_le_1 | easy ].
 Qed.
 
+Example titi :
+  sin {| a_s := 0; a_up := true; a_right := false; a_prop := angle2_zero_prop |} = 1%L.
+cbn.
+Example titi :
+  cos {| a_s := 0; a_up := true; a_right := false; a_prop := angle2_zero_prop |} = 1%L.
+cbn.
+...
+
 Definition angle2_add a b :=
   match Bool.bool_dec (a_up a) true with
   | left Hua =>
@@ -215,10 +224,12 @@ Definition angle2_add a b :=
                  match rngl_leb_dec 0 s with
                  | left Hzs =>
                      match rngl_eqb_dec s 1 with
-                     | left Hs1 => angle2_zero
+                     | left Hs1 =>
+                         {| a_s := 0; a_up := true; a_right := false;
+                            a_prop := angle2_zero_prop |}
                      | right Hs1 =>
                          {| a_s := s; a_up := true; a_right := true;
-                            a_prop := angle2_add_prop_1 a b Hzs Hs1 |}
+                            a_prop := angle2_add_prop_2 a b Hzs Hs1 |}
                      end
                  | right Hsz => angle2_zero
                  end
