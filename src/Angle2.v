@@ -98,13 +98,53 @@ Qed.
 Definition angle2_zero :=
   {| a_s := 0%L; a_up := true; a_right := true; a_prop := angle2_zero_prop |}.
 
+Theorem if_then_else_opp :
+  rngl_has_opp T = true →
+  ∀ (a : bool) b, ((if a then b else -b) = (if a then 1 else -1) * b)%L.
+Proof.
+intros Hop *.
+symmetry.
+destruct a; [ apply rngl_mul_1_l | ].
+rewrite (rngl_mul_opp_l Hop).
+f_equal.
+apply rngl_mul_1_l.
+Qed.
+
+Theorem squ_if_then_else :
+  ∀ (a : bool) b c, ((if a then b else c)² = if a then b² else c²).
+Proof. now intros; destruct a. Qed.
+
+Theorem if_then_else_same : ∀ (a : bool) (b : T), (if a then b else b) = b.
+Proof. now intros; destruct a. Qed.
+
 Theorem cos2_sin2_1 : ∀ α, (cos² α + sin² α = 1)%L.
 Proof.
 destruct_ac2.
 intros.
 progress unfold cos.
 progress unfold sin.
-...
+rewrite (if_then_else_opp Hop).
+rewrite (if_then_else_opp Hop (a_up α)).
+do 2 rewrite (rngl_squ_mul Hic).
+do 2 rewrite squ_if_then_else.
+rewrite (rngl_squ_opp Hop).
+rewrite rngl_squ_1.
+do 2 rewrite if_then_else_same.
+do 2 rewrite rngl_mul_1_l.
+rewrite rngl_squ_sqrt.
+apply (rngl_sub_add Hop).
+apply (rngl_le_0_sub Hop Hor).
+apply (rngl_squ_le_1_iff Hop Hiq Hto).
+destruct α as (sa, ua, ra, Hpa); cbn.
+progress unfold angle2_prop in Hpa.
+apply Bool.andb_true_iff in Hpa.
+destruct Hpa as (H1, H2).
+apply rngl_leb_le in H1.
+apply (rngl_ltb_lt Heo) in H2.
+split; [ | now apply rngl_lt_le_incl ].
+apply (rngl_le_trans Hor _ 0); [ | easy ].
+apply (rngl_opp_1_le_0 Hop Hto).
+Qed.
 
 Theorem cos_sin_add_prop :
   ∀ a b,
@@ -130,16 +170,18 @@ rewrite (rngl_sub_add Hop).
 do 4 rewrite (rngl_squ_mul Hic).
 rewrite <- rngl_add_assoc.
 do 2 rewrite <- rngl_mul_add_distr_l.
-...
-apply (rngl_eqb_eq Heo) in Hxy'.
-rewrite Hxy'.
-now do 2 rewrite rngl_mul_1_r.
-...
+subst.
+rewrite cos2_sin2_1.
+do 2 rewrite rngl_mul_1_r.
+apply cos2_sin2_1.
+Qed.
 
 Theorem sin_add_le_1 : ∀ a b, (sin a * cos b + cos a * sin b ≤ 1)%L.
 Proof.
 destruct_ac2.
 intros.
+specialize (cos_sin_add_prop a b) as H1.
+...
 enough ((cos a)² + (sin a)² = 1)%L.
 enough ((cos b)² + (sin b)² = 1)%L.
 enough (-1 ≤ cos a ≤ 1)%L.
