@@ -4,7 +4,9 @@ Require Import RingLike.Utf8.
 
 Require Import RingLike.Core.
 Require Import RingLike.RealLike.
+(*
 From TrigoWithoutPi Require Import AngleDef Angle.
+*)
 
 Notation "a ≤? b <? c" := ((a ≤? b)%L && (b <? c)%L)%bool
   (at level 70, b at next level) : ring_like_scope.
@@ -75,69 +77,6 @@ f_equal.
 apply (Eqdep_dec.UIP_dec Bool.bool_dec).
 Qed.
 
-Theorem rngl_asin_prop :
-  ∀ x, (x² ≤? 1)%L = true → cos2_sin2_prop √(1 - x²)%L x.
-Proof.
-destruct_ac2.
-intros * Hx1.
-apply rngl_leb_le in Hx1.
-progress unfold cos2_sin2_prop.
-apply (rngl_eqb_eq Heo).
-rewrite rngl_squ_sqrt. 2: {
-  apply (rngl_le_add_le_sub_r Hop Hor).
-  now rewrite rngl_add_0_l.
-}
-rewrite rngl_add_comm.
-rewrite rngl_add_comm.
-apply (rngl_sub_add Hop).
-Qed.
-
-Theorem rngl_asin_prop' :
-  ∀ x, (x² ≤? 1)%L = true → cos2_sin2_prop (- √(1 - x²))%L x.
-Proof.
-destruct_ac2.
-intros * Hx1.
-progress unfold cos2_sin2_prop.
-rewrite (rngl_squ_opp Hop).
-now apply rngl_asin_prop.
-Qed.
-
-(*
-Definition glop (a : angle2 T) : angle T.
-destruct_ac2.
-destruct a as (s, u, r, Hp).
-progress unfold angle2_prop in Hp.
-assert (Hs1 : (s² ≤? 1)%L = true). {
-  apply Bool.andb_true_iff in Hp.
-  destruct Hp as (H1, H2).
-  apply rngl_leb_le in H1.
-  apply (rngl_ltb_lt Heo) in H2.
-  apply rngl_leb_le.
-  apply (rngl_squ_le_1_iff Hop Hiq Hto).
-  split. {
-    apply (rngl_le_trans Hor _ 0); [ | easy ].
-    apply (rngl_opp_1_le_0 Hop Hto).
-  }
-  now apply rngl_lt_le_incl.
-}
-destruct u. {
-  destruct r. {
-    apply
-      {| rngl_cos := √(1-s²); rngl_sin := s;
-         rngl_cos2_sin2 := rngl_asin_prop s Hs1 |}.
-  } {
-    apply
-      {| rngl_cos := - √(1-s²); rngl_sin := s;
-         rngl_cos2_sin2 := rngl_asin_prop' s Hs1 |}.
-  }
-} {
-Show Proof.
-(* ouais bon, c'est bien joli, tout ça, mais c'est censé
-   être une définition, pas un théorème, et faire des
-   destruct dessus, ça va être un enfer *)
-....
-*)
-
 Theorem angle2_zero_prop : angle2_prop 0%L.
 Proof.
 destruct_ac2.
@@ -152,72 +91,73 @@ Qed.
 Definition angle2_zero :=
   {| a_s := 0%L; a_up := true; a_right := true; a_prop := angle2_zero_prop |}.
 
-Theorem a_prop_up_right a b :
+Theorem a_prop_up_up a b :
   a_up a = true
-  → let s := (a_s a * √(1 - (a_s b)²) + √(1 - (a_s a)²) * a_s b)%L in
+  → a_up b = true
+  → let s := (sin a * cos b + cos a * sin b)%L in
     angle2_prop s.
 Proof.
 destruct_ac2.
-intros * Hut.
+intros * Hua Hub.
 destruct a as (sa, ua, ra, Hpa).
-cbn in Hut |-*.
+destruct b as (sb, ub, rb, Hpb).
+cbn in Hua, Hub |-*.
 progress unfold angle2_prop in Hpa.
+progress unfold angle2_prop in Hpb.
 progress unfold angle2_prop.
-apply Bool.andb_true_iff in Hpa.
+progress unfold sin.
+progress unfold cos; cbn.
+rewrite Hua, Hub.
+...
+apply Bool.andb_true_iff in Hpa, Hpb.
 apply Bool.andb_true_iff.
 destruct Hpa as (Ha1, Ha2).
-apply rngl_leb_le in Ha1.
-apply (rngl_ltb_lt Heo) in Ha2.
+destruct Hpb as (Hb1, Hb2).
+apply rngl_leb_le in Ha1, Hb1.
+apply (rngl_ltb_lt Heo) in Ha2, Hb2.
 split. {
   apply rngl_leb_le.
-...
+  apply (rngl_le_0_add Hos Hor). {
+    apply (rngl_mul_nonneg_nonneg Hos Hor); [ easy | ].
+    apply rl_sqrt_nonneg.
+    apply (rngl_le_0_sub Hop Hor).
+    apply (rngl_squ_le_1_iff Hop Hiq Hto).
+    split. {
+      apply (rngl_le_trans Hor _ 0); [ | easy ].
+      apply (rngl_opp_1_le_0 Hop Hto).
+    }
+    now apply rngl_lt_le_incl.
+  } {
+    apply (rngl_mul_nonneg_nonneg Hos Hor); [ | easy ].
+    apply rl_sqrt_nonneg.
+    apply (rngl_le_0_sub Hop Hor).
+    apply (rngl_squ_le_1_iff Hop Hiq Hto).
+    split. {
+      apply (rngl_le_trans Hor _ 0); [ | easy ].
+      apply (rngl_opp_1_le_0 Hop Hto).
+    }
+    now apply rngl_lt_le_incl.
+  }
+}
+apply (rngl_ltb_lt Heo).
+Admitted.
+
+Print sin.
 
 Definition angle2_add a b :=
   match Bool.bool_dec (a_up a) true with
-  | left Hut =>
-      if a_right a then
-        if a_up b then
-          if a_right b then
-            let s :=
-              (a_s a * √ (1 - (a_s b)²) + √ (1 - (a_s a)²) * a_s b)%L
-            in
-            if (0 ≤? s)%L then
-              {| a_s := s; a_up := true; a_right := true;
-                 a_prop := a_prop_up_right a b Hut |}
-            else angle2_zero
-          else angle2_zero
-        else angle2_zero
-      else angle2_zero
-  | right Huf => angle2_zero
+  | left Hua =>
+     match Bool.bool_dec (a_up b) true with
+     | left Hub =>
+         let s := (sin a * cos b + cos a * sin b)%L in
+         if (0 ≤? s)%L then
+           {| a_s := s; a_up := true; a_right := true;
+              a_prop := a_prop_up_up a b Hua Hub |}
+         else angle2_zero
+    | right Hdb => angle2_zero
+    end
+  | right Hda => angle2_zero
   end.
-
-...
-
-Definition angle2_add (a b : angle2 T) : angle2 T.
-remember (a_up a) as ua eqn:Hua.
-symmetry in Hua.
-destruct ua. {
-  apply (angle2_add1 a b Hua).
-}
-apply angle2_zero.
-Show Proof.
-(* ah ouai, ça va être des types dépendants de merde *)
-...
-
-Definition angle2_add a b :=
-  if a_up a then
-    if a_right a then
-      if a_up b then
-        if a_right b then
-          let s := (s a * √ (1 - (s b)²) + √ (1 - (s a)²) * s b)%L in
-          if (0 ≤? s)%L then
-            {| s := s; a_up := true; a_right := true;
-               a_prop := a_prop_up_right a b (a_up a) s |}
-          else angle2_zero
-        else angle2_zero
-      else angle2_zero
-    else angle2_zero
-  else angle2_zero.
 
 ...
 
