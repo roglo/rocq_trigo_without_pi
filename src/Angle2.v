@@ -48,6 +48,9 @@ Arguments angle2 T {ro}.
 Arguments angle2_ctx T {ro rp}.
 Arguments angle2_prop {T ro} s%_L.
 
+Notation "cos² a" := ((cos a)²) (at level 10).
+Notation "sin² a" := ((sin a)²) (at level 10).
+
 Ltac destruct_ac2 :=
   set (Hic := ac_ic);
   set (Hop := ac_op);
@@ -95,13 +98,90 @@ Qed.
 Definition angle2_zero :=
   {| a_s := 0%L; a_up := true; a_right := true; a_prop := angle2_zero_prop |}.
 
+Theorem cos2_sin2_1 : ∀ α, (cos² α + sin² α = 1)%L.
+Proof.
+destruct_ac2.
+intros.
+progress unfold cos.
+progress unfold sin.
+...
+
+Theorem cos_sin_add_prop :
+  ∀ a b,
+  ((cos a * cos b - sin a * sin b)² + (sin a * cos b + cos a * sin b)² = 1)%L.
+Proof.
+destruct_ac2.
+intros.
+remember (cos a) as x eqn:Hx.
+remember (sin a) as y eqn:Hy.
+remember (cos b) as x' eqn:Hx'.
+remember (sin b) as y' eqn:Hy'.
+rewrite (rngl_add_comm (y * _)%L).
+rewrite (rngl_squ_add Hic).
+rewrite (rngl_squ_sub Hop Hic).
+rewrite rngl_add_add_swap.
+do 2 rewrite rngl_add_assoc.
+rewrite <- (rngl_add_sub_swap Hop).
+do 4 rewrite rngl_mul_assoc.
+rewrite (rngl_mul_mul_swap Hic (2 * x * y')%L).
+rewrite (rngl_mul_mul_swap Hic (2 * x) y')%L.
+rewrite (rngl_mul_mul_swap Hic (2 * x * x') y' y)%L.
+rewrite (rngl_sub_add Hop).
+do 4 rewrite (rngl_squ_mul Hic).
+rewrite <- rngl_add_assoc.
+do 2 rewrite <- rngl_mul_add_distr_l.
+...
+apply (rngl_eqb_eq Heo) in Hxy'.
+rewrite Hxy'.
+now do 2 rewrite rngl_mul_1_r.
+...
+
+Theorem sin_add_le_1 : ∀ a b, (sin a * cos b + cos a * sin b ≤ 1)%L.
+Proof.
+destruct_ac2.
+intros.
+enough ((cos a)² + (sin a)² = 1)%L.
+enough ((cos b)² + (sin b)² = 1)%L.
+enough (-1 ≤ cos a ≤ 1)%L.
+enough (-1 ≤ sin a ≤ 1)%L.
+enough (-1 ≤ cos b ≤ 1)%L.
+enough (-1 ≤ sin b ≤ 1)%L.
+...
+destruct a as (sa, ua, ra, Hpa).
+destruct b as (sb, ub, rb, Hpb).
+move Hpa before Hpb.
+progress unfold sin, cos.
+cbn.
+progress unfold angle2_prop in Hpa, Hpb.
+apply Bool.andb_true_iff in Hpa, Hpb.
+destruct Hpa as (Ha1, Ha2).
+destruct Hpb as (Hb1, Hb2).
+apply rngl_leb_le in Ha1, Hb1.
+apply (rngl_ltb_lt Heo) in Ha2, Hb2.
+destruct ua, ub, ra, rb. {
+...
+
 Theorem angle2_add_prop_1 a b :
   let s := (sin a * cos b + cos a * sin b)%L in
-  ∀ (Hzs : (0 ≤? s)%L = true) (Hs1 : (s <? 1)%L = true), angle2_prop s.
+  ∀ (Hzs : (0 ≤? s)%L = true) (Hs1 : (s =? 1)%L = false), angle2_prop s.
 Proof.
+destruct_ac2.
 intros.
+apply (rngl_eqb_neq Heo) in Hs1.
 progress unfold angle2_prop.
-now rewrite Hzs, Hs1; cbn.
+rewrite Hzs; cbn.
+subst s.
+apply (rngl_ltb_lt Heo).
+apply rngl_le_neq.
+split; [ | easy ].
+...
+progress unfold sin.
+progress unfold cos.
+destruct (a_up a). {
+  destruct (a_right a). {
+    destruct (a_up b). {
+      destruct (a_right b). {
+...
 Qed.
 
 Definition angle2_add a b :=
