@@ -22,10 +22,10 @@ Context {rl : real_like_prop T}.
 Definition angle2_prop s := (0 ≤? s <? 1)%L = true.
 
 Record angle2 := mk_angle2
-  { s : T;
+  { a_s : T;
     a_up : bool;
     a_right : bool;
-    a_prop : angle2_prop s }.
+    a_prop : angle2_prop a_s }.
 
 Class angle2_ctx :=
   { ac_op : rngl_has_opp T = true;
@@ -34,9 +34,9 @@ Class angle2_ctx :=
     ac_c1 : rngl_characteristic T ≠ 1 }.
 
 Definition sin α :=
-  if a_up α then s α else (- s α)%L.
+  if a_up α then a_s α else (- a_s α)%L.
 Definition cos α :=
-  if a_right α then √ (1 - (s α)²) else (- √ (1 - (s α)²))%L.
+  if a_right α then √ (1 - (a_s α)²) else (- √ (1 - (a_s α)²))%L.
 
 End a.
 
@@ -62,7 +62,7 @@ Context {rl : real_like_prop T}.
 Context {ac : angle2_ctx T}.
 
 Theorem eq_angle2_eq : ∀ α1 α2,
-  (s α1, a_up α1, a_right α1) = (s α2, a_up α2, a_right α2) ↔ α1 = α2.
+  (a_s α1, a_up α1, a_right α1) = (a_s α2, a_up α2, a_right α2) ↔ α1 = α2.
 Proof.
 intros.
 split; intros Hab; [ | now subst α2 ].
@@ -150,13 +150,27 @@ apply (rngl_0_lt_1 Hos Hc1 Hto).
 Qed.
 
 Definition angle2_zero :=
-  {| s := 0%L; a_up := true; a_right := true; a_prop := angle2_zero_prop |}.
+  {| a_s := 0%L; a_up := true; a_right := true; a_prop := angle2_zero_prop |}.
 
 Theorem a_prop_up_right a b :
   a_up a = true
-  → let s := (s a * √(1 - (s b)²) + √(1 - (s a)²) * s b)%L in
-    ∀ s, angle2_prop s.
-Admitted.
+  → let s := (a_s a * √(1 - (a_s b)²) + √(1 - (a_s a)²) * a_s b)%L in
+    angle2_prop s.
+Proof.
+destruct_ac2.
+intros * Hut.
+destruct a as (sa, ua, ra, Hpa).
+cbn in Hut |-*.
+progress unfold angle2_prop in Hpa.
+progress unfold angle2_prop.
+apply Bool.andb_true_iff in Hpa.
+apply Bool.andb_true_iff.
+destruct Hpa as (Ha1, Ha2).
+apply rngl_leb_le in Ha1.
+apply (rngl_ltb_lt Heo) in Ha2.
+split. {
+  apply rngl_leb_le.
+...
 
 Definition angle2_add a b :=
   match Bool.bool_dec (a_up a) true with
@@ -164,10 +178,12 @@ Definition angle2_add a b :=
       if a_right a then
         if a_up b then
           if a_right b then
-            let s := (s a * √ (1 - (s b)²) + √ (1 - (s a)²) * s b)%L in
+            let s :=
+              (a_s a * √ (1 - (a_s b)²) + √ (1 - (a_s a)²) * a_s b)%L
+            in
             if (0 ≤? s)%L then
-              {| s := s; a_up := true; a_right := true;
-                 a_prop := a_prop_up_right a b Hut s |}
+              {| a_s := s; a_up := true; a_right := true;
+                 a_prop := a_prop_up_right a b Hut |}
             else angle2_zero
           else angle2_zero
         else angle2_zero
