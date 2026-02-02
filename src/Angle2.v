@@ -95,149 +95,14 @@ Qed.
 Definition angle2_zero :=
   {| a_s := 0%L; a_up := true; a_right := true; a_prop := angle2_zero_prop |}.
 
-Theorem rl_sqrt_1_sub_squ_nonneg :
-  rngl_has_opp T = true →
-  rngl_has_inv_or_pdiv T = true →
-  rngl_is_totally_ordered T = true →
-  ∀ x, (0 ≤ x ≤ 1)%L → (0 ≤ √(1 - x²))%L.
+Theorem angle2_add_prop_1 a b :
+  let s := (sin a * cos b + cos a * sin b)%L in
+  ∀ (Hzs : (0 ≤? s)%L = true) (Hs1 : (s <? 1)%L = true), angle2_prop s.
 Proof.
-intros Hop Hiq Hto.
-specialize (rngl_is_totally_ordered_is_ordered Hto) as Hor.
-intros * Hx1.
-apply rl_sqrt_nonneg.
-apply (rngl_le_0_sub Hop Hor).
-apply (rngl_squ_le_1_iff Hop Hiq Hto).
-split; [ | easy ].
-apply (rngl_le_trans Hor _ 0); [ | easy ].
-apply (rngl_opp_1_le_0 Hop Hto).
-Qed.
-
-Theorem a_prop_up_up a b :
-  a_up a = true
-  → a_right a = true
-  → a_up b = true
-  → a_right b = true
-  → angle2_prop (sin a * cos b + cos a * sin b).
-Proof.
-destruct_ac2.
-intros * Hua Hra Hub Hrb.
-(* bizarre, j'ai l'impression d'avoir déjà fait ce genre de trucs
-   dans mes autres angles ((x,y) tels que x²+y²=1) mais j'arrive
-   pas à retrouver *)
-destruct a as (sa, ua, ra, Hpa).
-destruct b as (sb, ub, rb, Hpb).
-cbn in Hua, Hra, Hub, Hrb |-*.
-progress unfold angle2_prop in Hpa.
-progress unfold angle2_prop in Hpb.
+intros.
 progress unfold angle2_prop.
-progress unfold sin.
-progress unfold cos; cbn.
-subst ua ub ra rb.
-apply Bool.andb_true_iff in Hpa, Hpb.
-apply Bool.andb_true_iff.
-destruct Hpa as (Ha1, Ha2).
-destruct Hpb as (Hb1, Hb2).
-apply rngl_leb_le in Ha1, Hb1.
-apply (rngl_ltb_lt Heo) in Ha2, Hb2.
-split. {
-  apply rngl_leb_le.
-  apply (rngl_le_0_add Hos Hor). {
-    apply (rngl_mul_nonneg_nonneg Hos Hor); [ easy | ].
-    apply rl_sqrt_nonneg.
-    apply (rngl_le_0_sub Hop Hor).
-    apply (rngl_squ_le_1_iff Hop Hiq Hto).
-    split. {
-      apply (rngl_le_trans Hor _ 0); [ | easy ].
-      apply (rngl_opp_1_le_0 Hop Hto).
-    }
-    now apply rngl_lt_le_incl.
-  } {
-    apply (rngl_mul_nonneg_nonneg Hos Hor); [ | easy ].
-    apply rl_sqrt_nonneg.
-    apply (rngl_le_0_sub Hop Hor).
-    apply (rngl_squ_le_1_iff Hop Hiq Hto).
-    split. {
-      apply (rngl_le_trans Hor _ 0); [ | easy ].
-      apply (rngl_opp_1_le_0 Hop Hto).
-    }
-    now apply rngl_lt_le_incl.
-  }
-}
-apply (rngl_ltb_lt Heo).
-apply (rngl_lt_add_lt_sub_r Hop Hor).
-apply (rngl_lt_squ_lt Hop Hiq Hto). {
-  apply (rngl_mul_nonneg_nonneg Hos Hor); [ easy | ].
-  apply (rl_sqrt_1_sub_squ_nonneg Hop Hiq Hto).
-  split; [ easy | now apply rngl_lt_le_incl ].
-} {
-  apply (rngl_le_0_sub Hop Hor).
-  rewrite <- (rngl_mul_1_l 1%L) at 2.
-  apply (rngl_mul_le_compat_nonneg Hor). {
-    split. {
-      apply (rl_sqrt_1_sub_squ_nonneg Hop Hiq Hto).
-      split; [ easy | now apply rngl_lt_le_incl ].
-    }
-    apply (rngl_le_squ_le Hop Hiq Hto). {
-      apply (rl_sqrt_1_sub_squ_nonneg Hop Hiq Hto).
-      split; [ easy | now apply rngl_lt_le_incl ].
-    } {
-      apply (rngl_0_le_1 Hos Hto).
-    }
-    rewrite rngl_squ_1.
-    rewrite rngl_squ_sqrt. {
-      apply (rngl_le_sub_l Hop Hor).
-      apply (rngl_squ_nonneg Hos Hto).
-    }
-    apply (rngl_le_0_sub Hop Hor).
-    apply (rngl_squ_le_1_iff Hop Hiq Hto).
-    split. {
-      apply (rngl_le_trans Hor _ 0); [ | easy ].
-      apply (rngl_opp_1_le_0 Hop Hto).
-    }
-    now apply rngl_lt_le_incl.
-  }
-  split; [ easy | ].
-  now apply rngl_lt_le_incl.
-}
-rewrite (rngl_squ_mul Hic).
-rewrite rngl_squ_sqrt. 2: {
-  apply (rngl_le_0_sub Hop Hor).
-  apply (rngl_squ_le_1_iff Hop Hiq Hto).
-  split. {
-    apply (rngl_le_trans Hor _ 0); [ | easy ].
-    apply (rngl_opp_1_le_0 Hop Hto).
-  }
-  now apply rngl_lt_le_incl.
-}
-rewrite (rngl_squ_sub Hop Hic).
-rewrite rngl_squ_1.
-rewrite rngl_mul_1_r.
-rewrite (rngl_squ_mul Hic).
-rewrite rngl_squ_sqrt. 2: {
-  apply (rngl_le_0_sub Hop Hor).
-  apply (rngl_squ_le_1_iff Hop Hiq Hto).
-  split. {
-    apply (rngl_le_trans Hor _ 0); [ | easy ].
-    apply (rngl_opp_1_le_0 Hop Hto).
-  }
-  now apply rngl_lt_le_incl.
-}
-rewrite <- (rngl_add_sub_swap Hop).
-apply (rngl_lt_add_lt_sub_r Hop Hor).
-rewrite rngl_add_comm.
-apply (rngl_lt_add_lt_sub_r Hop Hor).
-rewrite (rngl_mul_sub_distr_r Hop).
-rewrite (rngl_mul_sub_distr_l Hop).
-rewrite rngl_mul_1_l, rngl_mul_1_r.
-rewrite (rngl_add_sub_assoc Hop).
-rewrite (rngl_sub_sub_distr Hop).
-rewrite <- (rngl_add_sub_swap Hop).
-rewrite (rngl_sub_add Hop).
-rewrite rngl_mul_assoc.
-rewrite (rngl_mul_mul_swap Hic).
-apply (rngl_lt_squ_lt Hop Hiq Hto).
-(* ah oui mais le but 2 n'est pas forcément vrai ! *)
-...
+now rewrite Hzs, Hs1; cbn.
+Qed.
 
 Definition angle2_add a b :=
   match Bool.bool_dec (a_up a) true with
@@ -249,10 +114,16 @@ Definition angle2_add a b :=
              match Bool.bool_dec (a_right b) true with
              | left Hrb =>
                  let s := (sin a * cos b + cos a * sin b)%L in
-                 if (0 ≤? s)%L then
-                   {| a_s := s; a_up := true; a_right := true;
-                      a_prop := a_prop_ur_ur a b Hua Hra Hub Hrb |}
-                 else angle2_zero
+                 match rngl_leb_dec 0 s with
+                 | left Hzs =>
+                     match rngl_ltb_dec s 1 with
+                     | left Hs1 =>
+                         {| a_s := s; a_up := true; a_right := true;
+                            a_prop := angle2_add_prop_1 a b Hzs Hs1 |}
+                     | right Hs1 => angle2_zero
+                     end
+                 | right Hsz => angle2_zero
+                 end
              | right Hlb => angle2_zero
              end
         | right Hdb => angle2_zero
