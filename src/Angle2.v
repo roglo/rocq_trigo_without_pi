@@ -31,7 +31,8 @@ Record angle2 := mk_angle2
     a_prop : angle2_prop a_s }.
 
 Class angle2_ctx :=
-  { ac_op : rngl_has_opp T = true;
+  { ac_ic : rngl_mul_is_comm T = true;
+    ac_op : rngl_has_opp T = true;
     ac_iv : rngl_has_inv T = true;
     ac_to : rngl_is_totally_ordered T = true;
     ac_c1 : rngl_characteristic T ≠ 1 }.
@@ -48,6 +49,7 @@ Arguments angle2_ctx T {ro rp}.
 Arguments angle2_prop {T ro} s%_L.
 
 Ltac destruct_ac2 :=
+  set (Hic := ac_ic);
   set (Hop := ac_op);
   set (Hiv := ac_iv);
   set (Hto := ac_to);
@@ -119,6 +121,9 @@ Theorem a_prop_up_up a b :
 Proof.
 destruct_ac2.
 intros * Hua Hra Hub Hrb.
+(* bizarre, j'ai l'impression d'avoir déjà fait ce genre de trucs
+   dans mes autres angles ((x,y) tels que x²+y²=1) mais j'arrive
+   pas à retrouver *)
 destruct a as (sa, ua, ra, Hpa).
 destruct b as (sb, ub, rb, Hpb).
 cbn in Hua, Hra, Hub, Hrb |-*.
@@ -194,6 +199,44 @@ apply (rngl_lt_squ_lt Hop Hiq Hto). {
   split; [ easy | ].
   now apply rngl_lt_le_incl.
 }
+rewrite (rngl_squ_mul Hic).
+rewrite rngl_squ_sqrt. 2: {
+  apply (rngl_le_0_sub Hop Hor).
+  apply (rngl_squ_le_1_iff Hop Hiq Hto).
+  split. {
+    apply (rngl_le_trans Hor _ 0); [ | easy ].
+    apply (rngl_opp_1_le_0 Hop Hto).
+  }
+  now apply rngl_lt_le_incl.
+}
+rewrite (rngl_squ_sub Hop Hic).
+rewrite rngl_squ_1.
+rewrite rngl_mul_1_r.
+rewrite (rngl_squ_mul Hic).
+rewrite rngl_squ_sqrt. 2: {
+  apply (rngl_le_0_sub Hop Hor).
+  apply (rngl_squ_le_1_iff Hop Hiq Hto).
+  split. {
+    apply (rngl_le_trans Hor _ 0); [ | easy ].
+    apply (rngl_opp_1_le_0 Hop Hto).
+  }
+  now apply rngl_lt_le_incl.
+}
+rewrite <- (rngl_add_sub_swap Hop).
+apply (rngl_lt_add_lt_sub_r Hop Hor).
+rewrite rngl_add_comm.
+apply (rngl_lt_add_lt_sub_r Hop Hor).
+rewrite (rngl_mul_sub_distr_r Hop).
+rewrite (rngl_mul_sub_distr_l Hop).
+rewrite rngl_mul_1_l, rngl_mul_1_r.
+rewrite (rngl_add_sub_assoc Hop).
+rewrite (rngl_sub_sub_distr Hop).
+rewrite <- (rngl_add_sub_swap Hop).
+rewrite (rngl_sub_add Hop).
+rewrite rngl_mul_assoc.
+rewrite (rngl_mul_mul_swap Hic).
+apply (rngl_lt_squ_lt Hop Hiq Hto).
+(* ah oui mais le but 2 n'est pas forcément vrai ! *)
 ...
 
 Definition angle2_add a b :=
