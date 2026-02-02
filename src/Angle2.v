@@ -92,7 +92,7 @@ Qed.
 Definition angle2_zero :=
   {| a_s := 0%L; a_up := true; a_right := true; a_prop := angle2_zero_prop |}.
 
-Theorem a_prop_ur_ur a b :
+Theorem a_prop_up_up a b :
   a_up a = true
   → a_right a = true
   → a_up b = true
@@ -109,14 +109,13 @@ progress unfold angle2_prop in Hpb.
 progress unfold angle2_prop.
 progress unfold sin.
 progress unfold cos; cbn.
-rewrite Hua, Hra, Hub, Hrb.
+subst ua ub ra rb.
 apply Bool.andb_true_iff in Hpa, Hpb.
 apply Bool.andb_true_iff.
 destruct Hpa as (Ha1, Ha2).
 destruct Hpb as (Hb1, Hb2).
 apply rngl_leb_le in Ha1, Hb1.
 apply (rngl_ltb_lt Heo) in Ha2, Hb2.
-clear ra rb Hra Hrb.
 split. {
   apply rngl_leb_le.
   apply (rngl_le_0_add Hos Hor). {
