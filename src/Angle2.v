@@ -39,14 +39,18 @@ Class angle2_ctx :=
 
 Definition sin α :=
   if a_up α then
-    if a_right α then a_s α
-    else (1 - a_s α)%L
+    if a_right α then √(a_s α)
+    else √(1 - a_s α)%L
   else
-    if a_right α then (a_s α - 1)%L
-    else (- a_s α)%L.
-...
+    if a_right α then (- √(1 - a_s α))%L
+    else (- √(a_s α))%L.
 Definition cos α :=
-  if a_right α then √ (1 - (a_s α)²) else (- √ (1 - (a_s α)²))%L.
+  if a_up α then
+    if a_right α then √(1 - a_s α)
+    else (- √(a_s α))%L
+  else
+    if a_right α then √(a_s α)%L
+    else (- √(1 - a_s α))%L.
 
 End a.
 
@@ -102,39 +106,22 @@ apply (rngl_ltb_lt Heo).
 apply (rngl_0_lt_1 Hos Hc1 Hto).
 Qed.
 
-Theorem angle2_one_prop  : angle2_prop 1.
-Proof.
-destruct_ac2.
-progress unfold angle2_prop.
-...
-apply Bool.andb_true_iff.
-rewrite (rngl_leb_refl Hor).
-split; [ easy | ].
-apply (rngl_ltb_lt Heo).
-apply (rngl_0_lt_1 Hos Hc1 Hto).
-...
-
 Definition angle2_zero :=
   {| a_s := 0%L; a_up := true; a_right := true; a_prop := angle2_zero_prop |}.
 
-Theorem if_then_else_opp :
-  rngl_has_opp T = true →
-  ∀ (a : bool) b, ((if a then b else -b) = (if a then 1 else -1) * b)%L.
+Definition angle2_right :=
+  {| a_s := 0; a_up := true; a_right := false; a_prop := angle2_zero_prop |}.
+
+Theorem a_s_bound : ∀ α, (0 ≤ a_s α < 1)%L.
 Proof.
-intros Hop *.
-symmetry.
-destruct a; [ apply rngl_mul_1_l | ].
-rewrite (rngl_mul_opp_l Hop).
-f_equal.
-apply rngl_mul_1_l.
+destruct_ac2.
+intros.
+specialize (a_prop α) as H1.
+apply Bool.andb_true_iff in H1.
+destruct H1 as (H1, H2).
+apply rngl_leb_le in H1.
+now apply (rngl_ltb_lt Heo) in H2.
 Qed.
-
-Theorem squ_if_then_else :
-  ∀ (a : bool) b c, ((if a then b else c)² = if a then b² else c²).
-Proof. now intros; destruct a. Qed.
-
-Theorem if_then_else_same : ∀ (a : bool) (b : T), (if a then b else b) = b.
-Proof. now intros; destruct a. Qed.
 
 Theorem cos2_sin2_1 : ∀ α, (cos² α + sin² α = 1)%L.
 Proof.
@@ -142,27 +129,38 @@ destruct_ac2.
 intros.
 progress unfold cos.
 progress unfold sin.
-rewrite (if_then_else_opp Hop).
-rewrite (if_then_else_opp Hop (a_up α)).
-do 2 rewrite (rngl_squ_mul Hic).
-do 2 rewrite squ_if_then_else.
-rewrite (rngl_squ_opp Hop).
-rewrite rngl_squ_1.
-do 2 rewrite if_then_else_same.
-do 2 rewrite rngl_mul_1_l.
-rewrite rngl_squ_sqrt.
-apply (rngl_sub_add Hop).
-apply (rngl_le_0_sub Hop Hor).
-apply (rngl_squ_le_1_iff Hop Hiq Hto).
-destruct α as (sa, ua, ra, Hpa); cbn.
-progress unfold angle2_prop in Hpa.
-apply Bool.andb_true_iff in Hpa.
-destruct Hpa as (H1, H2).
-apply rngl_leb_le in H1.
-apply (rngl_ltb_lt Heo) in H2.
-split; [ | now apply rngl_lt_le_incl ].
-apply (rngl_le_trans Hor _ 0); [ | easy ].
-apply (rngl_opp_1_le_0 Hop Hto).
+destruct (a_up α), (a_right α). {
+  rewrite rngl_squ_sqrt. {
+    rewrite rngl_squ_sqrt; [ apply (rngl_sub_add Hop) | ].
+    apply a_s_bound.
+  }
+  apply (rngl_le_0_sub Hop Hor).
+  apply a_s_bound.
+} {
+  rewrite rngl_squ_sqrt. {
+    rewrite (rngl_squ_opp Hop), rngl_add_comm.
+    rewrite rngl_squ_sqrt; [ apply (rngl_sub_add Hop) | ].
+    apply a_s_bound.
+  }
+  apply (rngl_le_0_sub Hop Hor).
+  apply a_s_bound.
+} {
+  rewrite rngl_squ_sqrt. {
+    rewrite (rngl_squ_opp Hop), rngl_add_comm.
+    rewrite rngl_squ_sqrt; [ apply (rngl_sub_add Hop) | ].
+    apply (rngl_le_0_sub Hop Hor).
+    apply a_s_bound.
+  }
+  apply a_s_bound.
+} {
+  do 2 rewrite (rngl_squ_opp Hop).
+  rewrite rngl_squ_sqrt. {
+    rewrite rngl_squ_sqrt; [ apply (rngl_sub_add Hop) | ].
+    apply a_s_bound.
+  }
+  apply (rngl_le_0_sub Hop Hor).
+  apply a_s_bound.
+}
 Qed.
 
 Theorem cos_sin_add_prop :
@@ -221,15 +219,8 @@ apply rngl_le_neq.
 split; [ apply sin_add_le_1 | easy ].
 Qed.
 
-Example titi :
-  sin {| a_s := 1; a_up := true; a_right := false; a_prop := angle2_one_prop |} = 1%L.
-cbn.
-Example titi :
-  cos {| a_s := 1; a_up := true; a_right := false; a_prop := angle2_one_prop |} = 0%L.
-cbn.
-...
-
 Definition angle2_add a b :=
+  let s := (sin a * cos b + cos a * sin b)%L in
   match Bool.bool_dec (a_up a) true with
   | left Hua =>
       match Bool.bool_dec (a_right a) true with
@@ -238,13 +229,10 @@ Definition angle2_add a b :=
          | left Hub =>
              match Bool.bool_dec (a_right b) true with
              | left Hrb =>
-                 let s := (sin a * cos b + cos a * sin b)%L in
                  match rngl_leb_dec 0 s with
                  | left Hzs =>
                      match rngl_eqb_dec s 1 with
-                     | left Hs1 =>
-                         {| a_s := 0; a_up := true; a_right := false;
-                            a_prop := angle2_zero_prop |}
+                     | left _ => angle2_right
                      | right Hs1 =>
                          {| a_s := s; a_up := true; a_right := true;
                             a_prop := angle2_add_prop_2 a b Hzs Hs1 |}
