@@ -193,6 +193,17 @@ do 2 rewrite rngl_mul_1_r.
 apply cos2_sin2_1.
 Qed.
 
+Theorem cos_add_le_1 : ∀ a b, (cos a * cos b - sin a * sin b ≤ 1)%L.
+Proof.
+destruct_ac2.
+intros.
+specialize (cos_sin_add_prop a b) as H1.
+apply (rngl_squ_le_1_iff Hop Hiq Hto).
+rewrite <- H1.
+apply (rngl_le_add_r Hos Hor).
+apply (rngl_squ_nonneg Hos Hto).
+Qed.
+
 Theorem sin_add_le_1 : ∀ a b, (sin a * cos b + cos a * sin b ≤ 1)%L.
 Proof.
 destruct_ac2.
@@ -204,23 +215,39 @@ apply (rngl_le_add_l Hos Hor).
 apply (rngl_squ_nonneg Hos Hto).
 Qed.
 
-Theorem angle2_add_prop_2 a b :
-  let s := (sin a * cos b + cos a * sin b)%L in
-  ∀ (Hzs : (0 ≤? s)%L = true) (Hs1 : (s =? 1)%L = false), angle2_prop s.
+Theorem angle2_add_prop_1 a b :
+  let cab := (cos a * cos b - sin a * sin b)%L in
+  ∀ (Hzc : (0 <? cab)%L = true), angle2_prop (1 - cab²).
 Proof.
 destruct_ac2.
+specialize (rngl_integral_or_inv_pdiv_eq_dec_order Hiv Hor) as Hio.
 intros.
 progress unfold angle2_prop.
-apply (rngl_eqb_neq Heo) in Hs1.
-rewrite Hzs; cbn.
-subst s.
+apply Bool.andb_true_iff.
+apply (rngl_ltb_lt Heo) in Hzc.
+split. {
+  apply rngl_leb_le.
+  apply (rngl_le_0_sub Hop Hor).
+  apply (rngl_squ_le_1_iff Hop Hiq Hto).
+  split. {
+    apply (rngl_le_trans Hor _ 0); [ | now apply rngl_lt_le_incl ].
+    apply (rngl_opp_1_le_0 Hop Hto).
+  }
+  subst cab.
+  apply cos_add_le_1.
+}
 apply (rngl_ltb_lt Heo).
+apply (rngl_lt_sub_l Hop Hor).
 apply rngl_le_neq.
-split; [ apply sin_add_le_1 | easy ].
+split; [ apply (rngl_squ_nonneg Hos Hto) | ].
+intros H; symmetry in H.
+apply (eq_rngl_squ_0 Hos Hio) in H.
+rewrite H in Hzc.
+now apply rngl_lt_irrefl in Hzc.
 Qed.
 
 Definition angle2_add a b :=
-  let ab := (sin a * cos b + cos a * sin b)%L in
+  let cab := (cos a * cos b - sin a * sin b)%L in
   match Bool.bool_dec (a_up a) true with
   | left Hua =>
       match Bool.bool_dec (a_right a) true with
@@ -229,17 +256,12 @@ Definition angle2_add a b :=
          | left Hub =>
              match Bool.bool_dec (a_right b) true with
              | left Hrb =>
-                 match rngl_leb_dec 0 ab with
-                 | left Hzs =>
-                     match rngl_eqb_dec ab 1 with
-                     | left _ => angle2_right
-                     | right Hs1 =>
-                         {| a_s := ab; a_up := true; a_right := true;
-                            a_prop := angle2_add_prop_2 a b Hzs Hs1 |}
-                     end
+                 match rngl_ltb_dec 0 cab with
+                 | left Hzc =>
+                     {| a_s := 1 - cab²; a_up := true; a_right := true;
+                        a_prop := angle2_add_prop_1 a b Hzc |}
                  | right Hsz =>
-                     {| a_s := ab + 1; a_up := true; a_right := false;
-                        a_prop := 42 |}
+                     angle2_zero
                  end
              | right Hlb => angle2_zero
              end
