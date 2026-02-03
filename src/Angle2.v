@@ -246,6 +246,43 @@ rewrite H in Hzc.
 now apply rngl_lt_irrefl in Hzc.
 Qed.
 
+(*
+Theorem angle2_add_prop_2 a b :
+  let cab := (cos a * cos b - sin a * sin b)%L in
+  ∀ (Hzc : (0 <? cab)%L = false), angle2_prop cab².
+Proof.
+destruct_ac2.
+intros.
+progress unfold angle2_prop.
+apply (rngl_ltb_ge_iff Hto) in Hzc.
+apply Bool.andb_true_iff.
+split. {
+  apply rngl_leb_le.
+  apply (rngl_squ_nonneg Hos Hto).
+}
+apply (rngl_ltb_lt Heo).
+Search (_² < _²)%L.
+...
+  apply (rngl_le_0_sub Hop Hor).
+  apply (rngl_squ_le_1_iff Hop Hiq Hto).
+  split. {
+    apply (rngl_le_trans Hor _ 0); [ | now apply rngl_lt_le_incl ].
+    apply (rngl_opp_1_le_0 Hop Hto).
+  }
+  subst cab.
+  apply cos_add_le_1.
+}
+apply (rngl_ltb_lt Heo).
+apply (rngl_lt_sub_l Hop Hor).
+apply rngl_le_neq.
+split; [ apply (rngl_squ_nonneg Hos Hto) | ].
+intros H; symmetry in H.
+apply (eq_rngl_squ_0 Hos Hio) in H.
+rewrite H in Hzc.
+now apply rngl_lt_irrefl in Hzc.
+...
+*)
+
 Definition angle2_add a b :=
   let cab := (cos a * cos b - sin a * sin b)%L in
   match Bool.bool_dec (a_up a) true with
@@ -260,8 +297,10 @@ Definition angle2_add a b :=
                  | left Hzc =>
                      {| a_s := 1 - cab²; a_up := true; a_right := true;
                         a_prop := angle2_add_prop_1 a b Hzc |}
-                 | right Hsz =>
-                     angle2_zero
+                 | right Hcz =>
+... ajouter cas cab=-1
+                     {| a_s := cab²; a_up := true; a_right := false;
+                        a_prop := angle2_add_prop_2 a b Hcz |}
                  end
              | right Hlb => angle2_zero
              end
