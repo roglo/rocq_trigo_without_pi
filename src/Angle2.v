@@ -193,7 +193,7 @@ do 2 rewrite rngl_mul_1_r.
 apply cos2_sin2_1.
 Qed.
 
-Theorem cos_add_le_1 : ∀ a b, (cos a * cos b - sin a * sin b ≤ 1)%L.
+Theorem cos_add_bound : ∀ a b, (-1 ≤ cos a * cos b - sin a * sin b ≤ 1)%L.
 Proof.
 destruct_ac2.
 intros.
@@ -204,7 +204,7 @@ apply (rngl_le_add_r Hos Hor).
 apply (rngl_squ_nonneg Hos Hto).
 Qed.
 
-Theorem sin_add_le_1 : ∀ a b, (sin a * cos b + cos a * sin b ≤ 1)%L.
+Theorem sin_add_bound : ∀ a b, (-1 ≤ sin a * cos b + cos a * sin b ≤ 1)%L.
 Proof.
 destruct_ac2.
 intros.
@@ -234,7 +234,7 @@ split. {
     apply (rngl_opp_1_le_0 Hop Hto).
   }
   subst cab.
-  apply cos_add_le_1.
+  apply cos_add_bound.
 }
 apply (rngl_ltb_lt Heo).
 apply (rngl_lt_sub_l Hop Hor).
@@ -246,42 +246,38 @@ rewrite H in Hzc.
 now apply rngl_lt_irrefl in Hzc.
 Qed.
 
-(*
 Theorem angle2_add_prop_2 a b :
   let cab := (cos a * cos b - sin a * sin b)%L in
-  ∀ (Hzc : (0 <? cab)%L = false), angle2_prop cab².
+  ∀ (Hzc : (0 <? cab)%L = false) (Hcz1 : (cab =? -1)%L = false),
+  angle2_prop cab².
 Proof.
 destruct_ac2.
 intros.
 progress unfold angle2_prop.
 apply (rngl_ltb_ge_iff Hto) in Hzc.
+apply (rngl_eqb_neq Heo) in Hcz1.
 apply Bool.andb_true_iff.
 split. {
   apply rngl_leb_le.
   apply (rngl_squ_nonneg Hos Hto).
 }
 apply (rngl_ltb_lt Heo).
-Search (_² < _²)%L.
-...
-  apply (rngl_le_0_sub Hop Hor).
-  apply (rngl_squ_le_1_iff Hop Hiq Hto).
-  split. {
-    apply (rngl_le_trans Hor _ 0); [ | now apply rngl_lt_le_incl ].
-    apply (rngl_opp_1_le_0 Hop Hto).
-  }
-  subst cab.
-  apply cos_add_le_1.
-}
-apply (rngl_ltb_lt Heo).
-apply (rngl_lt_sub_l Hop Hor).
 apply rngl_le_neq.
-split; [ apply (rngl_squ_nonneg Hos Hto) | ].
-intros H; symmetry in H.
-apply (eq_rngl_squ_0 Hos Hio) in H.
-rewrite H in Hzc.
-now apply rngl_lt_irrefl in Hzc.
-...
-*)
+split. {
+  apply (rngl_squ_le_1_iff Hop Hiq Hto).
+  subst cab.
+  apply cos_add_bound.
+}
+intros H.
+rewrite <- rngl_squ_1 in H.
+apply (rngl_squ_eq_cases Hop Hiv Heo) in H. {
+  apply (rngl_nlt_ge Hor) in Hzc; apply Hzc; clear Hzc.
+  destruct H as [H| ]; [ rewrite H | easy ].
+  apply (rngl_0_lt_1 Hos Hc1 Hto).
+}
+rewrite rngl_mul_1_l.
+apply rngl_mul_1_r.
+Qed.
 
 Definition angle2_add a b :=
   let cab := (cos a * cos b - sin a * sin b)%L in
@@ -298,9 +294,14 @@ Definition angle2_add a b :=
                      {| a_s := 1 - cab²; a_up := true; a_right := true;
                         a_prop := angle2_add_prop_1 a b Hzc |}
                  | right Hcz =>
-... ajouter cas cab=-1
-                     {| a_s := cab²; a_up := true; a_right := false;
-                        a_prop := angle2_add_prop_2 a b Hcz |}
+                     match rngl_eqb_dec cab (-1) with
+                     | left Hcz1 =>
+                         {| a_s := 0; a_up := false; a_right := false;
+                            a_prop := angle2_zero_prop |}
+                     | right Hcz1 =>
+                         {| a_s := cab²; a_up := true; a_right := false;
+                            a_prop := angle2_add_prop_2 a b Hcz Hcz1 |}
+                     end
                  end
              | right Hlb => angle2_zero
              end
