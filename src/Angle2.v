@@ -279,34 +279,78 @@ rewrite rngl_mul_1_l.
 apply rngl_mul_1_r.
 Qed.
 
+Theorem angle2_add_prop_3 a b :
+  let sab := (sin a * cos b + cos a * sin b)%L in
+  ∀ (Hzs : (0 <? sab)%L = true),
+  angle2_prop (1 - sab²).
+Proof.
+destruct_ac2.
+specialize (rngl_integral_or_inv_pdiv_eq_dec_order Hiv Hor) as Hio.
+intros.
+progress unfold angle2_prop.
+apply (rngl_ltb_lt Heo) in Hzs.
+apply Bool.andb_true_iff.
+split. {
+  apply rngl_leb_le.
+  apply (rngl_le_0_sub Hop Hor).
+  apply (rngl_squ_le_1_iff Hop Hiq Hto).
+  apply sin_add_bound.
+}
+apply (rngl_ltb_lt Heo).
+apply (rngl_lt_sub_l Hop Hor).
+apply rngl_le_neq.
+split; [ apply (rngl_squ_nonneg Hos Hto) | ].
+intros H; symmetry in H.
+apply (eq_rngl_squ_0 Hos Hio) in H.
+rewrite H in Hzs.
+now apply rngl_lt_irrefl in Hzs.
+Qed.
+
 Definition angle2_add a b :=
   let cab := (cos a * cos b - sin a * sin b)%L in
+  let sab := (sin a * cos b + cos a * sin b)%L in
   match Bool.bool_dec (a_up a) true with
   | left Hua =>
       match Bool.bool_dec (a_right a) true with
       | left Hra =>
-         match Bool.bool_dec (a_up b) true with
-         | left Hub =>
-             match Bool.bool_dec (a_right b) true with
-             | left Hrb =>
-                 match rngl_ltb_dec 0 cab with
-                 | left Hzc =>
-                     {| a_s := 1 - cab²; a_up := true; a_right := true;
-                        a_prop := angle2_add_prop_1 a b Hzc |}
-                 | right Hcz =>
-                     match rngl_eqb_dec cab (-1) with
-                     | left Hcz1 =>
-                         {| a_s := 0; a_up := false; a_right := false;
-                            a_prop := angle2_zero_prop |}
-                     | right Hcz1 =>
-                         {| a_s := cab²; a_up := true; a_right := false;
-                            a_prop := angle2_add_prop_2 a b Hcz Hcz1 |}
-                     end
-                 end
-             | right Hlb => angle2_zero
-             end
-        | right Hdb => angle2_zero
-         end
+          (* "a" in 1st quadrant *)
+          match Bool.bool_dec (a_up b) true with
+          | left Hub =>
+              match Bool.bool_dec (a_right b) true with
+              | left Hrb =>
+                  (* "b" in 1st quadrant *)
+                  match rngl_ltb_dec 0 cab with
+                  | left Hzc =>
+                      (* 0 < cos (a + b) *)
+                      {| a_s := 1 - cab²; a_up := true; a_right := true;
+                         a_prop := angle2_add_prop_1 a b Hzc |}
+                  | right Hcz =>
+                      (* cos (a + b) ≤ 0 *)
+                      match rngl_eqb_dec cab (-1) with
+                      | left Hcz1 =>
+                          (* cos (a + b) = -1 *)
+                          {| a_s := 0; a_up := false; a_right := false;
+                             a_prop := angle2_zero_prop |}
+                      | right Hcz1 =>
+                          (* cos (a + b) ≠ -1 *)
+                          {| a_s := cab²; a_up := true; a_right := false;
+                             a_prop := angle2_add_prop_2 a b Hcz Hcz1 |}
+                      end
+                  end
+              | right Hlb =>
+                  (* "b" in 2nd quadrant *)
+                  match rngl_ltb_dec 0 sab with
+                  | left Hzs =>
+                      (* 0 < sin (a + b) *)
+                      {| a_s := 1 - sab²; a_up := true; a_right := false;
+                         a_prop := angle2_add_prop_3 a b Hzs |}
+                  | right Hsz =>
+                      (* sin (a + b) ≤ 0 *)
+                      angle2_zero
+                  end
+              end
+          | right Hdb => angle2_zero
+          end
       | right Hla => angle2_zero
     end
   | right Hda => angle2_zero
