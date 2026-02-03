@@ -220,7 +220,7 @@ split; [ apply sin_add_le_1 | easy ].
 Qed.
 
 Definition angle2_add a b :=
-  let s := (sin a * cos b + cos a * sin b)%L in
+  let ab := (sin a * cos b + cos a * sin b)%L in
   match Bool.bool_dec (a_up a) true with
   | left Hua =>
       match Bool.bool_dec (a_right a) true with
@@ -229,15 +229,17 @@ Definition angle2_add a b :=
          | left Hub =>
              match Bool.bool_dec (a_right b) true with
              | left Hrb =>
-                 match rngl_leb_dec 0 s with
+                 match rngl_leb_dec 0 ab with
                  | left Hzs =>
-                     match rngl_eqb_dec s 1 with
+                     match rngl_eqb_dec ab 1 with
                      | left _ => angle2_right
                      | right Hs1 =>
-                         {| a_s := s; a_up := true; a_right := true;
+                         {| a_s := ab; a_up := true; a_right := true;
                             a_prop := angle2_add_prop_2 a b Hzs Hs1 |}
                      end
-                 | right Hsz => angle2_zero
+                 | right Hsz =>
+                     {| a_s := ab + 1; a_up := true; a_right := false;
+                        a_prop := 42 |}
                  end
              | right Hlb => angle2_zero
              end
