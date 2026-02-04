@@ -477,6 +477,7 @@ Definition angle2_add a b :=
                       {| a_s := 0; a_up := false; a_right := true;
                          a_prop := angle2_zero_prop |}
                   | right Hsz1 =>
+                      (* sin (a + b) ≠ -1 *)
                       {| a_s := sab²; a_up := false; a_right := false;
                          a_prop :=
                            angle2_add_prop_5 a b Hua Hra Hdb Hlb Hsz1 |}
@@ -490,6 +491,11 @@ Definition angle2_add a b :=
     end
   | right Hda => angle2_zero
   end.
+
+(* chais pas si ça vaut le coup, tout ça. À la fin, ça donnera au moins
+   16 cas. Du coup, la commutativité en donnera 16*16 = 256 cas. Et
+   l'associativité 16*16*16 = 4096 cas. Si j'arrive pas à simplifier
+   la somme d'angles, chuis foutu. *)
 
 ...
 
