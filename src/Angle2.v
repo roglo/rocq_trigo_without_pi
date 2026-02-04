@@ -364,9 +364,9 @@ split. {
 intros H.
 rewrite <- rngl_squ_1 in H.
 apply Bool.not_true_iff_false in Hdb, Hlb.
-assert (Hs : (sab < 0)%L). {
+assert (Hs : (sab ≤ 0)%L). {
   subst sab.
-  apply (rngl_add_nonpos_neg Hop Hor). {
+  apply (rngl_add_nonpos_nonpos Hos Hor). {
     apply (rngl_mul_nonneg_nonpos Hop Hor). {
       progress unfold sin.
       rewrite Hua, Hra.
@@ -384,22 +384,34 @@ assert (Hs : (sab < 0)%L). {
     apply Bool.andb_true_iff in H1.
     now apply rngl_lt_le_incl, (rngl_ltb_lt Heo).
   }
-  apply (rngl_mul_pos_neg Hop Hiq Hor). {
+  apply (rngl_mul_nonneg_nonpos Hop Hor). {
     progress unfold cos.
     rewrite Hua, Hra.
-    apply (rl_sqrt_pos Hos Hor).
-    apply (rngl_lt_0_sub Hop Hor).
+    apply rl_sqrt_nonneg.
+    apply (rngl_le_0_sub Hop Hor).
     specialize (a_prop a) as H1.
     apply Bool.andb_true_iff in H1.
     now apply rngl_ltb_lt.
   }
   progress unfold sin.
   rewrite Hdb, Hlb.
-  apply (rngl_opp_neg_pos Hop Hor).
-  apply (rl_sqrt_pos Hos Hor).
+  apply (rngl_opp_nonpos_nonneg Hop Hor).
+  apply rl_sqrt_nonneg.
   specialize (a_prop b) as H1.
   apply Bool.andb_true_iff in H1.
-  apply (rngl_ltb_lt Heo).
+  now apply rngl_leb_le.
+}
+apply (rngl_squ_eq_cases Hop Hiv Heo) in H. {
+  destruct H as [H| ]. {
+    apply (rngl_nlt_ge Hor) in Hs.
+    apply Hs; clear Hs.
+    rewrite H.
+    apply (rngl_0_lt_1 Hos Hc1 Hto).
+  }
+... ...
+}
+rewrite rngl_mul_1_l.
+apply rngl_mul_1_r.
 ...
 
 Definition angle2_add a b :=
