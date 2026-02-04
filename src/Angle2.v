@@ -487,8 +487,10 @@ Definition angle2_add a b :=
                   angle2_zero
               end
           end
-      | right Hla => angle2_zero
-    end
+      | right Hla =>
+          (* "a" in 2nd quadrant *)
+          angle2_zero
+      end
   | right Hda => angle2_zero
   end.
 
