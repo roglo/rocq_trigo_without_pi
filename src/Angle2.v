@@ -392,7 +392,14 @@ Definition angle2_add a b :=
               end
           | right Hdb =>
               (* "b" in 3rd or 4th quadrant *)
-              angle2_zero
+              match Bool.bool_dec (a_right b) true with
+              | left Hrb =>
+                  (* "b" in 4th quadrant *)
+                  angle2_zero
+              | right Hlb =>
+                  (* "b" in 3rd quadrant *)
+                  angle2_zero
+              end
           end
       | right Hla => angle2_zero
     end
