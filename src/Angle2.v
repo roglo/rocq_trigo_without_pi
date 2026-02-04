@@ -343,12 +343,14 @@ Theorem angle2_add_prop_5 a b :
   let cab := (cos a * cos b - sin a * sin b)%L in
   let sab := (sin a * cos b + cos a * sin b)%L in
   ∀ (Hua : a_up a = true) (Hra : a_right a = true)
-    (Hdb : a_up b ≠ true) (Hlb : a_right b ≠ true),
+    (Hdb : a_up b ≠ true) (Hlb : a_right b ≠ true)
+    (Hsz1 : (sab =? -1)%L = false),
   angle2_prop sab².
 Proof.
 destruct_ac2.
 specialize (rngl_integral_or_inv_pdiv_eq_dec_order Hiv Hor) as Hio.
 intros.
+apply (rngl_eqb_neq Heo) in Hsz1.
 progress unfold angle2_prop.
 apply Bool.andb_true_iff.
 split. {
@@ -402,17 +404,15 @@ assert (Hs : (sab ≤ 0)%L). {
   now apply rngl_leb_le.
 }
 apply (rngl_squ_eq_cases Hop Hiv Heo) in H. {
-  destruct H as [H| ]. {
-    apply (rngl_nlt_ge Hor) in Hs.
-    apply Hs; clear Hs.
-    rewrite H.
-    apply (rngl_0_lt_1 Hos Hc1 Hto).
-  }
-... ...
+  destruct H as [H| ]; [ | easy ].
+  apply (rngl_nlt_ge Hor) in Hs.
+  apply Hs; clear Hs.
+  rewrite H.
+  apply (rngl_0_lt_1 Hos Hc1 Hto).
 }
 rewrite rngl_mul_1_l.
 apply rngl_mul_1_r.
-...
+Qed.
 
 Definition angle2_add a b :=
   let cab := (cos a * cos b - sin a * sin b)%L in
@@ -457,6 +457,7 @@ Definition angle2_add a b :=
                       match rngl_eqb_dec sab (-1) with
                       | left Hsz1 =>
                           (* sin (a + b) = -1 *)
+...
 (* cas à résoudre *)
                           angle2_zero
                       | right Hsz1 =>
@@ -471,8 +472,15 @@ Definition angle2_add a b :=
               match Bool.bool_dec (a_right b) true with
               | right Hlb =>
                   (* "b" in 3rd quadrant *)
-                  {| a_s := sab²; a_up := false; a_right := false;
-                     a_prop := angle2_add_prop_5 a b Hua Hra Hdb Hlb |}
+                  match rngl_eqb_dec sab (-1) with
+                  | left Hsz1 =>
+                      (* sin (a + b) = -1 *)
+                      angle2_zero
+                  | right Hsz1 =>
+                      {| a_s := sab²; a_up := false; a_right := false;
+                         a_prop :=
+                           angle2_add_prop_5 a b Hua Hra Hdb Hlb Hsz1 |}
+                  end
               | left Hrb =>
                   (* "b" in 4th quadrant *)
                   angle2_zero
