@@ -342,15 +342,14 @@ Qed.
 Theorem angle2_add_prop_5 a b :
   let cab := (cos a * cos b - sin a * sin b)%L in
   let sab := (sin a * cos b + cos a * sin b)%L in
-  ∀ (Hsz : (0 <? sab)%L = false) (Hcz : (0 <? cab)%L = false),
+  ∀ (Hua : a_up a = true) (Hra : a_right a = true)
+    (Hdb : a_up b ≠ true) (Hlb : a_right b ≠ true),
   angle2_prop sab².
 Proof.
 destruct_ac2.
 specialize (rngl_integral_or_inv_pdiv_eq_dec_order Hiv Hor) as Hio.
 intros.
 progress unfold angle2_prop.
-apply (rngl_ltb_ge_iff Hto) in Hsz.
-apply (rngl_ltb_ge_iff Hto) in Hcz.
 apply Bool.andb_true_iff.
 split. {
   apply rngl_leb_le.
@@ -364,15 +363,43 @@ split. {
 }
 intros H.
 rewrite <- rngl_squ_1 in H.
-apply (rngl_squ_eq_cases Hop Hiv Heo) in H. {
-(**)
-  apply (rngl_nlt_ge Hor) in Hsz; apply Hsz; clear Hsz.
-  destruct H as [H| ]. {
-    rewrite H.
-    apply (rngl_0_lt_1 Hos Hc1 Hto).
+apply Bool.not_true_iff_false in Hdb, Hlb.
+assert (Hs : (sab < 0)%L). {
+  subst sab.
+  apply (rngl_add_nonpos_neg Hop Hor). {
+    apply (rngl_mul_nonneg_nonpos Hop Hor). {
+      progress unfold sin.
+      rewrite Hua, Hra.
+      apply rl_sqrt_nonneg.
+      specialize (a_prop a) as H1.
+      apply Bool.andb_true_iff in H1.
+      now apply rngl_leb_le.
+    }
+    progress unfold cos.
+    rewrite Hdb, Hlb.
+    apply (rngl_opp_nonpos_nonneg Hop Hor).
+    apply rl_sqrt_nonneg.
+    apply (rngl_le_0_sub Hop Hor).
+    specialize (a_prop b) as H1.
+    apply Bool.andb_true_iff in H1.
+    now apply rngl_lt_le_incl, (rngl_ltb_lt Heo).
   }
-(* works not *)
-(* ouais, y a un truc qui déconne, là *)
+  apply (rngl_mul_pos_neg Hop Hiq Hor). {
+    progress unfold cos.
+    rewrite Hua, Hra.
+    apply (rl_sqrt_pos Hos Hor).
+    apply (rngl_lt_0_sub Hop Hor).
+    specialize (a_prop a) as H1.
+    apply Bool.andb_true_iff in H1.
+    now apply rngl_ltb_lt.
+  }
+  progress unfold sin.
+  rewrite Hdb, Hlb.
+  apply (rngl_opp_neg_pos Hop Hor).
+  apply (rl_sqrt_pos Hos Hor).
+  specialize (a_prop b) as H1.
+  apply Bool.andb_true_iff in H1.
+  apply (rngl_ltb_lt Heo).
 ...
 
 Definition angle2_add a b :=
@@ -432,23 +459,8 @@ Definition angle2_add a b :=
               match Bool.bool_dec (a_right b) true with
               | right Hlb =>
                   (* "b" in 3rd quadrant *)
-                  match rngl_ltb_dec 0 sab with
-                  | left Hzs =>
-                      (* 0 < sin (a + b) *)
-                      (* sounds impossible *)
-                      angle2_zero
-                  | right Hsz =>
-                      (* sin (a + b) ≤ 0 *)
-                      match rngl_ltb_dec 0 cab with
-                      | right Hcz =>
-                          (* cos (a + b) ≤ 0 *)
-                          {| a_s := sab²; a_up := false; a_right := false;
-                             a_prop := angle2_add_prop_5 a b Hsz Hcz |}
-                      | left Hzc =>
-                          (* 0 < cos (a + b) *)
-                          angle2_zero
-                      end
-                  end
+                  {| a_s := sab²; a_up := false; a_right := false;
+                     a_prop := angle2_add_prop_5 a b Hua Hra Hdb Hlb |}
               | left Hrb =>
                   (* "b" in 4th quadrant *)
                   angle2_zero
