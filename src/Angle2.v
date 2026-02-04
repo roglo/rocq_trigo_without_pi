@@ -309,7 +309,7 @@ Qed.
 Theorem angle2_add_prop_4 a b :
   let sab := (sin a * cos b + cos a * sin b)%L in
   ∀ (Hsz : (0 <? sab)%L = false) (Hsz1 : (sab =? -1)%L = false),
-  angle2_prop (sab²).
+  angle2_prop sab².
 Proof.
 destruct_ac2.
 specialize (rngl_integral_or_inv_pdiv_eq_dec_order Hiv Hor) as Hio.
@@ -338,6 +338,42 @@ apply (rngl_squ_eq_cases Hop Hiv Heo) in H. {
 rewrite rngl_mul_1_l.
 apply rngl_mul_1_r.
 Qed.
+
+Theorem angle2_add_prop_5 a b :
+  let cab := (cos a * cos b - sin a * sin b)%L in
+  let sab := (sin a * cos b + cos a * sin b)%L in
+  ∀ (Hsz : (0 <? sab)%L = false) (Hcz : (0 <? cab)%L = false),
+  angle2_prop sab².
+Proof.
+destruct_ac2.
+specialize (rngl_integral_or_inv_pdiv_eq_dec_order Hiv Hor) as Hio.
+intros.
+progress unfold angle2_prop.
+apply (rngl_ltb_ge_iff Hto) in Hsz.
+apply (rngl_ltb_ge_iff Hto) in Hcz.
+apply Bool.andb_true_iff.
+split. {
+  apply rngl_leb_le.
+  apply (rngl_squ_nonneg Hos Hto).
+}
+apply (rngl_ltb_lt Heo).
+apply rngl_le_neq.
+split. {
+  apply (rngl_squ_le_1_iff Hop Hiq Hto).
+  apply sin_add_bound.
+}
+intros H.
+rewrite <- rngl_squ_1 in H.
+apply (rngl_squ_eq_cases Hop Hiv Heo) in H. {
+(**)
+  apply (rngl_nlt_ge Hor) in Hsz; apply Hsz; clear Hsz.
+  destruct H as [H| ]. {
+    rewrite H.
+    apply (rngl_0_lt_1 Hos Hc1 Hto).
+  }
+(* works not *)
+(* ouais, y a un truc qui déconne, là *)
+...
 
 Definition angle2_add a b :=
   let cab := (cos a * cos b - sin a * sin b)%L in
@@ -382,6 +418,7 @@ Definition angle2_add a b :=
                       match rngl_eqb_dec sab (-1) with
                       | left Hsz1 =>
                           (* sin (a + b) = -1 *)
+(* cas à résoudre *)
                           angle2_zero
                       | right Hsz1 =>
                           (* sin (a + b) ≠ -1 *)
@@ -393,11 +430,27 @@ Definition angle2_add a b :=
           | right Hdb =>
               (* "b" in 3rd or 4th quadrant *)
               match Bool.bool_dec (a_right b) true with
-              | left Hrb =>
-                  (* "b" in 4th quadrant *)
-                  angle2_zero
               | right Hlb =>
                   (* "b" in 3rd quadrant *)
+                  match rngl_ltb_dec 0 sab with
+                  | left Hzs =>
+                      (* 0 < sin (a + b) *)
+                      (* sounds impossible *)
+                      angle2_zero
+                  | right Hsz =>
+                      (* sin (a + b) ≤ 0 *)
+                      match rngl_ltb_dec 0 cab with
+                      | right Hcz =>
+                          (* cos (a + b) ≤ 0 *)
+                          {| a_s := sab²; a_up := false; a_right := false;
+                             a_prop := angle2_add_prop_5 a b Hsz Hcz |}
+                      | left Hzc =>
+                          (* 0 < cos (a + b) *)
+                          angle2_zero
+                      end
+                  end
+              | left Hrb =>
+                  (* "b" in 4th quadrant *)
                   angle2_zero
               end
           end
