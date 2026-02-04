@@ -457,9 +457,8 @@ Definition angle2_add a b :=
                       match rngl_eqb_dec sab (-1) with
                       | left Hsz1 =>
                           (* sin (a + b) = -1 *)
-...
-(* cas à résoudre *)
-                          angle2_zero
+                          {| a_s := 0; a_up := false; a_right := true;
+                             a_prop := angle2_zero_prop |}
                       | right Hsz1 =>
                           (* sin (a + b) ≠ -1 *)
                           {| a_s := sab²; a_up := false; a_right := false;
@@ -475,7 +474,8 @@ Definition angle2_add a b :=
                   match rngl_eqb_dec sab (-1) with
                   | left Hsz1 =>
                       (* sin (a + b) = -1 *)
-                      angle2_zero
+                      {| a_s := 0; a_up := false; a_right := true;
+                         a_prop := angle2_zero_prop |}
                   | right Hsz1 =>
                       {| a_s := sab²; a_up := false; a_right := false;
                          a_prop :=
