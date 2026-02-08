@@ -166,7 +166,7 @@ rewrite (rngl_mul_comm Hic).
 rewrite <- rngl_mul_2_r.
 rewrite (rngl_mul_comm Hic ε).
 rewrite rngl_mul_assoc.
-rewrite <- rl_nth_root_mul; cycle 1. {
+rewrite <- rl_nth_root_mul_r; cycle 1. {
   rewrite (rngl_mul_inv_r Hiv).
   apply (rngl_le_div_r Hop Hiv Hto). {
     apply (rngl_0_lt_2 Hos Hc1 Hto).
@@ -182,18 +182,18 @@ rewrite <- rl_nth_root_mul; cycle 1. {
 rewrite rngl_mul_assoc.
 rewrite (rngl_mul_mul_swap Hic (1 - _)%L).
 do 2 rewrite <- rngl_mul_assoc.
-rewrite rl_nth_root_mul; cycle 1. {
+rewrite rl_nth_root_mul_r; cycle 1. {
   now apply (rngl_mul_nonneg_nonneg Hos Hor).
 } {
   apply (rngl_mul_diag_nonneg Hos Hto).
 }
-rewrite rl_nth_root_mul; [ | easy | easy ].
+rewrite rl_nth_root_mul_r; [ | easy | easy ].
 assert (Hz2 : (0 ≤ 2⁻¹)%L). {
   apply rngl_lt_le_incl.
   apply (rngl_inv_pos Hop Hiv Hto).
   apply (rngl_0_lt_2 Hos Hc1 Hto).
 }
-rewrite rl_nth_root_mul; [ | easy | easy ].
+rewrite rl_nth_root_mul_r; [ | easy | easy ].
 rewrite fold_rngl_squ.
 rewrite fold_rl_sqrt.
 rewrite rngl_squ_pow_2.
@@ -205,7 +205,7 @@ rewrite (rngl_mul_comm Hic).
 do 2 rewrite <- rngl_mul_assoc.
 rewrite (rngl_mul_inv_diag_l Hiv); [ | easy ].
 rewrite rngl_mul_1_r.
-rewrite <- rl_nth_root_mul; [ | easy | easy ].
+rewrite <- rl_nth_root_mul_r; [ | easy | easy ].
 rewrite (rngl_mul_comm Hic (1 - _)%L).
 rewrite (rngl_squ_sub_squ' Hop).
 rewrite rngl_mul_1_r, rngl_mul_1_l.
@@ -224,14 +224,14 @@ destruct saz. {
   rewrite rngl_mul_1_l.
   rewrite <- (rl_nth_root_pow 2); [ cbn | easy ].
   rewrite rngl_mul_1_r.
-  now rewrite rl_nth_root_mul.
+  now rewrite rl_nth_root_mul_r.
 } {
   apply (rngl_leb_gt_iff Hto) in Hsaz.
   apply (rngl_opp_lt_compat Hop Hor) in Hsaz.
   rewrite (rngl_opp_0 Hop) in Hsaz.
   apply rngl_lt_le_incl in Hsaz.
   rewrite <- (rngl_mul_opp_opp Hop sa).
-  rewrite rl_nth_root_mul; [ | easy | easy ].
+  rewrite rl_nth_root_mul_r; [ | easy | easy ].
   apply (rngl_opp_inj Hop).
   rewrite <- (rngl_mul_opp_l Hop).
   rewrite (rngl_opp_involutive Hop).
