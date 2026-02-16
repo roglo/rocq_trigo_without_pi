@@ -2297,7 +2297,7 @@ destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
 intros * Hzca.
 cbn.
 apply (rngl_mul_nonneg_nonneg Hos Hor). {
-  rewrite rngl_signp_of_pos; [ | easy ].
+  rewrite rngl_signp_of_nonneg; [ | easy ].
   apply (rngl_0_le_1 Hos Hto).
 }
 apply rl_sqrt_nonneg.
