@@ -27,6 +27,7 @@ uninstall:
 	@rm -rf $(OPAM_SWITCH_PREFIX)/lib/coq/user-contrib/TrigoWithout_pi
 
 local_opam_pin_add:
+	opam remove --force rocq-ring-like 2>/dev/null || true
 	opam pin add rocq-trigo-without-pi ../ -n -y
 	opam reinstall rocq-trigo-without-pi -y -w
 

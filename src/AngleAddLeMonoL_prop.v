@@ -77,7 +77,7 @@ destruct (rngl_leb_dec 0 (rngl_cos α1))%L as [Hzc1| Hc1z]. {
     destruct (0 ≤? rngl_cos _)%L; [ easy | ].
     apply (rngl_ltb_lt Heo).
     apply (rngl_lt_opp_l Hop Hor).
-    apply (rngl_lt_0_add Hos Hor); [ | easy ].
+    apply (rngl_add_pos_nonneg Hos Hor); [ | easy ].
     apply rngl_le_neq.
     split. {
       apply rngl_lt_le_incl in Hzs2, Hc2z.
