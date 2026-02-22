@@ -202,7 +202,7 @@ progress sin_cos_add_sub_right_goal T.
 destruct (rngl_leb_dec 0 (rngl_cos α1))%L as [Hzc1| Hc1z]. {
   apply rngl_leb_le in Hzc1.
   move Hzc1 before Hc3z.
-  apply (rngl_le_0_add Hos Hor); [ | easy ].
+  apply (rngl_add_nonneg_nonneg Hos Hor); [ | easy ].
   apply rngl_lt_le_incl in Hc3z.
   now apply rngl_sin_add_nonneg.
 }
@@ -277,7 +277,7 @@ specialize rngl_cos_cos_sin_sin_nonneg_sin_le_cos_le_iff as H1.
 apply rngl_lt_le_incl in Hc1z, Hc231.
 apply H1; try easy.
 cbn.
-apply (rngl_le_0_add Hos Hor). {
+apply (rngl_add_nonneg_nonneg Hos Hor). {
   now apply (rngl_mul_nonneg_nonneg Hos Hor).
 } {
   apply rngl_lt_le_incl in Hc3z.
@@ -306,7 +306,7 @@ destruct (rngl_leb_dec 0 (rngl_cos α1)) as [Hzc1| Hc1z]. {
     move Hzc2 before Hzc1.
     assert (Hzc12 : (0 ≤ rngl_sin (α1 + α2))%L). {
       cbn.
-      apply (rngl_le_0_add Hos Hor).
+      apply (rngl_add_nonneg_nonneg Hos Hor).
       now apply (rngl_mul_nonneg_nonneg Hos Hor).
       now apply (rngl_mul_nonneg_nonneg Hos Hor).
     }
@@ -326,7 +326,7 @@ destruct (rngl_leb_dec 0 (rngl_cos α1)) as [Hzc1| Hc1z]. {
   progress sin_cos_add_sub_right_hyp T Hzs12.
   apply (rngl_nle_gt Hor) in Hzs12.
   apply Hzs12; clear Hzs12; cbn.
-  apply (rngl_le_0_add Hos Hor).
+  apply (rngl_add_nonneg_nonneg Hos Hor).
   now apply (rngl_mul_nonneg_nonneg Hos Hor).
   apply (rngl_mul_nonneg_nonneg Hos Hor); [ easy | ].
   now apply rngl_lt_le_incl.
@@ -379,7 +379,7 @@ destruct (rngl_leb_dec (rngl_cos α2) 0) as [Hc2z| Hzc2]. {
   apply rngl_le_neq.
   split. {
     cbn.
-    apply (rngl_le_0_add Hos Hor).
+    apply (rngl_add_nonneg_nonneg Hos Hor).
     now apply (rngl_mul_nonneg_nonneg Hos Hor).
     now apply (rngl_mul_nonneg_nonneg Hos Hor).
   }
@@ -408,7 +408,7 @@ apply (rngl_leb_gt_iff Hto) in Hzc2.
 move Hzc2 before Hzs1.
 apply rngl_cos_cos_sin_sin_nonneg_sin_le_cos_le_iff; try easy. {
   cbn.
-  apply (rngl_le_0_add Hos Hor).
+  apply (rngl_add_nonneg_nonneg Hos Hor).
   apply (rngl_mul_nonneg_nonneg Hos Hor); [ easy | ].
   now apply rngl_lt_le_incl.
   now apply (rngl_mul_nonneg_nonneg Hos Hor).
@@ -421,7 +421,7 @@ apply angle_le_sub_le_add_l_lemma_1; try easy. {
   apply (rngl_le_refl Hor).
 }
 cbn.
-apply (rngl_le_0_add Hos Hor).
+apply (rngl_add_nonneg_nonneg Hos Hor).
 apply (rngl_mul_nonneg_nonneg Hos Hor); [ easy | ].
 now apply rngl_lt_le_incl.
 now apply (rngl_mul_nonneg_nonneg Hos Hor).
@@ -596,7 +596,7 @@ apply (rngl_lt_0_add Hos Hor). {
   now apply rngl_le_neq.
 }
 cbn.
-apply (rngl_le_0_add Hos Hor).
+apply (rngl_add_nonneg_nonneg Hos Hor).
 now apply (rngl_mul_nonneg_nonneg Hos Hor).
 apply (rngl_mul_nonneg_nonneg Hos Hor); [ easy | ].
 now apply rngl_lt_le_incl.

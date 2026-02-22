@@ -682,7 +682,7 @@ destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
 remember (α1 + α2)%A as α3 eqn:Hα3.
 destruct (rngl_leb_dec 0 (rngl_cos α2)) as [Hzc2| Hzc2]. {
   apply rngl_leb_le in Hzc2.
-  now apply (rngl_le_0_add Hos Hor).
+  now apply (rngl_add_nonneg_nonneg Hos Hor).
 }
 apply (rngl_leb_gt_iff Hto) in Hzc2.
 (* here, for sin α3 to be non negative, then the negativity
@@ -1286,7 +1286,7 @@ destruct (rngl_leb_dec 0 (rngl_cos α2)) as [Hzc2| Hzc2]. {
   apply (rngl_nle_gt Hor) in Hs3z.
   exfalso; apply Hs3z; clear Hs3z.
   rewrite Hα3; cbn.
-  apply (rngl_le_0_add Hos Hor). {
+  apply (rngl_add_nonneg_nonneg Hos Hor). {
     now apply (rngl_mul_nonneg_nonneg Hos Hor).
   } {
     now apply (rngl_mul_nonneg_nonneg Hos Hor).
@@ -1325,7 +1325,7 @@ progress unfold rngl_sub at 1.
 rewrite Hop.
 rewrite <- (rngl_mul_opp_r Hop).
 (* ok, all terms are non negative *)
-apply (rngl_le_0_add Hos Hor). {
+apply (rngl_add_nonneg_nonneg Hos Hor). {
   now apply (rngl_mul_nonneg_nonneg Hos Hor).
 }
 apply (rngl_mul_nonneg_nonneg Hos Hor). {
@@ -1628,7 +1628,7 @@ rewrite <- (rngl_abs_nonneg_eq Hop Hor (√_ / _ * _))%L. 2: {
   now apply rl_sqrt_nonneg.
 }
 rewrite <- (rngl_abs_nonneg_eq Hop Hor). 2: {
-  now apply (rngl_le_0_add Hos Hor); apply rl_sqrt_nonneg.
+  now apply (rngl_add_nonneg_nonneg Hos Hor); apply rl_sqrt_nonneg.
 }
 apply (eq_rngl_squ_rngl_abs Hop Hto). {
   rewrite Bool.orb_true_iff; right.
@@ -2102,7 +2102,7 @@ Proof.
 destruct_ac.
 intros * Hzs1 Hzs2 Hcs1 Hcs2.
 cbn.
-apply (rngl_le_0_add Hos Hor).
+apply (rngl_add_nonneg_nonneg Hos Hor).
 now apply (rngl_mul_nonneg_nonneg Hos Hor).
 now apply (rngl_mul_nonneg_nonneg Hos Hor).
 Qed.

@@ -760,16 +760,16 @@ apply (rngl_mul_le_compat_nonneg Hor). {
 }
 specialize (rngl_0_le_1 Hos Hto) as H01.
 split. {
-  apply (rngl_le_0_add Hos Hor); [ | easy ].
-  apply (rngl_le_0_add Hos Hor); [ | easy ].
-  apply (rngl_le_0_add Hos Hor); [ | easy ].
-  now apply (rngl_le_0_add Hos Hor).
+  apply (rngl_add_nonneg_nonneg Hos Hor); [ | easy ].
+  apply (rngl_add_nonneg_nonneg Hos Hor); [ | easy ].
+  apply (rngl_add_nonneg_nonneg Hos Hor); [ | easy ].
+  now apply (rngl_add_nonneg_nonneg Hos Hor).
 }
 rewrite rngl_mul_add_distr_r.
 rewrite rngl_mul_1_l.
 apply (rngl_add_le_mono_l Hos Hor).
 apply (rngl_le_add_l Hos Hor).
-now apply (rngl_le_0_add Hos Hor).
+now apply (rngl_add_nonneg_nonneg Hos Hor).
 Qed.
 
 Theorem rngl_1_sub_cos_div_2_le_angle_eucl_dist_0_r :

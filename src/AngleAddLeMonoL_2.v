@@ -1033,7 +1033,7 @@ destruct (rngl_leb_dec 0 (rngl_cos α3)) as [Hzc3| Hc3z]. {
     apply rngl_leb_le in Hzs1.
     destruct (rngl_leb_dec 0 (rngl_cos α1)) as [Hzc1| Hc1z]. {
       apply rngl_leb_le in Hzc1.
-      apply (rngl_le_0_add Hos Hor).
+      apply (rngl_add_nonneg_nonneg Hos Hor).
       now apply rngl_sin_add_nonneg.
       apply rngl_sin_add_nonneg; try easy.
       now apply rngl_lt_le_incl.
@@ -1166,7 +1166,7 @@ destruct (rngl_leb_dec 0 (rngl_cos α2)) as [Hzc2| Hc2z]. {
       progress sin_cos_add_sub_right_goal T.
       apply (rngl_le_opp_l Hop Hor).
       apply rngl_lt_le_incl in Hc1z.
-      apply (rngl_le_0_add Hos Hor).
+      apply (rngl_add_nonneg_nonneg Hos Hor).
       now apply rngl_sin_add_nonneg.
       now apply rngl_sin_add_nonneg.
     }
@@ -1297,9 +1297,9 @@ destruct (rngl_leb_dec 0 (rngl_cos α1)) as [Hzc1| Hc1z]. {
     rewrite <- (rngl_add_sub_assoc Hop).
     rewrite <- (rngl_mul_sub_distr_l Hop).
     rewrite <- rngl_mul_add_distr_l.
-    apply (rngl_le_0_add Hos Hor).
+    apply (rngl_add_nonneg_nonneg Hos Hor).
     apply (rngl_mul_nonneg_nonneg Hos Hor); [ easy | ].
-    now apply (rngl_le_0_add Hos Hor).
+    now apply (rngl_add_nonneg_nonneg Hos Hor).
     apply (rngl_mul_nonneg_nonneg Hos Hor); [ easy | ].
     now apply (rngl_le_0_sub Hop Hor).
   }
@@ -1334,8 +1334,8 @@ destruct (rngl_leb_dec (rngl_cos α2) (rngl_cos α3)) as [Hc23| Hc32]. {
   rewrite (rngl_sub_opp_r Hop).
   rewrite (rngl_add_sub_swap Hop).
   rewrite <- (rngl_mul_sub_distr_l Hop).
-  apply (rngl_le_0_add Hos Hor). {
-    apply (rngl_le_0_add Hos Hor). {
+  apply (rngl_add_nonneg_nonneg Hos Hor). {
+    apply (rngl_add_nonneg_nonneg Hos Hor). {
       apply (rngl_mul_nonneg_nonneg Hos Hor); [ easy | ].
       now apply (rngl_le_0_sub Hop Hor).
     }

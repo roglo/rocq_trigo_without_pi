@@ -449,7 +449,7 @@ destruct zs1. {
       apply (rngl_nle_gt Hor) in Hcc.
       apply Hcc; clear Hcc.
       rewrite rngl_cos_sub_comm.
-      apply (rngl_le_0_add Hos Hor). {
+      apply (rngl_add_nonneg_nonneg Hos Hor). {
         apply rngl_lt_le_incl in Hzs2, Hzs3, Hzc3.
         apply rngl_cos_sub_nonneg; [ easy | easy | easy | ].
         now apply (rngl_le_trans Hor _ (rngl_cos α3)).
@@ -534,7 +534,7 @@ destruct zs1. {
           now apply (rngl_le_sub_0 Hop Hor).
         }
         apply (rngl_mul_nonneg_nonneg Hos Hor); [ | easy ].
-        now apply (rngl_le_0_add Hos Hor).
+        now apply (rngl_add_nonneg_nonneg Hos Hor).
       }
       apply (rngl_leb_gt_iff Hto) in Hc21.
       apply (rngl_nlt_ge_iff Hto).

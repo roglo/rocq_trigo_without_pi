@@ -252,7 +252,7 @@ destruct (rngl_leb_dec (rngl_cos α1) 0) as [Hc1z| Hzc1]. {
     apply (rngl_nle_gt Hor) in Hzs3.
     exfalso.
     apply Hzs3; clear Hzs3; cbn.
-    apply (rngl_le_0_add Hos Hor). {
+    apply (rngl_add_nonneg_nonneg Hos Hor). {
       apply (rngl_mul_nonneg_nonneg Hos Hor); [ | easy ].
       now apply rngl_lt_le_incl.
     } {
@@ -503,7 +503,7 @@ destruct zs1. {
       apply (rngl_nle_gt Hor) in Hzs12.
       apply Hzs12; clear Hzs12; cbn.
       apply rngl_lt_le_incl in Hzs1, Hzs2.
-      apply (rngl_le_0_add Hos Hor).
+      apply (rngl_add_nonneg_nonneg Hos Hor).
       now apply (rngl_mul_nonneg_nonneg Hos Hor).
       now apply (rngl_mul_nonneg_nonneg Hos Hor).
     }

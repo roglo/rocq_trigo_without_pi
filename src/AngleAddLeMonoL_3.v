@@ -144,7 +144,7 @@ destruct zs2. 2: {
       cbn.
       rewrite rngl_add_assoc.
       rewrite rngl_add_mul_r_diag_l.
-      apply (rngl_le_0_add Hos Hor).
+      apply (rngl_add_nonneg_nonneg Hos Hor).
       apply (rngl_mul_nonneg_nonneg Hos Hor); [ easy | ].
       apply (rngl_le_opp_l Hop Hor).
       apply rngl_cos_bound.
@@ -479,7 +479,7 @@ split. {
     cbn.
     rewrite (rngl_mul_opp_r Hop).
     rewrite (rngl_sub_opp_r Hop).
-    apply (rngl_le_0_add Hos Hor).
+    apply (rngl_add_nonneg_nonneg Hos Hor).
     now apply (rngl_mul_nonneg_nonneg Hos Hor).
     apply (rngl_mul_nonneg_nonneg Hos Hor); [ easy | ].
     now apply rngl_lt_le_incl.

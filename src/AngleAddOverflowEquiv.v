@@ -36,7 +36,7 @@ destruct H12 as [H12| H12]. {
   apply (rngl_le_0_sub Hop Hor).
   rewrite <- (rngl_add_sub_assoc Hop).
   rewrite (rngl_sub_mul_r_diag_l Hop).
-  apply (rngl_le_0_add Hos Hor).
+  apply (rngl_add_nonneg_nonneg Hos Hor).
   now apply (rngl_mul_nonneg_nonneg Hos Hor).
   apply (rngl_mul_nonneg_nonneg Hos Hor); [ easy | ].
   apply (rngl_le_0_sub Hop Hor).
@@ -49,7 +49,7 @@ destruct (rngl_leb_dec 0 (rngl_cos α1)) as [Hzc1| Hc1z]. {
   apply (rngl_le_0_sub Hop Hor).
   rewrite <- (rngl_add_sub_assoc Hop).
   rewrite (rngl_sub_mul_r_diag_l Hop).
-  apply (rngl_le_0_add Hos Hor).
+  apply (rngl_add_nonneg_nonneg Hos Hor).
   now apply (rngl_mul_nonneg_nonneg Hos Hor).
   apply (rngl_mul_nonneg_nonneg Hos Hor); [ easy | ].
   apply (rngl_le_0_sub Hop Hor).
@@ -75,7 +75,7 @@ destruct (rngl_leb_dec 0 (rngl_cos α2)) as [Hzc2| Hc2z]. {
   apply (rngl_le_0_sub Hop Hor).
   rewrite <- (rngl_add_sub_assoc Hop).
   rewrite (rngl_sub_mul_r_diag_l Hop).
-  apply (rngl_le_0_add Hos Hor).
+  apply (rngl_add_nonneg_nonneg Hos Hor).
   now apply (rngl_mul_nonneg_nonneg Hos Hor).
   apply (rngl_mul_nonneg_nonneg Hos Hor); [ easy | ].
   apply (rngl_le_0_sub Hop Hor).
@@ -151,7 +151,7 @@ intros * Hzs1 Hzs2 Hzc1 Hzc2.
 apply rngl_cos_add_le_cos; try easy.
 now right; right; left.
 cbn.
-apply (rngl_le_0_add Hos Hor).
+apply (rngl_add_nonneg_nonneg Hos Hor).
 now apply (rngl_mul_nonneg_nonneg Hos Hor).
 now apply (rngl_mul_nonneg_nonneg Hos Hor).
 Qed.
@@ -169,7 +169,7 @@ intros * Hzs1 Hzs2 Hcs1 Hcs2.
 cbn.
 rewrite (rngl_mul_opp_r Hop).
 rewrite (rngl_sub_opp_r Hop).
-apply (rngl_le_0_add Hos Hor).
+apply (rngl_add_nonneg_nonneg Hos Hor).
 now apply (rngl_mul_nonneg_nonneg Hos Hor).
 now apply (rngl_mul_nonneg_nonneg Hos Hor).
 Qed.
@@ -714,7 +714,7 @@ destruct s1z. {
     progress sin_cos_add_sub_straight_hyp T Hc21.
     progress sin_cos_add_sub_straight_goal T.
     apply rngl_lt_le_incl in Hzc1, Hzc2.
-    apply (rngl_le_0_add Hos Hor); [ | easy ].
+    apply (rngl_add_nonneg_nonneg Hos Hor); [ | easy ].
     now apply rngl_cos_sub_nonneg.
   }
   apply rngl_leb_le in Hs1z.
