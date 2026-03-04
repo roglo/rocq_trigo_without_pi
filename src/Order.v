@@ -1003,7 +1003,6 @@ apply (angle_le_lt_trans _ α2); [ | easy ].
 now apply angle_lt_le_incl in H12.
 Qed.
 
-(* to be completed
 Theorem angle_add_is_not_small_lt_straight_ge_straight :
   ∀ α1 α2,
   angle_add_is_small α1 α2 = false
@@ -1022,8 +1021,12 @@ remember (0 ≤? rngl_sin α2)%L as zs2 eqn:Hzs2.
 symmetry in Hzs1, Hzs2.
 destruct zs1; [ | easy ].
 destruct zs2; [ | easy ].
-...
-*)
+apply Bool.negb_false_iff in H12.
+apply Bool.andb_true_iff in H12.
+destruct H12 as (H1, H2).
+apply angle_eqb_eq in H2; subst.
+apply rngl_leb_le, (rngl_le_refl Hor).
+Qed.
 
 Theorem angle_add_overflow_lt_straight_ge_straight :
   ∀ α1 α2,
