@@ -55,6 +55,137 @@ Context {ac : angle_ctx T}.
 
 Definition angle_add_overflow α1 α2 := ((α1 ≠? 0)%A && (- α1 ≤? α2)%A)%bool.
 
+Definition angle_add_is_small (α₁ α₂ : angle T) :=
+  match (0 ≤? rngl_sin α₁, 0 ≤? rngl_sin α₂)%L with
+  | (true, true) =>
+      negb ((α₁ =? π)%A && (α₂ =? π)%A)%bool
+  | (true, false) =>
+      (rngl_cos α₂ <? rngl_cos α₁)%L
+  | (false, true) =>
+      (rngl_cos α₁ <? rngl_cos α₂)%L
+  | (false, false) =>
+      false
+  end.
+
+(* to be completed
+Theorem angle_add_overflow_is_not_small :
+  rngl_characteristic T ≠ 1 →
+  ∀ α1 α2, angle_add_overflow α1 α2 = negb (angle_add_is_small α1 α2).
+Proof.
+destruct_ac.
+intros Hc1.
+progress unfold angle_add_overflow.
+progress unfold angle_add_is_small.
+progress unfold angle_eqb.
+progress unfold angle_leb.
+intros.
+cbn.
+rewrite (rngl_leb_0_opp Hop Hto).
+remember (rngl_cos α1 =? 1)%L as c11 eqn:Hc11.
+symmetry in Hc11.
+destruct c11. {
+  apply (rngl_eqb_eq Heo) in Hc11.
+  rewrite Hc11; cbn.
+  specialize (rngl_opp_1_neq_1 Hop Hc1 Hto) as H1.
+  apply (rngl_neqb_neq Heo) in H1.
+  apply Bool.negb_true_iff in H1.
+  rewrite (rngl_eqb_sym Heo) in H1.
+  rewrite H1; clear H1; cbn.
+  remember (rngl_sin α1 =? 0)%L as s1z eqn:Hs1z.
+  symmetry in Hs1z.
+  destruct s1z. {
+    apply (rngl_eqb_eq Heo) in Hs1z.
+    rewrite Hs1z; cbn.
+    rewrite (rngl_leb_refl Hor).
+    remember (0 ≤? rngl_sin α2)%L as zs2 eqn:Hzs2.
+    symmetry in Hzs2.
+    destruct zs2; [ easy | ].
+    apply (rngl_leb_gt_iff Hto) in Hzs2.
+    remember (rngl_cos α2 <? 1)%L as c21 eqn:Hc21.
+    symmetry in Hc21.
+    destruct c21; [ easy | exfalso ].
+    apply (rngl_ltb_ge_iff Hto) in Hc21.
+    specialize (rngl_cos_bound α2) as H1.
+    apply (rngl_le_antisymm Hor) in Hc21; [ | easy ].
+    apply eq_rngl_cos_1 in Hc21.
+    subst α2.
+    now apply rngl_lt_irrefl in Hzs2.
+  }
+  cbn.
+  apply (rngl_eqb_neq Heo) in Hs1z.
+  remember (rngl_sin α1 ≤? 0)%L as s1lz eqn:Hs1lz.
+  remember (0 ≤? rngl_sin α1)%L as zs1 eqn:Hzs1.
+  symmetry in Hs1lz, Hzs1.
+  destruct s1lz. {
+    destruct zs1. {
+      apply rngl_leb_le in Hs1lz, Hzs1.
+      exfalso; apply Hs1z.
+      now apply (rngl_le_antisymm Hor).
+    }
+    destruct (0 ≤? rngl_sin α2)%L; [ | easy ].
+    apply Bool.negb_sym.
+    apply (rngl_ltb_neg_leb Hto).
+  }
+  destruct zs1. {
+    destruct (0 ≤? rngl_sin α2)%L; [ easy | ].
+    apply Bool.negb_sym.
+    apply (rngl_ltb_neg_leb Hto).
+  }
+  apply (rngl_leb_gt_iff Hto) in Hs1lz, Hzs1.
+  now apply (rngl_lt_asymm Hor) in Hzs1.
+}
+cbn.
+remember (rngl_sin α1 ≤? 0)%L as s1z eqn:Hs1z.
+symmetry in Hs1z.
+destruct s1z. {
+  remember (0 ≤? rngl_sin α2)%L as zs2 eqn:Hzs2.
+  symmetry in Hzs2.
+  destruct zs2. {
+    remember (0 ≤? rngl_sin α1)%L as zs1 eqn:Hzs1.
+    symmetry in Hzs1.
+    destruct zs1. {
+      rewrite Bool.negb_involutive.
+      apply rngl_leb_le in Hs1z.
+      apply rngl_leb_le in Hzs2.
+      apply rngl_leb_le in Hzs1.
+      apply (rngl_le_antisymm Hor) in Hzs1; [ clear Hs1z | easy ].
+      rewrite Hzs1.
+      rewrite (rngl_eqb_refl Heo).
+      cbn.
+      apply (rngl_eqb_neq Heo) in Hc11.
+      remember (rngl_cos α1 =? -1)%L as c1o1 eqn:Hc1o1.
+      symmetry in Hc1o1.
+      apply eq_rngl_sin_0 in Hzs1.
+      destruct Hzs1; subst α1; [ easy | ].
+      clear Hc11.
+      cbn in Hc1o1.
+      rewrite (rngl_eqb_refl Heo) in Hc1o1.
+      subst c1o1; cbn.
+      remember (rngl_cos α2 ≤? -1)%L as c21 eqn:Hc21.
+      symmetry in Hc21.
+      destruct c21. {
+        apply rngl_leb_le in Hc21.
+        specialize (rngl_cos_bound α2) as H1.
+        apply (rngl_le_antisymm Hor) in Hc21; [ | easy ].
+        symmetry in Hc21.
+        apply eq_rngl_cos_opp_1 in Hc21; subst α2.
+        cbn.
+        now do 2 rewrite (rngl_eqb_refl Heo).
+      }
+      apply (rngl_leb_gt_iff Hto) in Hc21.
+      remember (rngl_cos α2 =? -1)%L as c2o1 eqn:Hc2o1.
+      symmetry in Hc2o1.
+      destruct c2o1; [ | easy ].
+      apply (rngl_eqb_eq Heo) in Hc2o1.
+      rewrite Hc2o1 in Hc21.
+      now apply rngl_lt_irrefl in Hc21.
+    }
+    apply Bool.negb_sym.
+    apply (rngl_ltb_neg_leb Hto).
+  }
+...
+*)
+
 Theorem angle_lt_le_incl :
   ∀ α1 α2, (α1 < α2 → α1 ≤ α2)%A.
 Proof.
