@@ -491,131 +491,38 @@ apply rngl_leb_le.
 apply rngl_cos_bound.
 Qed.
 
+Theorem angle_add_is_small_comm :
+  ∀ α1 α2, angle_add_is_small α1 α2 = angle_add_is_small α2 α1.
+Proof.
+intros.
+progress unfold angle_add_is_small.
+remember (0 ≤? rngl_sin α1)%L as zs1 eqn:Hzs1.
+remember (0 ≤? rngl_sin α2)%L as zs2 eqn:Hzs2.
+symmetry in Hzs1, Hzs2.
+destruct zs1; [ | easy ].
+destruct zs2; [ | easy ].
+progress f_equal.
+apply Bool.andb_comm.
+Qed.
+
 Theorem angle_add_overflow_comm :
   ∀ α1 α2,
   angle_add_overflow α1 α2 = angle_add_overflow α2 α1.
 Proof.
-destruct_ac.
+destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
+  specialize (rngl_characteristic_1_angle_0 Hc1) as H1.
+  intros.
+  now rewrite (H1 α1), (H1 α2).
+}
 intros.
-progress unfold angle_add_overflow.
-remember (α1 ≠? 0)%A as z1 eqn:Hz1.
-remember (α2 ≠? 0)%A as z2 eqn:Hz2.
-symmetry in Hz1, Hz2.
-destruct z1. 2: {
-  destruct z2; [ | easy ].
-  cbn; symmetry.
-  apply angle_neqb_neq in Hz2.
-  apply Bool.not_true_iff_false in Hz1.
-  apply Bool.not_true_iff_false.
-  intros H1; apply Hz1; clear Hz1.
-  apply angle_neqb_neq.
-  intros Hz1; apply Hz2; clear Hz2.
-  subst α1.
-  apply angle_nonpos in H1.
-  apply (f_equal angle_opp) in H1.
-  now rewrite angle_opp_involutive, angle_opp_0 in H1.
-}
-cbn.
-destruct z2. {
-  cbn.
-  apply angle_neqb_neq in Hz1, Hz2.
-  progress unfold angle_leb.
-  cbn.
-  do 2 rewrite (rngl_leb_0_opp Hop Hto).
-  remember (rngl_sin α1 ≤? 0)%L as s1z eqn:Hs1z.
-  remember (rngl_sin α2 ≤? 0)%L as s2z eqn:Hs2z.
-  remember (0 ≤? rngl_sin α1)%L as zs1 eqn:Hzs1.
-  remember (0 ≤? rngl_sin α2)%L as zs2 eqn:Hzs2.
-  symmetry in Hs1z, Hs2z, Hzs1, Hzs2.
-  destruct s1z. {
-    destruct zs1. {
-      apply rngl_leb_le in Hs1z, Hzs1.
-      apply (rngl_le_antisymm Hor) in Hzs1; [ clear Hs1z | easy ].
-      apply eq_rngl_sin_0 in Hzs1.
-      destruct Hzs1; subst α1; [ easy | ].
-      cbn.
-      destruct zs2. {
-        destruct s2z. {
-          apply rngl_leb_le in Hs2z, Hzs2.
-          apply (rngl_le_antisymm Hor) in Hzs2; [ clear Hs2z | easy ].
-          apply eq_rngl_sin_0 in Hzs2.
-          now destruct Hzs2; subst α2.
-        }
-        apply (rngl_leb_gt_iff Hto).
-        apply rngl_le_neq.
-        split; [ apply rngl_cos_bound | ].
-        intros H; symmetry in H.
-        apply eq_rngl_cos_opp_1 in H.
-        subst α2.
-        cbn in Hs2z.
-        now rewrite (rngl_leb_refl Hor) in Hs2z.
-      }
-      symmetry.
-      destruct s2z. {
-        apply rngl_leb_le.
-        apply rngl_cos_bound.
-      }
-      exfalso.
-      apply (rngl_leb_gt_iff Hto) in Hs2z, Hzs2.
-      now apply (rngl_lt_asymm Hor) in Hs2z.
-    }
-    destruct zs2. {
-      destruct s2z; [ | easy ].
-      apply rngl_leb_le in Hs2z, Hzs2.
-      apply (rngl_le_antisymm Hor) in Hzs2; [ clear Hs2z | easy ].
-      apply eq_rngl_sin_0 in Hzs2.
-      destruct Hzs2; subst α2; [ easy | cbn ].
-      apply rngl_leb_le.
-      apply rngl_cos_bound.
-    }
-    symmetry.
-    destruct s2z; [ easy | ].
-    apply (rngl_leb_gt_iff Hto) in Hs2z, Hzs2.
-    now apply (rngl_lt_asymm Hor) in Hs2z.
-  }
-  destruct zs1. {
-    destruct zs2. {
-      symmetry.
-      destruct s2z; [ | easy ].
-      apply rngl_leb_le in Hs2z, Hzs2.
-      apply (rngl_le_antisymm Hor) in Hzs2; [ clear Hs2z | easy ].
-      apply eq_rngl_sin_0 in Hzs2.
-      destruct Hzs2; subst α2; [ easy | cbn ].
-      apply (rngl_leb_gt_iff Hto).
-      apply rngl_le_neq.
-      split; [ apply rngl_cos_bound | ].
-      intros H; symmetry in H.
-      apply eq_rngl_cos_opp_1 in H; subst α1.
-      cbn in Hs1z.
-      now rewrite rngl_leb_refl in Hs1z.
-    }
-    destruct s2z; [ easy | ].
-    apply (rngl_leb_gt_iff Hto) in Hs2z, Hzs2.
-    now apply (rngl_lt_asymm Hor) in Hs2z.
-  }
-  apply (rngl_leb_gt_iff Hto) in Hs1z, Hzs1.
-  now apply (rngl_lt_asymm Hor) in Hs1z.
-}
-apply Bool.negb_false_iff in Hz2.
-apply angle_eqb_eq in Hz2.
-subst α2; cbn.
-(* lemma *)
-progress unfold angle_leb.
-cbn.
-rewrite (rngl_leb_refl Hor).
-rewrite (rngl_leb_0_opp Hop Hto).
-destruct (rngl_sin α1 ≤? 0)%L; [ | easy ].
-apply (rngl_leb_gt_iff Hto).
-apply rngl_le_neq.
-split; [ apply rngl_cos_bound | ].
-intros H.
-apply eq_rngl_cos_1 in H.
-now apply angle_neqb_neq in Hz1.
+do 2 rewrite (angle_add_overflow_is_not_small Hc1).
+progress f_equal.
+apply angle_add_is_small_comm.
 Qed.
 
 (* pas terrible, putain. La version angle_add_overflow_0_l
    est beaucoup plus simple *)
-Theorem angle_add_small_0_l :
+Theorem angle_add_is_small_0_l :
   rngl_characteristic T ≠ 1 →
   ∀ α, angle_add_is_small 0 α = true.
 Proof.
@@ -625,13 +532,13 @@ rewrite (rngl_leb_refl Hor); cbn.
 remember (0 ≤? rngl_sin α)%L as zs eqn:Hzs.
 symmetry in Hzs.
 destruct zs. {
-  remember (0 =? π)%A as zp eqn:Hzp.
-  symmetry in Hzp.
-  destruct zp; [ exfalso | easy ].
-  apply angle_eqb_eq in Hzp.
-  apply eq_angle_eq in Hzp.
-  injection Hzp; intros H1.
-  symmetry in H1.
+  apply Bool.negb_true_iff.
+  apply Bool.andb_false_iff; left.
+  apply Bool.not_true_iff_false.
+  intros H1.
+  apply angle_eqb_eq in H1; symmetry in H1.
+  apply eq_angle_eq in H1.
+  injection H1; clear H1; intros H1.
   now apply (rngl_opp_1_neq_1 Hop Hc1 Hto) in H1.
 }
 apply (rngl_ltb_lt Heo).
@@ -641,6 +548,15 @@ intros H1.
 apply eq_rngl_cos_1 in H1; subst.
 cbn in Hzs.
 now rewrite (rngl_leb_refl Hor) in Hzs.
+Qed.
+
+Theorem angle_add_is_small_0_r :
+  rngl_characteristic T ≠ 1 →
+  ∀ α, angle_add_is_small α 0 = true.
+Proof.
+intros Hc1 *.
+rewrite angle_add_is_small_comm.
+apply (angle_add_is_small_0_l Hc1).
 Qed.
 
 Theorem angle_add_overflow_0_l : ∀ α, angle_add_overflow 0 α = false.
@@ -1086,6 +1002,28 @@ intros * H12 H23.
 apply (angle_le_lt_trans _ α2); [ | easy ].
 now apply angle_lt_le_incl in H12.
 Qed.
+
+(* to be completed
+Theorem angle_add_is_not_small_lt_straight_ge_straight :
+  ∀ α1 α2,
+  angle_add_is_small α1 α2 = false
+  → (α1 < π)%A
+  → (π ≤ α2)%A.
+Proof.
+destruct_ac.
+intros * H12 H1p.
+progress unfold angle_add_is_small in H12.
+progress unfold angle_ltb in H1p; cbn in H1p.
+progress unfold angle_leb; cbn.
+rewrite (rngl_leb_refl Hor) in H1p.
+rewrite (rngl_leb_refl Hor).
+remember (0 ≤? rngl_sin α1)%L as zs1 eqn:Hzs1.
+remember (0 ≤? rngl_sin α2)%L as zs2 eqn:Hzs2.
+symmetry in Hzs1, Hzs2.
+destruct zs1; [ | easy ].
+destruct zs2; [ | easy ].
+...
+*)
 
 Theorem angle_add_overflow_lt_straight_ge_straight :
   ∀ α1 α2,
