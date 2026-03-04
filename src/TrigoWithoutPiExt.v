@@ -36,6 +36,34 @@ apply rngl_lt_le_incl in Hs1z.
 now apply rngl_sin_add_nonneg.
 Qed.
 
+Theorem rngl_sin_add_nonneg_angle_add_is_small :
+  ∀ α1 α2,
+  (0 ≤ rngl_sin α1)%L
+  → (0 < rngl_sin α2)%L
+  → (0 ≤ rngl_sin (α1 + α2))%L
+  → angle_add_is_small α1 α2 = true.
+Proof.
+destruct_ac.
+intros * Hzs1 Hzs2 Hzs3.
+progress unfold angle_add_is_small.
+generalize Hzs1; intros H.
+apply rngl_leb_le in H.
+rewrite H; clear H.
+generalize Hzs2; intros H.
+apply rngl_lt_le_incl in H.
+apply rngl_leb_le in H.
+rewrite H; clear H.
+apply Bool.negb_true_iff.
+apply Bool.andb_false_iff.
+destruct (angle_eq_dec α1 π) as [H1p| H1p]. {
+  subst; exfalso.
+  rewrite rngl_sin_add_straight_l in Hzs3.
+  apply (rngl_opp_nonneg_nonpos Hop Hor) in Hzs3.
+  now apply (rngl_nlt_ge Hor) in Hzs3.
+}
+now left; apply angle_eqb_neq.
+Qed.
+
 Theorem rngl_sin_add_nonneg_angle_add_not_overflow :
   ∀ α1 α2,
   (0 ≤ rngl_sin α1)%L
@@ -73,6 +101,17 @@ apply (rngl_opp_nonpos_nonneg Hop Hor).
 apply rngl_sin_sub_nonneg; [ easy | easy | ].
 now apply rngl_lt_le_incl.
 Qed.
+
+(* to be completed
+Theorem rngl_sin_add_nonneg_angle_add_is_small_sin_nonneg :
+  ∀ α1 α2,
+  (0 ≤ rngl_sin α1)%L
+  → (0 ≤ rngl_sin (α1 + α2))%L
+  → angle_add_is_small α1 α2 = true
+  → (0 ≤ rngl_sin α2)%L.
+Proof.
+...
+*)
 
 Theorem rngl_sin_add_nonneg_angle_add_not_overflow_sin_nonneg :
   ∀ α1 α2,
