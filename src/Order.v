@@ -55,6 +55,7 @@ Context {ac : angle_ctx T}.
 
 Definition angle_add_overflow α1 α2 := ((α1 ≠? 0)%A && (- α1 ≤? α2)%A)%bool.
 
+(* experiment: another vision (negative one) of angle_add_overflow *)
 Definition angle_add_is_small (α₁ α₂ : angle T) :=
   match (0 ≤? rngl_sin α₁, 0 ≤? rngl_sin α₂)%L with
   | (true, true) =>
@@ -490,34 +491,6 @@ apply rngl_leb_le.
 apply rngl_cos_bound.
 Qed.
 
-Theorem angle_add_overflow_0_l : ∀ α, angle_add_overflow 0 α = false.
-Proof.
-intros.
-progress unfold angle_add_overflow.
-apply Bool.andb_false_iff; left.
-apply Bool.negb_false_iff.
-now apply angle_eqb_eq.
-Qed.
-
-Theorem angle_add_overflow_0_r : ∀ α, angle_add_overflow α 0 = false.
-Proof.
-intros.
-progress unfold angle_add_overflow.
-apply Bool.andb_false_iff.
-destruct (angle_eq_dec α 0) as [Htz| Htz]. {
-  subst α; left.
-  apply Bool.negb_false_iff.
-  now apply angle_eqb_eq.
-}
-right.
-apply angle_leb_gt.
-apply angle_lt_iff.
-split; [ apply angle_nonneg | ].
-intros H; apply Htz; clear Htz.
-apply (f_equal angle_opp) in H.
-now rewrite angle_opp_0, angle_opp_involutive in H.
-Qed.
-
 Theorem angle_add_overflow_comm :
   ∀ α1 α2,
   angle_add_overflow α1 α2 = angle_add_overflow α2 α1.
@@ -638,6 +611,52 @@ split; [ apply rngl_cos_bound | ].
 intros H.
 apply eq_rngl_cos_1 in H.
 now apply angle_neqb_neq in Hz1.
+Qed.
+
+(* pas terrible, putain. La version angle_add_overflow_0_l
+   est beaucoup plus simple *)
+Theorem angle_add_small_0_l :
+  rngl_characteristic T ≠ 1 →
+  ∀ α, angle_add_is_small 0 α = true.
+Proof.
+destruct_ac.
+intros Hc1 *; cbn.
+rewrite (rngl_leb_refl Hor); cbn.
+remember (0 ≤? rngl_sin α)%L as zs eqn:Hzs.
+symmetry in Hzs.
+destruct zs. {
+  remember (0 =? π)%A as zp eqn:Hzp.
+  symmetry in Hzp.
+  destruct zp; [ exfalso | easy ].
+  apply angle_eqb_eq in Hzp.
+  apply eq_angle_eq in Hzp.
+  injection Hzp; intros H1.
+  symmetry in H1.
+  now apply (rngl_opp_1_neq_1 Hop Hc1 Hto) in H1.
+}
+apply (rngl_ltb_lt Heo).
+apply rngl_le_neq.
+split; [ apply rngl_cos_bound | ].
+intros H1.
+apply eq_rngl_cos_1 in H1; subst.
+cbn in Hzs.
+now rewrite (rngl_leb_refl Hor) in Hzs.
+Qed.
+
+Theorem angle_add_overflow_0_l : ∀ α, angle_add_overflow 0 α = false.
+Proof.
+intros.
+progress unfold angle_add_overflow.
+apply Bool.andb_false_iff; left.
+apply Bool.negb_false_iff.
+now apply angle_eqb_eq.
+Qed.
+
+Theorem angle_add_overflow_0_r : ∀ α, angle_add_overflow α 0 = false.
+Proof.
+intros.
+rewrite angle_add_overflow_comm.
+apply angle_add_overflow_0_l.
 Qed.
 
 (* *)
