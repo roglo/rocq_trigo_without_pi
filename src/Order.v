@@ -67,7 +67,6 @@ Definition angle_add_is_small (α₁ α₂ : angle T) :=
       false
   end.
 
-(* to be completed
 Theorem angle_add_overflow_is_not_small :
   rngl_characteristic T ≠ 1 →
   ∀ α1 α2, angle_add_overflow α1 α2 = negb (angle_add_is_small α1 α2).
@@ -183,8 +182,36 @@ destruct s1z. {
     apply Bool.negb_sym.
     apply (rngl_ltb_neg_leb Hto).
   }
-...
-*)
+  apply (rngl_eqb_neq Heo) in Hc11.
+  apply rngl_leb_le in Hs1z.
+  apply (rngl_leb_gt_iff Hto) in Hzs2.
+  remember (0 ≤? rngl_sin α1)%L as zs1 eqn:Hzs1.
+  symmetry in Hzs1.
+  destruct zs1; [ | easy ].
+  apply rngl_leb_le in Hzs1.
+  apply (rngl_le_antisymm Hor) in Hzs1; [ clear Hs1z | easy ].
+  apply eq_rngl_sin_0 in Hzs1.
+  destruct Hzs1; subst α1; [ easy | cbn ].
+  symmetry.
+  apply Bool.negb_true_iff.
+  apply (rngl_ltb_ge Hor), rngl_cos_bound.
+}
+apply (rngl_leb_gt_iff Hto) in Hs1z.
+generalize Hs1z; intros H; apply rngl_lt_le_incl in H.
+apply rngl_leb_le in H.
+rewrite H; clear H.
+remember (0 ≤? rngl_sin α2)%L as zs2 eqn:Hzs2.
+symmetry in Hzs2.
+destruct zs2; [ | apply Bool.negb_sym, (rngl_ltb_neg_leb Hto) ].
+rewrite Bool.negb_involutive.
+apply -> rngl_le_neq in Hs1z.
+destruct Hs1z as (_, H1).
+apply not_eq_sym in H1.
+apply (rngl_neqb_neq Heo) in H1.
+apply Bool.negb_true_iff in H1.
+rewrite H1.
+now rewrite Bool.andb_false_r.
+Qed.
 
 Theorem angle_lt_le_incl :
   ∀ α1 α2, (α1 < α2 → α1 ≤ α2)%A.
