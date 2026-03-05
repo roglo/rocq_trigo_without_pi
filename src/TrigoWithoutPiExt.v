@@ -46,6 +46,8 @@ Proof.
 destruct_ac.
 intros * Hzs1 Hzs2 Hzs3.
 progress unfold angle_add_is_small.
+apply Bool.orb_true_iff.
+right.
 generalize Hzs1; intros H.
 apply rngl_leb_le in H.
 rewrite H; clear H.
@@ -134,6 +136,13 @@ Proof.
 destruct_ac.
 intros * Hzs1 Hzs3 Has.
 progress unfold angle_add_is_small in Has.
+apply Bool.orb_true_iff in Has.
+destruct Has as [Hc1| Has]. {
+  apply Nat.eqb_eq in Hc1.
+  specialize (rngl_characteristic_1 Hos Hc1) as H1.
+  rewrite (H1 (rngl_sin _)).
+  apply (rngl_le_refl Hor).
+}
 generalize Hzs1; intros H.
 apply rngl_leb_le in H.
 rewrite H in Has; clear H.
@@ -176,6 +185,28 @@ now apply rngl_sin_sub_nonneg.
 Qed.
 
 Theorem rngl_sin_nonneg_add_nonneg :
+  ∀ α1 α2,
+  (0 ≤ rngl_sin α1)%L
+  → (0 ≤ rngl_sin (α1 + α2))%L
+  → if angle_add_is_small α1 α2 then (0 ≤ rngl_sin α2)%L
+    else (rngl_sin α2 ≤ 0)%L.
+Proof.
+destruct_ac.
+intros * Hzs1 Hzs3.
+remember (angle_add_is_small α1 α2) as aov eqn:Haov.
+symmetry in Haov.
+destruct aov. {
+  now apply (rngl_sin_add_nonneg_angle_add_is_small_sin_nonneg α1).
+} {
+  apply (rngl_nlt_ge_iff Hto).
+  intros Hzs2.
+  apply Bool.not_false_iff_true in Haov.
+  apply Haov; clear Haov.
+  now apply rngl_sin_add_nonneg_angle_add_is_small.
+}
+Qed.
+
+Theorem rngl_sin_nonneg_add_nonneg_from_add_overflow :
   ∀ α1 α2,
   (0 ≤ rngl_sin α1)%L
   → (0 ≤ rngl_sin (α1 + α2))%L

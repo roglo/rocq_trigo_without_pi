@@ -97,7 +97,8 @@ destruct zs3. {
     apply (rngl_nle_gt Hor) in Hzs2.
     apply Hzs2; clear Hzs2.
     subst α3.
-    specialize (rngl_sin_nonneg_add_nonneg α1 α2 Hzs1 Hzs3) as H1.
+    specialize rngl_sin_nonneg_add_nonneg_from_add_overflow as H1.
+    specialize (H1 α1 α2 Hzs1 Hzs3).
     now rewrite Haov_v in H1.
   } {
     apply (rngl_leb_gt_iff Hto) in Hzs1.
@@ -358,7 +359,8 @@ destruct zs1. {
     apply (rngl_nle_gt Hor) in Hzs2.
     apply Hzs2; clear Hzs2.
     apply rngl_leb_le in Hzs12.
-    specialize (rngl_sin_nonneg_add_nonneg α1 α2 Hzs1 Hzs12) as H1.
+    specialize rngl_sin_nonneg_add_nonneg_from_add_overflow as H1.
+    specialize (H1 α1 α2 Hzs1 Hzs12).
     now rewrite Haov_v in H1.
   }
   clear Haov.
