@@ -102,7 +102,28 @@ apply rngl_sin_sub_nonneg; [ easy | easy | ].
 now apply rngl_lt_le_incl.
 Qed.
 
-(* to be completed
+Theorem rngl_sin_nonneg_sin_add_nonneg_cos_lt :
+  ∀ α1 α2,
+  (0 ≤ rngl_sin α1)%L
+  → (0 ≤ rngl_sin (α1 + α2))%L
+  → (rngl_cos α2 < rngl_cos α1)%L
+  → (0 ≤ rngl_sin α2)%L.
+Proof.
+destruct_ac.
+intros * Hzs1 Hzs3 Has.
+remember (α1 + α2)%A as α3 eqn:Hα3.
+move Hα3 before α2.
+symmetry in Hα3.
+apply angle_add_move_l in Hα3.
+subst α2; rename α3 into α2.
+apply rngl_sin_sub_nonneg; [ easy | easy | ].
+apply (rngl_nlt_ge_iff Hto).
+apply (rngl_nle_gt Hor) in Has.
+intros Hcc; apply Has; clear Has.
+apply rngl_cos_le_cos_sub; [ easy | easy | ].
+now apply rngl_lt_le_incl in Hcc.
+Qed.
+
 Theorem rngl_sin_add_nonneg_angle_add_is_small_sin_nonneg :
   ∀ α1 α2,
   (0 ≤ rngl_sin α1)%L
@@ -116,76 +137,12 @@ progress unfold angle_add_is_small in Has.
 generalize Hzs1; intros H.
 apply rngl_leb_le in H.
 rewrite H in Has; clear H.
-(**)
 remember (0 ≤? rngl_sin α2)%L as zs2 eqn:Hzs2.
 symmetry in Hzs2.
-(*
-destruct zs2; [ now apply rngl_leb_le | exfalso ].
-apply (rngl_ltb_lt Heo) in Has.
-apply (rngl_leb_gt_iff Hto) in Hzs2.
-...
-cbn in Hzs3.
-apply (rngl_nle_gt Hor) in Has.
-apply Has; clear Has.
-rewrite rngl_add_comm in Hzs3.
-apply (rngl_le_opp_l Hop Hor) in Hzs3.
-rewrite <- (rngl_mul_opp_r Hop) in Hzs3.
-apply (rngl_mul_le_mono_pos_r Hop Hiq Hto _ _ (- rngl_sin α2)); cycle 1.
-eapply (rngl_le_trans Hor); [ apply Hzs3 | ].
-Search (_ * _ ≤ _ * _)%L.
-apply rngl_mul_le_nonpos
-rngl_mul_le_mono_pos_l:
-  ∀ {T : Type} {ro : ring_like_op T},
-    ring_like_prop T
-    → rngl_has_opp T = true
-      → rngl_has_inv_or_pdiv T = true
-        → rngl_is_totally_ordered T = true → ∀ a b c : T, (0 < a)%L → (b ≤ c)%L ↔ (a * b ≤ a * c)%L
-...
-*)
 destruct zs2; [ now apply rngl_leb_le | clear Hzs2 ].
 apply (rngl_ltb_lt Heo) in Has.
-(* marrant, c'est le théorème (qu'on essaie de prouver) mais en
-   remplaçant :
-     Has : angle_add_is_small α1 α2 = true
-   par :
-     Has : (rngl_cos α2 < rngl_cos α1)%L
-*)
-...
-Search (rngl_cos _ < rngl_cos _)%L.
-apply rngl_cos_cos_sin_sin_nonneg_sin_lt_cos_lt_iff in Has; try easy.
-...
-(* sorte de réciproque de :
-rngl_sin_add_nonneg_angle_add_is_small:
-  ∀ α1 α2 : angle T,
-    (0 ≤ rngl_sin α1)%L
-    → (0 < rngl_sin α2)%L → (0 ≤ rngl_sin (α1 + α2))%L → angle_add_is_small α1 α2 = true
-à réécrire sous cette forme, si prouvé *)
-...
-remember (α1 + α2)%A as α3 eqn:Hα3.
-move Hα3 before α2.
-symmetry in Hα3.
-apply angle_add_move_l in Hα3.
-subst α2.
-Search (rngl_cos _ < rngl_cos _)%L.
-apply rngl_cos_cos_sin_sin_nonneg_sin_lt_cos_lt_iff in Has; try easy.
-...
-apply rngl_sin_sub_nonneg; [ easy | easy | ].
-Search (rngl_cos (_ - _) < rngl_cos _)%L.
-...
-  Hα3 : α3 = (α1 + α2)%A
-  Hzs1 : (0 ≤ rngl_sin α1)%L
-  Hzs3 : (0 ≤ rngl_sin α3)%L
-  Has : (rngl_cos α2 < rngl_cos α1)%L
-  ============================
-  (0 ≤ rngl_sin α2)%L
-...
-destruct (rngl_leb_dec 0 (rngl_sin α2)) as [Hzs2| Hzs2].
-now apply rngl_leb_le.
-exfalso.
-rewrite Hzs2 in Has.
-apply (rngl_leb_gt_iff Hto) in Hzs2.
-...
-*)
+now apply (rngl_sin_nonneg_sin_add_nonneg_cos_lt α1).
+Qed.
 
 Theorem rngl_sin_add_nonneg_angle_add_not_overflow_sin_nonneg :
   ∀ α1 α2,
