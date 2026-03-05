@@ -688,6 +688,16 @@ now apply rngl_lt_le_incl.
 now apply rngl_lt_le_incl.
 Qed.
 
+(* to be completed
+Theorem angle_add_is_small_le :
+  ∀ α1 α2 α3,
+  (α3 ≤ α2)%A
+  → angle_add_is_small α1 α2 = true
+  → angle_add_is_small α1 α3 = true.
+Proof.
+...
+*)
+
 Theorem angle_add_overflow_le :
   ∀ α1 α2 α3,
   (α3 ≤ α2)%A
