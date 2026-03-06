@@ -868,6 +868,7 @@ Theorem angle_add_is_small_move_add :
   → angle_add_is_small (α1 + α3) α2 = true
   → angle_add_is_small α1 (α2 + α3) = true.
 Proof.
+destruct_ac.
 progress unfold angle_add_is_small.
 intros * H13 H132.
 apply Bool.orb_true_iff in H13, H132.
@@ -888,6 +889,26 @@ destruct zs1. {
       apply Bool.negb_true_iff.
       apply Bool.andb_false_iff.
       destruct H13 as [H13| H13]; [ now left | ].
+      apply angle_eqb_neq in H13.
+      destruct zs13. {
+        apply rngl_leb_le in Hzs3, Hzs13.
+        destruct (angle_eq_dec α1 π) as [H1p| H1p]; cycle 1. {
+          now left; apply angle_eqb_neq.
+        }
+        right; subst α1.
+        rewrite rngl_sin_add_straight_l in Hzs13.
+        apply (rngl_opp_nonneg_nonpos Hop Hor) in Hzs13.
+        apply (rngl_le_antisymm Hor) in Hzs3; [ | easy ].
+        apply eq_rngl_sin_0 in Hzs3.
+        destruct Hzs3; [ subst | easy ].
+        rewrite angle_add_0_r in H132 |-*.
+        apply Bool.not_true_iff_false.
+        intros H1.
+        apply angle_eqb_eq in H1; subst α2.
+        cbn in H132.
+        rewrite (rngl_leb_refl Hor) in H132.
+        now rewrite angle_eqb_refl in H132.
+      }
 ...
 *)
 
