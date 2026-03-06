@@ -888,19 +888,21 @@ destruct zs1. {
     destruct zs23. {
       apply Bool.negb_true_iff.
       apply Bool.andb_false_iff.
-      destruct H13 as [H13| H13]; [ now left | ].
+      destruct (angle_eq_dec α1 π) as [H1p| H1p]; cycle 1. {
+        now left; apply angle_eqb_neq.
+      }
+      subst α1.
+      clear Hzs1.
+      destruct H13 as [H13| H13]; [ now left | right ].
+      rewrite rngl_sin_add_straight_l in Hzs13.
+      rewrite (rngl_leb_0_opp Hop Hto) in Hzs13.
       apply angle_eqb_neq in H13.
       destruct zs13. {
         apply rngl_leb_le in Hzs3, Hzs13.
-        destruct (angle_eq_dec α1 π) as [H1p| H1p]; cycle 1. {
-          now left; apply angle_eqb_neq.
-        }
-        right; subst α1.
-        rewrite rngl_sin_add_straight_l in Hzs13.
-        apply (rngl_opp_nonneg_nonpos Hop Hor) in Hzs13.
         apply (rngl_le_antisymm Hor) in Hzs3; [ | easy ].
         apply eq_rngl_sin_0 in Hzs3.
         destruct Hzs3; [ subst | easy ].
+        clear H13 Hzs13.
         rewrite angle_add_0_r in H132 |-*.
         apply Bool.not_true_iff_false.
         intros H1.
@@ -909,6 +911,20 @@ destruct zs1. {
         rewrite (rngl_leb_refl Hor) in H132.
         now rewrite angle_eqb_refl in H132.
       }
+      destruct zs2; [ | easy ].
+      apply (rngl_leb_gt_iff Hto) in Hzs13.
+      rewrite rngl_cos_add_straight_l in H132.
+      apply (rngl_ltb_lt Heo) in H132.
+      apply (rngl_lt_opp_l Hop Hor) in H132.
+      apply angle_eqb_neq.
+      intros H1.
+      apply angle_add_move_r in H1; subst α2.
+      rewrite rngl_cos_sub_straight_l in H132.
+      rewrite (rngl_add_opp_r Hop) in H132.
+      rewrite (rngl_sub_diag Hos) in H132.
+      now apply rngl_lt_irrefl in H132.
+    }
+    destruct zs13. {
 ...
 *)
 
