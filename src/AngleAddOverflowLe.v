@@ -695,6 +695,49 @@ Theorem angle_add_is_small_le :
   → angle_add_is_small α1 α2 = true
   → angle_add_is_small α1 α3 = true.
 Proof.
+destruct_ac.
+intros * H32 H12.
+apply Bool.orb_true_iff in H12.
+apply Bool.orb_true_iff.
+destruct H12 as [H12| H12]; [ now left | ].
+remember (0 ≤? rngl_sin α1)%L as zs1 eqn:Hzs1.
+remember (0 ≤? rngl_sin α2)%L as zs2 eqn:Hzs2.
+remember (0 ≤? rngl_sin α3)%L as zs3 eqn:Hzs3.
+symmetry in Hzs1, Hzs2, Hzs3.
+destruct zs1. {
+  right.
+  destruct zs2. {
+    apply Bool.negb_true_iff in H12.
+    apply Bool.andb_false_iff in H12.
+    destruct zs3. {
+      apply Bool.negb_true_iff.
+      apply Bool.andb_false_iff.
+      destruct H12 as [H12| H12]; apply angle_eqb_neq in H12. {
+        now left; apply angle_eqb_neq in H12.
+      } {
+        right; apply angle_eqb_neq.
+        intros H1; apply H12; clear H12; subst.
+        apply rngl_leb_le in Hzs2.
+        apply rngl_sin_nonneg_angle_le_straight in Hzs2.
+        now apply angle_le_antisymm.
+      }
+    }
+    apply (rngl_ltb_lt Heo).
+    apply rngl_leb_le in Hzs2.
+    apply (rngl_leb_gt_iff Hto) in Hzs3.
+    apply (rngl_nle_gt Hor) in Hzs3.
+    apply (rngl_nle_gt_iff Hto).
+    now apply angle_le_rngl_sin_nonneg_sin_nonneg in H32.
+  }
+  destruct zs3. {
+    apply Bool.negb_true_iff.
+    apply Bool.andb_false_iff.
+    left.
+    apply (rngl_ltb_lt Heo) in H12.
+    apply angle_eqb_neq; intros H; subst.
+    apply (rngl_nle_gt Hor) in H12.
+    apply H12, rngl_cos_bound.
+  }
 ...
 *)
 
