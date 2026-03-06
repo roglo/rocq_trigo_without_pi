@@ -861,6 +861,36 @@ induction n; [ easy | cbn ].
 now rewrite IHn, angle_mul_0_r, angle_add_overflow_0_r.
 Qed.
 
+(* to be completed
+Theorem angle_add_is_small_move_add :
+  ∀ α1 α2 α3,
+  angle_add_is_small α1 α3 = true
+  → angle_add_is_small (α1 + α3) α2 = true
+  → angle_add_is_small α1 (α2 + α3) = true.
+Proof.
+progress unfold angle_add_is_small.
+intros * H13 H132.
+apply Bool.orb_true_iff in H13, H132.
+apply Bool.orb_true_iff.
+destruct H13 as [H13| H13]; [ now left | ].
+destruct H132 as [H132| H132]; [ now left | right ].
+remember (0 ≤? rngl_sin α1)%L as zs1 eqn:Hzs1.
+remember (0 ≤? rngl_sin α2)%L as zs2 eqn:Hzs2.
+remember (0 ≤? rngl_sin α3)%L as zs3 eqn:Hzs3.
+remember (0 ≤? rngl_sin (α1 + α3))%L as zs13 eqn:Hzs13.
+remember (0 ≤? rngl_sin (α2 + α3))%L as zs23 eqn:Hzs23.
+symmetry in Hzs1, Hzs2, Hzs3, Hzs13, Hzs23.
+destruct zs1. {
+  destruct zs3. {
+    apply Bool.negb_true_iff in H13.
+    apply Bool.andb_false_iff in H13.
+    destruct zs23. {
+      apply Bool.negb_true_iff.
+      apply Bool.andb_false_iff.
+      destruct H13 as [H13| H13]; [ now left | ].
+...
+*)
+
 Theorem angle_add_not_overflow_move_add :
   ∀ α1 α2 α3,
   angle_add_overflow α1 α3 = false
