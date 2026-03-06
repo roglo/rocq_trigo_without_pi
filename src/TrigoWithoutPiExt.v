@@ -713,11 +713,29 @@ Context {rp : ring_like_prop T}.
 Context {rl : real_like_prop T}.
 Context {ac : angle_ctx T}.
 
+Fixpoint angle_mul_nat_div_2π' n α :=
+  match n with
+  | 0 => 0
+  | S m =>
+      angle_mul_nat_div_2π' m α + Nat.b2n (negb (angle_add_is_small α (m * α)))
+  end.
+
 Fixpoint angle_mul_nat_div_2π n α :=
   match n with
   | 0 => 0
   | S m => angle_mul_nat_div_2π m α + Nat.b2n (angle_add_overflow α (m * α))
   end.
+
+Theorem angle_mul_nat_div_2π'_succ_l_true :
+  ∀ α n,
+  angle_mul_nat_div_2π' (S n) α = 0
+  ↔ angle_mul_nat_div_2π' n α = 0 ∧
+    angle_add_is_small α (n * α) = true.
+Proof.
+intros; cbn.
+destruct (angle_mul_nat_div_2π' _ _); [ | easy ].
+now destruct (angle_add_is_small _ _).
+Qed.
 
 Theorem angle_mul_nat_div_2π_succ_l_false :
   ∀ α n,
@@ -922,14 +940,6 @@ destruct (angle_add_overflow _ _). {
 }
 now split; [ intros; left | ].
 Qed.
-
-(*
-Theorem angle_mul_nat_div_2π_succ_l :
-  ∀ α n,
-  angle_mul_nat_div_2π (S n) α =
-  angle_mul_nat_div_2π n α + Nat.b2n (angle_add_overflow α (n * α)).
-Proof. easy. Qed.
-*)
 
 Fixpoint rngl_cos_div_pow_2 α n :=
   match n with
