@@ -936,6 +936,16 @@ destruct zs1. {
       destruct zs2. {
         apply Bool.negb_true_iff in H132.
         apply Bool.andb_false_iff in H132.
+        apply (rngl_leb_gt_iff Hto) in Hzs23.
+        apply (rngl_nle_gt Hor) in Hzs23.
+        apply (rngl_nle_gt_iff Hto).
+        intros H123; apply Hzs23; clear Hzs23.
+apply rngl_leb_le in Hzs2, Hzs3.
+apply rngl_sin_add_nonneg; try easy.
+(* je pourrais aussi transformer le théorème avec des angle_add_overflow
+   et utiliser le théorème ci-dessous mais bon, mon idée de base, c'est
+   quand même essayer de supprimer complètement angle_add_overflow et là,
+   ça n'irait pas dans ce sens *)
 ...
 Search (rngl_cos (_ + _) ≤ rngl_cos _)%L.
 ...
