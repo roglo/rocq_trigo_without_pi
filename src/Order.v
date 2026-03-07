@@ -57,20 +57,21 @@ Definition angle_add_overflow α1 α2 := ((α1 ≠? 0)%A && (- α1 ≤? α2)%A)%
 
 (* experiment: another vision (negative one) of angle_add_overflow *)
 Definition angle_add_is_small (α₁ α₂ : angle T) :=
-  ((rngl_characteristic T =? 1)%nat ||
-   match (0 ≤? rngl_sin α₁, 0 ≤? rngl_sin α₂)%L with
-   | (true, true) =>
-       negb ((α₁ =? π)%A && (α₂ =? π)%A)%bool
-   | (true, false) =>
-       (rngl_cos α₂ <? rngl_cos α₁)%L
-   | (false, true) =>
-       (rngl_cos α₁ <? rngl_cos α₂)%L
-   | (false, false) =>
-       false
-   end)%bool.
+  match (0 ≤? rngl_sin α₁, 0 ≤? rngl_sin α₂)%L with
+  | (true, true) =>
+      negb ((α₁ =? π)%A && (α₂ =? π)%A)%bool
+  | (true, false) =>
+      (rngl_cos α₂ <? rngl_cos α₁)%L
+  | (false, true) =>
+      (rngl_cos α₁ <? rngl_cos α₂)%L
+  | (false, false) =>
+      false
+  end.
 
 Theorem angle_add_overflow_is_not_small :
-  ∀ α1 α2, angle_add_overflow α1 α2 = negb (angle_add_is_small α1 α2).
+  ∀ α1 α2,
+  angle_add_overflow α1 α2 =
+    negb ((rngl_characteristic T =? 1)%nat || angle_add_is_small α1 α2).
 Proof.
 destruct_ac.
 destruct (Nat.eq_dec (rngl_characteristic T) 1) as [Hc1| Hc1]. {
@@ -522,22 +523,18 @@ Theorem angle_add_overflow_comm :
 Proof.
 intros.
 do 2 rewrite angle_add_overflow_is_not_small.
-progress f_equal.
+do 2 progress f_equal.
 apply angle_add_is_small_comm.
 Qed.
 
 (* pas terrible, putain. La version angle_add_overflow_0_l
    est beaucoup plus simple *)
-Theorem angle_add_is_small_0_l : ∀ α, angle_add_is_small 0 α = true.
+Theorem angle_add_is_small_0_l :
+  rngl_characteristic T ≠ 1 →
+  ∀ α, angle_add_is_small 0 α = true.
 Proof.
 destruct_ac.
-intros.
-apply Bool.orb_true_iff.
-remember (rngl_characteristic T =? 1) as c1 eqn:Hc1.
-symmetry in Hc1.
-destruct c1; [ now left | right ].
-apply Nat.eqb_neq in Hc1.
-move Hc1 after α.
+intros Hc1 *; cbn.
 rewrite (rngl_leb_refl Hor); cbn.
 remember (0 ≤? rngl_sin α)%L as zs eqn:Hzs.
 symmetry in Hzs.
@@ -560,11 +557,13 @@ cbn in Hzs.
 now rewrite (rngl_leb_refl Hor) in Hzs.
 Qed.
 
-Theorem angle_add_is_small_0_r : ∀ α, angle_add_is_small α 0 = true.
+Theorem angle_add_is_small_0_r :
+  rngl_characteristic T ≠ 1 →
+  ∀ α, angle_add_is_small α 0 = true.
 Proof.
-intros.
+intros Hc1 *.
 rewrite angle_add_is_small_comm.
-apply angle_add_is_small_0_l.
+apply (angle_add_is_small_0_l Hc1).
 Qed.
 
 Theorem angle_add_overflow_0_l : ∀ α, angle_add_overflow 0 α = false.
@@ -1019,8 +1018,7 @@ Theorem angle_add_is_not_small_lt_straight_ge_straight :
 Proof.
 destruct_ac.
 intros * H12 H1p.
-apply Bool.orb_false_iff in H12.
-destruct H12 as (_, H12).
+progress unfold angle_add_is_small in H12.
 progress unfold angle_ltb in H1p; cbn in H1p.
 progress unfold angle_leb; cbn.
 rewrite (rngl_leb_refl Hor) in H1p.

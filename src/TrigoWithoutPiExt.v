@@ -46,8 +46,6 @@ Proof.
 destruct_ac.
 intros * Hzs1 Hzs2 Hzs3.
 progress unfold angle_add_is_small.
-apply Bool.orb_true_iff.
-right.
 generalize Hzs1; intros H.
 apply rngl_leb_le in H.
 rewrite H; clear H.
@@ -136,13 +134,6 @@ Proof.
 destruct_ac.
 intros * Hzs1 Hzs3 Has.
 progress unfold angle_add_is_small in Has.
-apply Bool.orb_true_iff in Has.
-destruct Has as [Hc1| Has]. {
-  apply Nat.eqb_eq in Hc1.
-  specialize (rngl_characteristic_1 Hos Hc1) as H1.
-  rewrite (H1 (rngl_sin _)).
-  apply (rngl_le_refl Hor).
-}
 generalize Hzs1; intros H.
 apply rngl_leb_le in H.
 rewrite H in Has; clear H.
@@ -732,7 +723,7 @@ Theorem angle_mul_nat_div_2π'_succ_l_true :
   ↔ angle_mul_nat_div_2π' n α = 0 ∧
     angle_add_is_small α (n * α) = true.
 Proof.
-intros; cbn.
+intros; cbn - [ angle_add_is_small ].
 destruct (angle_mul_nat_div_2π' _ _); [ | easy ].
 now destruct (angle_add_is_small _ _).
 Qed.
