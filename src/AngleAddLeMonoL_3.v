@@ -254,8 +254,7 @@ destruct zs2. 2: {
     now apply rngl_sin_add_nonneg.
   }
   apply angle_add_le_mono_l_lemma_3; try easy. {
-    apply angle_add_overflow_le with (α2 := (α3 - π/₂)%A);
-      try easy.
+    apply angle_add_overflow_le with (α2 := (α3 - π/₂)%A); try easy.
     progress unfold angle_leb.
     apply rngl_leb_le in Hzc3.
     rewrite Hzc3.
