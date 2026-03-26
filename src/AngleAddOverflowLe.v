@@ -171,7 +171,7 @@ destruct (rngl_leb_dec (rngl_cos α3) 0) as [Hc3z| Hzc3]. {
   apply (rngl_add_nonpos_nonpos Hos Hor).
   apply (rngl_mul_nonneg_nonpos Hop Hor); [ | easy ].
   now apply rngl_lt_le_incl.
-  apply (rngl_opp_nonpos_nonneg Hop Hor).
+  apply (rngl_le_opp_0 Hop Hor).
   now apply (rngl_mul_nonneg_nonneg Hos Hor).
 }
 apply (rngl_leb_gt_iff Hto) in Hzc3.

@@ -443,7 +443,7 @@ destruct zs3. {
     progress sin_cos_add_sub_straight_goal T.
     rewrite <- (rngl_opp_add_distr Hop).
     rewrite rngl_add_comm.
-    apply (rngl_opp_nonpos_nonneg Hop Hor).
+    apply (rngl_le_opp_0 Hop Hor).
     change_angle_sub_l α3 π/₂.
     progress sin_cos_add_sub_right_hyp T Hzs3.
     progress sin_cos_add_sub_right_hyp T Hc3z.
@@ -816,7 +816,7 @@ destruct zs13. {
       now apply rngl_lt_irrefl in Hzs3.
     }
     rewrite rngl_sin_add_straight_l in Hzs13.
-    apply (rngl_opp_nonpos_nonneg Hop Hor) in Hzs13.
+    apply (rngl_le_opp_0 Hop Hor) in Hzs13.
     now apply (rngl_nlt_ge Hor) in Hzs13.
   }
   apply (rngl_leb_gt_iff Hto) in Hzs1.
@@ -1268,7 +1268,7 @@ destruct (rngl_leb_dec 0 (rngl_cos α1)) as [Hzc1| Hc1z]. {
   progress sin_cos_add_sub_right_hyp T Hzs1.
   progress sin_cos_add_sub_right_goal T.
   rewrite rngl_sin_sub_anticomm in Hc12z.
-  apply (rngl_opp_nonpos_nonneg Hop Hor) in Hc12z.
+  apply (rngl_le_opp_0 Hop Hor) in Hc12z.
   apply (rngl_nlt_ge_iff Hto).
   intros Hc12s13.
   rename Hzs13 into Hzc13.

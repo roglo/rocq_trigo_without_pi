@@ -379,7 +379,7 @@ assert (Hs : (sab ≤ 0)%L). {
     }
     progress unfold cos.
     rewrite Hdb, Hlb.
-    apply (rngl_opp_nonpos_nonneg Hop Hor).
+    apply (rngl_le_opp_0 Hop Hor).
     apply rl_sqrt_nonneg.
     apply (rngl_le_0_sub Hop Hor).
     specialize (a_prop b) as H1.
@@ -397,7 +397,7 @@ assert (Hs : (sab ≤ 0)%L). {
   }
   progress unfold sin.
   rewrite Hdb, Hlb.
-  apply (rngl_opp_nonpos_nonneg Hop Hor).
+  apply (rngl_le_opp_0 Hop Hor).
   apply rl_sqrt_nonneg.
   specialize (a_prop b) as H1.
   apply Bool.andb_true_iff in H1.

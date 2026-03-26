@@ -696,10 +696,10 @@ destruct (rngl_ltb_dec x y) as [Hxy| Hxy]. {
     (* case rngl_cos α1 ≤ 0 *)
     apply rngl_add_cos_nonneg_when_sin_nonpos; try easy. {
       rewrite rngl_sin_add_straight_r.
-      now apply (rngl_opp_nonpos_nonneg Hop Hor).
+      now apply (rngl_le_opp_0 Hop Hor).
     } {
       rewrite rngl_sin_add_straight_r.
-      now apply (rngl_opp_nonpos_nonneg Hop Hor).
+      now apply (rngl_le_opp_0 Hop Hor).
     } {
       rewrite angle_add_assoc.
       rewrite (angle_add_comm α1).

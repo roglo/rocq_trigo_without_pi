@@ -97,7 +97,7 @@ symmetry in Hα3.
 apply angle_add_move_l in Hα3.
 subst α2.
 rewrite rngl_sin_sub_anticomm.
-apply (rngl_opp_nonpos_nonneg Hop Hor).
+apply (rngl_le_opp_0 Hop Hor).
 apply rngl_sin_sub_nonneg; [ easy | easy | ].
 now apply rngl_lt_le_incl.
 Qed.

@@ -479,12 +479,12 @@ destruct zs1. {
       rewrite (rngl_mul_0_l Hos) in Haov.
       rewrite (rngl_sub_0_l Hop) in Haov.
       rewrite rngl_mul_1_l in Haov.
-      apply (rngl_opp_nonpos_nonneg Hop Hor) in Haov.
+      apply (rngl_le_opp_0 Hop Hor) in Haov.
       now apply (rngl_nlt_ge Hor) in Haov.
     } {
       apply (rngl_nle_gt Hor) in Hzs1.
       exfalso; apply Hzs1; clear Hzs1.
-      apply (rngl_opp_nonpos_nonneg Hop Hor).
+      apply (rngl_le_opp_0 Hop Hor).
       apply (rngl_0_le_1 Hos Hto).
     }
   }

@@ -617,7 +617,7 @@ split. {
   apply rngl_sin_eq in H.
   destruct H; subst α2; [ now apply rngl_lt_irrefl in Hcc | ].
   rewrite rngl_cos_sub_straight_l in Hcc, Hzc2.
-  apply (rngl_opp_nonpos_nonneg Hop Hor) in Hzc2.
+  apply (rngl_le_opp_0 Hop Hor) in Hzc2.
   apply (rngl_le_antisymm Hor) in Hzc2; [ | easy ].
   rewrite Hzc2 in Hcc.
   rewrite (rngl_opp_0 Hop) in Hcc.

@@ -502,7 +502,7 @@ destruct zs1. {
   rewrite (rngl_mul_opp_l Hop).
   rewrite rngl_mul_1_l.
   apply (rngl_le_trans Hor _ 0). {
-    apply (rngl_opp_nonpos_nonneg Hop Hor).
+    apply (rngl_le_opp_0 Hop Hor).
     now apply rl_sqrt_nonneg.
   } {
     now apply rl_sqrt_nonneg.
