@@ -554,7 +554,7 @@ destruct s1z. {
       }
       apply angle_sub_move_r in H1; subst α1.
       rewrite rngl_sin_add_straight_l in Hzs1.
-      apply (rngl_opp_pos_neg Hop Hor) in Hzs1.
+      apply (rngl_lt_0_opp Hop Hor) in Hzs1.
       now apply (rngl_nle_gt Hor) in Hzs1.
     }
     apply (rngl_leb_gt_iff Hto) in Hzc1.
@@ -579,12 +579,12 @@ destruct s1z. {
       apply eq_rngl_sin_0 in H.
       destruct H as [H1| H1]. {
         apply -> angle_add_move_0_r in H1; subst α1.
-        apply (rngl_opp_pos_neg Hop Hor) in Hzs1.
+        apply (rngl_lt_0_opp Hop Hor) in Hzs1.
         now apply (rngl_nle_gt Hor) in Hzs1.
       }
       apply angle_add_move_r in H1; subst α1.
       rewrite rngl_cos_sub_straight_l in Hzc1.
-      apply (rngl_opp_pos_neg Hop Hor) in Hzc1.
+      apply (rngl_lt_0_opp Hop Hor) in Hzc1.
       now apply (rngl_nle_gt Hor) in Hzc1.
     }
     apply (rngl_leb_gt_iff Hto) in Hzc2.
@@ -613,7 +613,7 @@ destruct s1z. {
     }
     apply angle_sub_move_r in H1; subst α1.
     rewrite rngl_sin_add_straight_l in Hzs1.
-    apply (rngl_opp_pos_neg Hop Hor) in Hzs1.
+    apply (rngl_lt_0_opp Hop Hor) in Hzs1.
     now apply (rngl_nle_gt Hor) in Hzs1.
   }
   destruct s2z. {

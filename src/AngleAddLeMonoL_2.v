@@ -292,7 +292,7 @@ destruct zs3. {
         rewrite <- angle_sub_add_distr in Hzs12 |-*.
         rewrite rngl_sin_sub_straight_l in Hzs12.
         rewrite rngl_cos_sub_straight_l in Hzc2 |-*.
-        apply (rngl_opp_pos_neg Hop Hor) in Hzc2.
+        apply (rngl_lt_0_opp Hop Hor) in Hzc2.
         apply (rngl_le_opp_r Hop Hor).
         cbn.
         rewrite (rngl_mul_opp_r Hop).

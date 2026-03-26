@@ -64,7 +64,7 @@ Ltac sin_cos_add_sub_right_hyp T H :=
   try apply -> (rngl_opp_nonneg_nonpos Hop' Hor') in H;
   try apply -> (rngl_opp_nonpos_nonneg Hop' Hor') in H;
   try apply -> (rngl_opp_neg_pos Hop' Hor') in H;
-  try apply -> (rngl_opp_pos_neg Hop' Hor') in H;
+  try apply -> (rngl_lt_0_opp Hop' Hor') in H;
   try apply -> (rngl_le_opp_l Hop' Hor') in H;
   try apply -> (rngl_le_opp_r Hop' Hor') in H;
   try apply -> (rngl_lt_opp_l Hop' Hor') in H;
@@ -96,12 +96,12 @@ Ltac sin_cos_add_sub_straight_hyp T H :=
   try apply -> (rngl_opp_nonpos_nonneg Hop' Hor') in H;
   try apply -> (rngl_opp_nonneg_nonpos Hop' Hor') in H;
   try apply -> (rngl_opp_neg_pos Hop' Hor') in H;
-  try apply -> (rngl_opp_pos_neg Hop' Hor') in H;
+  try apply -> (rngl_lt_0_opp Hop' Hor') in H;
   try apply -> (rngl_le_opp_r Hop' Hor') in H;
   try apply <- (rngl_opp_lt_compat Hop' Hor') in H;
   repeat rewrite (rngl_opp_involutive Hop') in H;
   try apply -> (rngl_lt_opp_l Hop' Hor') in H;
-  try apply -> (rngl_opp_pos_neg Hop' Hor') in H;
+  try apply -> (rngl_lt_0_opp Hop' Hor') in H;
   clear Hop' Hos' Hto' Hor'.
 
 Ltac sin_cos_opp_hyp T H :=

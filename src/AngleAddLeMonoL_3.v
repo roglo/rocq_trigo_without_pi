@@ -170,7 +170,7 @@ destruct zs2. 2: {
       rewrite angle_sub_0_l in H1.
       subst α2.
       cbn in Hzs2.
-      apply (rngl_opp_pos_neg Hop Hor) in Hzs2.
+      apply (rngl_lt_0_opp Hop Hor) in Hzs2.
       now apply (rngl_nlt_ge Hor) in Hzs2.
     }
     apply angle_add_move_l in H1.
@@ -351,7 +351,7 @@ destruct (rngl_leb_dec (rngl_cos α2) 0)%L as [Hc2z| Hzc2]. 2: {
       apply angle_sub_move_l in H.
       subst α3.
       rewrite rngl_sin_sub_straight_r in Hzs3.
-      apply (rngl_opp_pos_neg Hop Hor) in Hzs3.
+      apply (rngl_lt_0_opp Hop Hor) in Hzs3.
       now apply (rngl_nle_gt Hor) in Hzs3.
     }
     apply (rngl_eqb_neq Heo) in Hs1s3z.

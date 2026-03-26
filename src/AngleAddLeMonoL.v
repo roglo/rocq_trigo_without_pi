@@ -378,7 +378,7 @@ destruct zs1. {
       intros H.
       apply angle_sub_move_r in H; subst α3.
       rewrite rngl_sin_add_straight_l in Hzs3.
-      apply (rngl_opp_pos_neg Hop Hor) in Hzs3.
+      apply (rngl_lt_0_opp Hop Hor) in Hzs3.
       now apply (rngl_nlt_ge Hor) in Hzs1.
     }
     rewrite angle_sub_sub_distr.
@@ -472,7 +472,7 @@ destruct zs1. {
     } {
       apply angle_sub_move_r in H; subst α3.
       rewrite rngl_sin_add_straight_l in Hzs3.
-      apply (rngl_opp_pos_neg Hop Hor) in Hzs3.
+      apply (rngl_lt_0_opp Hop Hor) in Hzs3.
       now apply (rngl_nle_gt Hor) in Hzs3.
     }
   }
@@ -605,7 +605,7 @@ destruct zs1. {
     left; intros H.
     apply angle_sub_move_r in H; subst α3.
     rewrite rngl_sin_add_straight_l in Hzs3.
-    apply (rngl_opp_pos_neg Hop Hor) in Hzs3.
+    apply (rngl_lt_0_opp Hop Hor) in Hzs3.
     now apply (rngl_lt_asymm Hor) in Hzs3.
   } {
     apply rngl_lt_le_incl in Hzs2, Hzc3.
@@ -655,12 +655,12 @@ destruct (rngl_leb_dec 0 (rngl_cos α1)) as [Hzc1| Hzc1]. {
       apply rngl_cos_eq in H12.
       destruct H12; subst α2; [ easy | ].
       cbn in Hzs2.
-      apply (rngl_opp_pos_neg Hop Hor) in Hzs2.
+      apply (rngl_lt_0_opp Hop Hor) in Hzs2.
       now apply (rngl_lt_asymm Hor) in Hzs2.
     } {
       apply angle_sub_move_r in H; subst α1.
       rewrite rngl_sin_add_straight_l in Hzs1.
-      apply (rngl_opp_pos_neg Hop Hor) in Hzs1.
+      apply (rngl_lt_0_opp Hop Hor) in Hzs1.
       now apply (rngl_lt_asymm Hor) in Hzs1.
     }
   } {
@@ -1148,7 +1148,7 @@ destruct s31. {
       symmetry in H.
       apply eq_rngl_cos_opp_1 in H; subst α2.
       rewrite rngl_sin_sub_straight_r in Hs32.
-      apply (rngl_opp_pos_neg Hop Hor) in Hs32.
+      apply (rngl_lt_0_opp Hop Hor) in Hs32.
       now apply (rngl_nle_gt Hor) in Hs32.
     }
     apply (rngl_le_lt_trans Hor _ (rngl_cos α1)). {
@@ -1177,7 +1177,7 @@ destruct s31. {
       now apply rngl_lt_irrefl in Hs32.
     }
     cbn in Hzs3.
-    apply (rngl_opp_pos_neg Hop Hor) in Hzs3.
+    apply (rngl_lt_0_opp Hop Hor) in Hzs3.
     now apply (rngl_nle_gt Hor) in Hzs3.
   }
   destruct zs3; [ easy | ].

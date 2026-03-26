@@ -90,13 +90,13 @@ destruct (rngl_leb_dec 0 (rngl_cos α1))%L as [Hzc1| Hc1z]. {
       rewrite angle_sub_0_l in H.
       subst α2.
       cbn in Hzs2.
-      apply (rngl_opp_pos_neg Hop Hor) in Hzs2.
+      apply (rngl_lt_0_opp Hop Hor) in Hzs2.
       now apply (rngl_nle_gt Hor) in Hzs2.
     }
     apply angle_add_move_l in H.
     subst α2.
     rewrite rngl_cos_sub_straight_l in Hc2z.
-    apply (rngl_opp_pos_neg Hop Hor) in Hc2z.
+    apply (rngl_lt_0_opp Hop Hor) in Hc2z.
     now apply (rngl_nle_gt Hor) in Hc2z.
   }
   exfalso.
