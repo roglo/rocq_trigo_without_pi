@@ -103,4 +103,4 @@ Qed.
 
 End a.
 
-Notation "rngl_tan² a" := ((rngl_tan a)²) (at level 10).
+Notation "rngl_tan² a" := ((rngl_tan a)²%L) (at level 10).

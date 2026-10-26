@@ -812,7 +812,7 @@ rewrite <- (rl_sqrt_squ Hop Hto).
 apply (rl_sqrt_le_rl_sqrt Hop Hiq Hto). {
   apply (rngl_squ_nonneg Hos Hto).
 }
-apply (rngl_le_div_r Hop Hiv Hto _²); [ easy | ].
+apply (rngl_le_div_r Hop Hiv Hto _²%L); [ easy | ].
 rewrite rngl_cos_angle_eucl_dist_0_r.
 rewrite (rngl_add_sub_assoc Hop).
 remember (angle_eucl_dist α 0) as a.
@@ -856,7 +856,7 @@ rewrite <- (rl_sqrt_squ Hop Hto).
 apply (rl_sqrt_le_rl_sqrt Hop Hiq Hto). {
   apply (rngl_squ_nonneg Hos Hto).
 }
-apply (rngl_le_div_r Hop Hiv Hto _²); [ easy | ].
+apply (rngl_le_div_r Hop Hiv Hto _²%L); [ easy | ].
 rewrite rngl_cos_angle_eucl_dist_straight_r.
 rewrite (rngl_sub_sub_distr Hop).
 rewrite <- (rngl_add_sub_swap Hop).
